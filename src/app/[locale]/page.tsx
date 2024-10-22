@@ -1,11 +1,13 @@
 'use client'
 
 import Head from 'next/head'
-import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
+import { useTranslations } from "next-intl"
+import { Link } from "@/i18n/routing"
 
 export default function Home() {
   const { user } = useAuth({ middleware: 'guest' })
+  const t = useTranslations("general");
 
   return (
     <>
@@ -19,7 +21,7 @@ export default function Home() {
             <Link
               href="/dashboard"
               className="ml-4 text-sm text-gray-700 underline">
-              Dashboard
+              {t("dashboard")}
             </Link>
           ) : (
             <>

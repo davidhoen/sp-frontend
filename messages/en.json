@@ -1,0 +1,10 @@
+{
+  "general": {
+    "dashboard": "Dashboard"
+  },
+  "students": {
+    "loggedIn": "You are logged in!",
+    "title": "Hello world!",
+    "about": "Go to the about page"
+  }
+}
