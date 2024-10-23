@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl"
 import { Link } from "@/i18n/routing"
 
 export default function Home() {
-  const { user } = useAuth({ middleware: "guest" })
+  const { user } = useAuth({ middleware: "auth" })
   const t = useTranslations("general")
 
   return (

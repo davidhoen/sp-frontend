@@ -1,6 +1,5 @@
 "use client"
 
-import { cn } from "@/lib"
 import { useLocale } from "next-intl"
 import { languageNames, locales, usePathname, useRouter } from "../i18n/routing"
 import { DropdownButton } from "./DropdownLink"
