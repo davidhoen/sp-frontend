@@ -1,12 +1,12 @@
-'use client'
-import Link from 'next/link'
-import * as Yup from 'yup'
-import axios, { AxiosError } from 'axios'
-import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik'
+"use client"
+import * as Yup from "yup"
+import axios, { AxiosError } from "axios"
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik"
 
-import { useAuth } from '@/hooks/auth'
-import ApplicationLogo from '@/components/ApplicationLogo'
-import AuthCard from '@/components/AuthCard'
+import { useAuth } from "@/hooks/auth"
+import ApplicationLogo from "@/components/ApplicationLogo"
+import AuthCard from "@/components/AuthCard"
+import { Link } from "@/i18n/routing"
 
 interface Values {
   name: string
@@ -17,14 +17,11 @@ interface Values {
 
 const RegisterPage = () => {
   const { register } = useAuth({
-    middleware: 'guest',
-    redirectIfAuthenticated: '/dashboard',
+    middleware: "guest",
+    redirectIfAuthenticated: "/dashboard"
   })
 
-  const submitForm = async (
-    values: Values,
-    { setSubmitting, setErrors }: FormikHelpers<Values>,
-  ): Promise<any> => {
+  const submitForm = async (values: Values, { setSubmitting, setErrors }: FormikHelpers<Values>): Promise<any> => {
     try {
       await register(values)
     } catch (error: Error | AxiosError | any) {
@@ -37,14 +34,12 @@ const RegisterPage = () => {
   }
 
   const RegisterSchema = Yup.object().shape({
-    name: Yup.string().required('The name field is required.'),
-    email: Yup.string()
-      .email('Invalid email')
-      .required('The email field is required.'),
-    password: Yup.string().required('The password field is required.'),
+    name: Yup.string().required("The name field is required."),
+    email: Yup.string().email("Invalid email").required("The email field is required."),
+    password: Yup.string().required("The password field is required."),
     password_confirmation: Yup.string()
-      .required('Please confirm password.')
-      .oneOf([Yup.ref('password')], 'Your passwords do not match.'),
+      .required("Please confirm password.")
+      .oneOf([Yup.ref("password")], "Your passwords do not match.")
   })
 
   return (
@@ -58,36 +53,24 @@ const RegisterPage = () => {
         onSubmit={submitForm}
         validationSchema={RegisterSchema}
         initialValues={{
-          name: '',
-          email: '',
-          password: '',
-          password_confirmation: '',
+          name: "",
+          email: "",
+          password: "",
+          password_confirmation: ""
         }}>
         <Form className="space-y-4">
           <div>
-            <label
-              htmlFor="name"
-              className="undefined block font-medium text-sm text-gray-700">
+            <label htmlFor="name" className="undefined block font-medium text-sm text-gray-700">
               Name
             </label>
 
-            <Field
-              id="name"
-              name="name"
-              className="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            />
+            <Field id="name" name="name" className="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
 
-            <ErrorMessage
-              name="name"
-              component="span"
-              className="text-xs text-red-500"
-            />
+            <ErrorMessage name="name" component="span" className="text-xs text-red-500" />
           </div>
 
           <div>
-            <label
-              htmlFor="email"
-              className="undefined block font-medium text-sm text-gray-700">
+            <label htmlFor="email" className="undefined block font-medium text-sm text-gray-700">
               Email
             </label>
 
@@ -98,17 +81,11 @@ const RegisterPage = () => {
               className="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             />
 
-            <ErrorMessage
-              name="email"
-              component="span"
-              className="text-xs text-red-500"
-            />
+            <ErrorMessage name="email" component="span" className="text-xs text-red-500" />
           </div>
 
           <div className="">
-            <label
-              htmlFor="password"
-              className="undefined block font-medium text-sm text-gray-700">
+            <label htmlFor="password" className="undefined block font-medium text-sm text-gray-700">
               Password
             </label>
 
@@ -119,17 +96,11 @@ const RegisterPage = () => {
               className="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             />
 
-            <ErrorMessage
-              name="password"
-              component="span"
-              className="text-xs text-red-500"
-            />
+            <ErrorMessage name="password" component="span" className="text-xs text-red-500" />
           </div>
 
           <div className="">
-            <label
-              htmlFor="password"
-              className="undefined block font-medium text-sm text-gray-700">
+            <label htmlFor="password" className="undefined block font-medium text-sm text-gray-700">
               Confirm Password
             </label>
 
@@ -140,17 +111,11 @@ const RegisterPage = () => {
               className="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             />
 
-            <ErrorMessage
-              name="password_confirmation"
-              component="span"
-              className="text-xs text-red-500"
-            />
+            <ErrorMessage name="password_confirmation" component="span" className="text-xs text-red-500" />
           </div>
 
           <div className="flex items-center justify-end mt-4">
-            <Link
-              href="/login"
-              className="underline text-sm text-gray-600 hover:text-gray-900">
+            <Link href="/login" className="underline text-sm text-gray-600 hover:text-gray-900">
               Already registered?
             </Link>
 

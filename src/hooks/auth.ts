@@ -1,6 +1,7 @@
+import { useRouter } from "@/i18n/routing"
 import axios from "@/lib/axios"
 import { AxiosResponse } from "axios"
-import { useParams, useRouter } from "next/navigation"
+import { useParams } from "next/navigation"
 import { useEffect } from "react"
 import useSWR from "swr"
 
@@ -82,8 +83,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: { middleware?: 
     if (!error) {
       await axios.post("/logout").then(() => mutate())
     }
-
-    window.location.pathname = "/login"
+    window.location.pathname = `${params.locale}/login`
   }
 
   useEffect(() => {

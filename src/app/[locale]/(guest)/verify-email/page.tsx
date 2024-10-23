@@ -1,17 +1,17 @@
-'use client'
-import Link from 'next/link'
-import React, { useState } from 'react'
+"use client"
+import React, { useState } from "react"
 
-import { useAuth } from '@/hooks/auth'
-import AuthCard from '@/components/AuthCard'
-import ApplicationLogo from '@/components/ApplicationLogo'
+import { useAuth } from "@/hooks/auth"
+import AuthCard from "@/components/AuthCard"
+import ApplicationLogo from "@/components/ApplicationLogo"
+import { Link } from "@/i18n/routing"
 
 const VerifyEmailPage = () => {
-  const [status, setStatus] = useState<string>('')
+  const [status, setStatus] = useState<string>("")
 
   const { logout, resendEmailVerification } = useAuth({
-    middleware: 'auth',
-    redirectIfAuthenticated: '/dashboard',
+    middleware: "auth",
+    redirectIfAuthenticated: "/dashboard"
   })
 
   const onClickResend = () => {
@@ -26,16 +26,12 @@ const VerifyEmailPage = () => {
         </Link>
       }>
       <div className="mb-4 text-sm text-gray-600">
-        Thanks for signing up! Before getting started, could you verify your
-        email address by clicking on the link we just emailed to you? If you
-        didn&apos;t receive the email, we will gladly send you another.
+        Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn&apos;t receive the email, we will gladly send you
+        another.
       </div>
 
-      {status === 'verification-link-sent' && (
-        <div className="mb-4 font-medium text-sm text-green-600">
-          A new verification link has been sent to the email address you
-          provided during registration.
-        </div>
+      {status === "verification-link-sent" && (
+        <div className="mb-4 font-medium text-sm text-green-600">A new verification link has been sent to the email address you provided during registration.</div>
       )}
 
       <div className="mt-4 flex items-center justify-between">
@@ -45,10 +41,7 @@ const VerifyEmailPage = () => {
           Resend Verification Email
         </button>
 
-        <button
-          type="button"
-          className="underline text-sm text-gray-600 hover:text-gray-900"
-          onClick={logout}>
+        <button type="button" className="underline text-sm text-gray-600 hover:text-gray-900" onClick={logout}>
           Logout
         </button>
       </div>

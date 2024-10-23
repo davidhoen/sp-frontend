@@ -1,13 +1,13 @@
-'use client'
-import Link from 'next/link'
-import * as Yup from 'yup'
-import axios, { AxiosError } from 'axios'
-import { useSearchParams } from 'next/navigation'
-import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik'
+"use client"
+import * as Yup from "yup"
+import axios, { AxiosError } from "axios"
+import { useSearchParams } from "next/navigation"
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik"
 
-import { useAuth } from '@/hooks/auth'
-import AuthCard from '@/components/AuthCard'
-import ApplicationLogo from '@/components/ApplicationLogo'
+import { useAuth } from "@/hooks/auth"
+import AuthCard from "@/components/AuthCard"
+import ApplicationLogo from "@/components/ApplicationLogo"
+import { Link } from "@/i18n/routing"
 
 interface Values {
   email: string
@@ -17,12 +17,9 @@ interface Values {
 
 const PasswordResetPage = () => {
   const query = useSearchParams()
-  const { resetPassword } = useAuth({ middleware: 'guest' })
+  const { resetPassword } = useAuth({ middleware: "guest" })
 
-  const submitForm = async (
-    values: Values,
-    { setSubmitting, setErrors }: FormikHelpers<Values>,
-  ): Promise<any> => {
+  const submitForm = async (values: Values, { setSubmitting, setErrors }: FormikHelpers<Values>): Promise<any> => {
     try {
       await resetPassword(values)
     } catch (error: Error | AxiosError | any) {
@@ -35,13 +32,11 @@ const PasswordResetPage = () => {
   }
 
   const ForgotPasswordSchema = Yup.object().shape({
-    email: Yup.string()
-      .email('Invalid email')
-      .required('The email field is required.'),
-    password: Yup.string().required('The password field is required.'),
+    email: Yup.string().email("Invalid email").required("The email field is required."),
+    password: Yup.string().required("The password field is required."),
     password_confirmation: Yup.string()
-      .required('Please confirm password.')
-      .oneOf([Yup.ref('password')], 'Your passwords do not match.'),
+      .required("Please confirm password.")
+      .oneOf([Yup.ref("password")], "Your passwords do not match.")
   })
 
   return (
@@ -55,15 +50,13 @@ const PasswordResetPage = () => {
         onSubmit={submitForm}
         validationSchema={ForgotPasswordSchema}
         initialValues={{
-          password: '',
-          password_confirmation: '',
-          email: query.get('email') ?? '',
+          password: "",
+          password_confirmation: "",
+          email: query.get("email") ?? ""
         }}>
         <Form className="space-y-4">
           <div>
-            <label
-              htmlFor="email"
-              className="undefined block font-medium text-sm text-gray-700">
+            <label htmlFor="email" className="undefined block font-medium text-sm text-gray-700">
               Email
             </label>
 
@@ -75,17 +68,11 @@ const PasswordResetPage = () => {
               className="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 disabled:opacity-75 disabled:cursor-not-allowed"
             />
 
-            <ErrorMessage
-              name="email"
-              component="span"
-              className="text-xs text-red-500"
-            />
+            <ErrorMessage name="email" component="span" className="text-xs text-red-500" />
           </div>
 
           <div className="">
-            <label
-              htmlFor="password"
-              className="undefined block font-medium text-sm text-gray-700">
+            <label htmlFor="password" className="undefined block font-medium text-sm text-gray-700">
               Password
             </label>
 
@@ -96,17 +83,11 @@ const PasswordResetPage = () => {
               className="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             />
 
-            <ErrorMessage
-              name="password"
-              component="span"
-              className="text-xs text-red-500"
-            />
+            <ErrorMessage name="password" component="span" className="text-xs text-red-500" />
           </div>
 
           <div className="">
-            <label
-              htmlFor="password"
-              className="undefined block font-medium text-sm text-gray-700">
+            <label htmlFor="password" className="undefined block font-medium text-sm text-gray-700">
               Confirm Password
             </label>
 
@@ -117,11 +98,7 @@ const PasswordResetPage = () => {
               className="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             />
 
-            <ErrorMessage
-              name="password_confirmation"
-              component="span"
-              className="text-xs text-red-500"
-            />
+            <ErrorMessage name="password_confirmation" component="span" className="text-xs text-red-500" />
           </div>
 
           <div className="flex items-center justify-end mt-4">
