@@ -1,6 +1,8 @@
 {
   "general": {
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "viewProfile": "View profile",
+    "logout": "Logout"
   },
   "students": {
     "loggedIn": "You are logged in!",

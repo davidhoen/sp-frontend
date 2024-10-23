@@ -1,11 +1,9 @@
 "use client"
 
-import { useLocale } from "next-intl"
 import { languageNames, locales, usePathname, useRouter } from "../i18n/routing"
 import { DropdownButton } from "./DropdownLink"
 
 export function LanguageSwitch() {
-  const locale = useLocale()
   const router = useRouter()
   const pathname = usePathname()
 

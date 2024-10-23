@@ -1,11 +1,12 @@
 import { defineRouting } from "next-intl/routing"
 import { createNavigation } from "next-intl/navigation"
 
-export const locales = ["nl", "en"]
+// When a new locale is added, make sure to add a language name as well.
+export const locales = ["en", "nl"]
 
 export const languageNames = {
-  "nl": "Nederlands",
-  "en": "English"
+  "en": "English",
+  "nl": "Nederlands"
 }
 
 export const routing = defineRouting({
@@ -13,7 +14,7 @@ export const routing = defineRouting({
   locales,
 
   // Used when no locale matches
-  defaultLocale: "en"
+  defaultLocale: locales[0]
 })
 
 // Lightweight wrappers around Next.js' navigation APIs
