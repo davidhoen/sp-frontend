@@ -18,7 +18,7 @@ interface Values {
 const RegisterPage = () => {
   const { register } = useAuth({
     middleware: "guest",
-    redirectIfAuthenticated: "/dashboard"
+    redirectIfAuthenticated: "/student"
   })
 
   const submitForm = async (values: Values, { setSubmitting, setErrors }: FormikHelpers<Values>): Promise<any> => {
