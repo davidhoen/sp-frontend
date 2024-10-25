@@ -1,18 +1,13 @@
 "use client"
 
-import UserProfile from "@/components/Navigation/UserProfile"
-import SectionTitle from "@/components/SectionTitle"
-import { SidebarLeft } from "@/components/Navigation/SideBarLeft"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import UserProfile from "@/components/navigation/UserProfile"
+import StarRating from "@/components/StarRating"
+import PageTitle from "@/components/typography/PageTitle"
+import SectionTitle from "@/components/typography/SectionTitle"
 import UserAvatar from "@/components/UserAvatar"
-import { cn } from "@/lib/utils"
-import { UserType } from "@/types/User"
-import { ArrowBigLeft, ArrowLeftIcon, BellIcon, BookIcon, SearchIcon, StarIcon, StarsIcon, UserIcon, UsersIcon } from "lucide-react"
-import { useTranslations } from "next-intl"
-import { useState } from "react"
 import { UserProvider } from "@/providers/UserProvider"
+import { UserType } from "@/types/User"
+import { useTranslations } from "next-intl"
 
 const Showcase = () => {
   const t = useTranslations()
@@ -25,24 +20,13 @@ const Showcase = () => {
     created_at: new Date(),
     updated_at: new Date()
   }
-  const notificationCount = 3
-  const menuItems = [
-    { title: "Dashboard", url: "#", icon: BookIcon, isActive: true },
-    { title: "My Skills", url: "#", icon: StarIcon },
-    { title: "Groups", url: "#", icon: UsersIcon },
-    { title: "Competences", url: "#", icon: StarsIcon },
-    { title: "Profiles", url: "#", icon: ArrowBigLeft },
-    { title: "Public Profile", url: "#", icon: UserIcon }
-  ]
-
-  const [showMobileSearch, setShowMobileSearch] = useState(false)
 
   return (
     <UserProvider>
       <div className="max-w-3xl mt-6 px-8">
         {/* Page title */}
         <div className="mb-8">
-          <h1 className="font-sans font-bold text-2xl">Showcase</h1>
+          <PageTitle>Showcase</PageTitle>
           <p className="mt-2">A showcase of all of our components</p>
         </div>
 
@@ -59,6 +43,14 @@ const Showcase = () => {
         <div>
           <SectionTitle>This is a section title</SectionTitle>
           <SectionTitle numberOfItems={1}>This is a section title</SectionTitle>
+        </div>
+
+        <div className="flex flex-col">
+          <StarRating rating={1.8} />
+          <StarRating rating={3.25} />
+          <StarRating rating={3.5} />
+          <StarRating rating={3.75} />
+          <StarRating rating={4} />
         </div>
       </div>
     </UserProvider>

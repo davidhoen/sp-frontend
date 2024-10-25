@@ -8,5 +8,11 @@
     "loggedIn": "You are logged in!",
     "title": "Hello world!",
     "about": "Go to the about page"
+  },
+  "ratings": {
+    "insufficient": "Insufficient",
+    "sufficient": "Sufficient",
+    "good": "Good",
+    "excellent": "Excellent"
   }
 }

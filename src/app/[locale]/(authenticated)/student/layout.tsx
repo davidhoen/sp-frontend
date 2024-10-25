@@ -1,6 +1,6 @@
 "use client"
 
-import SideBar from "@/components/Navigation/SideBar"
+import SideBar from "@/components/navigation/SideBar"
 import { useUser } from "@/providers/UserProvider"
 import { ArrowBigLeft, BookIcon, StarIcon, StarsIcon, UserIcon, UsersIcon } from "lucide-react"
 import { ReactNode } from "react"

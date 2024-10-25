@@ -10,8 +10,6 @@ import { Input } from "../ui/input"
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "../ui/sidebar"
 import { SidebarLeft } from "./SideBarLeft"
 import UserProfile from "./UserProfile"
-import { useUser } from "@/providers/UserProvider"
-import { Skeleton } from "../ui/skeleton"
 
 const SideBar = ({ items, children }: { items: NavItem[]; children: ReactNode }) => {
   const [showMobileSearch, setShowMobileSearch] = useState(false)
@@ -54,7 +52,7 @@ const SideBar = ({ items, children }: { items: NavItem[]; children: ReactNode })
             <Button variant="ghost" size="icon" className="relative" aria-label={`${notificationCount} notifications`}>
               <BellIcon className="h-6 w-6" />
               {notificationCount > 0 && (
-                <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
+                <span className="absolute top-1 right-1 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
                   {notificationCount}
                 </span>
               )}

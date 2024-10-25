@@ -8,5 +8,11 @@
     "loggedIn": "Je bent ingelogd!",
     "pageTitle": "Hallo wereld!",
     "about": "Ga naar de over ons pagina"
+  },
+  "ratings": {
+    "insufficient": "Onvoldoende",
+    "sufficient": "Voldoende",
+    "good": "Goed",
+    "excellent": "Uitstekend"
   }
 }
