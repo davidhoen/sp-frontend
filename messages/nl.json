@@ -2,7 +2,8 @@
   "general": {
     "dashboard": "Dashboard",
     "viewProfile": "Bekijk profiel",
-    "logout": "Uitloggen"
+    "logout": "Uitloggen",
+    "you": "Jij"
   },
   "students": {
     "loggedIn": "Je bent ingelogd!",

@@ -2,7 +2,8 @@
   "general": {
     "dashboard": "Dashboard",
     "viewProfile": "View profile",
-    "logout": "Logout"
+    "logout": "Logout",
+    "you": "You"
   },
   "students": {
     "loggedIn": "You are logged in!",
