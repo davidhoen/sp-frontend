@@ -1,10 +1,10 @@
 "use client"
 
 import { useUser } from "@/providers/UserProvider"
-import SideBar from "@/components/Navigation/SideBar"
 import { BookIcon, StarIcon, UsersIcon, StarsIcon, ArrowBigLeft, UserIcon } from "lucide-react"
 import { ReactNode } from "react"
 import Loading from "../loading"
+import SideBar from "@/components/Menu/SideBar"
 
 const StudentLayout = ({ children }: { children: ReactNode }) => {
   const { user } = useUser()

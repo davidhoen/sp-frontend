@@ -1,7 +1,7 @@
 "use client"
 
 import { FeedbackCard } from "@/components/FeedbackCard"
-import UserProfile from "@/components/Navigation/UserProfile"
+import UserProfile from "@/components/Menu/UserProfile"
 import StarRating from "@/components/StarRating"
 import PageTitle from "@/components/Typography/PageTitle"
 import SectionTitle from "@/components/Typography/SectionTitle"

@@ -3,7 +3,6 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { languageNames, Link, locales, usePathname, useRouter } from "@/i18n/routing"
 import { useUser } from "@/providers/UserProvider"
-import { UserType } from "@/types/User"
 import { LogOutIcon, UserIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Image from "next/image"

@@ -2,9 +2,8 @@
 
 import { cn } from "@/lib/utils"
 import { NavItem } from "@/types"
-import { UserType } from "@/types/User"
 import { ArrowLeftIcon, BellIcon, SearchIcon } from "lucide-react"
-import { ReactNode, Suspense, useState } from "react"
+import { ReactNode, useState } from "react"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "../ui/sidebar"

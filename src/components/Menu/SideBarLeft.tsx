@@ -2,10 +2,10 @@
 
 import * as React from "react"
 
-import { NavMain } from "@/components/Navigation/NavMain"
-import { Sidebar, SidebarContent, SidebarHeader, SidebarRail } from "@/components/ui/sidebar"
+import { Sidebar, SidebarContent, SidebarHeader } from "@/components/ui/sidebar"
 import { NavItem } from "@/types"
 import Logo from "./Logo"
+import { NavMain } from "./NavMain"
 
 export function SidebarLeft({ items, ...props }: React.ComponentProps<typeof Sidebar> & { items: NavItem[] }) {
   return (
