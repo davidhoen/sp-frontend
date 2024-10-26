@@ -1,10 +1,10 @@
 "use client"
 
 import { FeedbackCard } from "@/components/FeedbackCard"
-import UserProfile from "@/components/Menu/UserProfile"
+import UserProfile from "@/components/Navigation/UserProfile"
 import StarRating from "@/components/StarRating"
-import PageTitle from "@/components/Titles/PageTitle"
-import SectionTitle from "@/components/Titles/SectionTitle"
+import PageTitle from "@/components/Typography/PageTitle"
+import SectionTitle from "@/components/Typography/SectionTitle"
 import UserAvatar from "@/components/UserAvatar"
 import { UserProvider } from "@/providers/UserProvider"
 import { FeedbackType } from "@/types"

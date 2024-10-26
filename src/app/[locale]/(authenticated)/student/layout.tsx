@@ -4,7 +4,7 @@ import { useUser } from "@/providers/UserProvider"
 import { BookIcon, StarIcon, UsersIcon, StarsIcon, ArrowBigLeft, UserIcon } from "lucide-react"
 import { ReactNode } from "react"
 import Loading from "../loading"
-import SideBar from "@/components/Menu/SideBar"
+import SideBar from "@/components/Navigation/SideBar"
 
 const StudentLayout = ({ children }: { children: ReactNode }) => {
   const { user } = useUser()
