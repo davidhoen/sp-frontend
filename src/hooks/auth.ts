@@ -4,6 +4,7 @@ import { AxiosResponse } from "axios"
 import { useParams } from "next/navigation"
 import { useEffect } from "react"
 import useSWR from "swr"
+import { useCallback } from "react"
 
 export const useAuth = ({ middleware, redirectIfAuthenticated }: { middleware?: string; redirectIfAuthenticated?: string }) => {
   const router = useRouter()
@@ -79,12 +80,12 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: { middleware?: 
     }
   }
 
-  const logout = async () => {
+  const logout = useCallback(async () => {
     if (!error) {
       await axios.post("/logout").then(() => mutate())
     }
     window.location.pathname = `${params.locale}/login`
-  }
+  }, [error, mutate, params.locale])
 
   useEffect(() => {
     if (middleware === "guest" && redirectIfAuthenticated && user) {
@@ -94,7 +95,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: { middleware?: 
       router.push(redirectIfAuthenticated)
     }
     if (middleware === "auth" && error) logout()
-  }, [user, error, middleware, redirectIfAuthenticated, router, params.locale])
+  }, [user, error, middleware, redirectIfAuthenticated, router, params.locale, logout])
 
   return {
     user,
