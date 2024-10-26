@@ -2,7 +2,7 @@
 
 import SideBar from "@/components/navigation/SideBar"
 import { useUser } from "@/providers/UserProvider"
-import { ArrowBigLeft, BookIcon, StarIcon, StarsIcon, UserIcon, UsersIcon } from "lucide-react"
+import { BookIcon, StarIcon, UsersIcon, StarsIcon, ArrowBigLeft, UserIcon } from "lucide-react"
 import { ReactNode } from "react"
 import Loading from "../loading"
 

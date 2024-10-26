@@ -9,10 +9,8 @@ import UserAvatar from "@/components/UserAvatar"
 import { UserProvider } from "@/providers/UserProvider"
 import { FeedbackType } from "@/types"
 import { UserType } from "@/types/User"
-import { useTranslations } from "next-intl"
 
 const Showcase = () => {
-  const t = useTranslations()
   const fakeUser: UserType = {
     id: 1,
     email: "user@skillspassport.nl",
@@ -36,7 +34,7 @@ const Showcase = () => {
 
   return (
     <UserProvider>
-      <div className="max-w-3xl mt-6 px-8">
+      <div className=" mt-6 px-8">
         {/* Page title */}
         <div className="mb-8">
           <PageTitle>Showcase</PageTitle>
