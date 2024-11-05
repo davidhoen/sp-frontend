@@ -7,7 +7,7 @@ import { Link } from "@/i18n/routing"
 
 export default function Home() {
   const { user } = useAuth({ middleware: "auth" })
-  const t = useTranslations()
+  const t = useTranslations("general")
 
   return (
     <>

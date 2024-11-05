@@ -14,7 +14,7 @@ export default function UserProfile() {
   const router = useRouter()
   const pathname = usePathname()
 
-  const t = useTranslations()
+  const t = useTranslations("general")
   let { user, logout } = useUser()
 
   const switchLanguage = (newLocale: string) => {
@@ -23,7 +23,7 @@ export default function UserProfile() {
 
   if (!user) return <Skeleton className="w-10 h-10 rounded-full bg-border" />
 
-  user.imageUrl = "https://xsgames.co/randomusers/avatar.php?g=male"
+  user.image = "https://xsgames.co/randomusers/avatar.php?g=male"
 
   return (
     <DropdownMenu>
@@ -32,7 +32,7 @@ export default function UserProfile() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="pe-12">
         <DropdownMenuLabel className="pb-0">{getFullName(user)}</DropdownMenuLabel>
-        <DropdownMenuLabel className="font-normal pt-1">Student</DropdownMenuLabel>
+        <DropdownMenuLabel className="font-normal pt-1">{user.role.name}</DropdownMenuLabel>
         <DropdownMenuSeparator />
 
         {/* View profile */}

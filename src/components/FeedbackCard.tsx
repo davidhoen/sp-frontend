@@ -19,14 +19,14 @@ export function FeedbackCard({ feedback, user }: { feedback: FeedbackType; user:
             {/* Role */}
             <p className="text-sm text-muted-foreground">Student</p>
           </div>
-          {/* Date */}
-          <p className="text-muted-foreground text-sm">{format.dateTime(feedback.created_at, { year: "numeric", month: "short", day: "numeric" })}</p>
         </div>
-        {/* Content */}
-        <div>
-          <span className="font-sans font-bold text-lg">{feedback.event.title}</span>
-          <p>{feedback.content}</p>
-        </div>
+        {/* Date */}
+        <p className="text-muted-foreground text-sm">{format.dateTime(feedback.created_at, { year: "numeric", month: "short", day: "numeric" })}</p>
+      </div>
+      {/* Content */}
+      <div>
+        <span className="font-sans font-bold text-lg">{feedback.event.title}</span>
+        <p>{feedback.content}</p>
       </div>
     </div>
   )

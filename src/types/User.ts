@@ -4,8 +4,14 @@ export interface UserType {
   first_name: string
   last_name: string
   role_id?: number
-  imageUrl?: string
-  email_verified_at?: Date
-  created_at: Date
-  updated_at: Date
+  image?: string
+  role: Role
+  personal_coach?: UserType
+}
+
+export type Role = {
+  id: number
+  name: string
+  is_teacher: boolean
+  is_head_teacher: boolean
 }

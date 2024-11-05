@@ -17,10 +17,14 @@ const Showcase = () => {
     email: "user@skillspassport.nl",
     first_name: "John",
     last_name: "John",
+    role: {
+      id: 1,
+      name: "Student",
+      is_teacher: false,
+      is_head_teacher: false
+    },
     role_id: 1,
-    imageUrl: "https://xsgames.co/randomusers/avatar.php?g=male",
-    created_at: new Date(),
-    updated_at: new Date()
+    image: "https://xsgames.co/randomusers/avatar.php?g=male",
   }
 
   const feedback: FeedbackType = {
