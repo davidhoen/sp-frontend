@@ -98,16 +98,24 @@ const LoginPage = () => {
             </label>
           </div>
 
-          <div className="flex items-center justify-end mt-4">
-            <Link href="/forgot-password" className="underline text-sm text-gray-600 hover:text-gray-900">
-              Forgot your password?
-            </Link>
+          <div className="flex justify-between mt-4">
+            <div className="flex items-center justify-start mt-4">
+              <Link href="/register" className="underline text-sm text-gray-600 hover:text-gray-900">
+                Register
+              </Link>
+            </div>
 
-            <button
-              type="submit"
-              className="ml-3 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
-              Login
-            </button>
+            <div className="flex items-center justify-end mt-4">
+              <Link href="/forgot-password" className="underline text-sm text-gray-600 hover:text-gray-900">
+                Forgot your password?
+              </Link>
+
+              <button
+                type="submit"
+                className="ml-3 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
+                Login
+              </button>
+            </div>
           </div>
         </Form>
       </Formik>

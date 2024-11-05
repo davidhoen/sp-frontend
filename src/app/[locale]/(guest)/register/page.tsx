@@ -9,9 +9,11 @@ import AuthCard from "@/components/AuthCard"
 import { Link } from "@/i18n/routing"
 
 interface Values {
-  name: string
+  first_name: string
+  last_name: string
   email: string
   password: string
+  role_id: number
   password_confirmation: string
 }
 
@@ -34,9 +36,11 @@ const RegisterPage = () => {
   }
 
   const RegisterSchema = Yup.object().shape({
-    name: Yup.string().required("The name field is required."),
+    first_name: Yup.string().required("The first name field is required."),
+    last_name: Yup.string().required("The last name field is required."),
     email: Yup.string().email("Invalid email").required("The email field is required."),
     password: Yup.string().required("The password field is required."),
+    role_id: Yup.number().required("The role field is required."),
     password_confirmation: Yup.string()
       .required("Please confirm password.")
       .oneOf([Yup.ref("password")], "Your passwords do not match.")
@@ -53,20 +57,32 @@ const RegisterPage = () => {
         onSubmit={submitForm}
         validationSchema={RegisterSchema}
         initialValues={{
-          name: "",
+          first_name: "",
+          last_name: "",
           email: "",
+          role_id: 1,
           password: "",
           password_confirmation: ""
         }}>
         <Form className="space-y-4">
           <div>
-            <label htmlFor="name" className="undefined block font-medium text-sm text-gray-700">
-              Name
+            <label htmlFor="first_name" className="undefined block font-medium text-sm text-gray-700">
+              First Name
             </label>
 
-            <Field id="name" name="name" className="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+            <Field id="first_name" name="first_name" className="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
 
-            <ErrorMessage name="name" component="span" className="text-xs text-red-500" />
+            <ErrorMessage name="first_name" component="span" className="text-xs text-red-500" />
+          </div>
+
+          <div>
+            <label htmlFor="last_name" className="undefined block font-medium text-sm text-gray-700">
+              Last Name
+            </label>
+
+            <Field id="last_name" name="last_name" className="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+
+            <ErrorMessage name="last_name" component="span" className="text-xs text-red-500" />
           </div>
 
           <div>
@@ -82,6 +98,25 @@ const RegisterPage = () => {
             />
 
             <ErrorMessage name="email" component="span" className="text-xs text-red-500" />
+          </div>
+
+          <div>
+            <label htmlFor="role" className="undefined block font-medium text-sm text-gray-700">
+              Role 
+            </label>
+
+            <Field
+              as="select"
+              id="role"
+              name="role_id"
+              className="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+              <option value="1">Student</option>
+              <option value="2">Teacher</option>
+              <option value="3">Head Teacher</option>
+              <option value="4">Admin</option>
+            </Field>
+
+            <ErrorMessage name="role_id" component="span" className="text-xs text-red-500" />
           </div>
 
           <div className="">
