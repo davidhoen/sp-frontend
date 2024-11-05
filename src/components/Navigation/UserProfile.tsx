@@ -13,7 +13,7 @@ export default function UserProfile() {
   const router = useRouter()
   const pathname = usePathname()
 
-  const t = useTranslations("general")
+  const t = useTranslations()
   let { user, logout } = useUser()
 
   const switchLanguage = (newLocale: string) => {

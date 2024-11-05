@@ -1,6 +1,7 @@
 "use client"
 
 import { FeedbackCard } from "@/components/FeedbackCard"
+import UpdateRatingModal from "@/components/Modals/UpdateRatingModal"
 import UserProfile from "@/components/Navigation/UserProfile"
 import StarRating from "@/components/StarRating"
 import PageTitle from "@/components/Typography/PageTitle"
@@ -34,7 +35,7 @@ const Showcase = () => {
 
   return (
     <UserProvider>
-      <div className=" mt-6 px-8">
+      <div className=" mt-6 px-8 flex flex-col gap-6">
         {/* Page title */}
         <div className="mb-8">
           <PageTitle>Showcase</PageTitle>
@@ -42,7 +43,7 @@ const Showcase = () => {
         </div>
 
         {/* User avatar (just the icon) */}
-        <div className="mb-6">
+        <div>
           <UserAvatar user={fakeUser} />
         </div>
 
@@ -64,7 +65,14 @@ const Showcase = () => {
           <StarRating rating={4} />
         </div>
 
-        <FeedbackCard feedback={feedback} user={fakeUser} />
+        <div>
+          <FeedbackCard feedback={feedback} user={fakeUser} />
+        </div>
+
+        <UpdateRatingModal>
+          Open rating modal
+        </UpdateRatingModal>
+
       </div>
     </UserProvider>
   )

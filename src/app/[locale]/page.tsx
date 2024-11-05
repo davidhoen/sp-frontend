@@ -7,12 +7,12 @@ import { Link } from "@/i18n/routing"
 
 export default function Home() {
   const { user } = useAuth({ middleware: "auth" })
-  const t = useTranslations("general")
+  const t = useTranslations()
 
   return (
     <>
       <Head>
-        <title>Larave l</title>
+        <title>Laravel</title>
       </Head>
 
       <div className="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">

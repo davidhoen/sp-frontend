@@ -5,10 +5,19 @@
     "logout": "Uitloggen",
     "you": "Jij"
   },
+  "modals": {
+    "cancel": "Annuleren",
+    "saveChanges": "Wijzigingen opslaan",
+    "updateStarRating": {
+      "title": "Update sterrenbeoordeling",
+      "description": "Geef feedback waarin je uitlegt waarom je je beoordeling hebt bijgewerkt; houd er rekening mee dat de nieuwe beoordeling tijdelijk is totdat een leraar deze goedkeurt.",
+      "selectNewRating": "Selecteer je nieuwe beoordeling"
+    }
+  },
   "students": {
+    "about": "Ga naar de over ons pagina",
     "loggedIn": "Je bent ingelogd!",
-    "pageTitle": "Hallo wereld!",
-    "about": "Ga naar de over ons pagina"
+    "pageTitle": "Hallo wereld!"
   },
   "ratings": {
     "insufficient": "Onvoldoende",
