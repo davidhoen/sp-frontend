@@ -11,7 +11,7 @@ const VerifyEmailPage = () => {
 
   const { logout, resendEmailVerification } = useAuth({
     middleware: "auth",
-    redirectIfAuthenticated: "/dashboard"
+    redirectIfAuthenticated: "/student"
   })
 
   const onClickResend = () => {

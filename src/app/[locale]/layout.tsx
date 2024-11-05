@@ -45,7 +45,9 @@ export default async function RootLayout({ children, params: { locale } }: { chi
   return (
     <html lang={locale}>
       <body className={`${roboto.className} ${robotoSlab.variable} antialiased`}>
-        <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider messages={messages}>
+          <main>{children}</main>
+        </NextIntlClientProvider>
       </body>
     </html>
   )

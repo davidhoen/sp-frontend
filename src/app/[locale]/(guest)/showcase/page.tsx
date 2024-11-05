@@ -1,14 +1,16 @@
 "use client"
 
-import Menu from "@/components/Navigation/Menu"
+import { FeedbackCard } from "@/components/FeedbackCard"
 import UserProfile from "@/components/Navigation/UserProfile"
-import SectionTitle from "@/components/SectionTitle"
+import StarRating from "@/components/StarRating"
+import PageTitle from "@/components/Typography/PageTitle"
+import SectionTitle from "@/components/Typography/SectionTitle"
 import UserAvatar from "@/components/UserAvatar"
+import { UserProvider } from "@/providers/UserProvider"
+import { FeedbackType } from "@/types"
 import { UserType } from "@/types/User"
-import { useTranslations } from "next-intl"
 
 const Showcase = () => {
-  const t = useTranslations()
   const fakeUser: UserType = {
     id: 1,
     email: "user@skillspassport.nl",
@@ -19,13 +21,23 @@ const Showcase = () => {
     updated_at: new Date()
   }
 
+  const feedback: FeedbackType = {
+    id: 1,
+    user: fakeUser,
+    created_at: new Date(),
+    event: {
+      id: 1,
+      title: "Start presentation"
+    },
+    content: "Improvement could be incorporating more real-world examples to illustrate the points. Nevertheless, it was a compelling presentation."
+  }
+
   return (
-    <>
-      <Menu user={fakeUser} />
-      <div className="max-w-5xl mx-auto mt-6 px-8">
+    <UserProvider>
+      <div className=" mt-6 px-8">
         {/* Page title */}
         <div className="mb-8">
-          <h1 className="font-sans font-bold text-2xl">Showcase</h1>
+          <PageTitle>Showcase</PageTitle>
           <p className="mt-2">A showcase of all of our components</p>
         </div>
 
@@ -36,15 +48,25 @@ const Showcase = () => {
 
         {/* User profile */}
         <div>
-          <UserProfile user={fakeUser} />
+          <UserProfile />
         </div>
 
         <div>
           <SectionTitle>This is a section title</SectionTitle>
           <SectionTitle numberOfItems={1}>This is a section title</SectionTitle>
         </div>
+
+        <div className="flex flex-col">
+          <StarRating rating={1.8} /> 1.8
+          <StarRating rating={3.25} />
+          <StarRating rating={3.5} />
+          <StarRating rating={3.75} />
+          <StarRating rating={4} />
+        </div>
+
+        <FeedbackCard feedback={feedback} user={fakeUser} />
       </div>
-    </>
+    </UserProvider>
   )
 }
 

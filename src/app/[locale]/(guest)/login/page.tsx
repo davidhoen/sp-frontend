@@ -23,7 +23,7 @@ const LoginPage = () => {
 
   const { login } = useAuth({
     middleware: "guest",
-    redirectIfAuthenticated: "/dashboard"
+    redirectIfAuthenticated: "/student"
   })
 
   useEffect(() => {

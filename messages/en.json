@@ -2,11 +2,18 @@
   "general": {
     "dashboard": "Dashboard",
     "viewProfile": "View profile",
-    "logout": "Logout"
+    "logout": "Logout",
+    "you": "You"
   },
   "students": {
     "loggedIn": "You are logged in!",
     "title": "Hello world!",
     "about": "Go to the about page"
+  },
+  "ratings": {
+    "insufficient": "Insufficient",
+    "sufficient": "Sufficient",
+    "good": "Good",
+    "excellent": "Excellent"
   }
 }

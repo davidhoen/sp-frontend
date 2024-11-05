@@ -2,31 +2,35 @@
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { languageNames, Link, locales, usePathname, useRouter } from "@/i18n/routing"
-import { UserType } from "@/types/User"
+import { useUser } from "@/providers/UserProvider"
 import { LogOutIcon, UserIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
 import UserAvatar from "../UserAvatar"
-import { useAuth } from "@/hooks/auth"
+import { Skeleton } from "../ui/skeleton"
 
-export default function UserProfile({ user }: { user: UserType }) {
+export default function UserProfile() {
   const router = useRouter()
   const pathname = usePathname()
 
   const t = useTranslations("general")
-
-  const { logout } = useAuth({})
+  let { user, logout } = useUser()
 
   const switchLanguage = (newLocale: string) => {
     router.replace(pathname, { locale: newLocale })
   }
+
+  if (!user) return <Skeleton className="w-10 h-10 rounded-full bg-border" />
+
+  user.role = "Student"
+  user.imageUrl = "https://xsgames.co/randomusers/avatar.php?g=male"
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <UserAvatar user={user} />
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent align="end" className="pe-12">
         <DropdownMenuLabel className="pb-0">{user.name}</DropdownMenuLabel>
         <DropdownMenuLabel className="font-normal pt-1">{user.role}</DropdownMenuLabel>
         <DropdownMenuSeparator />

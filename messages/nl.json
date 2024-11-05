@@ -2,11 +2,18 @@
   "general": {
     "dashboard": "Dashboard",
     "viewProfile": "Bekijk profiel",
-    "logout": "Uitloggen"
+    "logout": "Uitloggen",
+    "you": "Jij"
   },
   "students": {
     "loggedIn": "Je bent ingelogd!",
     "pageTitle": "Hallo wereld!",
     "about": "Ga naar de over ons pagina"
+  },
+  "ratings": {
+    "insufficient": "Onvoldoende",
+    "sufficient": "Voldoende",
+    "good": "Goed",
+    "excellent": "Uitstekend"
   }
 }
