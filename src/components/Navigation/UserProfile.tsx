@@ -8,6 +8,7 @@ import { useTranslations } from "next-intl"
 import Image from "next/image"
 import UserAvatar from "../UserAvatar"
 import { Skeleton } from "../ui/skeleton"
+import { getFullName } from "@/lib"
 
 export default function UserProfile() {
   const router = useRouter()
@@ -22,7 +23,6 @@ export default function UserProfile() {
 
   if (!user) return <Skeleton className="w-10 h-10 rounded-full bg-border" />
 
-  user.role = "Student"
   user.imageUrl = "https://xsgames.co/randomusers/avatar.php?g=male"
 
   return (
@@ -31,8 +31,8 @@ export default function UserProfile() {
         <UserAvatar user={user} />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="pe-12">
-        <DropdownMenuLabel className="pb-0">{user.name}</DropdownMenuLabel>
-        <DropdownMenuLabel className="font-normal pt-1">{user.role}</DropdownMenuLabel>
+        <DropdownMenuLabel className="pb-0">{getFullName(user)}</DropdownMenuLabel>
+        <DropdownMenuLabel className="font-normal pt-1">Student</DropdownMenuLabel>
         <DropdownMenuSeparator />
 
         {/* View profile */}

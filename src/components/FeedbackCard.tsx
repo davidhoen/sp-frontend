@@ -2,6 +2,7 @@ import { UserType } from "@/types/User"
 import UserAvatar from "./UserAvatar"
 import { FeedbackType } from "@/types"
 import { useFormatter, useTranslations } from "next-intl"
+import { getFullName } from "@/lib";
 
 export function FeedbackCard({ feedback, user }: { feedback: FeedbackType; user: UserType }) {
   const t = useTranslations("general")
@@ -14,18 +15,18 @@ export function FeedbackCard({ feedback, user }: { feedback: FeedbackType; user:
           <UserAvatar user={user} />
           <div>
             {/* User name or "you" when viewing on feedback */}
-            <span className="font-semibold">{feedback.user.id === user.id ? t("you") : feedback.user.name}</span>
+            <span className="font-semibold">{feedback.user.id === user.id ? t("you") : getFullName(user)}</span>
             {/* Role */}
-            <p className="text-sm text-muted-foreground">{feedback.user.role}</p>
+            <p className="text-sm text-muted-foreground">Student</p>
           </div>
+          {/* Date */}
+          <p className="text-muted-foreground text-sm">{format.dateTime(feedback.created_at, { year: "numeric", month: "short", day: "numeric" })}</p>
         </div>
-        {/* Date */}
-        <p className="text-muted-foreground text-sm">{format.dateTime(feedback.created_at, { year: "numeric", month: "short", day: "numeric" })}</p>
-      </div>
-      {/* Content */}
-      <div>
-        <span className="font-sans font-bold text-lg">{feedback.event.title}</span>
-        <p>{feedback.content}</p>
+        {/* Content */}
+        <div>
+          <span className="font-sans font-bold text-lg">{feedback.event.title}</span>
+          <p>{feedback.content}</p>
+        </div>
       </div>
     </div>
   )

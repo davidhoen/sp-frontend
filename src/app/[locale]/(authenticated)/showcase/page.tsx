@@ -15,8 +15,9 @@ const Showcase = () => {
   const fakeUser: UserType = {
     id: 1,
     email: "user@skillspassport.nl",
-    name: "John Doe",
-    role: "Student",
+    first_name: "John",
+    last_name: "John",
+    role_id: 1,
     imageUrl: "https://xsgames.co/randomusers/avatar.php?g=male",
     created_at: new Date(),
     updated_at: new Date()
