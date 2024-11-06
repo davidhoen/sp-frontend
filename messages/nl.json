@@ -7,15 +7,35 @@
   },
   "modals": {
     "cancel": "Annuleren",
+    "save": "Opslaan",
     "saveChanges": "Wijzigingen opslaan",
+    "feedback": "Feedback",
+    "feedbackPlaceholder": "Type hier je feedback",
+    "event": "Gebeurtenis",
+    "eventPlaceholder": "Selecteer de gebeurtenis",
+    "email": "Email",
+    "emailPlaceholder": "bob@voorbeeld.nl",
     "updateStarRating": {
       "title": "Update sterrenbeoordeling",
       "description": "Geef feedback waarin je uitlegt waarom je je beoordeling hebt bijgewerkt; houd er rekening mee dat de nieuwe beoordeling tijdelijk is totdat een leraar deze goedkeurt.",
-      "selectNewRating": "Selecteer je nieuwe beoordeling",
-      "form": {
-        "feedback": "Feedback",
-        "feedbackPlaceholder": "Type hier je feedback"
-      }
+      "selectNewRating": "Selecteer je nieuwe beoordeling"
+    },
+    "addFeedback": {
+      "title": "Feedback toevoegen",
+      "description": "Geef voorbeelden, sterke punten, verbeterpunten en suggesties om je vaardigheden te reflecteren en te verbeteren"
+    },
+    "requestEndorsement": {
+      "title": "Onderschrijving aanvragen",
+      "fromEmaildescription": "Voer het werk e-mailadres in van de persoon die de onderschrijving zal schrijven.",
+      "fromUserdescription": "Vraag {name} om een onderschrijving over een specifieke skill.",
+      "workEmail": "Werk e-mailadres",
+      "workEmailPlaceholder": "bob@bedrijf.nl",
+      "workEmailDescription": "Er wordt een e-mail verstuurd met een link naar je vaardigheid. Deze link werkt maar één keer."
+    },
+    "requestFeedback": {
+      "title": "Feedback aanvragen",
+      "fromEmaildescription": "Voer het e-mailadres in van de persoon die de feedback zal schrijven.",
+      "fromUserdescription": "Vraag {name} om feedback over een specifieke skill."
     }
   },
   "students": {
