@@ -1,3 +1,6 @@
+import { useEvents } from "@/hooks/use-events"
+import { getFullName } from "@/lib"
+import { UserType } from "@/types/User"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { ReactNode, useState } from "react"
@@ -5,39 +8,31 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Button } from "../ui/button"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
 import { Input } from "../ui/input"
-import { UserType } from "@/types/User"
-import { getFullName } from "@/lib"
-import Select, { OptionType } from "../ui/select"
+import Select from "../ui/select"
 
 const RequestFeedbackModal = ({ children, requestFromUser }: { children: ReactNode, requestFromUser?: UserType }) => {
     const t = useTranslations("modals")
+    // TODO: Replace with useSkills hook
+    const { data: events, isLoading } = useEvents()
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const formSchema = z.object(
         requestFromUser ?
-            { skillId: z.number() }
+            { eventId: z.number(), skillId: z.number() }
             :
-            { email: z.string().email() }
+            { eventId: z.number(), email: z.string().email() }
     )
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
+            eventId: undefined,
             email: "",
             skillId: undefined
         }
     })
-
-    const events: OptionType[] = [
-        { label: 'Nextjs', value: 1 },
-        { label: 'React', value: 2 },
-        { label: 'Remix', value: 3 },
-        { label: 'Vite', value: 4 },
-        { label: 'Nuxt', value: 5 },
-        { label: 'Vue', value: 6 },
-    ];
 
     const onSubmit = (values: z.infer<typeof formSchema>) => {
         console.log(values);
@@ -63,8 +58,22 @@ const RequestFeedbackModal = ({ children, requestFromUser }: { children: ReactNo
                             </DialogDescription>
                         </DialogHeader>
 
+                        <FormField
+                            control={form.control}
+                            name="eventId"
+                            render={({ field: { onChange } }) => (
+                                <FormItem>
+                                    <FormLabel>{t("event")}</FormLabel>
+                                    <FormControl>
+                                        <Select options={events} isLoading={isLoading} onChange={(selectedOption) => onChange(selectedOption?.value)} placeholder={t("eventPlaceholder")} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
                         {requestFromUser ?
-                            < FormField
+                            <FormField
                                 control={form.control}
                                 name="skillId"
                                 render={({ field: { onChange } }) => (

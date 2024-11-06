@@ -1,3 +1,6 @@
+import { useEvents } from "@/hooks/use-events"
+import { getFullName } from "@/lib"
+import { UserType } from "@/types/User"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { ReactNode, useState } from "react"
@@ -7,23 +10,27 @@ import { Button } from "../ui/button"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
 import { Input } from "../ui/input"
-import { UserType } from "@/types/User"
-import Select, { OptionType } from "../ui/select"
-import { getFullName } from "@/lib"
+import Select from "../ui/select"
 
 const RequestEndorsementModal = ({ children, requestFromUser }: { children: ReactNode, requestFromUser?: UserType }) => {
     const t = useTranslations("modals")
+    const { data: events, isLoading: isEventsLoading } = useEvents()
+
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const formSchema = z.object(
-        requestFromUser ? { skillId: z.number() } : { email: z.string().email() }
+        requestFromUser ?
+            { eventId: z.number(), skillId: z.number() }
+            :
+            { eventId: z.number(), email: z.string().email() }
     )
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
+            eventId: undefined,
             email: "",
-            skillId: undefined
+            skillId: undefined,
         }
     })
 
@@ -32,15 +39,6 @@ const RequestEndorsementModal = ({ children, requestFromUser }: { children: Reac
         setIsModalOpen(false)
         form.reset()
     }
-
-    const events: OptionType[] = [
-        { label: 'Nextjs', value: 1 },
-        { label: 'React', value: 2 },
-        { label: 'Remix', value: 3 },
-        { label: 'Vite', value: 4 },
-        { label: 'Nuxt', value: 5 },
-        { label: 'Vue', value: 6 },
-    ];
 
     return (
         <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
@@ -59,6 +57,21 @@ const RequestEndorsementModal = ({ children, requestFromUser }: { children: Reac
                                 }
                             </DialogDescription>
                         </DialogHeader>
+
+                        {/* Event for endorsement */}
+                        <FormField
+                            control={form.control}
+                            name="eventId"
+                            render={({ field: { onChange } }) => (
+                                <FormItem>
+                                    <FormLabel>{t("event")}</FormLabel>
+                                    <FormControl>
+                                        <Select options={events} onChange={(selectedOption) => onChange(selectedOption?.value)} placeholder={t("eventPlaceholder")} isLoading={isEventsLoading} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
 
                         {requestFromUser ?
                             <FormField

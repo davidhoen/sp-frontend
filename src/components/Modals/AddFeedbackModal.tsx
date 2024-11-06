@@ -1,3 +1,4 @@
+import { useEvents } from "@/hooks/use-events"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { ReactNode, useState } from "react"
@@ -6,26 +7,19 @@ import { z } from "zod"
 import { Button } from "../ui/button"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
+import Select from "../ui/select"
 import { Textarea } from "../ui/textarea"
-import Select, { OptionType } from "../ui/select"
 
 const AddFeedbackModal = ({ children }: { children: ReactNode }) => {
     const t = useTranslations("modals")
     const [isModalOpen, setIsModalOpen] = useState(false)
 
+    const { data: events, isLoading } = useEvents()
+
     const formSchema = z.object({
         eventId: z.number(),
         feedback: z.string().min(10)
     })
-
-    const events: OptionType[] = [
-        { label: 'Nextjs', value: 1 },
-        { label: 'React', value: 2 },
-        { label: 'Remix', value: 3 },
-        { label: 'Vite', value: 4 },
-        { label: 'Nuxt', value: 5 },
-        { label: 'Vue', value: 6 },
-    ];
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -62,7 +56,7 @@ const AddFeedbackModal = ({ children }: { children: ReactNode }) => {
                                 <FormItem>
                                     <FormLabel>{t("event")}</FormLabel>
                                     <FormControl>
-                                        <Select options={events} onChange={(selectedOption) => onChange(selectedOption?.value)} placeholder={t("eventPlaceholder")} />
+                                        <Select options={events} isLoading={isLoading} onChange={(selectedOption) => onChange(selectedOption?.value)} placeholder={t("eventPlaceholder")} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
