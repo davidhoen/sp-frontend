@@ -1,18 +1,23 @@
 {
-  "dashboard": "Dashboard",
-  "viewProfile": "View profile",
-  "logout": "Logout",
-  "you": "You",
-  "cancel": "Cancel",
-  "saveChanges": "Save changes",
-
+  "general": {
+    "dashboard": "Dashboard",
+    "viewProfile": "View profile",
+    "logout": "Logout",
+    "you": "You"
+  },
+  "modals": {
+    "cancel": "Cancel",
+    "saveChanges": "Save changes",
+    "updateStarRating": {
+      "title": "Update stars rating",
+      "description": "Provide feedback explaining why you updated your rating; keep in mind the new rating is temporary until a teacher endorses it.",
+      "selectNewRating": "Select your new rating"
+    }
+  },
   "students": {
     "about": "Go to the about page",
     "loggedIn": "You are logged in!",
-    "title": "Hello world!",
-    "selectNewRating": "Select your new rating",
-    "updateStarsRating": "Update stars rating",
-    "updateStarsRatingDescription": "Provide feedback explaining why you updated your rating; keep in mind the new rating is temporary until a teacher endorses it."
+    "title": "Hello world!"
   },
   "ratings": {
     "insufficient": "Insufficient",

@@ -66,7 +66,7 @@ export default function StarRating({ rating: initialRating, allowEdit, onRatingC
       // On edit mode, show a tooltip with the star title (e.g. "Good")
       allowEdit ?
         <Tooltip key={i}>
-          <TooltipTrigger>
+          <TooltipTrigger asChild>
             <div className="flex">
               <Star key={i} fill={fill} onClick={() => handleRatingChange(starRating)} />
             </div>
@@ -91,12 +91,12 @@ export default function StarRating({ rating: initialRating, allowEdit, onRatingC
     <div aria-label={`Rating: ${rating} out of ${maxStars} stars`}>
       <TooltipProvider>
         {allowEdit ?
-          stars
+          <div className="flex">{stars}</div>
           :
           // When not editing, and just viewing, show a tooltip with the star title and the rating (e.g. "Good (3.5)")
           <Tooltip>
-            <TooltipTrigger>
-              <div className="flex">{stars}</div>
+            <TooltipTrigger asChild>
+              <div className="flex w-fit">{stars}</div>
             </TooltipTrigger>
             <TooltipContent>
               <p>

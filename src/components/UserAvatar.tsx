@@ -1,15 +1,16 @@
 import { UserType } from "@/types/User"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
+import { getFullName } from "@/lib"
 
 export default function UserAvatar({ user }: { user: UserType }) {
-  const initails = user.first_name + " " + user.last_name
+  const initails = getFullName(user)
     .split(" ")
     .map(n => n[0])
     .join("")
 
   return (
     <Avatar>
-      <AvatarImage src={user.imageUrl} />
+      <AvatarImage src={user.image} />
       <AvatarFallback>{initails}</AvatarFallback>
     </Avatar>
   )
