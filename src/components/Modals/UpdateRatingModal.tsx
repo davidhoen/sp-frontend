@@ -7,6 +7,7 @@ import { Button } from "../ui/button"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
 import { Textarea } from "../ui/textarea"
+import StarRating from "../StarRating"
 
 const UpdateRatingModal = ({ children }: { children: ReactNode }) => {
     const t = useTranslations("modals")
@@ -50,6 +51,7 @@ const UpdateRatingModal = ({ children }: { children: ReactNode }) => {
                             render={({ field: { value, onChange } }) => (
                                 <FormItem>
                                     <FormControl>
+                                        <StarRating rating={value} onRatingChange={onChange} allowEdit />
                                     </FormControl>
                                     <FormDescription>{t("updateStarRating.selectNewRating")}</FormDescription>
                                     <FormMessage />
