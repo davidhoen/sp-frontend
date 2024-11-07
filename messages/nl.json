@@ -3,7 +3,11 @@
     "dashboard": "Dashboard",
     "viewProfile": "Bekijk profiel",
     "logout": "Uitloggen",
-    "you": "Jij"
+    "you": "Jij",
+    "endorsement": "Onderschrijving",
+    "feedback": "Feedback",
+    "userUpdatedRating": "{name} heeft skills beoordeling bijgewerkt",
+    "addFeedback": "Feedback toevoegen"
   },
   "modals": {
     "cancel": "Annuleren",

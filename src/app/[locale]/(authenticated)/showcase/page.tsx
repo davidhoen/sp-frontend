@@ -1,17 +1,18 @@
 "use client"
 
-import { FeedbackCard } from "@/components/FeedbackCard"
+import { ContentCard } from "@/components/ContentCard"
 import AddFeedbackModal from "@/components/Modals/AddFeedbackModal"
 import RequestEndorsementModal from "@/components/Modals/RequestEndorsementModal"
 import RequestFeedbackModal from "@/components/Modals/RequestFeedbackModal"
 import UpdateRatingModal from "@/components/Modals/UpdateRatingModal"
 import UserProfile from "@/components/Navigation/UserProfile"
 import StarRating from "@/components/StarRating"
+import { TimeLine } from "@/components/Timeline/TimeLine"
 import PageTitle from "@/components/Typography/PageTitle"
 import SectionTitle from "@/components/Typography/SectionTitle"
 import UserAvatar from "@/components/UserAvatar"
 import { UserProvider } from "@/providers/UserProvider"
-import { FeedbackType } from "@/types"
+import { EndorsementType, FeedbackType, RatingUpdateType, TimeLineItemType } from "@/types"
 import { UserType } from "@/types/User"
 
 const Showcase = () => {
@@ -30,6 +31,20 @@ const Showcase = () => {
     image: "https://xsgames.co/randomusers/avatar.php?g=male",
   }
 
+  const fakeTeacher: UserType = {
+    id: 1,
+    email: "teacher@skillspassport.nl",
+    first_name: "Jane",
+    last_name: "Robbertson",
+    role: {
+      id: 2,
+      name: "Teacher",
+      is_teacher: true,
+      is_head_teacher: false
+    },
+    role_id: 2,
+    image: "https://xsgames.co/randomusers/avatar.php?g=female",
+  }
   const feedback: FeedbackType = {
     id: 1,
     user: fakeUser,
@@ -39,6 +54,28 @@ const Showcase = () => {
       title: "Start presentation"
     },
     content: "Improvement could be incorporating more real-world examples to illustrate the points. Nevertheless, it was a compelling presentation."
+  }
+
+  const endorsement: EndorsementType = {
+    id: 1,
+    user: fakeTeacher,
+    event: {
+      id: 1,
+      title: "Midterm evaluation"
+    },
+    content: "Impressive command over the subject matter and ability to engage the audience",
+    rating: 3,
+    is_approved: true,
+    created_by: fakeUser,
+    created_at: new Date()
+  }
+
+  const ratingUpdate: RatingUpdateType = {
+    id: 1,
+    rating: 3,
+    user: fakeUser,
+    is_approved: true,
+    created_at: new Date()
   }
 
   return (
@@ -74,8 +111,24 @@ const Showcase = () => {
         </div>
 
         <div>
-          <FeedbackCard feedback={feedback} user={fakeUser} />
+          <ContentCard content={feedback} />
         </div>
+
+        <div>
+          <ContentCard content={endorsement} />
+        </div>
+
+        {/* <div className="flex flex-col gap-4">
+          <TimeLineContentCard content={feedback} />
+          <TimeLineContentCard content={endorsement} />
+          <TimelineRatingUpdateCard ratingUpdate={ratingUpdate} />
+        </div> */}
+
+        <TimeLine items={[
+          { type: TimeLineItemType.Feedback, created_at: new Date("7-8-21"), feedback },
+          { type: TimeLineItemType.Endorsement, created_at: new Date(), endorsement },
+          { type: TimeLineItemType.RatingUpdate, created_at: new Date("8-8-21"), ratingUpdate }
+        ]} />
 
         <UpdateRatingModal>
           Open rating modal

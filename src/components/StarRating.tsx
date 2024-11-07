@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { useTranslations } from "next-intl"
+import { getStarTitles } from "@/lib"
 
 const adjustFillPercentage = (fill: number): number => {
   // round fill to the nearest quarter
@@ -42,9 +43,9 @@ const Star = ({ fill, onClick }: { fill: number, onClick?: () => void }) => {
   )
 }
 
-export default function StarRating({ rating: initialRating, allowEdit, onRatingChange, maxStars = 4 }: { rating: number, allowEdit?: boolean, onRatingChange?: (newRating: number) => void, maxStars?: number }) {
+export default function StarRating({ rating: initialRating, allowEdit, onRatingChange, maxStars = 4, showRatingTitle }: { rating: number, allowEdit?: boolean, onRatingChange?: (newRating: number) => void, maxStars?: number, showRatingTitle?: boolean }) {
   const t = useTranslations("ratings")
-  const starTitles = [t("insufficient"), t("sufficient"), t("good"), t("excellent")]
+  const starTitles = getStarTitles(t)
 
   const [rating, setRating] = useState(initialRating)
 
@@ -90,21 +91,24 @@ export default function StarRating({ rating: initialRating, allowEdit, onRatingC
   return (
     <div aria-label={`Rating: ${rating} out of ${maxStars} stars`}>
       <TooltipProvider>
-        {allowEdit ?
-          <div className="flex">{stars}</div>
-          :
-          // When not editing, and just viewing, show a tooltip with the star title and the rating (e.g. "Good (3.5)")
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div className="flex w-fit">{stars}</div>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>
-                {starTitles[roundedRating]} ({quarterRating})
-              </p>
-            </TooltipContent>
-          </Tooltip>
-        }
+        <div className="flex items-center gap-2">
+          {allowEdit ?
+            <div className="flex">{stars}</div>
+            :
+            // When not editing, and just viewing, show a tooltip with the star title and the rating (e.g. "Good (3.5)")
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="flex w-fit">{stars}</div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>
+                  {starTitles[roundedRating]} ({quarterRating})
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          }
+          {showRatingTitle && <p className="text-sm">{starTitles[roundedRating]}</p>}
+        </div>
       </TooltipProvider>
     </div>
   )

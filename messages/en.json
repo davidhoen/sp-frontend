@@ -3,7 +3,11 @@
     "dashboard": "Dashboard",
     "viewProfile": "View profile",
     "logout": "Logout",
-    "you": "You"
+    "you": "You",
+    "endorsement": "Endorsement",
+    "feedback": "Feedback",
+    "userUpdatedRating": "{name} updated skills rating",
+    "addFeedback": "Add feedback"
   },
   "modals": {
     "cancel": "Cancel",
