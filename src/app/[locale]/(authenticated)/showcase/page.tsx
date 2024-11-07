@@ -1,6 +1,9 @@
 "use client"
 
 import { FeedbackCard } from "@/components/FeedbackCard"
+import AddFeedbackModal from "@/components/Modals/AddFeedbackModal"
+import RequestEndorsementModal from "@/components/Modals/RequestEndorsementModal"
+import RequestFeedbackModal from "@/components/Modals/RequestFeedbackModal"
 import UpdateRatingModal from "@/components/Modals/UpdateRatingModal"
 import UserProfile from "@/components/Navigation/UserProfile"
 import StarRating from "@/components/StarRating"
@@ -63,7 +66,7 @@ const Showcase = () => {
         </div>
 
         <div className="flex flex-col">
-          <StarRating rating={1.8} /> 1.8
+          <StarRating rating={1.8} />
           <StarRating rating={3.25} />
           <StarRating rating={3.5} />
           <StarRating rating={3.75} />
@@ -77,6 +80,26 @@ const Showcase = () => {
         <UpdateRatingModal>
           Open rating modal
         </UpdateRatingModal>
+
+        <AddFeedbackModal>
+          Add feedback modal
+        </AddFeedbackModal>
+
+        <RequestEndorsementModal requestFromUser={fakeUser}>
+          Request endorsement form user modal
+        </RequestEndorsementModal>
+
+        <RequestEndorsementModal>
+          Request endorsement modal
+        </RequestEndorsementModal>
+
+        <RequestFeedbackModal>
+          Request feedback modal
+        </RequestFeedbackModal>
+
+        <RequestFeedbackModal requestFromUser={fakeUser}>
+          Request from user feedback modal
+        </RequestFeedbackModal>
 
       </div>
     </UserProvider>

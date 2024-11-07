@@ -7,11 +7,37 @@
   },
   "modals": {
     "cancel": "Cancel",
+    "save": "Save",
     "saveChanges": "Save changes",
+    "feedback": "Feedback",
+    "feedbackPlaceholder": "Type your feedback here",
+    "event": "Event",
+    "eventPlaceholder": "Select an event",
+    "skill": "Skill",
+    "skillPlaceholder": "Select a skill",
+    "email": "Email",
+    "emailPlaceholder": "bob@example.com",
     "updateStarRating": {
       "title": "Update stars rating",
       "description": "Provide feedback explaining why you updated your rating; keep in mind the new rating is temporary until a teacher endorses it.",
       "selectNewRating": "Select your new rating"
+    },
+    "addFeedback": {
+      "title": "Add feedback",
+      "description": "Provide examples, strengths, areas for improvement, and suggestions to reflect on and improve your skills"
+    },
+    "requestEndorsement": {
+      "title": "Request endorsement",
+      "fromEmaildescription": "Enter the work email of the person who will write the endorsement.",
+      "fromUserdescription": "Ask {name} for an endorsement on a specific skill.",
+      "workEmail": "Work email",
+      "workEmailPlaceholder": "bob@company.com",
+      "workEmailDescription": "An email will be sent with a link to your skill. This link will work only once."
+    },
+    "requestFeedback": {
+      "title": "Request feedback",
+      "fromEmaildescription": "Enter the email of the person who will write the feedback.",
+      "fromUserdescription": "Ask {name} for feedback on a specific skill."
     }
   },
   "students": {
