@@ -8,15 +8,14 @@ import { Button } from "./ui/button"
 
 export default function SkillCard({ skill }: { skill: SkillType }) {
     const t = useTranslations("general")
-    const isAdded = skill.ratingUpdates.length > 0
-    const rating = isAdded ? skill.ratingUpdates[0].rating : 0
+    const rating = skill.is_added ? skill.rating[0].rating : 0
     return (
         <div className="flex flex-col border rounded-lg px-4 py-3">
             <div className="flex justify-between mb-1">
                 <span className="font-medium text-xl">{skill.title}</span>
                 <div>
-                    <Button disabled={isAdded} variant="secondary" className="rounded-full h-8 w-8" size="icon">
-                        {isAdded ?
+                    <Button disabled={skill.is_added} variant="secondary" className="rounded-full h-8 w-8" size="icon">
+                        {skill.is_added ?
                             <CheckIcon size={18} />
                             :
                             <PlusIcon size={18} />
@@ -31,7 +30,7 @@ export default function SkillCard({ skill }: { skill: SkillType }) {
                 <StarRating rating={rating} />
                 {/* Disable button when skill is not added (yet) */}
                 <Link href={`/skills/${skill.id}`}>
-                    <Button size="sm" disabled={!isAdded}>{t("addFeedback")}</Button>
+                    <Button size="sm" disabled={!skill.is_added}>{t("addFeedback")}</Button>
                 </Link>
             </div>
         </div>

@@ -18,7 +18,6 @@ export type ProfileType = {
   icon: string,
   created_by: UserType
   created_at: Date
-  updated_at: Date
 }
 
 export type CompetencyType = {
@@ -29,17 +28,17 @@ export type CompetencyType = {
   skills: SkillType[]
   profiles: ProfileType[]
   created_at: Date
-  updated_at: Date
 }
 
 export type SkillType = {
   id: number
   title: string
-  desc: string
+  desc?: string
+  groups_count: number
   competency: CompetencyType
-  ratingUpdates: RatingUpdateType[]
+  is_added: boolean
+  rating: RatingUpdateType[]
   created_at: Date
-  updated_at: Date
 }
 
 export type GroupType = {
@@ -49,7 +48,6 @@ export type GroupType = {
   created_by: UserType
   closed_at: Date
   created_at: Date
-  updated_at: Date
 }
 
 export type FeedbackType = {
@@ -96,4 +94,11 @@ export enum TimeLineItemType {
 export type EventType = {
   id: number
   title: string
+}
+
+export type SkillsQueryType = {
+  page: string,
+  search: string,
+  competencies: string,
+  is_added: string
 }

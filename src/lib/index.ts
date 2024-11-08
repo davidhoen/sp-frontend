@@ -13,4 +13,4 @@ export const getYouOrFullName = (entityUser: UserType, t: TranslationFunction, l
 
 export const getStarTitles = (t: TranslationFunction) => {
     return [t("insufficient"), t("sufficient"), t("good"), t("excellent")]
-} 
+}

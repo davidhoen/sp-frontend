@@ -3,8 +3,8 @@
 import { type LucideIcon } from "lucide-react"
 
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar"
-import Link from "next/link"
 import { cn } from "@/lib/utils"
+import { Link } from "@/i18n/routing"
 
 export function NavMain({
   items
