@@ -12,14 +12,18 @@ const StudentLayout = ({ children }: { children: ReactNode }) => {
 
   const menuItems = [
     { title: "Dashboard", url: "#", icon: BookIcon, isActive: true },
-    { title: "My Skills", url: "#", icon: StarIcon },
+    { title: "Skills", url: "/student/skills", icon: StarIcon },
     { title: "Groups", url: "#", icon: UsersIcon },
     { title: "Competences", url: "#", icon: StarsIcon },
     { title: "Profiles", url: "#", icon: ArrowBigLeft },
     { title: "Public Profile", url: "#", icon: UserIcon }
   ]
 
-  return <SideBar items={menuItems}>{children}</SideBar>
+  return <SideBar items={menuItems}>
+    <div className="p-6">
+      {children}
+    </div>
+  </SideBar>
 }
 
 export default StudentLayout

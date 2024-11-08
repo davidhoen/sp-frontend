@@ -7,7 +7,8 @@
     "endorsement": "Onderschrijving",
     "feedback": "Feedback",
     "userUpdatedRating": "{name} heeft skills beoordeling bijgewerkt",
-    "addFeedback": "Feedback toevoegen"
+    "addFeedback": "Feedback toevoegen",
+    "skills": "Skills"
   },
   "modals": {
     "cancel": "Annuleren",

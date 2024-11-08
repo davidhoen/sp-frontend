@@ -7,7 +7,8 @@
     "endorsement": "Endorsement",
     "feedback": "Feedback",
     "userUpdatedRating": "{name} updated skills rating",
-    "addFeedback": "Add feedback"
+    "addFeedback": "Add feedback",
+    "skills": "Skills"
   },
   "modals": {
     "cancel": "Cancel",
