@@ -1,6 +1,5 @@
 "use client"
 
-import FilterButton from "@/components/FilterButton"
 import { Pager } from "@/components/Pager"
 import SearchInput from "@/components/SearchInput"
 import Skeletons from "@/components/Skeletons"
