@@ -8,7 +8,8 @@
     "feedback": "Feedback",
     "userUpdatedRating": "{name} heeft skills beoordeling bijgewerkt",
     "addFeedback": "Feedback toevoegen",
-    "skills": "Skills"
+    "skills": "Skills",
+    "search": "Zoeken"
   },
   "modals": {
     "cancel": "Annuleren",

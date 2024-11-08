@@ -8,7 +8,8 @@
     "feedback": "Feedback",
     "userUpdatedRating": "{name} updated skills rating",
     "addFeedback": "Add feedback",
-    "skills": "Skills"
+    "skills": "Skills",
+    "search": "Search"
   },
   "modals": {
     "cancel": "Cancel",
