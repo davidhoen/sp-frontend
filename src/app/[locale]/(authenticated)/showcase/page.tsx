@@ -80,58 +80,54 @@ const Showcase = () => {
     created_at: new Date()
   }
 
-  const fakeSkill: SkillType = {
-    id: 1,
-    title: "Presenting",
-    desc: "React is a JavaScript library for building user interfaces",
-    competency: {
-      id: 1,
-      title: "Communication",
-      desc: "You have a good understanding of the subject matter and can apply it in real-world scenarios",
-      overview: "Competency overview",
-      skills: [],
-      profiles: [],
-      created_at: new Date(),
-      updated_at: new Date()
-    },
-    ratingUpdates: [
-      {
-        id: 1,
-        rating: 3,
-        user: fakeUser,
-        is_approved: true,
-        created_at: new Date()
-      },
-      {
-        id: 2,
-        rating: 4,
-        user: fakeTeacher,
-        is_approved: true,
-        created_at: new Date()
-      }
-    ],
-    created_at: new Date(),
-    updated_at: new Date()
-  }
+  // const fakeSkill: SkillType = {
+  //   id: 1,
+  //   title: "Presenting",
+  //   desc: "React is a JavaScript library for building user interfaces",
+  //   competency: {
+  //     id: 1,
+  //     title: "Communication",
+  //     desc: "You have a good understanding of the subject matter and can apply it in real-world scenarios",
+  //     overview: "Competency overview",
+  //     skills: [],
+  //     profiles: [],
+  //     created_at: new Date(),
+  //   },
+  //   rating: [
+  //     {
+  //       id: 1,
+  //       rating: 3,
+  //       user: fakeUser,
+  //       is_approved: true,
+  //       created_at: new Date()
+  //     },
+  //     {
+  //       id: 2,
+  //       rating: 4,
+  //       user: fakeTeacher,
+  //       is_approved: true,
+  //       created_at: new Date()
+  //     }
+  //   ],
+  //   created_at: new Date(),
+  // }
 
-  const fakeSkill2: SkillType = {
-    id: 2,
-    title: "Creativity",
-    desc: "React is a JavaScript library for building user interfaces",
-    competency: {
-      id: 1,
-      title: "Communication",
-      desc: "You have a good understanding of the subject matter and can apply it in real-world scenarios",
-      overview: "Competency overview",
-      skills: [],
-      profiles: [],
-      created_at: new Date(),
-      updated_at: new Date()
-    },
-    ratingUpdates: [],
-    created_at: new Date(),
-    updated_at: new Date()
-  }
+  // const fakeSkill2: SkillType = {
+  //   id: 2,
+  //   title: "Creativity",
+  //   desc: "React is a JavaScript library for building user interfaces",
+  //   competency: {
+  //     id: 1,
+  //     title: "Communication",
+  //     desc: "You have a good understanding of the subject matter and can apply it in real-world scenarios",
+  //     overview: "Competency overview",
+  //     skills: [],
+  //     profiles: [],
+  //     created_at: new Date(),
+  //   },
+  //   rating: [],
+  //   created_at: new Date(),
+  // }
 
   return (
     <UserProvider>
@@ -174,8 +170,8 @@ const Showcase = () => {
         </div>
 
         <div>
-          <SkillCard skill={fakeSkill} />
-          <SkillCard skill={fakeSkill2} />
+          {/* <SkillCard skill={fakeSkill} />
+          <SkillCard skill={fakeSkill2} /> */}
         </div>
 
         <div>
