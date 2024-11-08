@@ -11,6 +11,47 @@ export type NavItem = {
 
 export type TranslationFunction = ReturnType<typeof useTranslations>;
 
+export type ProfileType = {
+  id: number
+  title: string
+  desc: string
+  icon: string,
+  created_by: UserType
+  created_at: Date
+  updated_at: Date
+}
+
+export type CompetencyType = {
+  id: number
+  title: string
+  desc: string
+  overview: string
+  skills: SkillType[]
+  profiles: ProfileType[]
+  created_at: Date
+  updated_at: Date
+}
+
+export type SkillType = {
+  id: number
+  title: string
+  desc: string
+  competency: CompetencyType
+  ratingUpdates: RatingUpdateType[]
+  created_at: Date
+  updated_at: Date
+}
+
+export type GroupType = {
+  id: number
+  name: string
+  desc: string
+  created_by: UserType
+  closed_at: Date
+  created_at: Date
+  updated_at: Date
+}
+
 export type FeedbackType = {
   id: number
   user: UserType

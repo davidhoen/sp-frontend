@@ -6,13 +6,15 @@ import RequestEndorsementModal from "@/components/Modals/RequestEndorsementModal
 import RequestFeedbackModal from "@/components/Modals/RequestFeedbackModal"
 import UpdateRatingModal from "@/components/Modals/UpdateRatingModal"
 import UserProfile from "@/components/Navigation/UserProfile"
+import ProfileTile from "@/components/ProfileTile"
+import SkillCard from "@/components/SkillCard"
 import StarRating from "@/components/StarRating"
 import { TimeLine } from "@/components/Timeline/TimeLine"
 import PageTitle from "@/components/Typography/PageTitle"
 import SectionTitle from "@/components/Typography/SectionTitle"
 import UserAvatar from "@/components/UserAvatar"
 import { UserProvider } from "@/providers/UserProvider"
-import { EndorsementType, FeedbackType, RatingUpdateType, TimeLineItemType } from "@/types"
+import { EndorsementType, FeedbackType, ProfileType, RatingUpdateType, SkillType, TimeLineItemType } from "@/types"
 import { UserType } from "@/types/User"
 
 const Showcase = () => {
@@ -78,6 +80,59 @@ const Showcase = () => {
     created_at: new Date()
   }
 
+  const fakeSkill: SkillType = {
+    id: 1,
+    title: "Presenting",
+    desc: "React is a JavaScript library for building user interfaces",
+    competency: {
+      id: 1,
+      title: "Communication",
+      desc: "You have a good understanding of the subject matter and can apply it in real-world scenarios",
+      overview: "Competency overview",
+      skills: [],
+      profiles: [],
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    ratingUpdates: [
+      {
+        id: 1,
+        rating: 3,
+        user: fakeUser,
+        is_approved: true,
+        created_at: new Date()
+      },
+      {
+        id: 2,
+        rating: 4,
+        user: fakeTeacher,
+        is_approved: true,
+        created_at: new Date()
+      }
+    ],
+    created_at: new Date(),
+    updated_at: new Date()
+  }
+
+  const fakeSkill2: SkillType = {
+    id: 2,
+    title: "Creativity",
+    desc: "React is a JavaScript library for building user interfaces",
+    competency: {
+      id: 1,
+      title: "Communication",
+      desc: "You have a good understanding of the subject matter and can apply it in real-world scenarios",
+      overview: "Competency overview",
+      skills: [],
+      profiles: [],
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    ratingUpdates: [],
+    created_at: new Date(),
+    updated_at: new Date()
+  }
+
   return (
     <UserProvider>
       <div className=" mt-6 px-8 flex flex-col gap-6">
@@ -110,6 +165,19 @@ const Showcase = () => {
           <StarRating rating={4} />
         </div>
 
+        <div className="grid grid-cols-2 gap-4">
+          <ProfileTile profile={{ title: "Technologist", icon: "MonitorCog" } as ProfileType} />
+          <ProfileTile profile={{ title: "Director", icon: "Clapperboard" } as ProfileType} />
+          <ProfileTile profile={{ title: "Analyst", icon: "ChartLine" } as ProfileType} />
+          <ProfileTile profile={{ title: "Innovator", icon: "Lightbulb" } as ProfileType} />
+          <ProfileTile profile={{ title: "Innovator", icon: "Weird string" } as ProfileType} />
+        </div>
+
+        <div>
+          <SkillCard skill={fakeSkill} />
+          <SkillCard skill={fakeSkill2} />
+        </div>
+
         <div>
           <ContentCard content={feedback} />
         </div>
@@ -117,12 +185,6 @@ const Showcase = () => {
         <div>
           <ContentCard content={endorsement} />
         </div>
-
-        {/* <div className="flex flex-col gap-4">
-          <TimeLineContentCard content={feedback} />
-          <TimeLineContentCard content={endorsement} />
-          <TimelineRatingUpdateCard ratingUpdate={ratingUpdate} />
-        </div> */}
 
         <TimeLine items={[
           { type: TimeLineItemType.Feedback, created_at: new Date("7-8-21"), feedback },
