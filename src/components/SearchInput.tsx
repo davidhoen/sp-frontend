@@ -20,6 +20,6 @@ export default function SearchInput({ placeholder }: { placeholder: string }) {
         replace(`${pathname}?${params.toString()}`);
     }, 300);
 
-    return <Input defaultValue={searchParams.get('search')?.toString()} placeholder={placeholder} onChange={({ target: { value } }) => handleSearch(value)} />
+    return <Input className="w-80" defaultValue={searchParams.get('search')?.toString()} placeholder={placeholder} onChange={({ target: { value } }) => handleSearch(value)} />
 
 }
