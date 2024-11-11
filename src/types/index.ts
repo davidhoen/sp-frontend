@@ -39,6 +39,7 @@ export type SkillType = {
   is_added: boolean
   rating: RatingUpdateType[]
   created_at: Date
+  ratings: Array<RatingHistoryType>
 }
 
 export type GroupType = {
@@ -74,6 +75,11 @@ export type RatingUpdateType = {
   rating: number
   user: UserType
   is_approved: boolean
+  created_at: Date
+}
+
+export type RatingHistoryType = {
+  rating: number
   created_at: Date
 }
 
