@@ -3,7 +3,7 @@ import React from "react"
 
 const DashboardPage = () => {
   const t = useTranslations("students")
-  return <div className="p-8">{t("loggedIn")}</div>
+  return <div className="p-8 w-screen">{t("loggedIn")}</div>
 }
 
 export default DashboardPage

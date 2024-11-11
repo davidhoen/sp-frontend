@@ -11,8 +11,10 @@
     "skills": "Skills",
     "search": "Search",
     "allSkills": "All skills",
+    "allCompetencies": "All competencies",
     "addedSkills": "Added skills",
-    "notAdded": "Not added"
+    "notAdded": "Not added",
+    "noSkillsFound": "No skills found"
   },
   "modals": {
     "cancel": "Cancel",

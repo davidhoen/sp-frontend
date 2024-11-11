@@ -22,7 +22,7 @@ export function Pager<T>({ pagerObject, renderItem, emptyMessage, renderAsTable,
     const paging = pagerObject?.meta;
 
     if (!pagerObject?.data.length)
-        return <div className="font-bold italic text-center">{emptyMessage}</div>
+        return <div className="font-bold text-center">{emptyMessage}</div>
 
     return <div>
         {renderAsTable

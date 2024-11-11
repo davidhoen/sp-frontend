@@ -60,7 +60,7 @@ const SkillsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => 
             const competencies = searchParams.competencies ?? ""
             const isAdded = searchParams.is_added ?? ""
 
-            const { data } = await axios.get<PagingSchema<SkillType>>(`/api/student/skills/?page=${page}&search=${search}&competencies=${competencies}&is_added=${isAdded}`);
+            const { data } = await axios.get<PagingSchema<SkillType>>(`/api/student/skills/?availableCompentencies=true&page=${page}&search=${search}&competencies=${competencies}&is_added=${isAdded}`);
             setSkills(data);
         }
         catch (error) {
@@ -78,7 +78,7 @@ const SkillsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => 
 
     const renderSkill = (skill: SkillType) => <SkillCard key={skill.id} skill={skill} />
 
-    return <div>
+    return <div className="w-full">
         <PageTitle>{t("skills")}</PageTitle>
 
         {/* Search */}
@@ -87,10 +87,14 @@ const SkillsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => 
         </div>
 
         {/* Compentencies filter*/}
-        <div className="my-4 w-screen overflow-x-auto ">
-            <ToggleGroup type="multiple" onValueChange={handleCompentencyFilter} defaultValue={searchParams.competencies?.split(',')}>
-                {competencies?.map((competency) => (<ToggleGroupItem key={competency.value} variant="outline" value={competency.value.toString()}>{competency.label}</ToggleGroupItem>))}
-            </ToggleGroup>
+        <div className="my-4 overflow-x-auto no-scrollbar">
+            {!!competencies ?
+                <ToggleGroup type="multiple" onValueChange={handleCompentencyFilter} defaultValue={searchParams.competencies?.split(',') || "all"}>
+                    {competencies?.map((competency) => (<ToggleGroupItem key={competency.value} variant="outline" value={competency.value.toString()}>{competency.label}</ToggleGroupItem>))}
+                </ToggleGroup>
+                :
+                <Skeletons amount={7} wrapperClass="flex" className="w-full h-10" />
+            }
         </div>
 
         {/* Is added filter */}
@@ -104,9 +108,9 @@ const SkillsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => 
 
         <div className={cn("transition-all duration-500", loading ? "blur-md cursor-wait" : "blur-0")}>
             {!!skills ?
-                <Pager pagerObject={skills} renderItem={renderSkill} emptyMessage="No skills found" wrapperClass="grid md:grid-cols-2 gap-8 items-start" />
+                <Pager pagerObject={skills} renderItem={renderSkill} emptyMessage={t("noSkillsFound")} wrapperClass="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-start" />
                 :
-                <Skeletons amount={10} className="w-full h-28 " />
+                <Skeletons amount={15} className="w-full h-28 mt" />
             }
         </div>
     </div>

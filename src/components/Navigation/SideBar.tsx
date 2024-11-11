@@ -18,7 +18,7 @@ const SideBar = ({ items, children }: { items: NavItem[]; children: ReactNode })
     <SidebarProvider>
       <SidebarLeft items={items} />
       <SidebarInset>
-        <header className="sticky top-1 flex h-14 shrink-0 items-center gap-2 bg-background border-b">
+        <header className="sticky top-1 flex h-14 shrink-0 items-center gap-2 bg-background border-b w-full md:max-w-[calc(100vw-var(--sidebar-width))]">
           <div className="flex flex-1 items-center gap-2 px-3">
             <SidebarTrigger className="md:hidden ml-2" />
 
@@ -61,7 +61,7 @@ const SideBar = ({ items, children }: { items: NavItem[]; children: ReactNode })
             <UserProfile />
           </div>
         </header>
-        <main>{children}</main>
+        <main className="">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   )

@@ -11,8 +11,10 @@
     "skills": "Skills",
     "search": "Zoeken",
     "allSkills": "Alle skills",
+    "allCompetencies": "Alle competenties",
     "addedSkills": "Toegevoegde skills",
-    "notAdded": "Niet toegevoegd"
+    "notAdded": "Niet toegevoegd",
+    "noSkillsFound": "Geen skills gevonden"
   },
   "modals": {
     "cancel": "Annuleren",
