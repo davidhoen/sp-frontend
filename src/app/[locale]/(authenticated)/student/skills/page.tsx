@@ -8,11 +8,10 @@ import PageTitle from "@/components/Typography/PageTitle"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { useCompentencies } from "@/hooks/use-compentencies"
 import { usePathname, useRouter } from "@/i18n/routing"
-import axios from "@/lib/axios"
+import { getSkills } from "@/lib/queries"
 import { cn } from "@/lib/utils"
 import { SkillsQueryType, SkillType } from "@/types"
 import { PagingSchema } from "@/zod/Pagination"
-import { Filter } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useCallback, useEffect, useState } from "react"
 import { useDebouncedCallback } from "use-debounce"
@@ -69,16 +68,14 @@ const SkillsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => 
     }, 300);
 
     //Method to get the skills for the current page
-    const getSkills = useCallback(async () => {
+    const fetchSkills = useCallback(async () => {
         setLoading(true);
         try {
             const page = parseInt(searchParams.page) || 1;
             const search = searchParams.search ?? ""
             const competencies = searchParams.competencies ?? ""
-            const isAdded = searchParams.is_added ?? ""
-
-            const { data } = await axios.get<PagingSchema<SkillType>>(`/api/student/skills/?availableCompentencies=true&page=${page}&search=${search}&competencies=${competencies}&is_added=${isAdded}`);
-            setSkills(data);
+            const isAdded = searchParams.is_added ?? undefined
+            setSkills(await getSkills({ page, search, competencies, isAdded }));
         }
         catch (error) {
             console.error(error);
@@ -90,8 +87,8 @@ const SkillsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => 
 
     useEffect(() => {
         //Get the skills on page mount and when a filter value changes
-        getSkills();
-    }, [getSkills, searchParams]);
+        fetchSkills();
+    }, [fetchSkills, searchParams]);
 
     const renderSkill = (skill: SkillType) => <SkillCard key={skill.id} skill={skill} />
 
