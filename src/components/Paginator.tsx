@@ -4,6 +4,7 @@ import { Button } from "./ui/button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationLink } from "./ui/pagination";
+import { useTranslations } from "next-intl";
 
 type Props = {
     itemCount: number;
@@ -14,8 +15,8 @@ type Props = {
 const PaginationComponent = ({ itemCount, pageSize, currentPage }: Props) => {
     const router = useRouter();
     const searchParams = useSearchParams();
+    const t = useTranslations("pagination");
 
-    const displayPageCount = 3;
     const generatePaginationLinks = () => {
         const paginationLinks = [];
         const leftEllipsis = currentPage > 2;
@@ -63,7 +64,7 @@ const PaginationComponent = ({ itemCount, pageSize, currentPage }: Props) => {
     };
     return (
         <Pagination>
-            <PaginationContent className=" *:cursor-pointer">
+            <PaginationContent className="cursor-pointer">
                 <Button
                     variant="ghost"
                     disabled={currentPage <= 1}
@@ -71,7 +72,7 @@ const PaginationComponent = ({ itemCount, pageSize, currentPage }: Props) => {
                     className="group"
                 >
                     <ChevronLeft className="group-hover:-translate-x-1 transition-all duration-300 delay-150" />{" "}
-                    Previous
+                    <span className="hidden sm:block">{t("previous")}</span>
                 </Button>
                 {generatePaginationLinks()}
                 <Button
@@ -80,7 +81,7 @@ const PaginationComponent = ({ itemCount, pageSize, currentPage }: Props) => {
                     onClick={() => changePage(currentPage + 1)}
                     className="group"
                 >
-                    Next{" "}
+                    <span className="hidden sm:block">{t("next")}</span>
                     <ChevronRight className="group-hover:translate-x-1 transition-all duration-300 delay-150" />
                 </Button>
             </PaginationContent>

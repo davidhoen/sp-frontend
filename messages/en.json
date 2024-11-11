@@ -61,5 +61,9 @@
     "sufficient": "Sufficient",
     "good": "Good",
     "excellent": "Excellent"
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next"
   }
 }

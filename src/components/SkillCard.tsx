@@ -9,6 +9,7 @@ import { Button } from "./ui/button"
 export default function SkillCard({ skill }: { skill: SkillType }) {
     const t = useTranslations("general")
     const rating = skill.is_added ? skill.rating[0].rating : 0
+
     return (
         <div className="flex flex-col border rounded-lg px-4 py-3">
             <div className="flex justify-between mb-1">

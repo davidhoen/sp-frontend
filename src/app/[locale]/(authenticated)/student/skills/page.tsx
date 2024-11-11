@@ -26,16 +26,33 @@ const SkillsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => 
 
     const [skills, setSkills] = useState<PagingSchema<SkillType>>();
     const [loading, setLoading] = useState(false);
+    const [competencyFilterValue, setCompetencyFilterValue] = useState(searchParams.competencies?.split(',') || ["all"]);
 
     const handleCompentencyFilter = useDebouncedCallback((values: string[]) => {
         const params = new URLSearchParams(searchParams);
         if (values.length > 0) {
-            params.set('competencies', values.join(",").toString());
+            let filterValues = values;
+            const newestValue = values[values.length - 1];
+
+            // When all is selected, remove all other values and reset the competencies parameter
+            if (newestValue === "all") {
+                filterValues = ["all"];
+                params.delete('competencies');
+            }
+            else {
+                // When a different value is selected, remove all and add the selected value
+                filterValues = values.filter((value) => value !== "all")
+                params.set('competencies', filterValues.join(",").toString());
+            }
+
+            setCompetencyFilterValue(filterValues);
             // Remove page parameter when searching to avoid so results on search
             params.delete('page')
-        } else {
-            params.delete('competencies');
         }
+        else
+            // Remove competencies parameter when no competencies are selected
+            params.delete('competencies');
+
         replace(`${pathname}?${params.toString()}`);
     }, 300);
 
@@ -89,11 +106,12 @@ const SkillsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => 
         {/* Compentencies filter*/}
         <div className="my-4 overflow-x-auto no-scrollbar">
             {!!competencies ?
-                <ToggleGroup type="multiple" onValueChange={handleCompentencyFilter} defaultValue={searchParams.competencies?.split(',') || "all"}>
+                <ToggleGroup type="multiple" value={competencyFilterValue} onValueChange={handleCompentencyFilter}>
+                    <ToggleGroupItem variant="outline" value="all">{t("allCompetencies")}</ToggleGroupItem>
                     {competencies?.map((competency) => (<ToggleGroupItem key={competency.value} variant="outline" value={competency.value.toString()}>{competency.label}</ToggleGroupItem>))}
                 </ToggleGroup>
                 :
-                <Skeletons amount={7} wrapperClass="flex" className="w-full h-10" />
+                <Skeletons amount={7} wrapperClass="flex" className="h-10 w-full" />
             }
         </div>
 
@@ -108,7 +126,7 @@ const SkillsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => 
 
         <div className={cn("transition-all duration-500", loading ? "blur-md cursor-wait" : "blur-0")}>
             {!!skills ?
-                <Pager pagerObject={skills} renderItem={renderSkill} emptyMessage={t("noSkillsFound")} wrapperClass="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-start" />
+                <Pager pagerObject={skills} renderItem={renderSkill} emptyMessage={t("noSkillsFound")} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-8 items-start" />
                 :
                 <Skeletons amount={15} className="w-full h-28 mt" />
             }

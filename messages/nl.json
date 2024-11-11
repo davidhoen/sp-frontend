@@ -59,5 +59,9 @@
     "sufficient": "Voldoende",
     "good": "Goed",
     "excellent": "Uitstekend"
+  },
+  "pagination": {
+    "previous": "Vorige",
+    "next": "Volgende"
   }
 }
