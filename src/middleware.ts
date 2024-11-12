@@ -7,10 +7,10 @@ export default createMiddleware(routing)
 export async function middleware(req: NextRequest) {
 
   const locale = req.cookies.get("NEXT_LOCALE")?.value || "en"
-  const session_token = req.cookies.get("laravel_session")?.value
+  const session_token = req.cookies.get("skills_passport_session")?.value
 
   if (req.nextUrl.pathname === "/" && session_token) {
-    return NextResponse.redirect(new URL(`/${locale.toString()}/student`, req.url))
+    return NextResponse.redirect(new URL(`/${locale}/student`, req.url))
   }
 
   return NextResponse.next()
