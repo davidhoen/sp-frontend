@@ -15,7 +15,8 @@
     "addedSkills": "Toegevoegde skills",
     "notAdded": "Niet toegevoegd",
     "noSkillsFound": "Geen skills gevonden",
-    "noSkillFound": "Deze skill bestaat niet of kon op dit moment niet worden gevonden."
+    "noSkillFound": "Deze skill bestaat niet of kon op dit moment niet worden gevonden.",
+    "rating": "Beoordeling"
   },
   "modals": {
     "cancel": "Annuleren",

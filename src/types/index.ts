@@ -35,8 +35,8 @@ export type SkillType = {
   title: string
   desc?: string
   groups_count: number
-  competency: CompetencyType
   is_added: boolean
+  competency: CompetencyType
   created_at: Date
   ratings: RatingHistoryType[]
 }

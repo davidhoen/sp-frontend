@@ -7,8 +7,9 @@ import { useEffect, useState } from "react";
 import { TimeLineContentCard } from "./TimeLineContentCard";
 import { TimelineRatingUpdateCard } from "./TimelineRatingUpdateCard";
 import { useTranslations } from "next-intl";
+import { UserType } from "@/types/User";
 
-export function TimeLine({ items: allItems }: { items: TimeLineItem[] }) {
+export function TimeLine({ items: allItems, user }: { items: TimeLineItem[], user: UserType }) {
     const t = useTranslations("general")
 
     const [sortDescending, setSortDescending] = useState(true)
@@ -50,7 +51,8 @@ export function TimeLine({ items: allItems }: { items: TimeLineItem[] }) {
                     return <TimeLineContentCard content={item.endorsement} />
             case TimeLineItemType.RatingUpdate:
                 if (item.ratingUpdate)
-                    return <TimelineRatingUpdateCard ratingUpdate={item.ratingUpdate } />
+                    // The rating update does not have a user, so we pass the user from the parent component
+                    return <TimelineRatingUpdateCard ratingUpdate={item.ratingUpdate} user={user} />
         }
     }
 
