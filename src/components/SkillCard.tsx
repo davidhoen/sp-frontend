@@ -5,16 +5,28 @@ import StarRating from "./StarRating"
 import { Badge } from "./ui/badge"
 import { Link } from "@/i18n/routing"
 import { Button } from "./ui/button"
+import axios from "@/lib/axios"
 
-export default function SkillCard({ skill }: { skill: SkillType }) {
+export default function SkillCard({ skill, mutate }: { skill: SkillType, mutate?: () => void }) {
     const t = useTranslations("general")
-    const rating = skill.is_added ? skill.rating[0].rating : 0
+    const rating = skill.is_added ? skill.ratings[0].rating : 0
+
+    const addSkill = async () => {
+        try {
+            await axios.post(`/api/student/skills/${skill.id}/add`)
+            mutate && mutate()
+            skill.is_added = true
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     return (
         <div className="flex flex-col border rounded-lg px-4 py-3">
             <div className="flex justify-between mb-1">
                 <span className="font-medium text-xl">{skill.title}</span>
                 <div>
-                    <Button disabled={skill.is_added} variant="secondary" className="rounded-full h-8 w-8" size="icon">
+                    <Button disabled={skill.is_added} variant="secondary" className="rounded-full h-8 w-8" size="icon" onClick={addSkill}>
                         {skill.is_added ?
                             <CheckIcon size={18} />
                             :

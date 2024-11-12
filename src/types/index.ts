@@ -35,10 +35,10 @@ export type SkillType = {
   title: string
   desc?: string
   groups_count: number
-  competency: CompetencyType
   is_added: boolean
-  rating: RatingUpdateType[]
+  competency: CompetencyType
   created_at: Date
+  ratings: RatingHistoryType[]
 }
 
 export type GroupType = {
@@ -69,11 +69,8 @@ export type EndorsementType = {
   created_at: Date
 }
 
-export type RatingUpdateType = {
-  id: number
+export type RatingHistoryType = {
   rating: number
-  user: UserType
-  is_approved: boolean
   created_at: Date
 }
 
@@ -82,7 +79,7 @@ export type TimeLineItem = {
   created_at: Date,
   endorsement?: EndorsementType,
   feedback?: FeedbackType,
-  ratingUpdate?: RatingUpdateType
+  ratingUpdate?: RatingHistoryType
 }
 
 export enum TimeLineItemType {

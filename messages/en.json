@@ -14,7 +14,9 @@
     "allCompetencies": "All competencies",
     "addedSkills": "Added skills",
     "notAdded": "Not added",
-    "noSkillsFound": "No skills found"
+    "noSkillsFound": "No skills found",
+    "noSkillFound": "This skill does not exist or could not be found at this time.",
+    "rating": "Rating"
   },
   "modals": {
     "cancel": "Cancel",
@@ -61,5 +63,9 @@
     "sufficient": "Sufficient",
     "good": "Good",
     "excellent": "Excellent"
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next"
   }
 }

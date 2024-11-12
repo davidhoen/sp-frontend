@@ -14,7 +14,9 @@
     "allCompetencies": "Alle competenties",
     "addedSkills": "Toegevoegde skills",
     "notAdded": "Niet toegevoegd",
-    "noSkillsFound": "Geen skills gevonden"
+    "noSkillsFound": "Geen skills gevonden",
+    "noSkillFound": "Deze skill bestaat niet of kon op dit moment niet worden gevonden.",
+    "rating": "Beoordeling"
   },
   "modals": {
     "cancel": "Annuleren",
@@ -59,5 +61,9 @@
     "sufficient": "Voldoende",
     "good": "Goed",
     "excellent": "Uitstekend"
+  },
+  "pagination": {
+    "previous": "Vorige",
+    "next": "Volgende"
   }
 }

@@ -14,7 +14,7 @@ import PageTitle from "@/components/Typography/PageTitle"
 import SectionTitle from "@/components/Typography/SectionTitle"
 import UserAvatar from "@/components/UserAvatar"
 import { UserProvider } from "@/providers/UserProvider"
-import { EndorsementType, FeedbackType, ProfileType, RatingUpdateType, SkillType, TimeLineItemType } from "@/types"
+import { EndorsementType, FeedbackType, ProfileType, RatingHistoryType, SkillType, TimeLineItemType } from "@/types"
 import { UserType } from "@/types/User"
 
 const Showcase = () => {
@@ -72,62 +72,57 @@ const Showcase = () => {
     created_at: new Date()
   }
 
-  const ratingUpdate: RatingUpdateType = {
-    id: 1,
+  const ratingUpdate: RatingHistoryType = {
     rating: 3,
-    user: fakeUser,
-    is_approved: true,
     created_at: new Date()
   }
 
-  // const fakeSkill: SkillType = {
-  //   id: 1,
-  //   title: "Presenting",
-  //   desc: "React is a JavaScript library for building user interfaces",
-  //   competency: {
-  //     id: 1,
-  //     title: "Communication",
-  //     desc: "You have a good understanding of the subject matter and can apply it in real-world scenarios",
-  //     overview: "Competency overview",
-  //     skills: [],
-  //     profiles: [],
-  //     created_at: new Date(),
-  //   },
-  //   rating: [
-  //     {
-  //       id: 1,
-  //       rating: 3,
-  //       user: fakeUser,
-  //       is_approved: true,
-  //       created_at: new Date()
-  //     },
-  //     {
-  //       id: 2,
-  //       rating: 4,
-  //       user: fakeTeacher,
-  //       is_approved: true,
-  //       created_at: new Date()
-  //     }
-  //   ],
-  //   created_at: new Date(),
-  // }
+  const fakeSkill: SkillType = {
+    id: 1,
+    title: "Presenting",
+    desc: "React is a JavaScript library for building user interfaces",
+    competency: {
+      id: 1,
+      title: "Communication",
+      desc: "You have a good understanding of the subject matter and can apply it in real-world scenarios",
+      overview: "Competency overview",
+      skills: [],
+      profiles: [],
+      created_at: new Date(),
+    },
+    ratings: [
+      {
+        rating: 3,
+        created_at: new Date()
+      },
+      {
+        rating: 4,
+        created_at: new Date()
+      }
+    ],
+    created_at: new Date(),
+    groups_count: 0,
+    is_added: false,
+  }
 
-  // const fakeSkill2: SkillType = {
-  //   id: 2,
-  //   title: "Creativity",
-  //   desc: "React is a JavaScript library for building user interfaces",
-  //   competency: {
-  //     id: 1,
-  //     title: "Communication",
-  //     desc: "You have a good understanding of the subject matter and can apply it in real-world scenarios",
-  //     overview: "Competency overview",
-  //     skills: [],
-  //     profiles: [],
-  //     created_at: new Date(),
-  //   },
-  //   rating: [],
-  //   created_at: new Date(),
-  // }
+  const fakeSkill2: SkillType = {
+    id: 2,
+    title: "Creativity",
+    desc: "React is a JavaScript library for building user interfaces",
+    competency: {
+      id: 1,
+      title: "Communication",
+      desc: "You have a good understanding of the subject matter and can apply it in real-world scenarios",
+      overview: "Competency overview",
+      skills: [],
+      profiles: [],
+      created_at: new Date(),
+    },
+    ratings: [],
+    created_at: new Date(),
+    groups_count: 0,
+    is_added: false,
+  }
 
   return (
     <UserProvider>
@@ -170,8 +165,8 @@ const Showcase = () => {
         </div>
 
         <div>
-          {/* <SkillCard skill={fakeSkill} />
-          <SkillCard skill={fakeSkill2} /> */}
+          <SkillCard skill={fakeSkill} />
+          <SkillCard skill={fakeSkill2} />
         </div>
 
         <div>
@@ -182,11 +177,14 @@ const Showcase = () => {
           <ContentCard content={endorsement} />
         </div>
 
-        <TimeLine items={[
-          { type: TimeLineItemType.Feedback, created_at: new Date("7-8-21"), feedback },
-          { type: TimeLineItemType.Endorsement, created_at: new Date(), endorsement },
-          { type: TimeLineItemType.RatingUpdate, created_at: new Date("8-8-21"), ratingUpdate }
-        ]} />
+        <TimeLine
+          items={[
+            { type: TimeLineItemType.Feedback, created_at: new Date("7-8-21"), feedback },
+            { type: TimeLineItemType.Endorsement, created_at: new Date(), endorsement },
+            { type: TimeLineItemType.RatingUpdate, created_at: new Date("8-8-21"), ratingUpdate }
+          ]}
+          user={fakeUser}
+        />
 
         <UpdateRatingModal>
           Open rating modal
