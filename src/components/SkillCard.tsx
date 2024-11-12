@@ -7,12 +7,14 @@ import { Link } from "@/i18n/routing"
 import { Button } from "./ui/button"
 import axios from "@/lib/axios"
 
-export default function SkillCard({ skill }: { skill: SkillType }) {
+export default function SkillCard({ skill, mutate }: { skill: SkillType, mutate?: () => void }) {
     const t = useTranslations("general")
     const rating = skill.is_added ? skill.ratings[0].rating : 0
+
     const addSkill = async () => {
         try {
             await axios.post(`/api/student/skills/${skill.id}/add`)
+            mutate && mutate()
             skill.is_added = true
         } catch (error) {
             console.error(error)

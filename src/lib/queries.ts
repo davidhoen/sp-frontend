@@ -1,5 +1,3 @@
-"use server"
-
 import { SkillType } from "@/types"
 import axios from "./axios"
 import { PagingSchema } from "@/zod/Pagination";
@@ -18,8 +16,6 @@ export const getSkills = async ({ page, search, competencies, isAdded }: { page:
     try {
         const skillsRoute = `/api/student/skills/?availableCompentencies=true&page=${page}&search=${search}&competencies=${competencies}&is_added=${isAdded}`
         const { data } = await axios.get<PagingSchema<SkillType>>(skillsRoute);
-        console.log(data);
-
         return data;
     }
     catch (error) {
