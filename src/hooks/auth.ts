@@ -10,17 +10,12 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: { middleware?: 
   const router = useRouter()
   const params = useParams()
 
-  const {
-    data: user,
-    error,
-    mutate
-  } = useSWR("/api/user", () =>
+  const { data: user, error, mutate } = useSWR("/api/user", () =>
     axios
       .get("/api/user")
       .then(res => res.data)
       .catch(error => {
         if (error.response.status !== 409) throw error
-
         router.push("/verify-email")
       })
   )
@@ -30,7 +25,6 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: { middleware?: 
   const register = async (data: { first_name: string; last_name: string; email: string; password: string; role_id: number; password_confirmation: string }) => {
     try {
       await csrf()
-
       await axios.post("/register", data)
       mutate()
     } catch (error) {
@@ -60,12 +54,10 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: { middleware?: 
   const resetPassword = async (data: { email: string; password: string; password_confirmation: string }) => {
     try {
       await csrf()
-
       const response = await axios.post("/reset-password", {
         ...data,
         token: params.token
       })
-
       router.push("/login?reset=" + btoa(response.data.status))
     } catch (error) {
       throw error
