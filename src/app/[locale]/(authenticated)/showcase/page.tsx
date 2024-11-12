@@ -14,7 +14,7 @@ import PageTitle from "@/components/Typography/PageTitle"
 import SectionTitle from "@/components/Typography/SectionTitle"
 import UserAvatar from "@/components/UserAvatar"
 import { UserProvider } from "@/providers/UserProvider"
-import { EndorsementType, FeedbackType, ProfileType, RatingUpdateType, SkillType, TimeLineItemType } from "@/types"
+import { EndorsementType, FeedbackType, ProfileType, RatingHistoryType, SkillType, TimeLineItemType } from "@/types"
 import { UserType } from "@/types/User"
 
 const Showcase = () => {
@@ -72,11 +72,8 @@ const Showcase = () => {
     created_at: new Date()
   }
 
-  const ratingUpdate: RatingUpdateType = {
-    id: 1,
+  const ratingUpdate: RatingHistoryType = {
     rating: 3,
-    user: fakeUser,
-    is_approved: true,
     created_at: new Date()
   }
 

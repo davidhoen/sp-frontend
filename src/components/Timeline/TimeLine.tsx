@@ -48,7 +48,7 @@ export function TimeLine({ items: allItems }: { items: TimeLineItem[] }) {
                     return <TimeLineContentCard content={item.endorsement} />
             case TimeLineItemType.RatingUpdate:
                 if (item.ratingUpdate)
-                    return <TimelineRatingUpdateCard ratingUpdate={item.ratingUpdate} />
+                    return <TimelineRatingUpdateCard ratingUpdate={item.ratingUpdate } />
         }
     }
 
