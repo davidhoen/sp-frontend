@@ -1,19 +1,20 @@
 "use client"
 
 import { cn } from "@/lib/utils";
-import { TimeLineItem, TimeLineItemType } from "@/types";
+import { TimeLineItemType, TimeLineItemTypeEnum } from "@/types";
+import { UserType } from "@/types/User";
 import { ArrowUpDownIcon, BadgeCheckIcon, MessageCircleIcon, PlusIcon, StarIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { TimeLineContentCard } from "./TimeLineContentCard";
 import { TimelineRatingUpdateCard } from "./TimelineRatingUpdateCard";
-import { useTranslations } from "next-intl";
-import { UserType } from "@/types/User";
+import AddFeedbackModal from "../Modals/AddFeedbackModal";
 
-export function TimeLine({ items: allItems, user }: { items: TimeLineItem[], user: UserType }) {
+export function TimeLine({ items: allItems, user, skillId }: { items: TimeLineItemType[], user: UserType, skillId: number }) {
     const t = useTranslations("general")
 
     const [sortDescending, setSortDescending] = useState(true)
-    const [items, setItems] = useState<TimeLineItem[]>(allItems)
+    const [items, setItems] = useState<TimeLineItemType[]>(allItems)
 
     const sortItems = () => {
         const sortedItems = [...items].sort((a, b) => {
@@ -29,27 +30,27 @@ export function TimeLine({ items: allItems, user }: { items: TimeLineItem[], use
         sortItems()
     }, [])
 
-    const getIcon = (item: TimeLineItem) => {
+    const getIcon = (item: TimeLineItemType) => {
         switch (item.type) {
-            case TimeLineItemType.Feedback:
+            case TimeLineItemTypeEnum.Feedback:
                 return <MessageCircleIcon className="h-5 w-5 text-primary" strokeWidth={2.5} />
-            case TimeLineItemType.Endorsement:
+            case TimeLineItemTypeEnum.Endorsement:
                 // TODO: ADD GREEN COLOR
                 return <BadgeCheckIcon className="h-5 w-5" strokeWidth={2.5} />
-            case TimeLineItemType.RatingUpdate:
+            case TimeLineItemTypeEnum.RatingUpdate:
                 return <StarIcon className="h-5 w-5 text-gold" strokeWidth={2.5} />
         }
     }
 
-    const getCard = (item: TimeLineItem) => {
+    const getCard = (item: TimeLineItemType) => {
         switch (item.type) {
-            case TimeLineItemType.Feedback:
+            case TimeLineItemTypeEnum.Feedback:
                 if (item.feedback)
                     return <TimeLineContentCard content={item.feedback} />
-            case TimeLineItemType.Endorsement:
+            case TimeLineItemTypeEnum.Endorsement:
                 if (item.endorsement)
                     return <TimeLineContentCard content={item.endorsement} />
-            case TimeLineItemType.RatingUpdate:
+            case TimeLineItemTypeEnum.RatingUpdate:
                 if (item.ratingUpdate)
                     // The rating update does not have a user, so we pass the user from the parent component
                     return <TimelineRatingUpdateCard ratingUpdate={item.ratingUpdate} user={user} />
@@ -57,14 +58,16 @@ export function TimeLine({ items: allItems, user }: { items: TimeLineItem[], use
     }
 
     const AddFeedbackButton = () => (
-        <div className="relative flex items-center">
-            <div className="absolute left-12 md:left-1/2 flex flex-col items-center -translate-x-1/2" >
-                <button className="inline-flex items-center rounded-full bg-border px-4 py-1 text-sm font-medium border shadow-sm hover:bg-muted transition-colors">
-                    <PlusIcon className="mr-1.5 h-4 w-4" />
-                    {t("addFeedback")}
-                </button>
+        <AddFeedbackModal skillId={skillId}>
+            <div className="relative flex items-center">
+                <div className="absolute left-12 md:left-1/2 flex flex-col items-center -translate-x-1/2" >
+                    <button className="inline-flex items-center rounded-full bg-border px-4 py-1 text-sm font-medium border shadow-sm hover:bg-muted transition-colors">
+                        <PlusIcon className="mr-1.5 h-4 w-4" />
+                        {t("addFeedback")}
+                    </button>
+                </div>
             </div>
-        </div >
+        </AddFeedbackModal>
     )
 
     return (

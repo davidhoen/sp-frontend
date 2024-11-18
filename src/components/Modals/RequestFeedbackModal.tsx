@@ -14,6 +14,7 @@ import Select from "../ui/select"
 
 const RequestFeedbackModal = ({ children, requestFromUser }: { children: ReactNode, requestFromUser?: UserType }) => {
     const t = useTranslations("modals")
+
     // TODO: Replace with useSkills hook
     const { data: events, isLoading } = useEvents()
     const [isModalOpen, setIsModalOpen] = useState(false)

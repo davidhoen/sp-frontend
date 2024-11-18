@@ -6,6 +6,7 @@ import React, { createContext, useContext, ReactNode } from "react"
 
 interface AuthContextType {
   user: UserType | undefined
+  basePath: string
   register: (data: { first_name: string; last_name: string; role_id: number; email: string; password: string; password_confirmation: string }) => Promise<void>
   login: (data: { email: string; password: string; remember: boolean }) => Promise<void>
   forgotPassword: (data: { email: string }) => Promise<any>
@@ -22,7 +23,18 @@ export function UserProvider({ children }: { children: ReactNode }) {
     redirectIfAuthenticated: "/student"
   })
 
+  const roleBasePathMap: { [key: string]: string } = {
+    student: "/student",
+    teacher: "/teacher",
+    head_teacher: "/teacher",
+    admin: "/teacher",
+  };
+
+  const basePath = roleBasePathMap[auth.user?.role.name] || "/";
+
   const value = {
+    // TODO: Remove basepath overwrite when teacher environment is ready
+    basePath: "/student",
     user: auth.user,
     register: auth.register,
     login: auth.login,

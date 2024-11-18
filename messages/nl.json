@@ -16,7 +16,8 @@
     "notAdded": "Niet toegevoegd",
     "noSkillsFound": "Geen skills gevonden",
     "noSkillFound": "Deze skill bestaat niet of kon op dit moment niet worden gevonden.",
-    "rating": "Beoordeling"
+    "rating": "Beoordeling",
+    "yourJourney": "Jouw voortgang"
   },
   "modals": {
     "cancel": "Annuleren",
@@ -31,7 +32,8 @@
     "updateStarRating": {
       "title": "Update sterrenbeoordeling",
       "description": "Geef feedback waarin je uitlegt waarom je je beoordeling hebt bijgewerkt; houd er rekening mee dat de nieuwe beoordeling tijdelijk is totdat een leraar deze goedkeurt.",
-      "selectNewRating": "Selecteer je nieuwe beoordeling"
+      "selectNewRating": "Selecteer je nieuwe beoordeling",
+      "ratingToLow": "Je nieuwe beoordeling is lager dan de huidige beoordeling"
     },
     "addFeedback": {
       "title": "Feedback toevoegen",

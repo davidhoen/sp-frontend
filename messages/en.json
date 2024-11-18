@@ -16,7 +16,8 @@
     "notAdded": "Not added",
     "noSkillsFound": "No skills found",
     "noSkillFound": "This skill does not exist or could not be found at this time.",
-    "rating": "Rating"
+    "rating": "Rating",
+    "yourJourney": "Your journey"
   },
   "modals": {
     "cancel": "Cancel",
@@ -33,7 +34,8 @@
     "updateStarRating": {
       "title": "Update stars rating",
       "description": "Provide feedback explaining why you updated your rating; keep in mind the new rating is temporary until a teacher endorses it.",
-      "selectNewRating": "Select your new rating"
+      "selectNewRating": "Select your new rating",
+      "ratingToLow": "Your new rating is lower than the current rating"
     },
     "addFeedback": {
       "title": "Add feedback",

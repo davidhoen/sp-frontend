@@ -1,3 +1,5 @@
+"use client"
+
 import { useEvents } from "@/hooks/use-events"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
@@ -9,12 +11,15 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
 import Select from "../ui/select"
 import { Textarea } from "../ui/textarea"
+import { useUser } from "@/providers/UserProvider"
+import axios from "@/lib/axios"
 
-const AddFeedbackModal = ({ children }: { children: ReactNode }) => {
+const AddFeedbackModal = ({ children, skillId }: { children: ReactNode, skillId?: number }) => {
     const t = useTranslations("modals")
-    const [isModalOpen, setIsModalOpen] = useState(false)
-
+    const { user } = useUser()
     const { data: events, isLoading } = useEvents()
+
+    const [isModalOpen, setIsModalOpen] = useState(false)
 
     const formSchema = z.object({
         eventId: z.number(),
@@ -29,16 +34,27 @@ const AddFeedbackModal = ({ children }: { children: ReactNode }) => {
         }
     })
 
-    const onSubmit = (values: z.infer<typeof formSchema>) => {
-        console.log(values);
-        setIsModalOpen(false)
-        form.reset()
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        try {
+            await axios.post(`/api/student/skills/${skillId}/feedback`, {
+                ...values,
+                skillId,
+                userId: user?.id
+            })
+        }
+        catch (error) {
+            console.error(error)
+        }
+        finally {
+            setIsModalOpen(false)
+            form.reset()
+        }
     }
 
     return (
         <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
 
-            <DialogTrigger>{children}</DialogTrigger>
+            <DialogTrigger asChild>{children}</DialogTrigger>
             <DialogContent>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

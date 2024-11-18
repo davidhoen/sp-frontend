@@ -74,15 +74,15 @@ export type RatingHistoryType = {
   created_at: Date
 }
 
-export type TimeLineItem = {
-  type: TimeLineItemType,
+export type TimeLineItemType = {
+  type: TimeLineItemTypeEnum,
   created_at: Date,
   endorsement?: EndorsementType,
   feedback?: FeedbackType,
   ratingUpdate?: RatingHistoryType
 }
 
-export enum TimeLineItemType {
+export enum TimeLineItemTypeEnum {
   Feedback,
   Endorsement,
   RatingUpdate

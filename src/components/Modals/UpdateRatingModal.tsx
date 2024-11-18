@@ -1,3 +1,5 @@
+"use client"
+
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { ReactNode, useState } from "react"
@@ -8,20 +10,23 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
 import { Textarea } from "../ui/textarea"
 import StarRating from "../StarRating"
+import { RatingHistoryType } from "@/types"
 
-const UpdateRatingModal = ({ children }: { children: ReactNode }) => {
+const UpdateRatingModal = ({ children, currentRating }: { children: ReactNode, currentRating?: RatingHistoryType }) => {
     const t = useTranslations("modals")
     const [isModalOpen, setIsModalOpen] = useState(false)
 
+    const minimalRating = currentRating?.rating || 0
+
     const formSchema = z.object({
-        rating: z.number().int().min(1).max(4),
+        rating: z.number().int().min(minimalRating, { message: t("updateStarRating.ratingToLow") }).max(4),
         feedback: z.string().min(10)
     })
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            rating: 0,
+            rating: currentRating?.rating || 0,
             feedback: ""
         }
     })

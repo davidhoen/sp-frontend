@@ -14,7 +14,7 @@ import PageTitle from "@/components/Typography/PageTitle"
 import SectionTitle from "@/components/Typography/SectionTitle"
 import UserAvatar from "@/components/UserAvatar"
 import { UserProvider } from "@/providers/UserProvider"
-import { EndorsementType, FeedbackType, ProfileType, RatingHistoryType, SkillType, TimeLineItemType } from "@/types"
+import { EndorsementType, FeedbackType, ProfileType, RatingHistoryType, SkillType, TimeLineItemType, TimeLineItemTypeEnum } from "@/types"
 import { UserType } from "@/types/User"
 
 const Showcase = () => {
@@ -179,11 +179,12 @@ const Showcase = () => {
 
         <TimeLine
           items={[
-            { type: TimeLineItemType.Feedback, created_at: new Date("7-8-21"), feedback },
-            { type: TimeLineItemType.Endorsement, created_at: new Date(), endorsement },
-            { type: TimeLineItemType.RatingUpdate, created_at: new Date("8-8-21"), ratingUpdate }
+            { type: TimeLineItemTypeEnum.Feedback, created_at: new Date("7-8-21"), feedback },
+            { type: TimeLineItemTypeEnum.Endorsement, created_at: new Date(), endorsement },
+            { type: TimeLineItemTypeEnum.RatingUpdate, created_at: new Date("8-8-21"), ratingUpdate }
           ]}
           user={fakeUser}
+          skillId={fakeSkill.id}
         />
 
         <UpdateRatingModal>
