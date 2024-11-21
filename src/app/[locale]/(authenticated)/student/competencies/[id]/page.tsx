@@ -1,8 +1,9 @@
 import ProfileTile from "@/components/ProfileTile"
+import SkillLine from "@/components/SkillLine"
 import StarRating from "@/components/StarRating"
 import PageTitle from "@/components/Typography/PageTitle"
 import SectionTitle from "@/components/Typography/SectionTitle"
-import { getCompetencyRating, getMostRecentRating } from "@/lib"
+import { getCompetencyRating } from "@/lib"
 import { fakeCompetency, fakeSkill, fakeSkill2 } from "@/lib/fakeData"
 import { getCompetency } from "@/lib/queries"
 import { getTranslations } from "next-intl/server"
@@ -51,10 +52,7 @@ const CompetencyDetail = async ({ params }: { params: { id: number } }) => {
         <div className="mt-6">
             <SectionTitle numberOfItems={competency.skills?.length}>{t("skills")}</SectionTitle>
             <div className="grid gap-4 max-w-xs">
-                {competency?.skills.map((skill) => <div className="flex justify-between" key={skill.id}>
-                    <span className="">{skill.title}</span>
-                    <StarRating rating={getMostRecentRating(skill.ratings)?.rating || 0} />
-                </div>)}
+                {competency?.skills.map((skill) => <SkillLine key={skill.id} skill={skill} />)}
             </div>
         </div>
     </div>
