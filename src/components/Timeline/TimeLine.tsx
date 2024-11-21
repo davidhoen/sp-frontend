@@ -110,8 +110,8 @@ export function TimeLine({ user, skillId }: { user: UserType, skillId: string })
 
                     {/* Loading skeletons */}
                     {isLoading && Array.from({ length: 5 }).map((_, index) =>
-                        <div className="relative flex items-start md:items-center">
-                            <Skeleton key={index} className={cn("bg-border", "w-full h-24 ml-12 md:ml-0 md:w-[calc(50%-20px)]", index % 2 === 0 ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8')} />
+                        <div className="relative flex items-start md:items-center" key={index}>
+                            <Skeleton className={cn("bg-border", "w-full h-24 ml-12 md:ml-0 md:w-[calc(50%-20px)]", index % 2 === 0 ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8')} />
                         </div>
                     )}
 
