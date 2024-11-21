@@ -11,10 +11,14 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Textarea } from "../ui/textarea"
 import StarRating from "../StarRating"
 import { RatingHistoryType } from "@/types"
+import axios from "@/lib/axios"
+import { triggerPromiseToast } from "@/lib"
+import { useUser } from "@/providers/UserProvider"
 
-const UpdateRatingModal = ({ children, currentRating }: { children: ReactNode, currentRating?: RatingHistoryType }) => {
+const UpdateRatingModal = ({ children, skillId, currentRating }: { children: ReactNode, skillId: string, currentRating?: RatingHistoryType }) => {
     const t = useTranslations("modals")
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const { user } = useUser()
 
     const minimalRating = currentRating?.rating || 0
 
@@ -31,7 +35,14 @@ const UpdateRatingModal = ({ children, currentRating }: { children: ReactNode, c
         }
     })
 
-    const onSubmit = (values: z.infer<typeof formSchema>) => {
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        const res = axios.post(`/api/student/skills/${skillId}/rating_update`, {
+            ...values,
+            skillId,
+            userId: user?.id
+        })
+        await triggerPromiseToast(res, t)
+
         console.log(values);
         setIsModalOpen(false)
         form.reset()

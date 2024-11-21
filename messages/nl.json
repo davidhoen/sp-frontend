@@ -5,6 +5,7 @@
     "logout": "Uitloggen",
     "you": "Jij",
     "endorsement": "Onderschrijving",
+    "endorsements": "Onderschrijvingen",
     "feedback": "Feedback",
     "userUpdatedRating": "{name} heeft skills beoordeling bijgewerkt",
     "addFeedback": "Feedback toevoegen",
@@ -17,7 +18,12 @@
     "noSkillsFound": "Geen skills gevonden",
     "noSkillFound": "Deze skill bestaat niet of kon op dit moment niet worden gevonden.",
     "rating": "Beoordeling",
-    "yourJourney": "Jouw voortgang"
+    "yourJourney": "Jouw voortgang",
+    "loading": "Laden...",
+    "successfullySaved": "Succesvol opgeslagen",
+    "genericError": "Er is iets misgegaan. Probeer het later opnieuw.",
+    "requestFeedback": "Vraag feedback",
+    "requestEndorsement": "Onderschrijving aanvragen"
   },
   "modals": {
     "cancel": "Annuleren",
@@ -29,6 +35,9 @@
     "eventPlaceholder": "Selecteer de gebeurtenis",
     "email": "Email",
     "emailPlaceholder": "bob@voorbeeld.nl",
+    "loading": "Laden...",
+    "successfullySaved": "Succesvol opgeslagen",
+    "genericError": "Er is iets misgegaan. Probeer het later opnieuw.",
     "updateStarRating": {
       "title": "Update sterrenbeoordeling",
       "description": "Geef feedback waarin je uitlegt waarom je je beoordeling hebt bijgewerkt; houd er rekening mee dat de nieuwe beoordeling tijdelijk is totdat een leraar deze goedkeurt.",

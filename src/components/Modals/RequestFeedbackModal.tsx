@@ -1,3 +1,5 @@
+"use client"
+
 import { useEvents } from "@/hooks/use-events"
 import { getFullName } from "@/lib"
 import { UserType } from "@/types/User"
@@ -12,7 +14,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "../ui/input"
 import Select from "../ui/select"
 
-const RequestFeedbackModal = ({ children, requestFromUser }: { children: ReactNode, requestFromUser?: UserType }) => {
+const RequestFeedbackModal = ({ children, skillId, requestFromUser }: { children: ReactNode, skillId?: string, requestFromUser?: UserType }) => {
     const t = useTranslations("modals")
 
     // TODO: Replace with useSkills hook
@@ -21,9 +23,9 @@ const RequestFeedbackModal = ({ children, requestFromUser }: { children: ReactNo
 
     const formSchema = z.object(
         requestFromUser ?
-            { eventId: z.number(), skillId: z.number() }
+            { eventId: z.string(), skillId: z.string() }
             :
-            { eventId: z.number(), email: z.string().email() }
+            { eventId: z.string(), email: z.string().email() }
     )
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -31,7 +33,7 @@ const RequestFeedbackModal = ({ children, requestFromUser }: { children: ReactNo
         defaultValues: {
             eventId: undefined,
             email: "",
-            skillId: undefined
+            skillId
         }
     })
 
@@ -43,7 +45,7 @@ const RequestFeedbackModal = ({ children, requestFromUser }: { children: ReactNo
 
     return (
         <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-            <DialogTrigger>{children}</DialogTrigger>
+            <DialogTrigger asChild>{children}</DialogTrigger>
             <DialogContent>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

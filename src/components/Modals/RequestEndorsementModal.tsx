@@ -1,3 +1,5 @@
+"use client"
+
 import { useEvents } from "@/hooks/use-events"
 import { getFullName } from "@/lib"
 import { UserType } from "@/types/User"
@@ -12,7 +14,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "../ui/input"
 import Select from "../ui/select"
 
-const RequestEndorsementModal = ({ children, requestFromUser }: { children: ReactNode, requestFromUser?: UserType }) => {
+const RequestEndorsementModal = ({ children, skillId, requestFromUser }: { children: ReactNode, skillId?: string, requestFromUser?: UserType }) => {
     const t = useTranslations("modals")
     const { data: events, isLoading: isEventsLoading } = useEvents()
 
@@ -20,9 +22,9 @@ const RequestEndorsementModal = ({ children, requestFromUser }: { children: Reac
 
     const formSchema = z.object(
         requestFromUser ?
-            { eventId: z.number(), skillId: z.number() }
+            { eventId: z.string(), skillId: z.string() }
             :
-            { eventId: z.number(), email: z.string().email() }
+            { eventId: z.string(), email: z.string().email() }
     )
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -30,7 +32,7 @@ const RequestEndorsementModal = ({ children, requestFromUser }: { children: Reac
         defaultValues: {
             eventId: undefined,
             email: "",
-            skillId: undefined,
+            skillId,
         }
     })
 
@@ -42,7 +44,7 @@ const RequestEndorsementModal = ({ children, requestFromUser }: { children: Reac
 
     return (
         <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-            <DialogTrigger>{children}</DialogTrigger>
+            <DialogTrigger asChild>{children}</DialogTrigger>
             <DialogContent>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

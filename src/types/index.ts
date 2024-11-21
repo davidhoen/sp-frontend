@@ -12,7 +12,7 @@ export type NavItem = {
 export type TranslationFunction = ReturnType<typeof useTranslations>;
 
 export type ProfileType = {
-  id: number
+  id: string
   title: string
   desc: string
   icon: string,
@@ -21,7 +21,7 @@ export type ProfileType = {
 }
 
 export type CompetencyType = {
-  id: number
+  id: string
   title: string
   desc: string
   overview: string
@@ -31,7 +31,7 @@ export type CompetencyType = {
 }
 
 export type SkillType = {
-  id: number
+  id: string
   title: string
   desc?: string
   groups_count: number
@@ -42,7 +42,7 @@ export type SkillType = {
 }
 
 export type GroupType = {
-  id: number
+  id: string
   name: string
   desc: string
   created_by: UserType
@@ -51,7 +51,7 @@ export type GroupType = {
 }
 
 export type FeedbackType = {
-  id: number
+  id: string
   user: UserType
   created_at: Date
   event: EventType
@@ -59,7 +59,7 @@ export type FeedbackType = {
 }
 
 export type EndorsementType = {
-  id: number
+  id: string
   user: UserType
   event: EventType
   content: string
@@ -89,7 +89,7 @@ export enum TimeLineItemTypeEnum {
 }
 
 export type EventType = {
-  id: number
+  id: string
   title: string
 }
 

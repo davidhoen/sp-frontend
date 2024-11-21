@@ -1,10 +1,11 @@
 import axios from "@/lib/axios"
-import { EventType } from "@/types"
 import useSWR from "swr"
+import { EventType } from "@/types"
 
 export const useEvents = () => {
-    return useSWR("/api/events", () =>
-        axios.get("/api/events")
+    const url = "/api/events"
+    return useSWR(url, () =>
+        axios.get(url)
             .then((res: { data: EventType[] }) => {
                 return res.data.map((event) => ({
                     label: event.title,

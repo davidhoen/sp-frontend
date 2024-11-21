@@ -5,6 +5,7 @@
     "logout": "Logout",
     "you": "You",
     "endorsement": "Endorsement",
+    "endorsements": "Endorsements",
     "feedback": "Feedback",
     "userUpdatedRating": "{name} updated skills rating",
     "addFeedback": "Add feedback",
@@ -17,7 +18,12 @@
     "noSkillsFound": "No skills found",
     "noSkillFound": "This skill does not exist or could not be found at this time.",
     "rating": "Rating",
-    "yourJourney": "Your journey"
+    "yourJourney": "Your journey",
+    "loading": "Loading...",
+    "successfullySaved": "Successfully saved",
+    "genericError": "Something went wrong. Please try again later.",
+    "requestFeedback": "Request feedback",
+    "requestEndorsement": "Request endorsement"
   },
   "modals": {
     "cancel": "Cancel",

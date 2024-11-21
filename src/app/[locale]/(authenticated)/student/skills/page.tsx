@@ -108,7 +108,7 @@ const SkillsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => 
                     {competencies?.map((competency) => (<ToggleGroupItem key={competency.value} variant="outline" value={competency.value.toString()}>{competency.label}</ToggleGroupItem>))}
                 </ToggleGroup>
                 :
-                <Skeletons amount={7} wrapperClass="flex" className="h-10 w-full" />
+                <Skeletons amount={7} wrapperClass="flex gap-4" className="h-10 w-full" />
             }
         </div>
 
@@ -125,7 +125,7 @@ const SkillsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => 
             {!!skills ?
                 <Pager pagerObject={skills} renderItem={renderSkill} emptyMessage={t("noSkillsFound")} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-8 items-start" />
                 :
-                <Skeletons amount={15} className="w-full h-28 mt" />
+                <Skeletons amount={15} className="w-full h-28" />
             }
         </div>
     </div>

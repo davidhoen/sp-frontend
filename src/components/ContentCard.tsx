@@ -1,3 +1,5 @@
+"use client"
+
 import { getYouOrFullName } from "@/lib";
 import { useUser } from "@/providers/UserProvider";
 import { EndorsementType, FeedbackType } from "@/types";
