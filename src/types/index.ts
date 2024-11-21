@@ -25,6 +25,8 @@ export type CompetencyType = {
   title: string
   desc: string
   overview: string
+  feedbacks_count?: number
+  endorsements_count?: number
   skills: SkillType[]
   profiles: ProfileType[]
   created_at: Date

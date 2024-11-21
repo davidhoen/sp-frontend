@@ -1,4 +1,4 @@
-import { EndorsementType, FeedbackType, RatingHistoryType, SkillType } from "@/types"
+import { CompetencyType, EndorsementType, FeedbackType, RatingHistoryType, SkillType } from "@/types"
 import { UserType } from "@/types/User"
 import { v4 as uuid } from "uuid"
 
@@ -62,24 +62,25 @@ export const ratingUpdate: RatingHistoryType = {
     created_at: new Date()
 }
 
+export const fakeCompetency: CompetencyType = {
+    id: uuid(),
+    title: "Communication",
+    desc: "You have a good understanding of the subject matter and can apply it in real-world scenarios",
+    overview: "Competency overview",
+    skills: [],
+    profiles: [],
+    feedbacks_count: 4,
+    endorsements_count: 3,
+    created_at: new Date(),
+}
+
 export const fakeSkill: SkillType = {
     id: uuid(),
     title: "Presenting",
     desc: "React is a JavaScript library for building user interfaces",
-    competency: {
-        id: uuid(),
-        title: "Communication",
-        desc: "You have a good understanding of the subject matter and can apply it in real-world scenarios",
-        overview: "Competency overview",
-        skills: [],
-        profiles: [],
-        created_at: new Date(),
-    },
+    competency: fakeCompetency,
     ratings: [
-        {
-            rating: 3,
-            created_at: new Date()
-        },
+        ratingUpdate,
         {
             rating: 4,
             created_at: new Date()
@@ -94,15 +95,7 @@ export const fakeSkill2: SkillType = {
     id: uuid(),
     title: "Creativity",
     desc: "React is a JavaScript library for building user interfaces",
-    competency: {
-        id: uuid(),
-        title: "Communication",
-        desc: "You have a good understanding of the subject matter and can apply it in real-world scenarios",
-        overview: "Competency overview",
-        skills: [],
-        profiles: [],
-        created_at: new Date(),
-    },
+    competency: fakeCompetency,
     ratings: [],
     created_at: new Date(),
     groups_count: 0,

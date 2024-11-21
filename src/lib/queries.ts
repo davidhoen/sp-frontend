@@ -1,6 +1,6 @@
-import { SkillType } from "@/types"
+import { CompetencyType, SkillType } from "@/types"
 import axios from "./axios"
-import { PagingSchema } from "@/zod/Pagination";
+import { PagingSchema } from "@/types/pagination";
 
 export const getSkill = async (id: number) => {
     try {
@@ -14,11 +14,24 @@ export const getSkill = async (id: number) => {
 
 export const getSkills = async ({ page, search, competencies, isAdded }: { page: number; search: string; competencies: string; isAdded: string; }) => {
     try {
-        const skillsRoute = `/api/student/skills/?availableCompentencies=true&page=${page}&search=${search}&competencies=${competencies}&is_added=${isAdded}`
-        const { data } = await axios.get<PagingSchema<SkillType>>(skillsRoute);
+        // Add page params and availableCompentencies to get the competencies connected to the skills
+        const route = `/api/student/skills/?availableCompentencies=true&page=${page}&search=${search}&competencies=${competencies}&is_added=${isAdded}`
+        const { data } = await axios.get<PagingSchema<SkillType>>(route);
         return data;
     }
     catch (error) {
         console.error(error);
     }
 }
+
+export const getCompetencies = async ({ page, search }: { page: number; search: string; }) => {
+    try {
+        const route = `/api/student/competencies?page=${page}&search=${search}`
+        const { data } = await axios.get<PagingSchema<CompetencyType>>(route);
+        return data;
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+
