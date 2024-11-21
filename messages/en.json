@@ -27,7 +27,8 @@
     "requestEndorsement": "Request endorsement",
     "noEntitiesFound": "No {entities} found",
     "topSkills": "Top skills",
-    "view": "View"
+    "view": "View",
+    "overview": "Overview"
   },
   "modals": {
     "cancel": "Cancel",
