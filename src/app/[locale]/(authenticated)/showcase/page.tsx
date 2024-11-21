@@ -1,4 +1,3 @@
-"use client"
 
 import { ContentCard } from "@/components/ContentCard"
 import AddFeedbackModal from "@/components/Modals/AddFeedbackModal"
@@ -13,116 +12,12 @@ import { TimeLine } from "@/components/Timeline/TimeLine"
 import PageTitle from "@/components/Typography/PageTitle"
 import SectionTitle from "@/components/Typography/SectionTitle"
 import UserAvatar from "@/components/UserAvatar"
+import { endorsement, fakeSkill, fakeSkill2, fakeStudent, feedback } from "@/lib/fakeData"
 import { UserProvider } from "@/providers/UserProvider"
-import { EndorsementType, FeedbackType, ProfileType, RatingHistoryType, SkillType, TimeLineItemType, TimeLineItemTypeEnum } from "@/types"
-import { UserType } from "@/types/User"
+import { ProfileType } from "@/types"
 
 const Showcase = () => {
-  const fakeUser: UserType = {
-    id: 1,
-    email: "user@skillspassport.nl",
-    first_name: "John",
-    last_name: "John",
-    role: {
-      id: 1,
-      name: "Student",
-      is_teacher: false,
-      is_head_teacher: false
-    },
-    role_id: 1,
-    image: "https://xsgames.co/randomusers/avatar.php?g=male",
-  }
 
-  const fakeTeacher: UserType = {
-    id: 1,
-    email: "teacher@skillspassport.nl",
-    first_name: "Jane",
-    last_name: "Robbertson",
-    role: {
-      id: 2,
-      name: "Teacher",
-      is_teacher: true,
-      is_head_teacher: false
-    },
-    role_id: 2,
-    image: "https://xsgames.co/randomusers/avatar.php?g=female",
-  }
-  const feedback: FeedbackType = {
-    id: 1,
-    user: fakeUser,
-    created_at: new Date(),
-    event: {
-      id: 1,
-      title: "Start presentation"
-    },
-    content: "Improvement could be incorporating more real-world examples to illustrate the points. Nevertheless, it was a compelling presentation."
-  }
-
-  const endorsement: EndorsementType = {
-    id: 1,
-    user: fakeTeacher,
-    event: {
-      id: 1,
-      title: "Midterm evaluation"
-    },
-    content: "Impressive command over the subject matter and ability to engage the audience",
-    rating: 3,
-    is_approved: true,
-    created_by: fakeUser,
-    created_at: new Date()
-  }
-
-  const ratingUpdate: RatingHistoryType = {
-    rating: 3,
-    created_at: new Date()
-  }
-
-  const fakeSkill: SkillType = {
-    id: 1,
-    title: "Presenting",
-    desc: "React is a JavaScript library for building user interfaces",
-    competency: {
-      id: 1,
-      title: "Communication",
-      desc: "You have a good understanding of the subject matter and can apply it in real-world scenarios",
-      overview: "Competency overview",
-      skills: [],
-      profiles: [],
-      created_at: new Date(),
-    },
-    ratings: [
-      {
-        rating: 3,
-        created_at: new Date()
-      },
-      {
-        rating: 4,
-        created_at: new Date()
-      }
-    ],
-    created_at: new Date(),
-    groups_count: 0,
-    is_added: false,
-  }
-
-  const fakeSkill2: SkillType = {
-    id: 2,
-    title: "Creativity",
-    desc: "React is a JavaScript library for building user interfaces",
-    competency: {
-      id: 1,
-      title: "Communication",
-      desc: "You have a good understanding of the subject matter and can apply it in real-world scenarios",
-      overview: "Competency overview",
-      skills: [],
-      profiles: [],
-      created_at: new Date(),
-    },
-    ratings: [],
-    created_at: new Date(),
-    groups_count: 0,
-    is_added: false,
-  }
 
   return (
     <UserProvider>
@@ -135,7 +30,7 @@ const Showcase = () => {
 
         {/* User avatar (just the icon) */}
         <div>
-          <UserAvatar user={fakeUser} />
+          <UserAvatar user={fakeStudent} />
         </div>
 
         {/* User profile */}
@@ -178,16 +73,11 @@ const Showcase = () => {
         </div>
 
         <TimeLine
-          items={[
-            { type: TimeLineItemTypeEnum.Feedback, created_at: new Date("7-8-21"), feedback },
-            { type: TimeLineItemTypeEnum.Endorsement, created_at: new Date(), endorsement },
-            { type: TimeLineItemTypeEnum.RatingUpdate, created_at: new Date("8-8-21"), ratingUpdate }
-          ]}
-          user={fakeUser}
+          user={fakeStudent}
           skillId={fakeSkill.id}
         />
 
-        <UpdateRatingModal>
+        <UpdateRatingModal skillId={fakeSkill.id}>
           Open rating modal
         </UpdateRatingModal>
 
@@ -195,7 +85,7 @@ const Showcase = () => {
           Add feedback modal
         </AddFeedbackModal>
 
-        <RequestEndorsementModal requestFromUser={fakeUser}>
+        <RequestEndorsementModal requestFromUser={fakeStudent}>
           Request endorsement form user modal
         </RequestEndorsementModal>
 
@@ -207,7 +97,7 @@ const Showcase = () => {
           Request feedback modal
         </RequestFeedbackModal>
 
-        <RequestFeedbackModal requestFromUser={fakeUser}>
+        <RequestFeedbackModal requestFromUser={fakeStudent}>
           Request from user feedback modal
         </RequestFeedbackModal>
 

@@ -13,8 +13,9 @@ import Select from "../ui/select"
 import { Textarea } from "../ui/textarea"
 import { useUser } from "@/providers/UserProvider"
 import axios from "@/lib/axios"
+import { triggerPromiseToast } from "@/lib"
 
-const AddFeedbackModal = ({ children, skillId }: { children: ReactNode, skillId?: number }) => {
+const AddFeedbackModal = ({ children, skillId, mutate }: { children: ReactNode, skillId?: string, mutate?: () => void }) => {
     const t = useTranslations("modals")
     const { user } = useUser()
     const { data: events, isLoading } = useEvents()
@@ -22,7 +23,7 @@ const AddFeedbackModal = ({ children, skillId }: { children: ReactNode, skillId?
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const formSchema = z.object({
-        eventId: z.number(),
+        eventId: z.string(),
         feedback: z.string().min(10)
     })
 
@@ -36,11 +37,13 @@ const AddFeedbackModal = ({ children, skillId }: { children: ReactNode, skillId?
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            await axios.post(`/api/student/skills/${skillId}/feedback`, {
+            const res = axios.post(`/api/student/skills/${skillId}/feedback`, {
                 ...values,
                 skillId,
                 userId: user?.id
             })
+            await triggerPromiseToast(res, t)
+            mutate && mutate()
         }
         catch (error) {
             console.error(error)

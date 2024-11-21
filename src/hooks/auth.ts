@@ -10,9 +10,10 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: { middleware?: 
   const router = useRouter()
   const params = useParams()
 
-  const { data: user, error, mutate } = useSWR("/api/user", () =>
+  const url = "/api/user"
+  const { data: user, error, mutate } = useSWR(url, () =>
     axios
-      .get("/api/user")
+      .get(url)
       .then(res => res.data)
       .catch(error => {
         if (error.response.status !== 409) throw error

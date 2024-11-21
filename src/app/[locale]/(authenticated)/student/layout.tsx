@@ -18,7 +18,7 @@ const StudentLayout = ({ children }: { children: ReactNode }) => {
     { title: "Dashboard", url: `${basePath}`, icon: BookIcon },
     { title: "Skills", url: `${basePath}/skills`, icon: StarIcon },
     { title: "Groups", url: "#", icon: UsersIcon },
-    { title: "Competences", url: "#", icon: StarsIcon },
+    { title: "Competences", url: `${basePath}/competencies`, icon: StarsIcon },
     { title: "Profiles", url: "#", icon: ArrowBigLeft },
     { title: "Public Profile", url: "#", icon: UserIcon }
   ]

@@ -1,11 +1,10 @@
 "use client"
 
-import { TimeLineItemType } from "@/types";
-import { TimeLine } from "./TimeLine";
 import { useUser } from "@/providers/UserProvider";
+import { TimeLine } from "./TimeLine";
 
-export default function TimeLineWithUser({ items, skillId }: { items: TimeLineItemType[], skillId: number }) {
+export default function TimeLineWithUser({ skillId }: { skillId: string }) {
     const { user } = useUser()
     if (!user) return null
-    return <TimeLine items={items} user={user} skillId={skillId} />
+    return <TimeLine user={user} skillId={skillId} />
 }

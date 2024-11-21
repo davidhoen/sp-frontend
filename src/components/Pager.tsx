@@ -1,6 +1,6 @@
-import { PagingSchema } from "@/zod/Pagination";
 import { ReactNode } from "react";
 import Paginator from "./Paginator";
+import { PagingSchema } from "@/types/pagination";
 
 type Props<T> = {
     pagerObject?: PagingSchema<T> | null;
@@ -21,7 +21,7 @@ type Props<T> = {
 export function Pager<T>({ pagerObject, renderItem, emptyMessage, renderAsTable, headerItems, wrapperClass }: Props<T>) {
     const paging = pagerObject?.meta;
 
-    if (!pagerObject?.data.length)
+    if (!pagerObject?.data || !pagerObject?.data.length)
         return <div className="font-bold text-center">{emptyMessage}</div>
 
     return <div>
@@ -34,10 +34,10 @@ export function Pager<T>({ pagerObject, renderItem, emptyMessage, renderAsTable,
                         </tr>
                     </thead>
                 }
-                {pagerObject.data.map((item, index) => renderItem(item, index))}
+                {pagerObject?.data.map((item, index) => renderItem(item, index))}
             </table>
             : <div className={wrapperClass || "grid grid-cols-1 md:grid-cols-3 gap-8"}>
-                {pagerObject.data.map((item, index) => renderItem(item, index))}
+                {pagerObject?.data.map((item, index) => renderItem(item, index))}
             </div>
         }
 

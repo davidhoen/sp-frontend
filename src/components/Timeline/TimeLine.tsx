@@ -1,23 +1,36 @@
 "use client"
 
+import { useTimeLineItems } from "@/hooks/use-timeline-items";
+import { endorsement, feedback, ratingUpdate } from "@/lib/fakeData";
 import { cn } from "@/lib/utils";
 import { TimeLineItemType, TimeLineItemTypeEnum } from "@/types";
 import { UserType } from "@/types/User";
 import { ArrowUpDownIcon, BadgeCheckIcon, MessageCircleIcon, PlusIcon, StarIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
+import AddFeedbackModal from "../Modals/AddFeedbackModal";
+import { Skeleton } from "../ui/skeleton";
 import { TimeLineContentCard } from "./TimeLineContentCard";
 import { TimelineRatingUpdateCard } from "./TimelineRatingUpdateCard";
-import AddFeedbackModal from "../Modals/AddFeedbackModal";
 
-export function TimeLine({ items: allItems, user, skillId }: { items: TimeLineItemType[], user: UserType, skillId: number }) {
+const fakeItems = [
+    { type: TimeLineItemTypeEnum.Feedback, created_at: new Date("7-8-21"), feedback },
+    { type: TimeLineItemTypeEnum.Endorsement, created_at: new Date(), endorsement },
+    { type: TimeLineItemTypeEnum.RatingUpdate, created_at: new Date("8-8-21"), ratingUpdate }
+]
+
+export function TimeLine({ user, skillId }: { user: UserType, skillId: string }) {
     const t = useTranslations("general")
+    let { data: allItems, isLoading, mutate } = useTimeLineItems(skillId)
+
+    if (!allItems)
+        allItems = fakeItems
 
     const [sortDescending, setSortDescending] = useState(true)
     const [items, setItems] = useState<TimeLineItemType[]>(allItems)
 
     const sortItems = () => {
-        const sortedItems = [...items].sort((a, b) => {
+        const sortedItems = items.sort((a, b) => {
             const dateA = new Date(a.created_at).getTime()
             const dateB = new Date(b.created_at).getTime()
             return sortDescending ? dateB - dateA : dateA - dateB
@@ -27,6 +40,7 @@ export function TimeLine({ items: allItems, user, skillId }: { items: TimeLineIt
     }
 
     useEffect(() => {
+        // Causes build warning, but dont know how to fix
         sortItems()
     }, [])
 
@@ -58,10 +72,10 @@ export function TimeLine({ items: allItems, user, skillId }: { items: TimeLineIt
     }
 
     const AddFeedbackButton = () => (
-        <AddFeedbackModal skillId={skillId}>
+        <AddFeedbackModal skillId={skillId} mutate={mutate}>
             <div className="relative flex items-center">
-                <div className="absolute left-12 md:left-1/2 flex flex-col items-center -translate-x-1/2" >
-                    <button className="inline-flex items-center rounded-full bg-border px-4 py-1 text-sm font-medium border shadow-sm hover:bg-muted transition-colors">
+                <div className="absolute -left-4 md:left-1/2 flex flex-col items-center md:-translate-x-1/2" >
+                    <button className="inline-flex items-center text-nowrap rounded-full bg-border px-4 py-1 text-sm font-medium border shadow-sm hover:bg-muted transition-colors">
                         <PlusIcon className="mr-1.5 h-4 w-4" />
                         {t("addFeedback")}
                     </button>
@@ -71,7 +85,7 @@ export function TimeLine({ items: allItems, user, skillId }: { items: TimeLineIt
     )
 
     return (
-        <div className="relative mx-auto">
+        <div className="relative mx-auto w-full">
             {/* Sort items */}
             <div className="flex justify-between items-center mb-8">
                 <button
@@ -84,17 +98,25 @@ export function TimeLine({ items: allItems, user, skillId }: { items: TimeLineIt
             </div>
 
             {/* Timeline container */}
-            <div className="relative">
+            <div className="relative w-full">
                 {/* Timeline line */}
                 <div className="absolute left-4 md:left-1/2 top-0 h-full w-px bg-border " />
 
                 {/* Timeline items */}
-                <div className="space-y-8 p-4">
+                <div className="space-y-8 p-4 w-full">
                     {!sortDescending && (
                         <AddFeedbackButton />
                     )}
-                    {items.map((item, index) => (
-                        <div key={index} className="relative flex items-start md:items-center">
+
+                    {/* Loading skeletons */}
+                    {isLoading && Array.from({ length: 5 }).map((_, index) =>
+                        <div className="relative flex items-start md:items-center" key={index}>
+                            <Skeleton className={cn("bg-border", "w-full h-24 ml-12 md:ml-0 md:w-[calc(50%-20px)]", index % 2 === 0 ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8')} />
+                        </div>
+                    )}
+
+                    {!isLoading && items.map((item, index) => (
+                        <div key={index} className="relative flex items-start md:items-center w-full">
                             {/* Date marker */}
                             <div className="absolute left-0 md:left-1/2 flex flex-col items-center -translate-x-1/2 bg-background">
                                 <div className="rounded-full h-8 w-8 md:h-10 md:w-10 border flex items-center justify-center">
@@ -115,6 +137,6 @@ export function TimeLine({ items: allItems, user, skillId }: { items: TimeLineIt
                     )}
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
