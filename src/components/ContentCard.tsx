@@ -31,7 +31,7 @@ export function ContentCard({ content }: { content: EndorsementType | FeedbackTy
             {/* Content */}
             <div>
                 <div className="flex justify-between">
-                    <span className="font-sans font-bold text-lg mb-1">{content.event.title}</span>
+                    <span className="font-sans font-bold text-lg mb-1">{content.title}</span>
                     {"rating" in content && <StarRating rating={content.rating} />}
                 </div>
                 <p>{content.content}</p>

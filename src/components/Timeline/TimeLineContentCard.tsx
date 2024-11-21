@@ -16,7 +16,7 @@ export function TimeLineContentCard({ content }: { content: EndorsementType | Fe
             {/* Header */}
             <div className="flex mb-2 justify-between">
                 <div className="flex flex-col">
-                    <span className="font-sans font-bold text-lg">{content.event.title}</span>
+                    <span className="font-sans font-bold text-lg">{content.title}</span>
                     <span className="text-muted-foreground text-sm">{t(contentType)}</span>
                 </div>
                 <UserAvatar user={content.user} />

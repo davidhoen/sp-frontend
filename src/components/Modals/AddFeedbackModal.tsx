@@ -1,6 +1,8 @@
 "use client"
 
-import { useEvents } from "@/hooks/use-events"
+import { triggerPromiseToast } from "@/lib"
+import axios from "@/lib/axios"
+import { useUser } from "@/providers/UserProvider"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { ReactNode, useState } from "react"
@@ -9,28 +11,24 @@ import { z } from "zod"
 import { Button } from "../ui/button"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
-import Select from "../ui/select"
+import { Input } from "../ui/input"
 import { Textarea } from "../ui/textarea"
-import { useUser } from "@/providers/UserProvider"
-import axios from "@/lib/axios"
-import { triggerPromiseToast } from "@/lib"
 
 const AddFeedbackModal = ({ children, skillId, mutate }: { children: ReactNode, skillId?: string, mutate?: () => void }) => {
     const t = useTranslations("modals")
     const { user } = useUser()
-    const { data: events, isLoading } = useEvents()
 
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const formSchema = z.object({
-        eventId: z.string(),
+        title: z.string(),
         feedback: z.string().min(10)
     })
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            eventId: undefined,
+            title: "",
             feedback: ""
         }
     })
@@ -67,15 +65,15 @@ const AddFeedbackModal = ({ children, skillId, mutate }: { children: ReactNode, 
                             <DialogDescription>{t("addFeedback.description")}</DialogDescription>
                         </DialogHeader>
 
-                        {/* Event  */}
+                        {/* Title  */}
                         <FormField
                             control={form.control}
-                            name="eventId"
-                            render={({ field: { onChange } }) => (
+                            name="title"
+                            render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>{t("event")}</FormLabel>
+                                    <FormLabel>{t("feedbackTitle")}</FormLabel>
                                     <FormControl>
-                                        <Select options={events} isLoading={isLoading} onChange={(selectedOption) => onChange(selectedOption?.value)} placeholder={t("eventPlaceholder")} />
+                                        <Input {...field} placeholder={t("feedbackTitlePlaceholder")} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>

@@ -27,7 +27,8 @@
     "requestEndorsement": "Onderschrijving aanvragen",
     "noEntitiesFound": "Geen {entities) gevonden",
     "topSkills": "Top skills",
-    "view": "Bekijk"
+    "view": "Bekijk",
+    "title": "Titel"
   },
   "modals": {
     "cancel": "Annuleren",
@@ -35,8 +36,10 @@
     "saveChanges": "Wijzigingen opslaan",
     "feedback": "Feedback",
     "feedbackPlaceholder": "Type hier je feedback",
-    "event": "Gebeurtenis",
-    "eventPlaceholder": "Selecteer de gebeurtenis",
+    "feedbackTitle": "Feedback titel",
+    "feedbackTitlePlaceholder": "Bijv: Oefenpresentatie",
+    "endorsementTitle": "Titel van de onderschrijving",
+    "endorsementTitlePlaceholder": "Bijv: Eindpresentatie",
     "email": "Email",
     "emailPlaceholder": "bob@voorbeeld.nl",
     "loading": "Laden...",

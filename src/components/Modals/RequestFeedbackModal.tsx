@@ -14,25 +14,19 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "../ui/input"
 import Select from "../ui/select"
 
-const RequestFeedbackModal = ({ children, skillId, requestFromUser }: { children: ReactNode, skillId?: string, requestFromUser?: UserType }) => {
+const RequestFeedbackModal = ({ children, requestFromUser, skillId }: { children: ReactNode, requestFromUser: UserType, skillId?: string, }) => {
     const t = useTranslations("modals")
 
     // TODO: Replace with useSkills hook
     const { data: events, isLoading } = useEvents()
     const [isModalOpen, setIsModalOpen] = useState(false)
 
-    const formSchema = z.object(
-        requestFromUser ?
-            { eventId: z.string(), skillId: z.string() }
-            :
-            { eventId: z.string(), email: z.string().email() }
-    )
+    const formSchema = z.object({ title: z.string(), skillId: z.string() })
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            eventId: undefined,
-            email: "",
+            title: undefined,
             skillId
         }
     })
@@ -61,49 +55,34 @@ const RequestFeedbackModal = ({ children, skillId, requestFromUser }: { children
                             </DialogDescription>
                         </DialogHeader>
 
+                        {/* Title of the feedback */}
                         <FormField
                             control={form.control}
-                            name="eventId"
-                            render={({ field: { onChange } }) => (
+                            name="title"
+                            render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>{t("event")}</FormLabel>
+                                    <FormLabel>{t("feedbackTitle")}</FormLabel>
                                     <FormControl>
-                                        <Select options={events} isLoading={isLoading} onChange={(selectedOption) => onChange(selectedOption?.value)} placeholder={t("eventPlaceholder")} />
+                                        <Input {...field} placeholder={t("feedbackTitlePlaceholder")} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
 
-                        {requestFromUser ?
-                            <FormField
-                                control={form.control}
-                                name="skillId"
-                                render={({ field: { onChange } }) => (
-                                    <FormItem>
-                                        <FormLabel>{t("skill")}</FormLabel>
-                                        <FormControl>
-                                            <Select options={events} onChange={(selectedOption) => onChange(selectedOption?.value)} placeholder={t("skillPlaceholder")} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            :
-                            <FormField
-                                control={form.control}
-                                name="email"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>{t("email")}</FormLabel>
-                                        <FormControl>
-                                            <Input {...field} type="email" placeholder={t("emailPlaceholder")} value={field.value ?? ""} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        }
+                        <FormField
+                            control={form.control}
+                            name="skillId"
+                            render={({ field: { onChange } }) => (
+                                <FormItem>
+                                    <FormLabel>{t("skill")}</FormLabel>
+                                    <FormControl>
+                                        <Select options={events} onChange={(selectedOption) => onChange(selectedOption?.value)} placeholder={t("skillPlaceholder")} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
 
                         <DialogFooter>
                             {/* Cancel */}
