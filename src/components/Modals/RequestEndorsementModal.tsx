@@ -43,6 +43,7 @@ const RequestEndorsementModal = ({ children, skillId, requestFromUser }: { child
             const res = axios.post(`/api/student/request/endorsement`, {
                 ...values,
                 skillId,
+                userId: requestFromUser?.id
             })
             await triggerPromiseToast(res, t)
         }

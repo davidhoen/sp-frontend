@@ -93,10 +93,6 @@ const Showcase = () => {
           Request endorsement modal
         </RequestEndorsementModal>
 
-        <RequestFeedbackModal>
-          Request feedback modal
-        </RequestFeedbackModal>
-
         <RequestFeedbackModal requestFromUser={fakeStudent}>
           Request from user feedback modal
         </RequestFeedbackModal>

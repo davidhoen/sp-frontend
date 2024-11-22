@@ -96,3 +96,10 @@ export type SkillsQueryType = {
   competencies: string,
   is_added: string
 }
+
+export type EndorsementRequest = {
+  id: string;
+  title: string;
+  skill: SkillType;
+  requester: UserType
+}

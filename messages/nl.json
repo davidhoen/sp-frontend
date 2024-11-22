@@ -67,6 +67,9 @@
       "title": "Feedback aanvragen",
       "fromEmaildescription": "Voer het e-mailadres in van de persoon die de feedback zal schrijven.",
       "fromUserdescription": "Vraag {name} om feedback over een specifieke skill."
+    },
+    "endorsementRequest": {
+      "title": "Skill onderschrijving"
     }
   },
   "students": {

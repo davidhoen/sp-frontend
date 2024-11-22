@@ -65,6 +65,9 @@
       "title": "Request feedback",
       "fromEmaildescription": "Enter the email of the person who will write the feedback.",
       "fromUserdescription": "Ask {name} for feedback on a specific skill."
+    },
+    "endorsementRequest": {
+      "title": "Skill onderschrijving"
     }
   },
   "students": {
