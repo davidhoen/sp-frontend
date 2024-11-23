@@ -36,16 +36,19 @@ const UpdateRatingModal = ({ children, skillId, currentRating }: { children: Rea
     })
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
-        const res = axios.post(`/api/student/skills/${skillId}/rating_update`, {
-            ...values,
-            skillId,
-            userId: user?.id
-        })
-        await triggerPromiseToast(res, t)
-
-        console.log(values);
-        setIsModalOpen(false)
-        form.reset()
+        try {
+            const res = axios.post(`/api/student/skills/${skillId}/rating_update`, {
+                ...values,
+                skillId,
+                userId: user?.id
+            })
+            await triggerPromiseToast(res, t)
+            setIsModalOpen(false)
+            form.reset()
+        }
+        catch (error) {
+            console.error(error)
+        }
     }
 
     return (

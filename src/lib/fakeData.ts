@@ -1,4 +1,4 @@
-import { CompetencyType, EndorsementRequest, EndorsementType, FeedbackType, RatingHistoryType, SkillType } from "@/types"
+import { CompetencyType, EndorsementRequestType, EndorsementType, FeedbackType, RatingHistoryType, SkillType } from "@/types"
 import { UserType } from "@/types/User"
 import { v4 as uuid } from "uuid"
 
@@ -96,7 +96,7 @@ export const fakeSkill2: SkillType = {
     is_added: false,
 }
 
-export const fakeEndorsementRequest: EndorsementRequest = {
+export const fakeEndorsementRequest: EndorsementRequestType = {
     id: uuid(),
     title: "Starting presentation",
     requester: fakeStudent,

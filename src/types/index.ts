@@ -97,7 +97,7 @@ export type SkillsQueryType = {
   is_added: string
 }
 
-export type EndorsementRequest = {
+export type EndorsementRequestType = {
   id: string;
   title: string;
   skill: SkillType;

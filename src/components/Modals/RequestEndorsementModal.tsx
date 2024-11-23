@@ -46,13 +46,12 @@ const RequestEndorsementModal = ({ children, skillId, requestFromUser }: { child
                 userId: requestFromUser?.id
             })
             await triggerPromiseToast(res, t)
+            form.reset()
+            setIsModalOpen(false)
+
         }
         catch (error) {
             console.error(error)
-        }
-        finally {
-            setIsModalOpen(false)
-            form.reset()
         }
     }
 

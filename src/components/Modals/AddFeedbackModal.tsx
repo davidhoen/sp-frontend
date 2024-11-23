@@ -42,13 +42,11 @@ const AddFeedbackModal = ({ children, skillId, mutate }: { children: ReactNode, 
             })
             await triggerPromiseToast(res, t)
             mutate && mutate()
+            setIsModalOpen(false)
+            form.reset()
         }
         catch (error) {
             console.error(error)
-        }
-        finally {
-            setIsModalOpen(false)
-            form.reset()
         }
     }
 

@@ -16,9 +16,9 @@ import { endorsement, fakeSkill, fakeSkill2, fakeStudent, feedback } from "@/lib
 import { UserProvider } from "@/providers/UserProvider"
 import { ProfileType } from "@/types"
 
+
+// Showcase page for components
 const Showcase = () => {
-
-
   return (
     <UserProvider>
       <div className=" mt-6 px-8 flex flex-col gap-6">
