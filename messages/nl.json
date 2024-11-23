@@ -27,7 +27,8 @@
     "requestEndorsement": "Onderschrijving aanvragen",
     "noEntitiesFound": "Geen {entities) gevonden",
     "topSkills": "Top skills",
-    "view": "Bekijk"
+    "view": "Bekijk",
+    "overview": "Overzicht"
   },
   "modals": {
     "cancel": "Annuleren",

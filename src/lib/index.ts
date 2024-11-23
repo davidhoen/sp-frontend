@@ -1,4 +1,4 @@
-import { RatingHistoryType, TranslationFunction } from "@/types"
+import { CompetencyType, RatingHistoryType, TranslationFunction } from "@/types"
 import { UserType } from "@/types/User"
 import toast from "react-hot-toast"
 
@@ -28,4 +28,19 @@ export const triggerPromiseToast = <T extends any>(response: Promise<T>, t: Tran
         success: messages?.success ?? t('successfullySaved'),
         error: messages?.error ?? t('genericError'),
     });
+}
+
+export const getCompetencyRating = (competency: CompetencyType) => {
+    const ratings = competency.skills.map((skill) => {
+        const skillRating = getMostRecentRating(skill.ratings)?.rating
+        if (skillRating) return skillRating
+        return undefined
+    }).filter((rating): rating is number => rating !== undefined)
+
+    // Get the average rating of the skills
+    return roundToQuarter(ratings.reduce((acc, rating) => acc + (rating ?? 0), 0) / ratings.length)
+}
+
+export const roundToQuarter = (num: number) => {
+    return Math.round(num * 4) / 4
 }
