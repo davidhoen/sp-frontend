@@ -3,11 +3,11 @@
 import React, { useState } from "react"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { useTranslations } from "next-intl"
-import { getStarTitles } from "@/lib"
+import { getStarTitles, roundToQuarter } from "@/lib"
 
 const adjustFillPercentage = (fill: number): number => {
   // round fill to the nearest quarter
-  fill = Math.round(fill * 4) / 4
+  fill = roundToQuarter(fill)
 
   // 1/4 star
   if (fill == 0.25) {

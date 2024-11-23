@@ -28,7 +28,11 @@
     "noEntitiesFound": "Geen {entities) gevonden",
     "topSkills": "Top skills",
     "view": "Bekijk",
+<<<<<<< HEAD
     "title": "Titel"
+=======
+    "overview": "Overzicht"
+>>>>>>> fb058cb05b360c55a8b25d4b853bcedf08192678
   },
   "modals": {
     "cancel": "Annuleren",

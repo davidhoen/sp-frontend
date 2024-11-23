@@ -48,3 +48,12 @@ export const getCompetencies = async ({ page, search }: { page: number; search: 
 }
 
 
+export const getCompetency = async (id: number) => {
+    try {
+        const { data } = await axios.get<CompetencyType>(`/api/student/competencies/${id}`);
+        return data;
+    }
+    catch (error) {
+        console.error(error);
+    }
+}

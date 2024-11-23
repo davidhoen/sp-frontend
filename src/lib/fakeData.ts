@@ -60,7 +60,7 @@ export const fakeCompetency: CompetencyType = {
     id: uuid(),
     title: "Communication",
     desc: "You have a good understanding of the subject matter and can apply it in real-world scenarios",
-    overview: "Competency overview",
+    overview: "You have a good understanding of the subject matter and can apply it in real-world scenarios. You have a good understanding of the subject matter and can apply it in real-world scenarios.You have a good understanding of the subject matter and can apply it in real-world scenarios. ",
     skills: [],
     profiles: [],
     feedbacks_count: 4,
@@ -90,7 +90,18 @@ export const fakeSkill2: SkillType = {
     title: "Creativity",
     desc: "React is a JavaScript library for building user interfaces",
     competency: fakeCompetency,
-    ratings: [],
+    ratings: [{
+        rating: 1,
+        created_at: new Date()
+    },
+    {
+        rating: 2,
+        created_at: new Date()
+    },
+    {
+        rating: 3,
+        created_at: new Date()
+    }],
     created_at: new Date(),
     groups_count: 0,
     is_added: false,
