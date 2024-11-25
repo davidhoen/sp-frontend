@@ -4,13 +4,11 @@ on:
     branches: [main, master]
   pull_request:
     branches: [main, master]
+
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.49.0-noble
-      options: --user 1001
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -18,20 +16,18 @@ jobs:
           node-version: lts/*
       - name: Install dependencies
         run: npm ci
-      - name: Wait for Vercel deployment
-        uses: UnlyEd/github-action-await-vercel@v1.2.15
-        id: await-vercel
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: Wait for Vercel Preview
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
+        id: waitFor
         with:
-          deployment-url: ${{ github.event.deployment_status.target_url }}
-          timeout: 300
-      - name: Get Vercel deployment URL
-        run: echo "Deployment URL - ${{ steps.await-vercel.outputs.deploymentUrl }}"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 300
       - name: Run Playwright tests
         run: npx playwright test
         env:
-          PLAYWRIGHT_TEST_BASE_URL: ${{ steps.await-vercel.outputs.deploymentUrl }}
+          PLAYWRIGHT_TEST_BASE_URL: ${{ steps.waitFor.outputs.url }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
