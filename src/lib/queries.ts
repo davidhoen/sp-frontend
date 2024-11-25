@@ -8,7 +8,7 @@ export const getSkill = async (id: number) => {
         return data;
     }
     catch (error) {
-        console.error(error);
+        console.error(error, "error");
     }
 }
 

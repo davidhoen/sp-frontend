@@ -18,7 +18,7 @@ import { triggerPromiseToast } from "@/lib"
 const AddFeedbackModal = ({ children, skillId, mutate }: { children: ReactNode, skillId?: string, mutate?: () => void }) => {
     const t = useTranslations("modals")
     const { user } = useUser()
-    const { data: events, isLoading } = useEvents()
+    // const { data: events, isLoading } = useEvents()
 
     const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -71,11 +71,11 @@ const AddFeedbackModal = ({ children, skillId, mutate }: { children: ReactNode, 
                         <FormField
                             control={form.control}
                             name="eventId"
-                            render={({ field: { onChange } }) => (
+                            render={({ field}) => (
                                 <FormItem>
-                                    <FormLabel>{t("event")}</FormLabel>
+                                    <FormLabel>{t("title")}</FormLabel>
                                     <FormControl>
-                                        <Select options={events} isLoading={isLoading} onChange={(selectedOption) => onChange(selectedOption?.value)} placeholder={t("eventPlaceholder")} />
+                                        <input type="hidden" {...form.register("eventId")} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>

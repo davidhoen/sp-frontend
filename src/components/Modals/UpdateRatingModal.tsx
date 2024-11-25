@@ -43,7 +43,6 @@ const UpdateRatingModal = ({ children, skillId, currentRating }: { children: Rea
         })
         await triggerPromiseToast(res, t)
 
-        console.log(values);
         setIsModalOpen(false)
         form.reset()
     }

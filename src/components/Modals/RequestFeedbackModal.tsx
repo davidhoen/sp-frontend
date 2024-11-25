@@ -18,7 +18,7 @@ const RequestFeedbackModal = ({ children, skillId, requestFromUser }: { children
     const t = useTranslations("modals")
 
     // TODO: Replace with useSkills hook
-    const { data: events, isLoading } = useEvents()
+    // const { data: events, isLoading } = useEvents()
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const formSchema = z.object(
@@ -38,7 +38,6 @@ const RequestFeedbackModal = ({ children, skillId, requestFromUser }: { children
     })
 
     const onSubmit = (values: z.infer<typeof formSchema>) => {
-        console.log(values);
         setIsModalOpen(false)
         form.reset()
     }
@@ -64,11 +63,11 @@ const RequestFeedbackModal = ({ children, skillId, requestFromUser }: { children
                         <FormField
                             control={form.control}
                             name="eventId"
-                            render={({ field: { onChange } }) => (
+                            render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>{t("event")}</FormLabel>
+                                    <FormLabel>{t("title")}</FormLabel>
                                     <FormControl>
-                                        <Select options={events} isLoading={isLoading} onChange={(selectedOption) => onChange(selectedOption?.value)} placeholder={t("eventPlaceholder")} />
+                                        <Input {...field} type="text" placeholder={t("eventPlaceholder")} value={field.value ?? ""} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -79,11 +78,11 @@ const RequestFeedbackModal = ({ children, skillId, requestFromUser }: { children
                             <FormField
                                 control={form.control}
                                 name="skillId"
-                                render={({ field: { onChange } }) => (
+                                render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>{t("skill")}</FormLabel>
                                         <FormControl>
-                                            <Select options={events} onChange={(selectedOption) => onChange(selectedOption?.value)} placeholder={t("skillPlaceholder")} />
+                                            <Input {...field} type="text" placeholder={t("skillPlaceholder")} value={field.value ?? ""} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>

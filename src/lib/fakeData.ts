@@ -75,7 +75,7 @@ export const fakeCompetency: CompetencyType = {
 }
 
 export const fakeSkill: SkillType = {
-    id: uuid(),
+    id: '9d92e9e4-1c7f-4adf-9fa2-6d5abb610153',
     title: "Presenting",
     desc: "React is a JavaScript library for building user interfaces",
     competency: fakeCompetency,
