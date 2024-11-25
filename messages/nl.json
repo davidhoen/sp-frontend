@@ -30,7 +30,8 @@
     "view": "Bekijk",
     "overview": "Overzicht",
     "students": "Studenten",
-    "groups": "Groepen"
+    "groups": "Groepen",
+    "teachers": "Docenten"
   },
   "modals": {
     "cancel": "Annuleren",

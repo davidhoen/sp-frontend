@@ -30,7 +30,8 @@
     "view": "View",
     "overview": "Overview",
     "students": "Students",
-    "groups": "Groups"
+    "groups": "Groups",
+    "teachers": "Teachers"
   },
   "modals": {
     "cancel": "Cancel",

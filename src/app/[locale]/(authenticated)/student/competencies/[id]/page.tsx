@@ -10,6 +10,7 @@ import { getTranslations } from "next-intl/server"
 
 const CompetencyDetail = async ({ params }: { params: { id: number } }) => {
     const t = await getTranslations("general")
+    // TODO: Replace with const and remove fakeCompentency
     let competency = await getCompetency(params.id)
 
     if (!competency)
