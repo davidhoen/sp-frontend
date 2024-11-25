@@ -1,4 +1,4 @@
-import { CompetencyType, GroupType, SkillType } from "@/types"
+import { CompetencyType, GroupType, ProfileType, SkillType } from "@/types"
 import axios from "./axios"
 import { PagingSchema } from "@/types/pagination";
 
@@ -59,6 +59,17 @@ export const getGroups = async ({ page, search, isJoined }: { page: number; sear
 export const getGroup = async (id: number) => {
     try {
         const { data } = await axios.get<GroupType>(`/api/student/groups/${id}`);
+        return data;
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+
+export const getProfiles = async () => {
+    try {
+        const route = `/api/student/profiles`
+        const { data } = await axios.get<ProfileType[]>(route);
         return data;
     }
     catch (error) {

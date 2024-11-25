@@ -31,7 +31,10 @@
     "overview": "Overview",
     "students": "Students",
     "groups": "Groups",
-    "teachers": "Teachers"
+    "teachers": "Teachers",
+    "profiles": "Profiles",
+    "enrolledGroups": "Enrolled groups",
+    "recentEndorsements": "Recent endorsements"
   },
   "modals": {
     "cancel": "Cancel",

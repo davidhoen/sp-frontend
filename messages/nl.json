@@ -31,7 +31,10 @@
     "overview": "Overzicht",
     "students": "Studenten",
     "groups": "Groepen",
-    "teachers": "Docenten"
+    "teachers": "Docenten",
+    "profiles": "Profielen",
+    "enrolledGroups": "Ingeschreven groepen",
+    "recentEndorsements": "Recente onderschrijvingen"
   },
   "modals": {
     "cancel": "Annuleren",
