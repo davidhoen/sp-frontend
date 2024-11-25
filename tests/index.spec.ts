@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('Change language', async ({ page }) => {
-  await page.goto('http://localhost:3000/nl/login/');
+  await page.goto('/nl/login/');
   await page.getByLabel('Email').click();
   await page.getByLabel('Email').fill('admin@sp');
   await page.getByLabel('Password').click();
