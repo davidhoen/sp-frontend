@@ -1,4 +1,4 @@
-import { CompetencyType, EndorsementType, FeedbackType, RatingHistoryType, SkillType } from "@/types"
+import { CompetencyType, EndorsementType, FeedbackType, GroupType, RatingHistoryType, SkillType } from "@/types"
 import { UserType } from "@/types/User"
 import { v4 as uuid } from "uuid"
 
@@ -7,6 +7,21 @@ export const fakeStudent: UserType = {
     email: "user@skillspassport.nl",
     first_name: "John",
     last_name: "John",
+    role: {
+        id: uuid(),
+        name: "Student",
+        is_teacher: false,
+        is_head_teacher: false
+    },
+    role_id: uuid(),
+    image: "https://xsgames.co/randomusers/avatar.php?g=male",
+}
+
+export const fakeStudent2: UserType = {
+    id: uuid(),
+    email: "user2@skillspassport.nl",
+    first_name: "Gea",
+    last_name: "van Booven",
     role: {
         id: uuid(),
         name: "Student",
@@ -111,4 +126,15 @@ export const fakeSkill2: SkillType = {
     created_at: new Date(),
     groups_count: 0,
     is_added: false,
+}
+
+export const fakeGroup: GroupType = {
+    id: uuid(),
+    name: "Conversations in organizations (24/25)",
+    desc: "Learning conversation skills isnt done through reading; the goal is for students to gain practical experience.",
+    created_by: fakeTeacher,
+    created_at: new Date(),
+    teachers: [fakeTeacher, fakeTeacher],
+    students: [fakeStudent, fakeStudent2],
+    skills: [fakeSkill, fakeSkill2],
 }

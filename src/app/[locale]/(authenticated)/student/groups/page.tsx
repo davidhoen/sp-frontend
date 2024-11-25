@@ -1,39 +1,40 @@
 "use client"
 
-import CompetenciesCard from "@/components/CompetenciesCard"
+import { GroupCard } from "@/components/GroupCard"
 import { Pager } from "@/components/Pager"
 import SearchInput from "@/components/SearchInput"
 import Skeletons from "@/components/Skeletons"
 import PageTitle from "@/components/Typography/PageTitle"
-import { fakeCompetency, fakeSkill, fakeSkill2 } from "@/lib/fakeData"
-import { getCompetencies } from "@/lib/queries"
+import { fakeGroup } from "@/lib/fakeData"
+import { getGroups } from "@/lib/queries"
 import { cn } from "@/lib/utils"
-import { CompetencyType, SkillsQueryType } from "@/types"
+import { GroupsQueryType, GroupType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useTranslations } from "next-intl"
 import { useCallback, useEffect, useState } from "react"
 
-const GroupsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => {
+const GroupsOverview = ({ searchParams }: { searchParams: GroupsQueryType }) => {
     const t = useTranslations("general")
 
-    const [competencies, setCompetencies] = useState<PagingSchema<CompetencyType>>();
+    const [groups, setGroups] = useState<PagingSchema<GroupType>>();
     const [isLoading, setIsLoading] = useState(false);
 
-    //Method to get the competencies for the current page
-    const fetchCompetencies = useCallback(async () => {
+    //Method to get the groups for the current page
+    const fetchGroups = useCallback(async () => {
         setIsLoading(true);
         try {
             const page = parseInt(searchParams.page) || 1;
             const search = searchParams.search ?? ""
+            const isJoined = searchParams.is_joined ?? ""
 
-            let filteredCompetencies = await getCompetencies({ page, search });
+            let filteredGroups = await getGroups({ page, search, isJoined });
 
-            if (!filteredCompetencies?.data)
-                filteredCompetencies = {
-                    data: [{ ...fakeCompetency, skills: [fakeSkill, fakeSkill2] }, fakeCompetency], meta: { current_page: 1, last_page: 1, per_page: 10, total: 2, }
+            if (!filteredGroups?.data)
+                filteredGroups = {
+                    data: [fakeGroup, fakeGroup], meta: { current_page: 1, last_page: 1, per_page: 10, total: 2, }
                 };
 
-            setCompetencies(filteredCompetencies);
+            setGroups(filteredGroups);
         }
         catch (error) {
             console.error(error);
@@ -44,14 +45,14 @@ const GroupsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => 
     }, [searchParams]);
 
     useEffect(() => {
-        //Get the competencies on page mount and the search term changes
-        fetchCompetencies();
-    }, [fetchCompetencies, searchParams]);
+        //Get the groups on page mount and the search term changes
+        fetchGroups();
+    }, [fetchGroups, searchParams]);
 
-    const renderCompetencies = (competency: CompetencyType) => <CompetenciesCard key={competency.id} competency={competency} />
+    const renderGroups = (group: GroupType) => <GroupCard key={group.id} group={group} />
 
     return <div className="w-full">
-        <PageTitle>{t("competencies")}</PageTitle>
+        <PageTitle>{t("groups")}</PageTitle>
 
         {/* Search */}
         <div className="my-4">
@@ -59,8 +60,8 @@ const GroupsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => 
         </div>
 
         <div className={cn("transition-all duration-500", isLoading ? "blur-md cursor-wait" : "blur-0")}>
-            {!!competencies ?
-                <Pager pagerObject={competencies} renderItem={renderCompetencies} emptyMessage={t("noEntitiesFound", { entities: t("competencies").toLowerCase() })} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-8 items-start" />
+            {!!groups ?
+                <Pager pagerObject={groups} renderItem={renderGroups} emptyMessage={t("noEntitiesFound", { entities: t("groups").toLowerCase() })} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-8 items-start" />
                 :
                 <Skeletons amount={15} className="w-full h-28" />
             }

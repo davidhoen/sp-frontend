@@ -28,7 +28,9 @@
     "noEntitiesFound": "Geen {entities) gevonden",
     "topSkills": "Top skills",
     "view": "Bekijk",
-    "overview": "Overzicht"
+    "overview": "Overzicht",
+    "students": "Studenten",
+    "groups": "Groepen"
   },
   "modals": {
     "cancel": "Annuleren",
