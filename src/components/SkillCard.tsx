@@ -1,15 +1,15 @@
 "use client"
 
+import { Link, useRouter } from "@/i18n/routing"
+import { getMostRecentRating, triggerPromiseToast } from "@/lib"
+import axios from "@/lib/axios"
+import { useUser } from "@/providers/UserProvider"
 import { SkillType } from "@/types"
 import { CheckIcon, PlusIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import StarRating from "./StarRating"
 import { Badge } from "./ui/badge"
-import { Link, useRouter } from "@/i18n/routing"
 import { Button } from "./ui/button"
-import axios from "@/lib/axios"
-import { useUser } from "@/providers/UserProvider"
-import { getMostRecentRating, triggerPromiseToast } from "@/lib"
 
 export default function SkillCard({ skill, mutate }: { skill: SkillType, mutate?: () => void }) {
     const t = useTranslations("general")
