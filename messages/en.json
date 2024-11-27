@@ -38,9 +38,12 @@
     "save": "Save",
     "saveChanges": "Save changes",
     "feedback": "Feedback",
+    "feedbackDescription": "Provide detailed feedback on the student's skill",
     "feedbackPlaceholder": "Type your feedback here",
-    "event": "Event",
-    "eventPlaceholder": "Select an event",
+    "feedbackTitle": "Feedback title",
+    "feedbackTitlePlaceholder": "E.g. Practice presentation",
+    "endorsementTitle": "Endorsement title",
+    "endorsementTitlePlaceholder": "E.g. Final presentation",
     "skill": "Skill",
     "skillPlaceholder": "Select a skill",
     "email": "Email",
@@ -67,6 +70,18 @@
       "title": "Request feedback",
       "fromEmaildescription": "Enter the email of the person who will write the feedback.",
       "fromUserdescription": "Ask {name} for feedback on a specific skill."
+    },
+    "endorsementRequest": {
+      "title": "Endorsment request",
+      "requestExpired": "This endorsement request has expired, please ask the student to send a new request.",
+      "endorseUserSkill": "Endorse {name}'s skill",
+      "skillInformation": "Skill information",
+      "yourName": "Your name",
+      "yourPosition": "Your position",
+      "yourCompany": "Your company",
+      "skillRating": "Skill rating",
+      "skillRatingDescription": "Rate the skill from 1 to 4 stars",
+      "submitEndorsement": "Submit endorsement"
     }
   },
   "students": {
