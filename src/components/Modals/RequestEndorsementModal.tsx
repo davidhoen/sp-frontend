@@ -1,7 +1,7 @@
 "use client"
 
 import { useEvents } from "@/hooks/use-events"
-import { getFullName } from "@/lib"
+import { getFullName, triggerPromiseToast } from "@/lib"
 import { UserType } from "@/types/User"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
@@ -13,33 +13,46 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
 import { Input } from "../ui/input"
 import Select from "../ui/select"
+import axios from "axios"
 
 const RequestEndorsementModal = ({ children, skillId, requestFromUser }: { children: ReactNode, skillId?: string, requestFromUser?: UserType }) => {
     const t = useTranslations("modals")
-    const { data: events, isLoading: isEventsLoading } = useEvents()
+    // TODO: Replace with useSkills of student
+    const { data: events } = useEvents()
 
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const formSchema = z.object(
         requestFromUser ?
-            { eventId: z.string(), skillId: z.string() }
+            { title: z.string(), skillId: z.string() }
             :
-            { eventId: z.string(), email: z.string().email() }
+            { title: z.string(), email: z.string().email() }
     )
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            eventId: undefined,
+            title: undefined,
             email: "",
             skillId,
         }
     })
 
-    const onSubmit = (values: z.infer<typeof formSchema>) => {
-        console.log(values);
-        setIsModalOpen(false)
-        form.reset()
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        try {
+            const res = axios.post(`/api/student/request/endorsement`, {
+                ...values,
+                skillId,
+                userId: requestFromUser?.id
+            })
+            await triggerPromiseToast(res, t)
+            form.reset()
+            setIsModalOpen(false)
+
+        }
+        catch (error) {
+            console.error(error)
+        }
     }
 
     return (
@@ -60,15 +73,15 @@ const RequestEndorsementModal = ({ children, skillId, requestFromUser }: { child
                             </DialogDescription>
                         </DialogHeader>
 
-                        {/* Event for endorsement */}
+                        {/* Title for endorsement */}
                         <FormField
                             control={form.control}
-                            name="eventId"
-                            render={({ field: { onChange } }) => (
+                            name="title"
+                            render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>{t("event")}</FormLabel>
+                                    <FormLabel>{t("endorsementTitle")}</FormLabel>
                                     <FormControl>
-                                        <Select options={events} onChange={(selectedOption) => onChange(selectedOption?.value)} placeholder={t("eventPlaceholder")} isLoading={isEventsLoading} />
+                                        <Input {...field} placeholder={t("endorsementTitlePlaceholder")} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>

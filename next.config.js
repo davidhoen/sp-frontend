@@ -12,6 +12,11 @@ const nextConfig = {
         protocol: "https",
         hostname: "flagcdn.com",
         port: ""
+      },
+      {
+        protocol: "https",
+        hostname: "xsgames.co",
+        port: ""
       }
     ]
   },

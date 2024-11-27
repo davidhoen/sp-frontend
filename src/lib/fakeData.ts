@@ -1,4 +1,4 @@
-import { CompetencyType, EndorsementType, FeedbackType, RatingHistoryType, SkillType } from "@/types"
+import { CompetencyType, EndorsementRequestType, EndorsementType, FeedbackType, RatingHistoryType, SkillType } from "@/types"
 import { UserType } from "@/types/User"
 import { v4 as uuid } from "uuid"
 
@@ -6,7 +6,7 @@ export const fakeStudent: UserType = {
     id: uuid(),
     email: "user@skillspassport.nl",
     first_name: "John",
-    last_name: "John",
+    last_name: "Doe",
     role: {
         id: uuid(),
         name: "Student",
@@ -36,20 +36,14 @@ export const feedback: FeedbackType = {
     id: uuid(),
     user: fakeStudent,
     created_at: new Date(),
-    event: {
-        id: uuid(),
-        title: "Start presentation"
-    },
+    title: "Start presentation",
     content: "Improvement could be incorporating more real-world examples to illustrate the points. Nevertheless, it was a compelling presentation."
 }
 
 export const endorsement: EndorsementType = {
     id: uuid(),
     user: fakeTeacher,
-    event: {
-        id: uuid(),
-        title: "Midterm evaluation"
-    },
+    title: "Midterm evaluation",
     content: "Impressive command over the subject matter and ability to engage the audience",
     rating: 3,
     is_approved: true,
@@ -111,4 +105,11 @@ export const fakeSkill2: SkillType = {
     created_at: new Date(),
     groups_count: 0,
     is_added: false,
+}
+
+export const fakeEndorsementRequest: EndorsementRequestType = {
+    id: uuid(),
+    title: "Starting presentation",
+    requester: fakeStudent,
+    skill: fakeSkill
 }

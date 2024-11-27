@@ -1,11 +1,23 @@
-import { CompetencyType, SkillType } from "@/types"
-import axios from "./axios"
+import { CompetencyType, EndorsementRequestType, SkillType } from "@/types";
 import { PagingSchema } from "@/types/pagination";
+import axios from "./axios";
 
 export const getSkill = async (id: number) => {
     try {
         const { data } = await axios.get<SkillType>(`/api/student/skills/${id}`);
         return data;
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+
+export const getEndorsementRequestResponse = async (id: number) => {
+    try {
+        const res = await axios.get<EndorsementRequestType>(`/api/endorsement_request/${id}`);
+        if (res?.status === 410)
+            return "expired";
+        return res.data;
     }
     catch (error) {
         console.error(error);

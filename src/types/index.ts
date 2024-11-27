@@ -56,14 +56,14 @@ export type FeedbackType = {
   id: string
   user: UserType
   created_at: Date
-  event: EventType
+  title: string
   content: string
 }
 
 export type EndorsementType = {
   id: string
   user: UserType
-  event: EventType
+  title: string
   content: string
   rating: number
   is_approved: boolean
@@ -90,14 +90,16 @@ export enum TimeLineItemTypeEnum {
   RatingUpdate
 }
 
-export type EventType = {
-  id: string
-  title: string
-}
-
 export type SkillsQueryType = {
   page: string,
   search: string,
   competencies: string,
   is_added: string
+}
+
+export type EndorsementRequestType = {
+  id: string;
+  title: string;
+  skill: SkillType;
+  requester: UserType
 }
