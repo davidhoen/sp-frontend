@@ -28,7 +28,10 @@
     "noEntitiesFound": "No {entities} found",
     "topSkills": "Top skills",
     "view": "View",
-    "overview": "Overview"
+    "overview": "Overview",
+    "students": "Students",
+    "groups": "Groups",
+    "teachers": "Teachers"
   },
   "modals": {
     "cancel": "Cancel",

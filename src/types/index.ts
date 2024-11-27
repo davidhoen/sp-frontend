@@ -47,8 +47,11 @@ export type GroupType = {
   id: string
   name: string
   desc: string
+  teachers: UserType[]
+  students: UserType[]
+  skills: SkillType[]
   created_by: UserType
-  closed_at: Date
+  closed_at?: Date
   created_at: Date
 }
 
@@ -102,4 +105,10 @@ export type EndorsementRequestType = {
   title: string;
   skill: SkillType;
   requester: UserType
+}
+
+export type GroupsQueryType = {
+  page: string,
+  search: string,
+  is_joined: string
 }

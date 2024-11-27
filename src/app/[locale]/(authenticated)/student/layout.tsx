@@ -17,10 +17,8 @@ const StudentLayout = ({ children }: { children: ReactNode }) => {
   const menuItems = [
     { title: "Dashboard", url: `${basePath}`, icon: BookIcon },
     { title: "Skills", url: `${basePath}/skills`, icon: StarIcon },
-    { title: "Groups", url: "#", icon: UsersIcon },
+    { title: "Groups", url: `${basePath}/groups`, icon: UsersIcon },
     { title: "Competencies", url: `${basePath}/competencies`, icon: StarsIcon },
-    { title: "Profiles", url: "#", icon: ArrowBigLeft },
-    { title: "Public Profile", url: "#", icon: UserIcon }
   ]
 
   return <SideBar items={menuItems}>

@@ -73,7 +73,7 @@ const SkillsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => 
             const page = parseInt(searchParams.page) || 1;
             const search = searchParams.search ?? ""
             const competencies = searchParams.competencies ?? ""
-            const isAdded = searchParams.is_added ?? undefined
+            const isAdded = searchParams.is_added ?? ""
 
             const filteredSkills = await getSkills({ page, search, competencies, isAdded });
 

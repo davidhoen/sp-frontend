@@ -29,7 +29,10 @@
     "topSkills": "Top skills",
     "view": "Bekijk",
     "title": "Titel",
-    "overview": "Overzicht"
+    "overview": "Overzicht",
+    "students": "Studenten",
+    "groups": "Groepen",
+    "teachers": "Docenten"
   },
   "modals": {
     "cancel": "Annuleren",
