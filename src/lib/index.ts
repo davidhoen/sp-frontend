@@ -44,3 +44,9 @@ export const getCompetencyRating = (competency: CompetencyType) => {
 export const roundToQuarter = (num: number) => {
     return Math.round(num * 4) / 4
 }
+
+export const LOGIN_ROUTE = "/en/login";
+
+// Expired session
+export const EXPIRED_SESSION_PARAM = "expired_session";
+export const EXPIRED_SESSION_ROUTE = `${LOGIN_ROUTE}?${EXPIRED_SESSION_PARAM}`;

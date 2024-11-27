@@ -29,10 +29,6 @@ const GroupsOverview = ({ searchParams }: { searchParams: GroupsQueryType }) => 
 
             let filteredGroups = await getGroups({ page, search, isJoined });
 
-            if (!filteredGroups?.data)
-                filteredGroups = {
-                    data: [fakeGroup, fakeGroup], meta: { current_page: 1, last_page: 1, per_page: 10, total: 2, }
-                };
 
             setGroups(filteredGroups);
         }
