@@ -33,7 +33,7 @@ const RequestEndorsementModal = ({ children, skillId, requestFromUser }: { child
         resolver: zodResolver(formSchema),
         defaultValues: {
             title: undefined,
-            email: "",
+            email: undefined,
             skillId,
         }
     })

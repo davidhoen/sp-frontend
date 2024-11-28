@@ -31,7 +31,7 @@ const UpdateRatingModal = ({ children, skillId, currentRating }: { children: Rea
         resolver: zodResolver(formSchema),
         defaultValues: {
             rating: currentRating?.rating || 0,
-            feedback: ""
+            feedback: undefined
         }
     })
 
