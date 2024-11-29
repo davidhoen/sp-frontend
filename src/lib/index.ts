@@ -1,5 +1,5 @@
 import { CompetencyType, RatingHistoryType, TranslationFunction } from "@/types"
-import { UserType } from "@/types/User"
+import { UserType } from "@/types/auth"
 import toast from "react-hot-toast"
 
 // Create a full name of the user
@@ -44,3 +44,10 @@ export const getCompetencyRating = (competency: CompetencyType) => {
 export const roundToQuarter = (num: number) => {
     return Math.round(num * 4) / 4
 }
+
+export const roleBasePathMap: { [key: string]: string } = {
+    student: "/student",
+    teacher: "/teacher",
+    head_teacher: "/teacher",
+    admin: "/teacher",
+};

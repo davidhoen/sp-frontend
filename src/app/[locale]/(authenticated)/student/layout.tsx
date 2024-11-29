@@ -10,15 +10,11 @@ const StudentLayout = ({ children }: { children: ReactNode }) => {
   const { user } = useUser()
   if (!user) return <Loading />
 
-
-  // const basePath = user.role.name === "student" ? "/student" : "/teacher"
-  const basePath = "/student"
-
   const menuItems = [
-    { title: "Dashboard", url: `${basePath}`, icon: BookIcon },
-    { title: "Skills", url: `${basePath}/skills`, icon: StarIcon },
-    { title: "Groups", url: `${basePath}/groups`, icon: UsersIcon },
-    { title: "Competencies", url: `${basePath}/competencies`, icon: StarsIcon },
+    { title: "Dashboard", url: `/student`, icon: BookIcon },
+    { title: "Skills", url: `/student/skills`, icon: StarIcon },
+    { title: "Groups", url: `/student/groups`, icon: UsersIcon },
+    { title: "Competencies", url: `/student/competencies`, icon: StarsIcon },
   ]
 
   return <SideBar items={menuItems}>

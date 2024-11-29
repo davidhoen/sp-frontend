@@ -10,11 +10,10 @@ import { Link } from "@/i18n/routing";
 import { Button } from "./ui/button";
 
 export function GroupCard({ group }: { group: GroupType }) {
-    const { basePath } = useUser()
     const t = useTranslations("general")
 
     return (
-        <Link href={`${basePath}/groups/${group.id}`}>
+        <Link href={`/student/groups/${group.id}`}>
             <div className="relative flex flex-col border rounded-lg px-4 py-3">
 
                 {/* Name */}

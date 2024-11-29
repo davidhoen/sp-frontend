@@ -6,6 +6,7 @@ import { Roboto, Roboto_Slab } from "next/font/google"
 import { notFound } from "next/navigation"
 import "./globals.css"
 import { Toaster } from 'react-hot-toast';
+import ParentProvider from "@/providers/ParentProvider"
 
 const roboto = Roboto({
   weight: ["400", "500", "700"],
@@ -47,7 +48,9 @@ export default async function RootLayout({ children, params: { locale } }: { chi
     <html lang={locale}>
       <body className={`${roboto.className} ${robotoSlab.variable} antialiased`}>
         <NextIntlClientProvider messages={messages}>
-          <main>{children}</main>
+          <ParentProvider>
+            <main>{children}</main>
+          </ParentProvider>
           <Toaster />
         </NextIntlClientProvider>
       </body>

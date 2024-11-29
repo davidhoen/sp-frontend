@@ -1,4 +1,4 @@
-import { UserType } from "@/types/User"
+import { UserType } from "@/types/auth"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import { getFullName } from "@/lib"
 

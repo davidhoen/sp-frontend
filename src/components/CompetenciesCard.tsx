@@ -11,7 +11,6 @@ import { Button } from "./ui/button"
 
 export default function CompetenciesCard({ competency, mutate }: { competency: CompetencyType, mutate?: () => void }) {
     const t = useTranslations("general")
-    const { basePath } = useUser()
 
     // Sort competency skills by newest ratings rating
     competency.skills.sort((a, b) => {
@@ -54,7 +53,7 @@ export default function CompetenciesCard({ competency, mutate }: { competency: C
                 </div>
             </div>
 
-            <Link href={`${basePath}/competencies/${competency.id}`}>
+            <Link href={`student/competencies/${competency.id}`}>
                 <Button variant="outline" className="w-full">
                     {t("view")}
                 </Button>

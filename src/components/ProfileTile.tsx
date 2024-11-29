@@ -9,8 +9,6 @@ import { icons } from "lucide-react"
 import { TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip"
 
 export default function ProfileTile({ profile, variant = "default", className }: { profile: ProfileType, variant?: "default" | "icon", className?: string }) {
-    const { basePath } = useUser()
-
     // Import icon dynamically and fallback to CircleDashed if icon is not found
     const Icon = icons[profile.icon as keyof typeof icons] || icons["CircleDashed"]
 
@@ -41,7 +39,7 @@ export default function ProfileTile({ profile, variant = "default", className }:
     }
 
     return (
-        <Link href={`${basePath}/profiles/${profile.id}`}>
+        <Link href={`/student/profiles/${profile.id}`}>
             {component()}
         </Link>
     )

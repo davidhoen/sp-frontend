@@ -102,7 +102,7 @@ const RegisterPage = () => {
 
           <div>
             <label htmlFor="role" className="undefined block font-medium text-sm text-gray-700">
-              Role 
+              Role
             </label>
 
             <Field

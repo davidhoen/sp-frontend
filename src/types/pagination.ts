@@ -18,3 +18,4 @@ export type PagingSchema<T> = {
 
 // Parameters for a paging object (without `last_page` and `total` fields)
 export type PagingParams = Omit<PagingMetaObject, "last_page" | "total">;
+

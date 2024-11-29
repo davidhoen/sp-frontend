@@ -2,7 +2,7 @@
 
 import { useEvents } from "@/hooks/use-events"
 import { getFullName } from "@/lib"
-import { UserType } from "@/types/User"
+import { UserType } from "@/types/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { ReactNode, useState } from "react"

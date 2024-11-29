@@ -1,5 +1,5 @@
 import { LucideIcon } from "lucide-react"
-import { UserType } from "./User"
+import { UserType } from "./auth"
 import { useTranslations } from "next-intl"
 
 export type NavItem = {

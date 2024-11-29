@@ -14,7 +14,6 @@ import { Button } from "./ui/button"
 export default function SkillCard({ skill, mutate }: { skill: SkillType, mutate?: () => void }) {
     const t = useTranslations("general")
     const router = useRouter()
-    const { basePath } = useUser()
 
     const rating = skill.ratings ? getMostRecentRating(skill.ratings)?.rating || 0 : 0
 
@@ -23,7 +22,7 @@ export default function SkillCard({ skill, mutate }: { skill: SkillType, mutate?
             const res = axios.post(`/api/student/skills/${skill.id}/add`)
             await triggerPromiseToast(res, t)
             mutate && mutate()
-            router.push(`${basePath}/skills/${skill.id}`)
+            router.push(`/student/skills/${skill.id}`)
         } catch (error) {
             console.error(error)
         }
@@ -49,7 +48,7 @@ export default function SkillCard({ skill, mutate }: { skill: SkillType, mutate?
             <div className="flex justify-between items-center">
                 <StarRating rating={rating} />
                 {/* Disable button when skill is not added (yet) */}
-                <Link href={`${basePath}/skills/${skill.id}`}>
+                <Link href={`/student/skills/${skill.id}`}>
                     <Button size="sm" disabled={!skill.is_added}>{t("addFeedback")}</Button>
                 </Link>
             </div>

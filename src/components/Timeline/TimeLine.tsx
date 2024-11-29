@@ -4,7 +4,7 @@ import { useTimeLineItems } from "@/hooks/use-timeline-items";
 import { endorsement, feedback, ratingUpdate } from "@/lib/fakeData";
 import { cn } from "@/lib/utils";
 import { TimeLineItemType, TimeLineItemTypeEnum } from "@/types";
-import { UserType } from "@/types/User";
+import { UserType } from "@/types/auth";
 import { ArrowUpDownIcon, BadgeCheckIcon, MessageCircleIcon, PlusIcon, StarIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
