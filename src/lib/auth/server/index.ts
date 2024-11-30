@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { createUserToken, verifyUserToken } from "../jwt";
 import { UserType } from "@/types/auth";
+import { getLocale } from "next-intl/server";
 
 const isSecureCookie = process.env.NODE_ENV !== "development";
 
@@ -95,16 +96,11 @@ export const auth = async () => {
   try {
     const token = cookies().get(AUTH_COOKIE_NAME)?.value;
 
-    console.log("token", token);
-
-
     if (!token) {
       return { user: null };
     }
 
     const user = await verifyUserToken(token);
-
-    console.log("user", user);
 
     return { user };
   } catch (error) {
