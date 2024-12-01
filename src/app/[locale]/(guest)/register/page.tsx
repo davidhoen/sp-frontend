@@ -1,50 +1,82 @@
 "use client"
-import * as Yup from "yup"
-import axios, { AxiosError } from "axios"
-import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { EyeClosedIcon, EyeIcon } from "lucide-react"
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
 
-import { useAuth } from "@/hooks/auth"
 import ApplicationLogo from "@/components/ApplicationLogo"
 import AuthCard from "@/components/AuthCard"
-import { Link } from "@/i18n/routing"
+import SubmitFormButton from "@/components/SubmitFormButton"
+import Select from "@/components/ui/select"
+import { Link, useRouter } from "@/i18n/routing"
 
-interface Values {
-  first_name: string
-  last_name: string
-  email: string
-  password: string
-  role_id: number
-  password_confirmation: string
-}
+import { useUser } from "@/providers/UserProvider"
+import { RegisterRequest } from "@/schemas/zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useTranslations } from "next-intl"
+import { handleBackendFormErrors } from "@/lib/utils"
+import { roleBasePathMap, triggerPromiseToast } from "@/lib"
+import { register } from "@/lib/auth/client"
 
 const RegisterPage = () => {
-  const { register } = useAuth({
-    middleware: "guest",
-    redirectIfAuthenticated: "/student"
+  const router = useRouter()
+  const { registerUser } = useUser();
+  const t = useTranslations("general")
+
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false)
+
+  const form = useForm<z.infer<typeof RegisterRequest>>({
+    resolver: zodResolver(RegisterRequest),
+    defaultValues: {
+      first_name: "",
+      last_name: "",
+      role_id: 1,
+      email: "",
+      password: "",
+      password_confirmation: "",
+    },
   })
 
-  const submitForm = async (values: Values, { setSubmitting, setErrors }: FormikHelpers<Values>): Promise<any> => {
+  const onSubmit = async (values: z.infer<typeof RegisterRequest>) => {
+    setIsSubmitting(true)
+
     try {
-      await register(values)
-    } catch (error: Error | AxiosError | any) {
-      if (axios.isAxiosError(error) && error.response?.status === 422) {
-        setErrors(error.response?.data?.errors)
-      }
+      const user = await register(values);
+      const res = fetch("/api/login", {
+        method: "POST",
+        body: JSON.stringify({ user }),
+        cache: "no-store",
+      });
+
+      await triggerPromiseToast(res, t)
+      registerUser(user);
+
+      router.push(roleBasePathMap[user?.role.name] ?? "/");
+    } catch (error: any) {
+      // toast.error(t("genericError"))
+      handleBackendFormErrors({
+        setError: form.setError,
+        error,
+        toast(options) { },
+      });
     } finally {
-      setSubmitting(false)
+      setIsSubmitting(false);
     }
   }
 
-  const RegisterSchema = Yup.object().shape({
-    first_name: Yup.string().required("The first name field is required."),
-    last_name: Yup.string().required("The last name field is required."),
-    email: Yup.string().email("Invalid email").required("The email field is required."),
-    password: Yup.string().required("The password field is required."),
-    role_id: Yup.number().required("The role field is required."),
-    password_confirmation: Yup.string()
-      .required("Please confirm password.")
-      .oneOf([Yup.ref("password")], "Your passwords do not match.")
-  })
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
+
+  const roleOptions = [
+    { value: 1, label: "Student" },
+    { value: 2, label: "Teacher" },
+    { value: 3, label: "Head teacher" },
+    { value: 4, label: "Admin" },
+  ]
 
   return (
     <AuthCard
@@ -53,115 +85,167 @@ const RegisterPage = () => {
           <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
         </Link>
       }>
-      <Formik
-        onSubmit={submitForm}
-        validationSchema={RegisterSchema}
-        initialValues={{
-          first_name: "",
-          last_name: "",
-          email: "",
-          role_id: 1,
-          password: "",
-          password_confirmation: ""
-        }}>
-        <Form className="space-y-4">
-          <div>
-            <label htmlFor="first_name" className="undefined block font-medium text-sm text-gray-700">
-              First Name
-            </label>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <FormField
+            control={form.control}
+            name="first_name"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-1">
+                <FormLabel>
+                  First name <span className="text-red-500">*</span>
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    className="background-light900_dark text-slate900_light800 placeholder no-focus slate-border outline-none"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="last_name"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-1">
+                <FormLabel>
+                  Last name <span className="text-red-500">*</span>
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    className="background-light900_dark text-slate900_light800 placeholder no-focus slate-border outline-none"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-            <Field id="first_name" name="first_name" className="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-1">
+                <FormLabel>
+                  Email <span className="text-red-500">*</span>
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Email"
+                    className="background-light900_dark text-slate900_light800 placeholder no-focus slate-border outline-none"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-            <ErrorMessage name="first_name" component="span" className="text-xs text-red-500" />
-          </div>
+          <FormField
+            control={form.control}
+            name="role_id"
+            render={({ field: { onChange, value } }) => (
+              <FormItem className="flex flex-col gap-1">
+                <FormLabel>
+                  Role <span className="text-red-500">*</span>
+                </FormLabel>
+                <FormControl>
+                  <Select options={roleOptions} onChange={(selectedOption) => onChange(selectedOption?.value)} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-          <div>
-            <label htmlFor="last_name" className="undefined block font-medium text-sm text-gray-700">
-              Last Name
-            </label>
 
-            <Field id="last_name" name="last_name" className="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
-
-            <ErrorMessage name="last_name" component="span" className="text-xs text-red-500" />
-          </div>
-
-          <div>
-            <label htmlFor="email" className="undefined block font-medium text-sm text-gray-700">
-              Email
-            </label>
-
-            <Field
-              id="email"
-              name="email"
-              type="email"
-              className="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            />
-
-            <ErrorMessage name="email" component="span" className="text-xs text-red-500" />
-          </div>
-
-          <div>
-            <label htmlFor="role" className="undefined block font-medium text-sm text-gray-700">
-              Role
-            </label>
-
-            <Field
-              as="select"
-              id="role"
-              name="role_id"
-              className="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-              <option value="1">Student</option>
-              <option value="2">Teacher</option>
-              <option value="3">Head Teacher</option>
-              <option value="4">Admin</option>
-            </Field>
-
-            <ErrorMessage name="role_id" component="span" className="text-xs text-red-500" />
-          </div>
-
-          <div className="">
-            <label htmlFor="password" className="undefined block font-medium text-sm text-gray-700">
-              Password
-            </label>
-
-            <Field
-              id="password"
-              name="password"
-              type="password"
-              className="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            />
-
-            <ErrorMessage name="password" component="span" className="text-xs text-red-500" />
-          </div>
-
-          <div className="">
-            <label htmlFor="password" className="undefined block font-medium text-sm text-gray-700">
-              Confirm Password
-            </label>
-
-            <Field
-              id="password_confirmation"
-              name="password_confirmation"
-              type="password"
-              className="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            />
-
-            <ErrorMessage name="password_confirmation" component="span" className="text-xs text-red-500" />
-          </div>
-
-          <div className="flex items-center justify-end mt-4">
-            <Link href="/login" className="underline text-sm text-gray-600 hover:text-gray-900">
-              Already registered?
-            </Link>
-
-            <button
-              type="submit"
-              className="ml-4 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
-              Register
-            </button>
-          </div>
-        </Form>
-      </Formik>
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-1">
+                <FormLabel>
+                  Password <span className="text-red-500">*</span>
+                </FormLabel>
+                <div className="background-light900_dark slate-border flex items-center justify-between rounded-md border">
+                  <FormControl>
+                    <>
+                      <Input
+                        type={isPasswordVisible ? "text" : "password"}
+                        placeholder="Password"
+                        className="text-slate900_light800 placeholder no-focus flex-1 border-none bg-transparent outline-none"
+                        {...field}
+                      />
+                      <div
+                        className="flex cursor-pointer select-none items-center pr-3"
+                        onClick={togglePasswordVisibility}
+                      >
+                        {isPasswordVisible ? (
+                          <EyeClosedIcon className="text-slate900_light800 size-4" />
+                        ) : (
+                          <EyeIcon className="text-slate900_light800 size-4" />
+                        )}
+                      </div>
+                    </>
+                  </FormControl>
+                </div>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password_confirmation"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-1">
+                <FormLabel>
+                  Password Confirmation{" "}
+                  <span className="text-red-500">*</span>
+                </FormLabel>
+                <div className="background-light900_dark slate-border flex items-center justify-between rounded-md border">
+                  <FormControl>
+                    <>
+                      <Input
+                        type={isPasswordVisible ? "text" : "password"}
+                        placeholder="Confirm your password"
+                        className="text-slate900_light800 placeholder no-focus flex-1 border-none bg-transparent outline-none"
+                        {...field}
+                      />
+                      <div
+                        className="flex cursor-pointer select-none items-center pr-3"
+                        onClick={togglePasswordVisibility}
+                      >
+                        {isPasswordVisible ? (
+                          <EyeClosedIcon className="text-slate900_light800 size-4" />
+                        ) : (
+                          <EyeIcon className="text-slate900_light800 size-4" />
+                        )}
+                      </div>
+                    </>
+                  </FormControl>
+                </div>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <SubmitFormButton
+            isSubmitting={isSubmitting}
+            submitLabel="Register"
+            extraElement={
+              <div className="flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center">
+                <Link
+                  href="/login"
+                  className="text-slate900_light800 text-sm underline"
+                >
+                  Already have an account?
+                </Link>
+              </div>
+            }
+          />
+        </form>
+      </Form>
     </AuthCard>
   )
 }

@@ -56,9 +56,7 @@ const LoginPage = () => {
       handleBackendFormErrors({
         setError: form.setError,
         error,
-        toast(options) {
-
-        },
+        toast(options) { },
       })
     } finally {
       setIsSubmitting(false)

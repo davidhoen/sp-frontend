@@ -1,45 +1,55 @@
 "use client"
-import React, { useState } from "react"
-import * as Yup from "yup"
-import axios, { AxiosError } from "axios"
-import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik"
 
-import { useAuth } from "@/hooks/auth"
-import AuthCard from "@/components/AuthCard"
-import ApplicationLogo from "@/components/ApplicationLogo"
-import AuthSessionStatus from "@/components/AuthSessionStatus"
-import { Link } from "@/i18n/routing"
+import { handleBackendFormErrors } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { postData } from "@/lib/actions/data.action";
+import AuthCard from "@/components/AuthCard";
+import { Link } from "@/i18n/routing";
+import ApplicationLogo from "@/components/ApplicationLogo";
+import SubmitFormButton from "@/components/SubmitFormButton";
+import toast from "react-hot-toast";
 
-interface FormValues {
-  email: string
-}
+const ForgotPasswordRequest = z.object({
+  email: z.string().email(),
+});
 
 const ForgotPasswordPage = () => {
-  const [status, setStatus] = useState<string>("")
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { forgotPassword } = useAuth({
-    middleware: "guest",
-    redirectIfAuthenticated: "/student"
-  })
+  const form = useForm<z.infer<typeof ForgotPasswordRequest>>({
+    resolver: zodResolver(ForgotPasswordRequest),
+    defaultValues: {
+      email: "",
+    },
+  });
 
-  const ForgotPasswordSchema = Yup.object().shape({
-    email: Yup.string().email("Invalid email").required("The email field is required.")
-  })
+  const onSubmit = async (values: z.infer<typeof ForgotPasswordRequest>) => {
+    setIsSubmitting(true);
 
-  const submitForm = async (values: FormValues, { setSubmitting, setErrors }: FormikHelpers<FormValues>): Promise<any> => {
-    try {
-      const response = await forgotPassword(values)
+    const response = await postData({
+      url: "/forgot-password",
+      data: values,
+      path: "/forgot-password",
+    });
 
-      setStatus(response.data.status)
-    } catch (error: Error | AxiosError | any) {
-      setStatus("")
-      if (axios.isAxiosError(error) && error.response?.status === 422) {
-        setErrors(error.response?.data?.errors)
-      }
-    } finally {
-      setSubmitting(false)
+    setIsSubmitting(false);
+
+    if (response && !response.success) {
+      handleBackendFormErrors({
+        setError: form.setError,
+        error: response.error,
+        toast(options) { },
+      });
+      return;
     }
-  }
+    toast.success("Password reset link sent successfully");
+  };
+
 
   return (
     <AuthCard
@@ -48,38 +58,36 @@ const ForgotPasswordPage = () => {
           <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
         </Link>
       }>
-      <div className="mb-4 text-sm text-gray-600">
+      <p>
         Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.
-      </div>
-
-      <AuthSessionStatus className="mb-4" status={status} />
-
-      <Formik onSubmit={submitForm} validationSchema={ForgotPasswordSchema} initialValues={{ email: "" }}>
-        <Form className="space-y-4">
-          <div>
-            <label htmlFor="email" className="undefined block font-medium text-sm text-gray-700">
-              Email
-            </label>
-
-            <Field
-              id="email"
-              name="email"
-              type="email"
-              className="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            />
-
-            <ErrorMessage name="email" component="span" className="text-xs text-red-500" />
-          </div>
-
-          <div className="flex items-center justify-end mt-4">
-            <button
-              type="submit"
-              className="ml-3 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
-              Email Password Reset Link
-            </button>
-          </div>
-        </Form>
-      </Formik>
+      </p>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-1">
+                <FormLabel>
+                  Email <span className="text-red-500">*</span>
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Email"
+                    className="background-light900_dark text-slate900_light800 placeholder no-focus slate-border outline-none"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <SubmitFormButton
+            isSubmitting={isSubmitting}
+            submitLabel="Send link"
+          />
+        </form>
+      </Form>
     </AuthCard>
   )
 }

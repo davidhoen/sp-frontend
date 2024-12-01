@@ -9,6 +9,15 @@ export interface UserType {
     personal_coach?: UserType
 }
 
+export interface UserInputType {
+    first_name: string
+    last_name: string
+    email: string
+    role_id: number
+    password: string
+    password_confirmation: string
+}
+
 export type Role = {
     id: string
     name: string
