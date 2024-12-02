@@ -1,11 +1,10 @@
-import { LucideIcon } from "lucide-react"
-import { UserType } from "./auth"
 import { useTranslations } from "next-intl"
+import { UserType } from "./auth"
 
 export type NavItem = {
   title: string
   url: string
-  icon: LucideIcon
+  icon: string,
   isActive?: boolean
 }
 

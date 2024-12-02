@@ -1,20 +1,13 @@
-"use client"
 
-import { useUser } from "@/providers/UserProvider"
-import { BookIcon, StarIcon, UsersIcon, StarsIcon, ArrowBigLeft, UserIcon } from "lucide-react"
-import { ReactNode } from "react"
-import Loading from "../../loading"
 import SideBar from "@/components/Navigation/SideBar"
+import { ReactNode } from "react"
 
 const StudentLayout = ({ children }: { children: ReactNode }) => {
-  const { user } = useUser()
-  if (!user) return <Loading />
-
   const menuItems = [
-    { title: "Dashboard", url: `/student`, icon: BookIcon },
-    { title: "Skills", url: `/student/skills`, icon: StarIcon },
-    { title: "Groups", url: `/student/groups`, icon: UsersIcon },
-    { title: "Competencies", url: `/student/competencies`, icon: StarsIcon },
+    { title: "Dashboard", url: `/student`, icon: "Book" },
+    { title: "Skills", url: `/student/skills`, icon: "Star" },
+    { title: "Groups", url: `/student/groups`, icon: "Users" },
+    { title: "Competencies", url: `/student/competencies`, icon: "Star" },
   ]
 
   return <SideBar items={menuItems}>

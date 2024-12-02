@@ -125,8 +125,7 @@ class ServerSideRequestsManager {
     }
 
     this.setCookiesString(response.headers["set-cookie"]?.join(", ") ?? "");
-
-    return { success: true, result: response.data };
+    return { success: true, result: response.data, status: response.status };
   }
 
   private async retryRequest<T>({

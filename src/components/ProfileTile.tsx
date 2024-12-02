@@ -2,7 +2,6 @@
 
 import { Link } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
-import { useUser } from "@/providers/UserProvider"
 import { ProfileType } from "@/types"
 import { Tooltip } from "@radix-ui/react-tooltip"
 import { icons } from "lucide-react"

@@ -2,8 +2,7 @@
 
 import { Link, useRouter } from "@/i18n/routing"
 import { getMostRecentRating, triggerPromiseToast } from "@/lib"
-import axios from "@/lib/axios"
-import { useUser } from "@/providers/UserProvider"
+import axiosInstance from "@/lib/axios"
 import { SkillType } from "@/types"
 import { CheckIcon, PlusIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
@@ -19,7 +18,7 @@ export default function SkillCard({ skill, mutate }: { skill: SkillType, mutate?
 
     const addSkill = async () => {
         try {
-            const res = axios.post(`/api/student/skills/${skill.id}/add`)
+            const res = axiosInstance.post(`/api/student/skills/${skill.id}/add`)
             await triggerPromiseToast(res, t)
             mutate && mutate()
             router.push(`/student/skills/${skill.id}`)
@@ -43,7 +42,7 @@ export default function SkillCard({ skill, mutate }: { skill: SkillType, mutate?
                 </div>
             </div>
             <div className="mb-1">
-                <Badge variant="secondary">{skill.competency.title}</Badge>
+                <Badge variant="secondary">{skill.competency?.title}</Badge>
             </div>
             <div className="flex justify-between items-center">
                 <StarRating rating={rating} />

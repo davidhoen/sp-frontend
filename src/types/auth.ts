@@ -53,6 +53,7 @@ export interface ApiResponse<T> {
     success: boolean;
     result: T;
     error?: SerializableError["error"];
+    status?: number;
 }
 
 export interface ApiPaginationMeta {

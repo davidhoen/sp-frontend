@@ -6,7 +6,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { triggerPromiseToast } from "@/lib";
-import axios from "@/lib/axios";
+import axiosInstance from "@/lib/axios";
 import { EndorsementFormValues, endorsementSchema } from "@/schemas/zod";
 import { EndorsementRequestType } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -31,7 +31,7 @@ export const EndorsementRequestForm = ({ endorsementRequest }: { endorsementRequ
 
     const onSubmit = async (values: z.infer<typeof endorsementSchema>) => {
         try {
-            const res = axios.post(`api/endorsement_request/${endorsementRequest.id}/response`, {
+            const res = axiosInstance.post(`api/endorsement_request/${endorsementRequest.id}/response`, {
                 ...values,
             })
             await triggerPromiseToast(res, t)

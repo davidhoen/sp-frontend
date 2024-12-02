@@ -1,10 +1,9 @@
 import { AUTH_COOKIE_NAME, EXPIRED_SESSION_PARAM, LOGIN_ROUTE } from "@/constants";
+import { UserType } from "@/types/auth";
 import { serialize } from "cookie";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { createUserToken, verifyUserToken } from "../jwt";
-import { UserType } from "@/types/auth";
-import { getLocale } from "next-intl/server";
 
 const isSecureCookie = process.env.NODE_ENV !== "development";
 

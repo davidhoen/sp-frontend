@@ -2,20 +2,15 @@ import SkillCard from "@/components/SkillCard"
 import PageTitle from "@/components/Typography/PageTitle"
 import SectionTitle from "@/components/Typography/SectionTitle"
 import UserLine from "@/components/UserLine"
-import { fakeGroup } from "@/lib/fakeData"
-import { getGroup } from "@/lib/queries"
+import { getGroup } from "@/lib/queries/server/queries"
 import { getTranslations } from "next-intl/server"
+import { notFound } from "next/navigation"
 
 const GroupsDetail = async ({ params }: { params: { id: number } }) => {
     const t = await getTranslations("general")
-    // TODO: Replace with const and remove fakeGroup
-    let group = await getGroup(params.id)
+    const group = await getGroup(params.id)
 
-    if (!group)
-        group = fakeGroup
-
-    if (!group)
-        return t("noSkillFound")
+    if (!group) notFound()
 
     return <div className="flex flex-col gap-6">
 
@@ -31,7 +26,7 @@ const GroupsDetail = async ({ params }: { params: { id: number } }) => {
         <div>
             <SectionTitle>{t("teachers")}</SectionTitle>
             <div className="flex flex-col gap-2">
-                {group?.teachers.map((teacher) => <UserLine key={teacher.id} user={teacher} />)}
+                {group?.teachers?.map((teacher) => <UserLine key={teacher.id} user={teacher} />)}
             </div>
         </div>
 
@@ -39,7 +34,7 @@ const GroupsDetail = async ({ params }: { params: { id: number } }) => {
         <div>
             <SectionTitle>{t("skills")}</SectionTitle>
             <div className="grid gap-2 max-w-xs">
-                {group?.skills.map((skill) => <SkillCard key={skill.id} skill={skill} />)}
+                {group?.skills?.map((skill) => <SkillCard key={skill.id} skill={skill} />)}
             </div>
         </div>
 
@@ -47,7 +42,7 @@ const GroupsDetail = async ({ params }: { params: { id: number } }) => {
         <div>
             <SectionTitle>{t("students")}</SectionTitle>
             <div className="flex flex-col gap-2">
-                {group?.students.map((student) => <UserLine key={student.id} user={student} />)}
+                {group?.students?.map((student) => <UserLine key={student.id} user={student} />)}
             </div>
         </div>
     </div>
