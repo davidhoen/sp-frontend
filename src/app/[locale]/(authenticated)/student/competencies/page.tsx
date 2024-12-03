@@ -5,8 +5,7 @@ import { Pager } from "@/components/Pager"
 import SearchInput from "@/components/SearchInput"
 import Skeletons from "@/components/Skeletons"
 import PageTitle from "@/components/Typography/PageTitle"
-import { fakeCompetency, fakeSkill, fakeSkill2 } from "@/lib/fakeData"
-import { getCompetencies } from "@/lib/queries"
+import { getCompetencies } from "@/lib/queries/client/queries"
 import { cn } from "@/lib/utils"
 import { CompetencyType, SkillsQueryType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
@@ -26,12 +25,7 @@ const CompetenciesOverview = ({ searchParams }: { searchParams: SkillsQueryType 
             const page = parseInt(searchParams.page) || 1;
             const search = searchParams.search ?? ""
 
-            let filteredCompetencies = await getCompetencies({ page, search });
-
-            if (!filteredCompetencies?.data)
-                filteredCompetencies = {
-                    data: [{ ...fakeCompetency, skills: [fakeSkill, fakeSkill2] }, fakeCompetency], meta: { current_page: 1, last_page: 1, per_page: 10, total: 2, }
-                };
+            const filteredCompetencies = await getCompetencies({ page, search });
 
             setCompetencies(filteredCompetencies);
         }

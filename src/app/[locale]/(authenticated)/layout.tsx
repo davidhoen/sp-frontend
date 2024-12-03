@@ -1,13 +1,11 @@
-"use client"
 
-import { UserProvider } from "@/providers/UserProvider"
-import { ReactNode } from "react"
+import { ReactNode } from "react";
+
+export const dynamic = "force-dynamic";
 
 const AppLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <UserProvider>
-      <div className="min-h-screen">{children}</div>
-    </UserProvider>
+    <div className="min-h-screen">{children}</div>
   )
 }
 

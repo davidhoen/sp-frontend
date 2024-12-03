@@ -1,56 +1,66 @@
-"use client"
+"use client";
 
-import { useAuth } from "@/hooks/auth"
-import { UserType } from "@/types/User"
-import React, { createContext, useContext, ReactNode } from "react"
+import { DASHBOARD_ROUTE } from "@/constants";
+import { revalidate } from "@/lib/actions/revalidate.action";
+import { fetchUser } from "@/lib/auth/client";
+import { UserType } from "@/types/auth";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
-interface AuthContextType {
-  user: UserType | undefined
-  basePath: string
-  register: (data: { first_name: string; last_name: string; role_id: number; email: string; password: string; password_confirmation: string }) => Promise<void>
-  login: (data: { email: string; password: string; remember: boolean }) => Promise<void>
-  forgotPassword: (data: { email: string }) => Promise<any>
-  resetPassword: (data: { email: string; password: string; password_confirmation: string }) => Promise<void>
-  resendEmailVerification: () => Promise<any>
-  logout: () => Promise<void>
+interface UserContextType {
+  user: UserType | undefined;
+  registerUser: (user: UserType) => void;
+  deleteUser: () => void;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined)
+const UserContext = createContext<UserContextType | undefined>(undefined);
 
-export function UserProvider({ children }: { children: ReactNode }) {
-  const auth = useAuth({
-    middleware: "auth",
-    redirectIfAuthenticated: "/student"
-  })
+export function UserProvider({ children }: { children: React.ReactNode }) {
+  const [user, setUser] = useState<UserType | undefined>();
 
-  const roleBasePathMap: { [key: string]: string } = {
-    student: "/student",
-    teacher: "/teacher",
-    head_teacher: "/teacher",
-    admin: "/teacher",
+  const getUser = async () => {
+    try {
+      const { user } = await fetchUser();
+      setUser(user);
+    } catch (error) {
+      setUser(undefined);
+    }
   };
 
-  const basePath = roleBasePathMap[auth.user?.role.name] || "/";
+  const registerUser = (user: UserType) => {
+    setUser(user);
 
-  const value = {
-    // TODO: Remove basepath overwrite when teacher environment is ready
-    basePath: "/student",
-    user: auth.user,
-    register: auth.register,
-    login: auth.login,
-    forgotPassword: auth.forgotPassword,
-    resetPassword: auth.resetPassword,
-    resendEmailVerification: auth.resendEmailVerification,
-    logout: auth.logout
-  }
+    // This is done so the dashboard page is revalidated when a new user logs in
+    // so it avoids viewing previous content (makes more sense when using RBAC)
+    revalidate(DASHBOARD_ROUTE);
+  };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+  const deleteUser = () => {
+    setUser(undefined);
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  return (
+    <UserContext.Provider
+      value={{
+        user,
+        registerUser,
+        deleteUser,
+      }}
+    >
+      {children}
+    </UserContext.Provider>
+  );
 }
 
 export function useUser() {
-  const context = useContext(AuthContext)
-  if (context === undefined) {
-    throw new Error("useUser must be used within a UserProvider")
+  const context = useContext(UserContext);
+
+  if (!context) {
+    throw new Error("useUser must be used within a UserProvider");
   }
-  return context
+
+  return context;
 }

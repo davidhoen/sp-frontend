@@ -1,14 +1,15 @@
+import { EXPIRED_SESSION_ROUTE, LOGIN_ROUTE } from "@/constants";
+import { locales } from "@/i18n/routing";
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios";
-import { EXPIRED_SESSION_ROUTE, LOGIN_ROUTE } from ".";
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
   withCredentials: true,
   withXSRFToken: true,
   headers: {
-    Accept: "application/json", // * Important so we don't get HTML responses
+    Accept: "application/json",
     "Content-Type": "application/json",
-    "Cache-Control": "no-cache", // "Do not use cached content without validating with the server"
+    "Cache-Control": "no-cache",
   }
 });
 
@@ -16,13 +17,17 @@ const axiosInstance: AxiosInstance = axios.create({
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => response,
   (error: AxiosError) => {
-
     if (error.response?.status === 401) {
-      if (typeof window !== "undefined" && window.location.pathname !== LOGIN_ROUTE) {
+      if (typeof window !== "undefined") {
         // We're on the client side
-        // It's important to check that we're not on the login page, otherwise we'll end up in an infinite loop
-        // The server side redirects should be handled by a ServerSideRequestsManager class
-        window.location.href = EXPIRED_SESSION_ROUTE;
+        const [, lang] = window.location.pathname.split('/');
+        const locale = lang || locales[0];
+        const urlWithoutLocale = window.location.pathname.replace(locale, '')
+        if (urlWithoutLocale !== LOGIN_ROUTE) {
+          // It's important to check that we're not on the login page, otherwise we'll end up in an infinite loop
+          // The server side redirects are handled by the ServerSideRequestsManager class
+          window.location.href = `/${locale}/${EXPIRED_SESSION_ROUTE}`;
+        }
       }
     }
     return Promise.reject(error);

@@ -4,18 +4,21 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { languageNames, Link, locales, usePathname, useRouter } from "@/i18n/routing"
 import { useUser } from "@/providers/UserProvider"
 import { LogOutIcon, UserIcon } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import Image from "next/image"
 import UserAvatar from "../UserAvatar"
 import { Skeleton } from "../ui/skeleton"
 import { getFullName } from "@/lib"
+import { logout } from "@/lib/auth/client"
+import { EXPIRED_SESSION_ROUTE } from "@/constants"
 
 export default function UserProfile() {
   const router = useRouter()
   const pathname = usePathname()
+  const locale = useLocale()
 
   const t = useTranslations("general")
-  let { user, logout } = useUser()
+  let { user, deleteUser } = useUser()
 
   const switchLanguage = (newLocale: string) => {
     router.replace(pathname, { locale: newLocale })
@@ -25,6 +28,11 @@ export default function UserProfile() {
 
   user.image = "https://xsgames.co/randomusers/avatar.php?g=male"
 
+  const onLogout = async () => {
+    await logout();
+    router.push(`/${EXPIRED_SESSION_ROUTE}`);
+    deleteUser();
+  }
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -55,7 +63,7 @@ export default function UserProfile() {
         })}
 
         {/*Logout */}
-        <DropdownMenuItem onClick={logout}>
+        <DropdownMenuItem onClick={onLogout}>
           <LogOutIcon size={16} strokeWidth={2.5} />
           <span>{t("logout")}</span>
         </DropdownMenuItem>

@@ -4,22 +4,21 @@ import StarRating from "@/components/StarRating"
 import PageTitle from "@/components/Typography/PageTitle"
 import SectionTitle from "@/components/Typography/SectionTitle"
 import { getCompetencyRating } from "@/lib"
-import { fakeCompetency, fakeSkill, fakeSkill2 } from "@/lib/fakeData"
-import { getCompetency } from "@/lib/queries"
+import { getCompetency } from "@/lib/queries/server/queries"
 import { getTranslations } from "next-intl/server"
+import { notFound } from "next/navigation"
 
 const CompetencyDetail = async ({ params }: { params: { id: number } }) => {
     const t = await getTranslations("general")
-    // TODO: Replace with const and remove fakeCompentency
-    let competency = await getCompetency(params.id)
 
-    if (!competency)
-        competency = { ...fakeCompetency, skills: [fakeSkill, fakeSkill2] }
+    const competency = await getCompetency(params.id)
 
-    // if (!competency)
-    //     return t("noSkillFound")
+
+    if (!competency) notFound()
 
     const avgRating = getCompetencyRating(competency)
+
+
 
     return <div className="flex flex-col gap-2">
 
@@ -27,7 +26,7 @@ const CompetencyDetail = async ({ params }: { params: { id: number } }) => {
         <div className="flex justify-between">
             <PageTitle>{competency.title}</PageTitle>
             <div className="flex gap-2">
-                {competency?.profiles.map((profile) => <ProfileTile key={profile.id} profile={profile} variant="icon" />)}
+                {competency?.profiles?.map((profile) => <ProfileTile key={profile.id} profile={profile} variant="icon" />)}
             </div>
         </div>
 
@@ -53,7 +52,7 @@ const CompetencyDetail = async ({ params }: { params: { id: number } }) => {
         <div className="mt-6">
             <SectionTitle numberOfItems={competency.skills?.length}>{t("skills")}</SectionTitle>
             <div className="grid gap-4 max-w-xs">
-                {competency?.skills.map((skill) => <SkillLine key={skill.id} skill={skill} />)}
+                {competency?.skills?.map((skill) => <SkillLine key={skill.id} skill={skill} />)}
             </div>
         </div>
     </div>

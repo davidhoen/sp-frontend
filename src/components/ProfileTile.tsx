@@ -2,15 +2,12 @@
 
 import { Link } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
-import { useUser } from "@/providers/UserProvider"
 import { ProfileType } from "@/types"
 import { Tooltip } from "@radix-ui/react-tooltip"
 import { icons } from "lucide-react"
 import { TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip"
 
 export default function ProfileTile({ profile, variant = "default", className }: { profile: ProfileType, variant?: "default" | "icon", className?: string }) {
-    const { basePath } = useUser()
-
     // Import icon dynamically and fallback to CircleDashed if icon is not found
     const Icon = icons[profile.icon as keyof typeof icons] || icons["CircleDashed"]
 
@@ -41,7 +38,7 @@ export default function ProfileTile({ profile, variant = "default", className }:
     }
 
     return (
-        <Link href={`${basePath}/profiles/${profile.id}`}>
+        <Link href={`/student/profiles/${profile.id}`}>
             {component()}
         </Link>
     )

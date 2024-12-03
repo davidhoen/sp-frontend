@@ -2,7 +2,6 @@
 
 import { Link } from "@/i18n/routing"
 import { getMostRecentRating } from "@/lib"
-import { useUser } from "@/providers/UserProvider"
 import { CompetencyType } from "@/types"
 import { BadgeCheckIcon, MessageCircleIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
@@ -11,10 +10,9 @@ import { Button } from "./ui/button"
 
 export default function CompetenciesCard({ competency, mutate }: { competency: CompetencyType, mutate?: () => void }) {
     const t = useTranslations("general")
-    const { basePath } = useUser()
 
     // Sort competency skills by newest ratings rating
-    competency.skills.sort((a, b) => {
+    competency.skills?.sort((a, b) => {
         const ratingA = getMostRecentRating(a.ratings)?.rating || 0
         const ratingB = getMostRecentRating(b.ratings)?.rating || 0
         return ratingB - ratingA
@@ -33,7 +31,7 @@ export default function CompetenciesCard({ competency, mutate }: { competency: C
             <div className="mb-4">
                 <span className="font-medium">{t("topSkills")}</span>
                 <div className="flex flex-col gap-1">
-                    {competency.skills.slice(0, 3).map((skill, index) => (
+                    {competency?.skills?.slice(0, 3).map((skill, index) => (
                         <div className="flex justify-between" key={index}>
                             <span className="">{skill.title}</span>
                             <StarRating rating={getMostRecentRating(skill.ratings)?.rating || 0} />
@@ -54,7 +52,7 @@ export default function CompetenciesCard({ competency, mutate }: { competency: C
                 </div>
             </div>
 
-            <Link href={`${basePath}/competencies/${competency.id}`}>
+            <Link href={`/student/competencies/${competency.id}`}>
                 <Button variant="outline" className="w-full">
                     {t("view")}
                 </Button>

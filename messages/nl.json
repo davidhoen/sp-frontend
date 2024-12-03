@@ -28,6 +28,7 @@
     "noEntitiesFound": "Geen {entities) gevonden",
     "topSkills": "Top skills",
     "view": "Bekijk",
+    "title": "Titel",
     "overview": "Overzicht",
     "students": "Studenten",
     "groups": "Groepen",
@@ -41,9 +42,12 @@
     "save": "Opslaan",
     "saveChanges": "Wijzigingen opslaan",
     "feedback": "Feedback",
+    "feedbackDescription": "Geef gedetailleerde feedback over de vaardigheid van de student",
     "feedbackPlaceholder": "Type hier je feedback",
-    "event": "Gebeurtenis",
-    "eventPlaceholder": "Selecteer de gebeurtenis",
+    "feedbackTitle": "Feedback titel",
+    "feedbackTitlePlaceholder": "Bijv: Oefenpresentatie",
+    "endorsementTitle": "Titel van de onderschrijving",
+    "endorsementTitlePlaceholder": "Bijv: Eindpresentatie",
     "email": "Email",
     "emailPlaceholder": "bob@voorbeeld.nl",
     "loading": "Laden...",
@@ -71,6 +75,18 @@
       "title": "Feedback aanvragen",
       "fromEmaildescription": "Voer het e-mailadres in van de persoon die de feedback zal schrijven.",
       "fromUserdescription": "Vraag {name} om feedback over een specifieke skill."
+    },
+    "endorsementRequest": {
+      "title": "Skill onderschrijving",
+      "requestExpired": "Deze onderschrijvingsaanvraag is verlopen, vraag de student om een nieuwe aanvraag te sturen.",
+      "endorseUserSkill": "Onderschrijf de skill van {name}",
+      "skillInformation": "Skill informatie",
+      "yourName": "Uw naam",
+      "yourPosition": "Uw functie",
+      "yourCompany": "Uw bedrijfsnaam",
+      "skillRating": "Skill beoordeling",
+      "skillRatingDescription": "Beoordeel de skill van 1 tot 4 sterren",
+      "submitEndorsement": "Onderschrijving versturen"
     }
   },
   "students": {

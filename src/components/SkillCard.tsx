@@ -1,29 +1,27 @@
 "use client"
 
+import { Link, useRouter } from "@/i18n/routing"
+import { getMostRecentRating, triggerPromiseToast } from "@/lib"
+import axiosInstance from "@/lib/axios"
 import { SkillType } from "@/types"
 import { CheckIcon, PlusIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import StarRating from "./StarRating"
 import { Badge } from "./ui/badge"
-import { Link, useRouter } from "@/i18n/routing"
 import { Button } from "./ui/button"
-import axios from "@/lib/axios"
-import { useUser } from "@/providers/UserProvider"
-import { getMostRecentRating, triggerPromiseToast } from "@/lib"
 
 export default function SkillCard({ skill, mutate }: { skill: SkillType, mutate?: () => void }) {
     const t = useTranslations("general")
     const router = useRouter()
-    const { basePath } = useUser()
 
     const rating = skill.ratings ? getMostRecentRating(skill.ratings)?.rating || 0 : 0
 
     const addSkill = async () => {
         try {
-            const res = axios.post(`/api/student/skills/${skill.id}/add`)
+            const res = axiosInstance.post(`/api/student/skills/${skill.id}/add`)
             await triggerPromiseToast(res, t)
             mutate && mutate()
-            router.push(`${basePath}/skills/${skill.id}`)
+            router.push(`/student/skills/${skill.id}`)
         } catch (error) {
             console.error(error)
         }
@@ -44,12 +42,12 @@ export default function SkillCard({ skill, mutate }: { skill: SkillType, mutate?
                 </div>
             </div>
             <div className="mb-1">
-                <Badge variant="secondary">{skill.competency.title}</Badge>
+                <Badge variant="secondary">{skill.competency?.title}</Badge>
             </div>
             <div className="flex justify-between items-center">
                 <StarRating rating={rating} />
                 {/* Disable button when skill is not added (yet) */}
-                <Link href={`${basePath}/skills/${skill.id}`}>
+                <Link href={`/student/skills/${skill.id}`}>
                     <Button size="sm" disabled={!skill.is_added}>{t("addFeedback")}</Button>
                 </Link>
             </div>
