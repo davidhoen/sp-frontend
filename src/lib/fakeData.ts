@@ -1,5 +1,5 @@
 import { CompetencyType, EndorsementRequestType, EndorsementType, FeedbackType, GroupType, RatingHistoryType, SkillType } from "@/types"
-import { UserType } from "@/types/User"
+import { UserType } from "@/types/auth"
 import { v4 as uuid } from "uuid"
 
 export const fakeStudent: UserType = {

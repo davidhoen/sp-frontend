@@ -11,9 +11,6 @@ export function FeedbacksList({ skillId }: { skillId: string }) {
     let { data: feedbacks, isLoading } = useFeedbacks(skillId)
     const t = useTranslations("general")
 
-    if (!feedbacks?.length)
-        feedbacks = [feedback, feedback, feedback]
-
     return <>
         <SectionTitle numberOfItems={feedbacks?.length}>{t("feedback")}</SectionTitle>
         {isLoading && <Skeletons amount={3} className="w-full h-36" />}

@@ -1,7 +1,7 @@
 "use client"
 
 import { triggerPromiseToast } from "@/lib"
-import axios from "@/lib/axios"
+import axiosInstance from "@/lib/axios"
 import { useUser } from "@/providers/UserProvider"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
@@ -22,20 +22,20 @@ const AddFeedbackModal = ({ children, skillId, mutate }: { children: ReactNode, 
 
     const formSchema = z.object({
         title: z.string(),
-        feedback: z.string().min(10)
+        feedback: z.string()
     })
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            title: "",
-            feedback: ""
+            title: undefined,
+            feedback: undefined
         }
     })
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            const res = axios.post(`/api/student/skills/${skillId}/feedback`, {
+            const res = axiosInstance.post(`/api/student/skills/${skillId}/feedback`, {
                 ...values,
                 skillId,
                 userId: user?.id

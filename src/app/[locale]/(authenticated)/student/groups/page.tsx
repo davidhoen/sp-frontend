@@ -5,8 +5,7 @@ import { Pager } from "@/components/Pager"
 import SearchInput from "@/components/SearchInput"
 import Skeletons from "@/components/Skeletons"
 import PageTitle from "@/components/Typography/PageTitle"
-import { fakeGroup } from "@/lib/fakeData"
-import { getGroups } from "@/lib/queries"
+import { getGroups } from "@/lib/queries/client/queries"
 import { cn } from "@/lib/utils"
 import { GroupsQueryType, GroupType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
@@ -27,12 +26,7 @@ const GroupsOverview = ({ searchParams }: { searchParams: GroupsQueryType }) => 
             const search = searchParams.search ?? ""
             const isJoined = searchParams.is_joined ?? ""
 
-            let filteredGroups = await getGroups({ page, search, isJoined });
-
-            if (!filteredGroups?.data)
-                filteredGroups = {
-                    data: [fakeGroup, fakeGroup], meta: { current_page: 1, last_page: 1, per_page: 10, total: 2, }
-                };
+            const filteredGroups = await getGroups({ page, search, isJoined });
 
             setGroups(filteredGroups);
         }

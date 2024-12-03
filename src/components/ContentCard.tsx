@@ -1,16 +1,16 @@
 "use client"
 
 import { getYouOrFullName } from "@/lib";
-import { useUser } from "@/providers/UserProvider";
 import { EndorsementType, FeedbackType } from "@/types";
 import { useFormatter, useTranslations } from "next-intl";
 import StarRating from "./StarRating";
 import UserAvatar from "./UserAvatar";
+import { useUser } from "@/providers/UserProvider";
 
 export function ContentCard({ content }: { content: EndorsementType | FeedbackType }) {
-    const { user } = useUser()
     const t = useTranslations("general")
     const format = useFormatter()
+    const { user } = useUser()
 
     return (
         <div className="border rounded-lg p-4">

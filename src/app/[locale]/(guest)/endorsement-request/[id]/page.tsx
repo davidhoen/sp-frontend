@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import UserAvatar from "@/components/UserAvatar";
 import { getFullName } from "@/lib";
 import { fakeEndorsementRequest } from "@/lib/fakeData";
-import { getEndorsementRequestResponse } from "@/lib/queries";
+import { getEndorsementRequestResponse } from "@/lib/queries/server/queries";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 

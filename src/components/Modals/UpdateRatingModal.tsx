@@ -11,7 +11,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Textarea } from "../ui/textarea"
 import StarRating from "../StarRating"
 import { RatingHistoryType } from "@/types"
-import axios from "@/lib/axios"
+import axiosInstance from "@/lib/axios"
 import { triggerPromiseToast } from "@/lib"
 import { useUser } from "@/providers/UserProvider"
 
@@ -31,13 +31,13 @@ const UpdateRatingModal = ({ children, skillId, currentRating }: { children: Rea
         resolver: zodResolver(formSchema),
         defaultValues: {
             rating: currentRating?.rating || 0,
-            feedback: ""
+            feedback: undefined
         }
     })
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            const res = axios.post(`/api/student/skills/${skillId}/rating_update`, {
+            const res = axiosInstance.post(`/api/student/skills/${skillId}/rating_update`, {
                 ...values,
                 skillId,
                 userId: user?.id

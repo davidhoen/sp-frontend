@@ -4,7 +4,7 @@ import { useTimeLineItems } from "@/hooks/use-timeline-items";
 import { endorsement, feedback, ratingUpdate } from "@/lib/fakeData";
 import { cn } from "@/lib/utils";
 import { TimeLineItemType, TimeLineItemTypeEnum } from "@/types";
-import { UserType } from "@/types/User";
+import { UserType } from "@/types/auth";
 import { ArrowUpDownIcon, BadgeCheckIcon, MessageCircleIcon, PlusIcon, StarIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
@@ -23,14 +23,11 @@ export function TimeLine({ user, skillId }: { user: UserType, skillId: string })
     const t = useTranslations("general")
     let { data: allItems, isLoading, mutate } = useTimeLineItems(skillId)
 
-    if (!allItems)
-        allItems = fakeItems
-
     const [sortDescending, setSortDescending] = useState(true)
-    const [items, setItems] = useState<TimeLineItemType[]>(allItems)
+    const [items, setItems] = useState<TimeLineItemType[] | undefined>(allItems)
 
     const sortItems = () => {
-        const sortedItems = items.sort((a, b) => {
+        const sortedItems = items?.sort((a, b) => {
             const dateA = new Date(a.created_at).getTime()
             const dateB = new Date(b.created_at).getTime()
             return sortDescending ? dateB - dateA : dateA - dateB
@@ -115,7 +112,7 @@ export function TimeLine({ user, skillId }: { user: UserType, skillId: string })
                         </div>
                     )}
 
-                    {!isLoading && items.map((item, index) => (
+                    {!isLoading && items?.map((item, index) => (
                         <div key={index} className="relative flex items-start md:items-center w-full">
                             {/* Date marker */}
                             <div className="absolute left-0 md:left-1/2 flex flex-col items-center -translate-x-1/2 bg-background">

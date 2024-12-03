@@ -2,7 +2,7 @@
 
 import { getYouOrFullName } from "@/lib"
 import { useUser } from "@/providers/UserProvider"
-import { UserType } from "@/types/User"
+import { UserType } from "@/types/auth"
 import { BadgeCheckIcon, MessageCircleIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import RequestEndorsementModal from "./Modals/RequestEndorsementModal"

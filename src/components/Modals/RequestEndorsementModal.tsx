@@ -2,7 +2,7 @@
 
 import { useEvents } from "@/hooks/use-events"
 import { getFullName, triggerPromiseToast } from "@/lib"
-import { UserType } from "@/types/User"
+import { UserType } from "@/types/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { ReactNode, useState } from "react"
@@ -33,7 +33,7 @@ const RequestEndorsementModal = ({ children, skillId, requestFromUser }: { child
         resolver: zodResolver(formSchema),
         defaultValues: {
             title: undefined,
-            email: "",
+            email: undefined,
             skillId,
         }
     })

@@ -1,15 +1,22 @@
 "use client"
-import * as Yup from "yup"
-import { useSearchParams } from "next/navigation"
-import axios, { AxiosError } from "axios"
-import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik"
-
-import { useAuth } from "@/hooks/auth"
 import ApplicationLogo from "@/components/ApplicationLogo"
 import AuthCard from "@/components/AuthCard"
-import { useEffect, useState } from "react"
-import AuthSessionStatus from "@/components/AuthSessionStatus"
-import { Link } from "@/i18n/routing"
+import SubmitFormButton from "@/components/SubmitFormButton"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { DASHBOARD_ROUTE } from "@/constants"
+import { Link, useRouter } from "@/i18n/routing"
+import { roleBasePathMap } from "@/lib"
+import { login } from "@/lib/auth/client"
+import { handleBackendFormErrors } from "@/lib/utils"
+import { useUser } from "@/providers/UserProvider"
+import { LoginRequest } from "@/schemas/zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Eye, EyeClosed } from "lucide-react"
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
 
 interface Values {
   email: string
@@ -18,36 +25,47 @@ interface Values {
 }
 
 const LoginPage = () => {
-  const searchParams = useSearchParams()
-  const [status, setStatus] = useState<string>("")
+  const router = useRouter()
+  const { registerUser } = useUser()
 
-  const { login } = useAuth({
-    middleware: "guest",
-    redirectIfAuthenticated: "/student"
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false)
+
+  const form = useForm<z.infer<typeof LoginRequest>>({
+    resolver: zodResolver(LoginRequest),
+    defaultValues: {
+      email: "",
+      password: "",
+      remember: false
+    },
   })
 
-  useEffect(() => {
-    const resetToken = searchParams.get("reset")
-    setStatus(resetToken ? atob(resetToken) : "")
-  }, [searchParams])
+  const onSubmit = async (values: z.infer<typeof LoginRequest>) => {
+    setIsSubmitting(true)
 
-  const submitForm = async (values: Values, { setSubmitting, setErrors }: FormikHelpers<Values>): Promise<any> => {
     try {
-      await login(values)
-    } catch (error: Error | AxiosError | any) {
-      if (axios.isAxiosError(error) && error.response?.status === 422) {
-        setErrors(error.response?.data?.errors)
-      }
+      const user = await login(values);
+      await fetch("/api/login", {
+        method: "POST",
+        body: JSON.stringify({ user }),
+        cache: "no-store"
+      });
+      registerUser(user)
+      router.push(roleBasePathMap[user?.role.name] ?? "/");
+    } catch (error: any) {
+      handleBackendFormErrors({
+        setError: form.setError,
+        error,
+        toast(options) { },
+      })
     } finally {
-      setSubmitting(false)
-      setStatus("")
+      setIsSubmitting(false)
     }
   }
 
-  const LoginSchema = Yup.object().shape({
-    email: Yup.string().email("Invalid email").required("The email field is required."),
-    password: Yup.string().required("The password field is required.")
-  })
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible(!isPasswordVisible)
+  }
 
   return (
     <AuthCard
@@ -56,69 +74,98 @@ const LoginPage = () => {
           <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
         </Link>
       }>
-      <AuthSessionStatus className="mb-4" status={status} />
 
-      <Formik onSubmit={submitForm} validationSchema={LoginSchema} initialValues={{ email: "", password: "", remember: false }}>
-        <Form className="space-y-4">
-          <div>
-            <label htmlFor="email" className="undefined block font-medium text-sm text-gray-700">
-              Email
-            </label>
-
-            <Field
-              id="email"
-              name="email"
-              type="email"
-              className="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            />
-
-            <ErrorMessage name="email" component="span" className="text-xs text-red-500" />
-          </div>
-
-          <div className="">
-            <label htmlFor="password" className="undefined block font-medium text-sm text-gray-700">
-              Password
-            </label>
-
-            <Field
-              id="password"
-              name="password"
-              type="password"
-              className="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            />
-
-            <ErrorMessage name="password" component="span" className="text-xs text-red-500" />
-          </div>
-
-          <div className="flex items-center justify-between">
-            <label htmlFor="remember" className="inline-flex items-center">
-              <Field type="checkbox" name="remember" className="rounded border-[#99A6AE] text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
-
-              <span className="ml-2 text-[#252729] text-sm leading-[150%] tracking-[-0.4px] font-medium">Remember me</span>
-            </label>
-          </div>
-
-          <div className="flex justify-between mt-4">
-            <div className="flex items-center justify-start mt-4">
-              <Link href="/register" className="underline text-sm text-gray-600 hover:text-gray-900">
-                Register
-              </Link>
-            </div>
-
-            <div className="flex items-center justify-end mt-4">
-              <Link href="/forgot-password" className="underline text-sm text-gray-600 hover:text-gray-900">
-                Forgot your password?
-              </Link>
-
-              <button
-                type="submit"
-                className="ml-3 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
-                Login
-              </button>
-            </div>
-          </div>
-        </Form>
-      </Formik>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-1">
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Your email"
+                    className="background-light900_dark text-slate900_light800 placeholder no-focus slate-border outline-none"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-1">
+                <FormLabel>Password</FormLabel>
+                <div className="background-light900_dark slate-border flex items-center justify-between rounded-md border">
+                  <FormControl>
+                    <>
+                      <Input
+                        type={isPasswordVisible ? "text" : "password"}
+                        placeholder="Your password"
+                        className="text-slate900_light800 placeholder no-focus flex-1 border-none bg-transparent outline-none"
+                        {...field}
+                      />
+                      <div
+                        className="flex cursor-pointer select-none items-center pr-3"
+                        onClick={togglePasswordVisibility}
+                      >
+                        {isPasswordVisible ? (
+                          <EyeClosed className="text-slate900_light800 size-3" />
+                        ) : (
+                          <Eye className="text-slate900_light800 size-3" />
+                        )}
+                      </div>
+                    </>
+                  </FormControl>
+                </div>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="remember"
+            render={({ field }) => (
+              <FormItem className="flex items-center gap-2 space-y-0">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value ?? false}
+                    onCheckedChange={field.onChange}
+                    className="gray-border text-slate900_light800 rounded-full"
+                  />
+                </FormControl>
+                <FormLabel className="text-slate900_light800 cursor-pointer">
+                  Remember me
+                </FormLabel>
+              </FormItem>
+            )}
+          />
+          <SubmitFormButton
+            isSubmitting={isSubmitting}
+            submitLabel="Log in"
+            extraElement={
+              <div className="flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center">
+                <Link
+                  href="/register"
+                  className="text-slate900_light800 text-sm underline"
+                >
+                  Register
+                </Link>
+                <Link
+                  href="/forgot-password"
+                  className="text-slate900_light800 text-sm underline"
+                >
+                  Forgot your password?
+                </Link>
+              </div>
+            }
+          />
+        </form>
+      </Form>
     </AuthCard>
   )
 }

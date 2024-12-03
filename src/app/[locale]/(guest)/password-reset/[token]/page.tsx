@@ -1,43 +1,76 @@
 "use client"
-import * as Yup from "yup"
-import axios, { AxiosError } from "axios"
-import { useSearchParams } from "next/navigation"
-import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik"
+import { handleBackendFormErrors } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
-import { useAuth } from "@/hooks/auth"
-import AuthCard from "@/components/AuthCard"
-import ApplicationLogo from "@/components/ApplicationLogo"
-import { Link } from "@/i18n/routing"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 
-interface Values {
-  email: string
-  password: string
-  password_confirmation: string
+import { postData } from "@/lib/actions/data.action";
+import toast from "react-hot-toast";
+import { Link, useRouter } from "@/i18n/routing";
+import { useSearchParams } from "next/navigation";
+import { ResetPasswordRequest } from "@/schemas/zod";
+import AuthCard from "@/components/AuthCard";
+import ApplicationLogo from "@/components/ApplicationLogo";
+import { EyeClosedIcon, EyeIcon } from "lucide-react";
+import SubmitFormButton from "@/components/SubmitFormButton";
+
+interface ResetPasswordFormProps {
+  token: string;
 }
 
 const PasswordResetPage = () => {
-  const query = useSearchParams()
-  const { resetPassword } = useAuth({ middleware: "guest" })
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-  const submitForm = async (values: Values, { setSubmitting, setErrors }: FormikHelpers<Values>): Promise<any> => {
-    try {
-      await resetPassword(values)
-    } catch (error: Error | AxiosError | any) {
-      if (axios.isAxiosError(error) && error.response?.status === 422) {
-        setErrors(error.response?.data?.errors)
-      }
-    } finally {
-      setSubmitting(false)
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const form = useForm<z.infer<typeof ResetPasswordRequest>>({
+    resolver: zodResolver(ResetPasswordRequest),
+    defaultValues: {
+      email: searchParams.get("email") || "",
+      password: "",
+      password_confirmation: "",
+    },
+  });
+
+  const onSubmit = async (values: z.infer<typeof ResetPasswordRequest>) => {
+    setIsSubmitting(true);
+
+    const dataToSend = {
+      ...values,
+      token: searchParams.get("token"),
     }
-  }
 
-  const ForgotPasswordSchema = Yup.object().shape({
-    email: Yup.string().email("Invalid email").required("The email field is required."),
-    password: Yup.string().required("The password field is required."),
-    password_confirmation: Yup.string()
-      .required("Please confirm password.")
-      .oneOf([Yup.ref("password")], "Your passwords do not match.")
-  })
+    const response = await postData({
+      url: "/reset-password",
+      data: dataToSend,
+      path: "/login",
+    });
+
+    setIsSubmitting(false);
+
+    if (response && !response.success) {
+      handleBackendFormErrors({
+        setError: form.setError,
+        error: response.error,
+        toast(options) { },
+      });
+      return;
+    }
+
+    router.push("/login");
+
+    toast.success("Password reset successfully");
+  };
+
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
 
   return (
     <AuthCard
@@ -46,70 +79,104 @@ const PasswordResetPage = () => {
           <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
         </Link>
       }>
-      <Formik
-        onSubmit={submitForm}
-        validationSchema={ForgotPasswordSchema}
-        initialValues={{
-          password: "",
-          password_confirmation: "",
-          email: query.get("email") ?? ""
-        }}>
-        <Form className="space-y-4">
-          <div>
-            <label htmlFor="email" className="undefined block font-medium text-sm text-gray-700">
-              Email
-            </label>
-
-            <Field
-              id="email"
-              name="email"
-              type="email"
-              disabled
-              className="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 disabled:opacity-75 disabled:cursor-not-allowed"
-            />
-
-            <ErrorMessage name="email" component="span" className="text-xs text-red-500" />
-          </div>
-
-          <div className="">
-            <label htmlFor="password" className="undefined block font-medium text-sm text-gray-700">
-              Password
-            </label>
-
-            <Field
-              id="password"
-              name="password"
-              type="password"
-              className="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            />
-
-            <ErrorMessage name="password" component="span" className="text-xs text-red-500" />
-          </div>
-
-          <div className="">
-            <label htmlFor="password" className="undefined block font-medium text-sm text-gray-700">
-              Confirm Password
-            </label>
-
-            <Field
-              id="password_confirmation"
-              name="password_confirmation"
-              type="password"
-              className="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            />
-
-            <ErrorMessage name="password_confirmation" component="span" className="text-xs text-red-500" />
-          </div>
-
-          <div className="flex items-center justify-end mt-4">
-            <button
-              type="submit"
-              className="ml-4 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
-              Reset Password
-            </button>
-          </div>
-        </Form>
-      </Formik>
+      <p className="paragraph-regular text-slate900_light800">
+        You can reset your password here.
+      </p>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-1">
+                <FormLabel>
+                  Email <span className="text-red-500">*</span>
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Email"
+                    className="background-light900_dark text-slate900_light800 placeholder no-focus slate-border outline-none"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-1">
+                <FormLabel>
+                  Password <span className="text-red-500">*</span>
+                </FormLabel>
+                <div className="background-light900_dark slate-border flex items-center justify-between rounded-md border">
+                  <FormControl>
+                    <>
+                      <Input
+                        type={isPasswordVisible ? "text" : "password"}
+                        placeholder="Password"
+                        className="text-slate900_light800 placeholder no-focus flex-1 border-none bg-transparent outline-none"
+                        {...field}
+                      />
+                      <div
+                        className="flex cursor-pointer select-none items-center pr-3"
+                        onClick={togglePasswordVisibility}
+                      >
+                        {isPasswordVisible ? (
+                          <EyeClosedIcon className="text-slate900_light800 size-4" />
+                        ) : (
+                          <EyeIcon className="text-slate900_light800 size-4" />
+                        )}
+                      </div>
+                    </>
+                  </FormControl>
+                </div>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password_confirmation"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-1">
+                <FormLabel>
+                  Password Confirmation <span className="text-red-500">*</span>
+                </FormLabel>
+                <div className="background-light900_dark slate-border flex items-center justify-between rounded-md border">
+                  <FormControl>
+                    <>
+                      <Input
+                        type={isPasswordVisible ? "text" : "password"}
+                        placeholder="Confirm your password"
+                        className="text-slate900_light800 placeholder no-focus flex-1 border-none bg-transparent outline-none"
+                        {...field}
+                      />
+                      <div
+                        className="flex cursor-pointer select-none items-center pr-3"
+                        onClick={togglePasswordVisibility}
+                      >
+                        {isPasswordVisible ? (
+                          <EyeClosedIcon className="text-slate900_light800 size-4" />
+                        ) : (
+                          <EyeIcon className="text-slate900_light800 size-4" />
+                        )}
+                      </div>
+                    </>
+                  </FormControl>
+                </div>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <SubmitFormButton
+            isSubmitting={isSubmitting}
+            submitLabel="Reset"
+          />
+        </form>
+      </Form>
     </AuthCard>
   )
 }
