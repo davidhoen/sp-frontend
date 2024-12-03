@@ -1,13 +1,12 @@
+import ProfileTile from "@/components/ProfileTile"
+import StarRating from "@/components/StarRating"
 import PageTitle from "@/components/Typography/PageTitle"
 import SectionTitle from "@/components/Typography/SectionTitle"
-import { getCompetencies, getGroups, getProfiles } from "@/lib/queries"
+import { fakeCompetency, fakeSkill, fakeSkill2 } from "@/lib/fakeData"
+import { BadgeCheckIcon, ChevronRightIcon } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import { DashboardButtons } from "./_components/DashboardButtons"
-import ProfileTile from "@/components/ProfileTile"
-import { fakeCompetency, fakeSkill, fakeSkill2 } from "@/lib/fakeData"
-import StarRating from "@/components/StarRating"
-import { BadgeCheckIcon, ChevronRightIcon } from "lucide-react"
-import { getMostRecentRating } from "@/lib"
+import { getCompetencies, getGroups, getProfiles } from "@/lib/queries/client/queries"
 
 const DashboardPage = async () => {
   const t = await getTranslations()
