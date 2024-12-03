@@ -90,7 +90,7 @@ const DashboardPage = async () => {
     <div>
       <SectionTitle>{t("general.recentEndorsements")}</SectionTitle>
       <div className="flex gap-3 overflow-x-auto no-scrollbar ">
-        {recentEndorsements?.map((endorsement) => <div>
+        {recentEndorsements?.map((endorsement) => <div key={endorsement.id}>
           <div className="flex items-center gap-2">
             <UserAvatar user={endorsement.user} />
             <div>
