@@ -10,6 +10,7 @@
     "feedbacks": "Feedbacks",
     "userUpdatedRating": "{name} heeft skills beoordeling bijgewerkt",
     "addFeedback": "Feedback toevoegen",
+    "addASkill": "Voeg een skill toe",
     "skills": "Skills",
     "competencies": "Competenties",
     "search": "Zoeken",
@@ -35,7 +36,8 @@
     "teachers": "Docenten",
     "profiles": "Profielen",
     "enrolledGroups": "Ingeschreven groepen",
-    "recentEndorsements": "Recente onderschrijvingen"
+    "recentEndorsements": "Recente onderschrijvingen",
+    "publicProfile": "Openbaar profiel"
   },
   "modals": {
     "cancel": "Annuleren",

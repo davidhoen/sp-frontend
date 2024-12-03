@@ -27,7 +27,7 @@ export const getCompetencies = async ({ page, search }: { page: number; search: 
 
 export const getGroups = async ({ page, search, isJoined }: { page: number; search: string; isJoined: string }) => {
     try {
-        const route = `/api/student/groups?page=${page}&search=${search}&is_joined=${isJoined}`
+        const route = `/api/groups?page=${page}&search=${search}&is_joined=${isJoined}`
         const { data } = await axiosInstance.get<PagingSchema<GroupType>>(route);
         return data;
     }
@@ -36,13 +36,3 @@ export const getGroups = async ({ page, search, isJoined }: { page: number; sear
     }
 }
 
-export const getProfiles = async () => {
-    try {
-        const route = `/api/student/profiles`
-        const { data } = await axiosInstance.get<ProfileType[]>(route);
-        return data;
-    }
-    catch (error) {
-        console.error(error);
-    }
-}

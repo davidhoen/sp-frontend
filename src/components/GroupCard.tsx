@@ -14,7 +14,7 @@ export function GroupCard({ group }: { group: GroupType }) {
 
     return (
         <Link href={`/student/groups/${group.id}`}>
-            <div className="relative flex flex-col border rounded-lg px-4 py-3">
+            <div className="relative flex flex-col border rounded-lg px-4 py-3 w-80">
 
                 {/* Name */}
                 <div className="mb-4">
@@ -42,9 +42,15 @@ export function GroupCard({ group }: { group: GroupType }) {
 
                 {/* Chip for every connected skill */}
                 <div className="flex flex-wrap gap-2 mt-4">
-                    {group.skills.map((skill) => (
+                    {/* Get max 3 skills */}
+                    {group.skills.slice(0, 3).map((skill) => (
                         <span key={skill.id} className="bg-primary text-white px-2 py-1 text-xs rounded-full">{skill.title}</span>
                     ))}
+                    {group.skills.length > 3 && (
+                        <div className="flex items-center h-fit gap-1 bg-border rounded-full text-xs p-1">
+                            <span>+{group.skills.length - 3}</span>
+                        </div>
+                    )}
                 </div>
 
                 {/* Number of students with users icon */}

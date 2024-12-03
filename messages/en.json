@@ -10,6 +10,7 @@
     "feedbacks": "Feedbacks",
     "userUpdatedRating": "{name} updated skills rating",
     "addFeedback": "Add feedback",
+    "addASkill": "Add a skill",
     "skills": "Skills",
     "competencies": "Competencies",
     "search": "Search",
@@ -34,7 +35,8 @@
     "teachers": "Teachers",
     "profiles": "Profiles",
     "enrolledGroups": "Enrolled groups",
-    "recentEndorsements": "Recent endorsements"
+    "recentEndorsements": "Recent endorsements",
+    "publicProfile": "Public profile"
   },
   "modals": {
     "cancel": "Cancel",

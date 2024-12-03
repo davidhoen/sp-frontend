@@ -68,6 +68,7 @@ export type EndorsementType = {
   title: string
   content: string
   rating: number
+  skill: SkillType
   is_approved: boolean
   created_by: UserType
   created_at: Date

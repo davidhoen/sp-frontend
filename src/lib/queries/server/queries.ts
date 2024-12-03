@@ -1,6 +1,6 @@
 "use server"
 
-import { CompetencyType, EndorsementRequestType, GroupType, SkillType } from "@/types";
+import { CompetencyType, EndorsementRequestType, EndorsementType, GroupType, ProfileType, SkillType } from "@/types";
 import { getData } from "./data-fetching";
 
 // For now only the detail pages are server side rendered
@@ -29,7 +29,7 @@ export const getEndorsementRequestResponse = async (id: number) => {
 
 export const getCompetency = async (id: number) => {
     try {
-        const { result } = await getData<CompetencyType>(`/api/competencies/${id}`);
+        const { result } = await getData<CompetencyType>(`/api/student/competencies/${id}`);
         return result;
     }
     catch (error) {
@@ -39,7 +39,40 @@ export const getCompetency = async (id: number) => {
 
 export const getGroup = async (id: number) => {
     try {
-        const { result } = await getData<GroupType>(`/api/student/groups/${id}`);
+        const { result } = await getData<GroupType>(`/api/groups/${id}?with=skills,skills.endorsements`);
+        return result;
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+
+export const getEnrolledGroups = async () => {
+    try {
+        const route = `/api/student/groups`
+        const { result } = await getData<GroupType[]>(route);
+        return result;
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+
+export const getProfiles = async () => {
+    try {
+        const route = `/api/student/profiles`
+        const { result } = await getData<ProfileType[]>(route);
+        return result;
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+
+export const getRecentEndorsements = async () => {
+    try {
+        const route = `/api/student/endorsements/recent`
+        const { result } = await getData<EndorsementType[]>(route);
         return result;
     }
     catch (error) {

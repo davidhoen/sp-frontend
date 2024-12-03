@@ -1,12 +1,8 @@
 # Skills Passport Frontend ⭐
 
----
-
 **This repository is a refactor of [breeze-next](https://github.com/laravel/breeze-next) and [nextjs-laravel-breeze](https://github.com/carlos-talavera/nextjs-laravel-breeze)**
 
-**This used NextJS Version 14**
-
----
+**See the backend repository [here](https://github.com/Skills-Passport/sp-backend)**
 
 ## Features
 

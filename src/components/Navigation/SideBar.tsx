@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils"
 import { NavItem } from "@/types"
 import { ArrowLeftIcon, BellIcon, SearchIcon } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { ReactNode, useState } from "react"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
@@ -11,8 +12,11 @@ import { SidebarLeft } from "./SideBarLeft"
 import UserProfile from "./UserProfile"
 
 const SideBar = ({ items, children }: { items: NavItem[]; children: ReactNode }) => {
+  const t = useTranslations()
+
   const [showMobileSearch, setShowMobileSearch] = useState(false)
   const notificationCount = 3
+
 
   return (
     <SidebarProvider>
@@ -28,7 +32,7 @@ const SideBar = ({ items, children }: { items: NavItem[]; children: ReactNode })
             </div>
             <Button variant="ghost" size="icon" className="shrink-0 md:hidden" onClick={() => setShowMobileSearch(true)}>
               <SearchIcon size={16} />
-              <span className="sr-only">Search</span>
+              <span className="sr-only">{t("general.search")}</span>
             </Button>
 
             {/* Search mobile */}
@@ -39,7 +43,7 @@ const SideBar = ({ items, children }: { items: NavItem[]; children: ReactNode })
                     <ArrowLeftIcon className="h-4 w-4" />
                     <span className="sr-only">Back</span>
                   </Button>
-                  <Input type="search" placeholder="Search..." className="h-10 w-full " autoFocus />
+                  <Input type="search" placeholder={t("general.search")} className="h-10 w-full " autoFocus />
                 </div>
               </div>
             )}
