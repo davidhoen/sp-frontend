@@ -15,6 +15,7 @@ export type ProfileType = {
   title: string
   desc: string
   icon: string,
+  color: string,
   created_by: UserType
   created_at: Date
 }

@@ -37,6 +37,16 @@ export const getCompetency = async (id: number) => {
     }
 }
 
+export const getStudentCompetencies = async () => {
+    try {
+        const { result } = await getData<CompetencyType[]>(`/api/student/competencies?with=skills,skills.endorsements`);
+        return result;
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+
 export const getGroup = async (id: number) => {
     try {
         const { result } = await getData<GroupType>(`/api/groups/${id}?with=skills,skills.endorsements`);

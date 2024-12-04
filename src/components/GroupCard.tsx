@@ -1,20 +1,20 @@
 "use client"
 
+import { Link } from "@/i18n/routing";
 import { getFullName } from "@/lib";
-import { useUser } from "@/providers/UserProvider";
 import { GroupType } from "@/types";
 import { ChevronRightIcon, UsersIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import UserAvatar from "./UserAvatar";
-import { Link } from "@/i18n/routing";
 import { Button } from "./ui/button";
+import UserAvatar from "./UserAvatar";
+import { cn } from "@/lib/utils";
 
-export function GroupCard({ group }: { group: GroupType }) {
+export function GroupCard({ group, className }: { group: GroupType, className?: string }) {
     const t = useTranslations("general")
 
     return (
         <Link href={`/student/groups/${group.id}`}>
-            <div className="relative flex flex-col border rounded-lg px-4 py-3 w-80">
+            <div className={cn("relative flex flex-col border rounded-lg px-4 py-3 hover:bg-muted", className)}>
 
                 {/* Name */}
                 <div className="mb-4">

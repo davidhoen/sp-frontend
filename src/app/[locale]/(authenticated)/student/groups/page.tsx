@@ -46,7 +46,7 @@ const GroupsOverview = ({ searchParams }: { searchParams: GroupsQueryType }) => 
     const renderGroups = (group: GroupType) => <GroupCard key={group.id} group={group} />
 
     return <div className="w-full">
-        <PageTitle>{t("groups")}</PageTitle>
+        <PageTitle information={t("definitions.groups")}>{t("groups")}</PageTitle>
 
         {/* Search */}
         <div className="my-4">

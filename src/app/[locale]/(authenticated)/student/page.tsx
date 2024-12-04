@@ -7,10 +7,8 @@ import { Button } from "@/components/ui/button"
 import UserAvatar from "@/components/UserAvatar"
 import { Link } from "@/i18n/routing"
 import { getCompetencyRating } from "@/lib"
-import { fakeCompetency, fakeSkill, fakeSkill2 } from "@/lib/fakeData"
-import { getCompetencies } from "@/lib/queries/client/queries"
-import { getEnrolledGroups, getProfiles, getRecentEndorsements } from "@/lib/queries/server/queries"
-import { BadgeCheckIcon, ChevronRightIcon, PlusIcon, UserIcon } from "lucide-react"
+import { getEnrolledGroups, getProfiles, getRecentEndorsements, getStudentCompetencies } from "@/lib/queries/server/queries"
+import { BadgeCheckIcon, PlusIcon, UserIcon } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 
 const DashboardPage = async () => {
@@ -18,7 +16,7 @@ const DashboardPage = async () => {
 
   const profiles = await getProfiles()
   const groups = await getEnrolledGroups()
-  const competencies = await getCompetencies({ page: 1, search: "" }) ?? { data: [{ ...fakeCompetency, skills: [fakeSkill, fakeSkill2] }], meta: { current_page: 1, last_page: 1, per_page: 10, total: 2, } }
+  const competencies = await getStudentCompetencies()
   const recentEndorsements = await getRecentEndorsements()
 
   return <div className="flex flex-col gap-8">
@@ -35,44 +33,52 @@ const DashboardPage = async () => {
 
     { /* Competencies  */}
     <div>
-      <SectionTitle numberOfItems={competencies?.data?.length}>{t("general.competencies")}</SectionTitle>
-      <div className="flex flex-wrap border rounded-md">
-        {competencies?.data?.map((competency) => {
+      <SectionTitle information={t("general.definitions.competencies")} numberOfItems={competencies?.length}>{t("general.competencies")}</SectionTitle>
+      <div className="flex flex-wrap md:flex-nowrap md:flex-row gap-2 w-full mb-2">
+        {competencies?.slice(0, 3).map((competency) => {
           const rating = getCompetencyRating(competency)
           return (
-            <div key={competency.id} className="relative flex p-4 w-full">
+            <Link key={competency.id} href={`/student/competencies/${competency.id}`}>
+              <div className="flex justify-between items-center p-4 border rounded-lg w-full md:w-80 min-w-max hover:bg-muted">
 
-              <div className="flex flex-col">
-                {/* Title and # skills */}
-                <div className="flex mb-4 items-center gap-4">
-                  <span className="font-medium">{competency.title}</span>
-                  <span className="text-xs text-muted-foreground">{competency.skills?.length} {t("general.skills")}</span>
+                <div className="flex flex-col">
+                  {/* Title and # skills */}
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium">{competency.title}</span>
+                    <span className="text-xs text-muted-foreground">{competency.skills?.length} {t("general.skills")}</span>
+                  </div>
+                  {/* # endorsements */}
+                  <div className="flex items-center gap-1">
+                    <BadgeCheckIcon size={16} />
+                    <span className="">{competency.endorsements_count || 0} {t("general.endorsements")}</span>
+                  </div>
                 </div>
-                {/* # endorsements */}
-                <div className="flex items-center gap-1">
-                  <BadgeCheckIcon size={16} />
-                  <span className="">{competency.endorsements_count || 0} {t("general.endorsements")}</span>
+
+                {/* Average rating */}
+                <div>
+                  <StarRating rating={rating} />
                 </div>
-              </div>
 
-              {/* Average rating */}
-              <div>
-                <StarRating rating={rating} />
               </div>
-
-              <div className="absolute right-6 bottom-6">
-                <ChevronRightIcon size={16} />
-              </div>
-
-            </div>
+            </Link>
           )
         })}
       </div>
+      {/* View all competencies */}
+      {(competencies && competencies?.length > 3) &&
+        <div className="mx-auto md:mx-2 mb-3">
+          <Link href="/student/competencies">
+            <Button size="sm" className="rounded-full ">
+              {t("general.viewAll")}
+            </Button>
+          </Link>
+        </div>
+      }
     </div >
 
     {/* Profiles */}
     <div>
-      <SectionTitle> {t("general.profiles")}</SectionTitle >
+      <SectionTitle information={t("general.definitions.profiles")}> {t("general.profiles")}</SectionTitle >
       <div className="grid grid-cols-2 md:flex gap-2 ">
         {profiles?.map((profile) => <ProfileTile key={profile.id} profile={profile} />)}
       </div>
@@ -82,7 +88,7 @@ const DashboardPage = async () => {
     <div>
       <SectionTitle numberOfItems={groups?.length}>{t("general.enrolledGroups")}</SectionTitle>
       <div className="flex gap-3 overflow-x-auto no-scrollbar ">
-        {groups?.map((group) => <GroupCard key={group.id} group={group} />)}
+        {groups?.map((group) => <GroupCard className="w-80" key={group.id} group={group} />)}
       </div>
     </div>
 
@@ -101,7 +107,6 @@ const DashboardPage = async () => {
         </div>)}
       </div>
     </div>
-
 
   </div >
 }

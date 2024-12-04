@@ -1,3 +1,5 @@
+"use client"
+
 import { Link } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
 import { ProfileType } from "@/types"
@@ -8,11 +10,12 @@ import { TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip"
 export default function ProfileTile({ profile, variant = "default", className }: { profile: ProfileType, variant?: "default" | "icon", className?: string }) {
     // Import icon dynamically and fallback to CircleDashed if icon is not found
     const Icon = icons[profile.icon as keyof typeof icons] || icons["CircleDashed"]
+    const color = profile.color ? profile.color : "bg-border"
 
     const component = () => {
         if (variant === "default")
             return (
-                <div className={cn("flex items-center gap-4 bg-border p-2 rounded-lg", className)}>
+                <div style={{ backgroundColor: color }} className={cn("flex items-center gap-4 p-2 rounded-lg", className)}>
                     <div className="p-2 bg-background rounded-full">
                         <Icon size={20} strokeWidth={2.5} />
                     </div>
@@ -24,7 +27,7 @@ export default function ProfileTile({ profile, variant = "default", className }:
                 <TooltipProvider>
                     <Tooltip>
                         <TooltipTrigger asChild>
-                            <div className={cn("flex items-center gap-4 bg-border p-2 rounded-full", className)}>
+                            <div style={{ backgroundColor: color }} className={cn("flex items-center gap-4 p-2 rounded-full", className)}>
                                 <Icon size={20} strokeWidth={2.5} />
                             </div>
                         </TooltipTrigger>
