@@ -17,7 +17,7 @@ export const getSkill = async (id: number) => {
 
 export const getEndorsementRequestResponse = async (id: number) => {
     try {
-        const { result, status } = await getData<EndorsementRequestType>(`/api/endorsement_request/${id}`);
+        const { result, status } = await getData<EndorsementRequestType>(`/api/endorsements/request/${id}`);
         if (status === 410)
             return "expired";
         return result;
@@ -81,7 +81,7 @@ export const getProfiles = async () => {
 
 export const getRecentEndorsements = async () => {
     try {
-        const route = `/api/student/endorsements/recent`
+        const route = `/api/student/endorsements/recent?with=skill`;
         const { result } = await getData<EndorsementType[]>(route);
         return result;
     }

@@ -9,8 +9,9 @@ import { useTranslations } from "next-intl"
 import StarRating from "./StarRating"
 import { Badge } from "./ui/badge"
 import { Button } from "./ui/button"
+import { cn } from "@/lib/utils"
 
-export default function SkillCard({ skill, mutate }: { skill: SkillType, mutate?: () => void }) {
+export default function SkillCard({ skill, className, mutate }: { skill: SkillType, className?: string, mutate?: () => void }) {
     const t = useTranslations("general")
     const router = useRouter()
 
@@ -28,7 +29,7 @@ export default function SkillCard({ skill, mutate }: { skill: SkillType, mutate?
     }
 
     return (
-        <div className="flex flex-col border rounded-lg px-4 py-3">
+        <div className={cn("flex flex-col border rounded-lg px-4 py-3", className)}>
             <div className="flex justify-between mb-1">
                 <span className="font-medium text-xl">{skill.title}</span>
                 <div>

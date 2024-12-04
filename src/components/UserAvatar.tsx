@@ -10,7 +10,7 @@ export default function UserAvatar({ user }: { user: UserType }) {
 
   return (
     <Avatar>
-      <AvatarImage src={user.image} />
+      <AvatarImage src={user?.image ?? "https://xsgames.co/randomusers/avatar.php?g=male"} />
       <AvatarFallback>{initails}</AvatarFallback>
     </Avatar>
   )

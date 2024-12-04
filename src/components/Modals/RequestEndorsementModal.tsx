@@ -14,6 +14,8 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "../ui/input"
 import Select from "../ui/select"
 import axios from "axios"
+import axiosInstance from "@/lib/axios"
+import SetCookies from "../SetCookies"
 
 const RequestEndorsementModal = ({ children, skillId, requestFromUser }: { children: ReactNode, skillId?: string, requestFromUser?: UserType }) => {
     const t = useTranslations("modals")
@@ -40,15 +42,15 @@ const RequestEndorsementModal = ({ children, skillId, requestFromUser }: { child
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            const res = axios.post(`/api/student/request/endorsement`, {
+            const res = axiosInstance.post(`/api/student/endorsements/request`, {
                 ...values,
-                skillId,
-                userId: requestFromUser?.id
+                skill: skillId,
+                requestee_email: values.email,
+                requestee: requestFromUser?.id
             })
             await triggerPromiseToast(res, t)
             form.reset()
             setIsModalOpen(false)
-
         }
         catch (error) {
             console.error(error)
@@ -72,6 +74,8 @@ const RequestEndorsementModal = ({ children, skillId, requestFromUser }: { child
                                 }
                             </DialogDescription>
                         </DialogHeader>
+
+                        <SetCookies />
 
                         {/* Title for endorsement */}
                         <FormField
