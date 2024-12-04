@@ -1,15 +1,22 @@
-# Laravel Breeze - Next.js v14 Edition with TypeScript 🏝️
-## Introduction
+# Skills Passport Frontend ⭐
 
----
-**This repository is a refactor of [breeze-next](https://github.com/laravel/breeze-next) by changing programing language from [JavaScript](https://www.javascript.com/) to [TypeScript](https://www.typescriptlang.org/)**
+**This repository is a refactor of [breeze-next](https://github.com/laravel/breeze-next) and [nextjs-laravel-breeze](https://github.com/carlos-talavera/nextjs-laravel-breeze)**
 
-**This used NextJS Version 14**
+**See the backend repository [here](https://github.com/Skills-Passport/sp-backend)**
 
-### Little extras
-* Add Formik Validation
-* Next Features inside app folder
-* Add Route Group
+## Features
+
+- **Server-Side Rendering (SSR)**: Efficiently fetch and render data on the server.
+- **Laravel Breeze**: Authentication system using Laravel Breeze.
+- **TypeScript**: Type-safe code for better developer experience.
+- **Validations with Zod**: Schema-based validation for safer data handling.
+- **shadcn as UI Library**: Modern UI components for building sleek interfaces.
+- **Turbopack**: Blazing fast bundler for development.
+- **Data Fetching with Search Params and Pagination**: Implementation of data fetching with query parameters and pagination.
+- **Server Actions**: Execute server-side actions seamlessly.
+- **Paths Revalidations**: Dynamically revalidate paths for up-to-date content (needed after mutating records on the same page).
+- **Next.js Built-in Middleware**: Middleware for handling requests efficiently.
+- **Authenticated User Retrieval**: Fetch authenticated user details on both client and server components.
 
 ---
 

@@ -4,12 +4,14 @@
     "viewProfile": "Bekijk profiel",
     "logout": "Uitloggen",
     "you": "Jij",
+    "definition": "Definitie:",
     "endorsement": "Onderschrijving",
     "endorsements": "Onderschrijvingen",
     "feedback": "Feedback",
     "feedbacks": "Feedbacks",
     "userUpdatedRating": "{name} heeft skills beoordeling bijgewerkt",
     "addFeedback": "Feedback toevoegen",
+    "addASkill": "Voeg een skill toe",
     "skills": "Skills",
     "competencies": "Competenties",
     "search": "Zoeken",
@@ -32,7 +34,18 @@
     "overview": "Overzicht",
     "students": "Studenten",
     "groups": "Groepen",
-    "teachers": "Docenten"
+    "teachers": "Docenten",
+    "profiles": "Profielen",
+    "enrolledGroups": "Ingeschreven groepen",
+    "recentEndorsements": "Recente onderschrijvingen",
+    "publicProfile": "Openbaar profiel",
+    "viewAll": "Bekijk alles",
+    "definitions": {
+      "skills": "Een skill is een specifieke vaardigheid die je kunt leren, ontwikkelen en toepassen. “Pitchen” of “Netwerken” zijn voorbeelden van skills.",
+      "competencies": "Een competentie is een verzameling gerelateerde skills die je samen in staat stellen om goed te presteren op een specifiek gebied. De competentie “Onderzoeken” kan bijvoorbeeld skills omvatten als “Interviewen” en “Reflecteren”.",
+      "groups": "Een groep is een trainingsprogramma waarvoor je je kunt inschrijven en aan verschillende skills kunt werken.",
+      "profiles": "Een profiel vertegenwoordigt een set competenties die nodig zijn om uit te blinken in een functie of vakgebied. Als je meerdere competenties van een profiel beheerst, betekent dit dat je een uitstekende kandidaat bent voor die functie of dat gebied."
+    }
   },
   "modals": {
     "cancel": "Annuleren",

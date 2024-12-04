@@ -1,12 +1,9 @@
 "use client"
 
-import Head from "next/head"
-import { useAuth } from "@/hooks/auth"
 import { useTranslations } from "next-intl"
-import { Link } from "@/i18n/routing"
+import Head from "next/head"
 
 export default function Home() {
-  const { user } = useAuth({ middleware: "auth" })
   const t = useTranslations("general")
 
   return (
@@ -17,20 +14,7 @@ export default function Home() {
 
       <div className="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
         <div className="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-          {user ? (
-            <Link href="/student" className="ml-4 text-sm text-gray-700 underline">
-              {t("dashboard")}
-            </Link>
-          ) : (
-            <>
-              <Link href="/login" className="text-sm text-gray-700 underline">
-                Login
-              </Link>
-              <Link href="/register" className="ml-4 text-sm text-gray-700 underline">
-                Register
-              </Link>
-            </>
-          )}
+
         </div>
 
         <div className="max-w-6xl mx-auto sm:px-6 lg:px-8">

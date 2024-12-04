@@ -4,12 +4,14 @@
     "viewProfile": "View profile",
     "logout": "Logout",
     "you": "You",
+    "definition": "Definition:",
     "endorsement": "Endorsement",
     "endorsements": "Endorsements",
     "feedback": "Feedback",
     "feedbacks": "Feedbacks",
     "userUpdatedRating": "{name} updated skills rating",
     "addFeedback": "Add feedback",
+    "addASkill": "Add a skill",
     "skills": "Skills",
     "competencies": "Competencies",
     "search": "Search",
@@ -31,7 +33,18 @@
     "overview": "Overview",
     "students": "Students",
     "groups": "Groups",
-    "teachers": "Teachers"
+    "teachers": "Teachers",
+    "profiles": "Profiles",
+    "enrolledGroups": "Enrolled groups",
+    "recentEndorsements": "Recent endorsements",
+    "publicProfile": "Public profile",
+    "viewAll": "See all",
+    "definitions": {
+      "skills": "A skill is a specific ability that you can learn, develop, and apply. “Pitching” or “Networking” are examples of skills.",
+      "competencies": "A competence is a collection of related skills that together enable you to perform well in a specific area. The competence “Researching” might include skills such as “Interviewing” and “Reflecting”.",
+      "groups": "A group is a training program that you can enroll in and work on different skills.",
+      "profiles": "A profile represents a set of competencies needed to excel in a role or field. If you master multiple competencies of a profile, it means you are an excellent candidate for that role or field."
+    }
   },
   "modals": {
     "cancel": "Cancel",

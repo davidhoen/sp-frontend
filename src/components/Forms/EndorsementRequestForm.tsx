@@ -29,9 +29,11 @@ export const EndorsementRequestForm = ({ endorsementRequest }: { endorsementRequ
         },
     })
 
+    const { formState: { isSubmitting } } = form
+
     const onSubmit = async (values: z.infer<typeof endorsementSchema>) => {
         try {
-            const res = axiosInstance.post(`api/endorsement_request/${endorsementRequest.id}/response`, {
+            const res = axiosInstance.post(`/api/endorsements/request/${endorsementRequest.id}`, {
                 ...values,
             })
             await triggerPromiseToast(res, t)
@@ -125,7 +127,7 @@ export const EndorsementRequestForm = ({ endorsementRequest }: { endorsementRequ
                         </FormItem>
                     )}
                 />
-                <Button type="submit" className="w-full">{t("endorsementRequest.submitEndorsement")}</Button>
+                <Button type="submit" disabled={isSubmitting} className="w-full">{t("endorsementRequest.submitEndorsement")}</Button>
             </form>
         </Form>
     )

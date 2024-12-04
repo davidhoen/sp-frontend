@@ -1,20 +1,20 @@
 "use client"
 
+import { Link } from "@/i18n/routing";
 import { getFullName } from "@/lib";
-import { useUser } from "@/providers/UserProvider";
 import { GroupType } from "@/types";
 import { ChevronRightIcon, UsersIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import UserAvatar from "./UserAvatar";
-import { Link } from "@/i18n/routing";
 import { Button } from "./ui/button";
+import UserAvatar from "./UserAvatar";
+import { cn } from "@/lib/utils";
 
-export function GroupCard({ group }: { group: GroupType }) {
+export function GroupCard({ group, className }: { group: GroupType, className?: string }) {
     const t = useTranslations("general")
 
     return (
         <Link href={`/student/groups/${group.id}`}>
-            <div className="relative flex flex-col border rounded-lg px-4 py-3">
+            <div className={cn("relative flex flex-col border rounded-lg px-4 py-3 hover:bg-muted", className)}>
 
                 {/* Name */}
                 <div className="mb-4">
@@ -42,9 +42,15 @@ export function GroupCard({ group }: { group: GroupType }) {
 
                 {/* Chip for every connected skill */}
                 <div className="flex flex-wrap gap-2 mt-4">
-                    {group.skills.map((skill) => (
+                    {/* Get max 3 skills */}
+                    {group.skills.slice(0, 3).map((skill) => (
                         <span key={skill.id} className="bg-primary text-white px-2 py-1 text-xs rounded-full">{skill.title}</span>
                     ))}
+                    {group.skills.length > 3 && (
+                        <div className="flex items-center h-fit gap-1 bg-border rounded-full text-xs p-1">
+                            <span>+{group.skills.length - 3}</span>
+                        </div>
+                    )}
                 </div>
 
                 {/* Number of students with users icon */}

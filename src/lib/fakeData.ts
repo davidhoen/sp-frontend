@@ -55,16 +55,7 @@ export const feedback: FeedbackType = {
     content: "Improvement could be incorporating more real-world examples to illustrate the points. Nevertheless, it was a compelling presentation."
 }
 
-export const endorsement: EndorsementType = {
-    id: uuid(),
-    user: fakeTeacher,
-    title: "Midterm evaluation",
-    content: "Impressive command over the subject matter and ability to engage the audience",
-    rating: 3,
-    is_approved: true,
-    created_by: fakeStudent,
-    created_at: new Date()
-}
+
 
 export const ratingUpdate: RatingHistoryType = {
     rating: 3,
@@ -120,6 +111,18 @@ export const fakeSkill2: SkillType = {
     created_at: new Date(),
     groups_count: 0,
     is_added: false,
+}
+
+export const endorsement: EndorsementType = {
+    id: uuid(),
+    user: fakeTeacher,
+    title: "Midterm evaluation",
+    content: "Impressive command over the subject matter and ability to engage the audience",
+    rating: 3,
+    is_approved: true,
+    skill: fakeSkill,
+    created_by: fakeStudent,
+    created_at: new Date()
 }
 
 export const fakeGroup: GroupType = {

@@ -95,7 +95,7 @@ const SkillsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => 
     const renderSkill = (skill: SkillType) => <SkillCard key={skill.id} skill={skill} mutate={fetchSkills} />
 
     return <div className="w-full">
-        <PageTitle>{t("skills")}</PageTitle>
+        <PageTitle information={t("definitions.skills")}>{t("skills")}</PageTitle>
 
         {/* Search */}
         <div className="my-4">

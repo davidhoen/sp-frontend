@@ -25,7 +25,7 @@ const GroupsDetail = async ({ params }: { params: { id: number } }) => {
         {/* Teachers */}
         <div>
             <SectionTitle>{t("teachers")}</SectionTitle>
-            <div className="flex flex-col gap-2">
+            <div className="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-2">
                 {group?.teachers?.map((teacher) => <UserLine key={teacher.id} user={teacher} />)}
             </div>
         </div>
@@ -33,7 +33,7 @@ const GroupsDetail = async ({ params }: { params: { id: number } }) => {
         {/* Skills */}
         <div>
             <SectionTitle>{t("skills")}</SectionTitle>
-            <div className="grid gap-2 max-w-xs">
+            <div className="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-2 ">
                 {group?.skills?.map((skill) => <SkillCard key={skill.id} skill={skill} />)}
             </div>
         </div>
@@ -41,7 +41,7 @@ const GroupsDetail = async ({ params }: { params: { id: number } }) => {
         {/* Students */}
         <div>
             <SectionTitle>{t("students")}</SectionTitle>
-            <div className="flex flex-col gap-2">
+            <div className="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-2">
                 {group?.students?.map((student) => <UserLine key={student.id} user={student} />)}
             </div>
         </div>

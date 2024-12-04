@@ -45,7 +45,7 @@ const CompetenciesOverview = ({ searchParams }: { searchParams: SkillsQueryType 
     const renderCompetencies = (competency: CompetencyType) => <CompetenciesCard key={competency.id} competency={competency} />
 
     return <div className="w-full">
-        <PageTitle>{t("competencies")}</PageTitle>
+        <PageTitle information={t("definitions.competencies")}>{t("competencies")}</PageTitle>
 
         {/* Search */}
         <div className="my-4">

@@ -1,5 +1,5 @@
 import axiosInstance from "@/lib/axios";
-import { CompetencyType, EndorsementRequestType, GroupType, SkillType } from "@/types";
+import { CompetencyType, EndorsementRequestType, GroupType, ProfileType, SkillType } from "@/types";
 import { PagingSchema } from "@/types/pagination";
 
 export const getSkills = async ({ page, search, competencies, isAdded }: { page: number; search: string; competencies: string; isAdded: string; }) => {
@@ -27,7 +27,7 @@ export const getCompetencies = async ({ page, search }: { page: number; search: 
 
 export const getGroups = async ({ page, search, isJoined }: { page: number; search: string; isJoined: string }) => {
     try {
-        const route = `/api/student/groups?page=${page}&search=${search}&is_joined=${isJoined}`
+        const route = `/api/groups?page=${page}&search=${search}&is_joined=${isJoined}`
         const { data } = await axiosInstance.get<PagingSchema<GroupType>>(route);
         return data;
     }
@@ -35,3 +35,4 @@ export const getGroups = async ({ page, search, isJoined }: { page: number; sear
         console.error(error);
     }
 }
+

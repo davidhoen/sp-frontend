@@ -13,12 +13,6 @@ import { Skeleton } from "../ui/skeleton";
 import { TimeLineContentCard } from "./TimeLineContentCard";
 import { TimelineRatingUpdateCard } from "./TimelineRatingUpdateCard";
 
-const fakeItems = [
-    { type: TimeLineItemTypeEnum.Feedback, created_at: new Date("7-8-21"), feedback },
-    { type: TimeLineItemTypeEnum.Endorsement, created_at: new Date(), endorsement },
-    { type: TimeLineItemTypeEnum.RatingUpdate, created_at: new Date("8-8-21"), ratingUpdate }
-]
-
 export function TimeLine({ user, skillId }: { user: UserType, skillId: string }) {
     const t = useTranslations("general")
     let { data: allItems, isLoading, mutate } = useTimeLineItems(skillId)
