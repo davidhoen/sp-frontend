@@ -1,5 +1,5 @@
 import { routing } from "@/i18n/routing"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { NextIntlClientProvider } from "next-intl"
 import { getMessages } from "next-intl/server"
 import { Roboto, Roboto_Slab } from "next/font/google"
@@ -17,6 +17,13 @@ const robotoSlab = Roboto_Slab({
   subsets: ["latin"],
   variable: "--roboto-slab"
 })
+
+// Fix input zoom for safari browsers
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+}
 
 export const metadata: Metadata = {
   title: "Skills Passport",

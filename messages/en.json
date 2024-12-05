@@ -29,6 +29,7 @@
     "requestEndorsement": "Request endorsement",
     "noEntitiesFound": "No {entities} found",
     "topSkills": "Top skills",
+    "myPersonalCoach": "My personal coach",
     "view": "View",
     "overview": "Overview",
     "students": "Students",
@@ -104,6 +105,12 @@
       "skillRating": "Skill rating",
       "skillRatingDescription": "Rate the skill from 1 to 4 stars",
       "submitEndorsement": "Submit endorsement"
+    },
+    "updatePersonalCoach": {
+      "title": "Update personal coach",
+      "description": "Select a coach to help you with your personal development. This person will have insight into your skills and your continued progress.",
+      "yourCoach": "Your coach",
+      "selectCoach": "Select a coach"
     }
   },
   "students": {
