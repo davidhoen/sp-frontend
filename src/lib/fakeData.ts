@@ -1,4 +1,4 @@
-import { CompetencyType, EndorsementRequestType, EndorsementType, FeedbackType, GroupType, RatingHistoryType, SkillType } from "@/types"
+import { CompetencyType, EndorsementRequestType, EndorsementType, FeedbackType, GroupType, NotificationType, NotificationTypeEnum, RatingHistoryType, SkillType } from "@/types"
 import { UserType } from "@/types/auth"
 import { v4 as uuid } from "uuid"
 
@@ -7,11 +7,12 @@ export const fakeStudent: UserType = {
     email: "user@skillspassport.nl",
     first_name: "John",
     last_name: "Doe",
+    is_teacher: false,
+    is_head_teacher: false,
+    is_admin: false,
     role: {
         id: uuid(),
         name: "Student",
-        is_teacher: false,
-        is_head_teacher: false
     },
     role_id: uuid(),
     image: "https://xsgames.co/randomusers/avatar.php?g=male",
@@ -25,10 +26,11 @@ export const fakeStudent2: UserType = {
     role: {
         id: uuid(),
         name: "Student",
-        is_teacher: false,
-        is_head_teacher: false
     },
     role_id: uuid(),
+    is_teacher: false,
+    is_head_teacher: false,
+    is_admin: false,
     image: "https://xsgames.co/randomusers/avatar.php?g=male",
 }
 
@@ -40,10 +42,11 @@ export const fakeTeacher: UserType = {
     role: {
         id: uuid(),
         name: "Teacher",
-        is_teacher: true,
-        is_head_teacher: false
     },
     role_id: uuid(),
+    is_teacher: false,
+    is_head_teacher: false,
+    is_admin: false,
     image: "https://xsgames.co/randomusers/avatar.php?g=female",
 }
 
@@ -142,3 +145,42 @@ export const fakeEndorsementRequest: EndorsementRequestType = {
     requester: fakeStudent,
     skill: fakeSkill
 }
+
+export const fakeNotifications: NotificationType[] = [
+    {
+        id: uuid(),
+        type: NotificationTypeEnum.FeedbackRequest,
+        requestee_name: "John Doe",
+        skill: {
+            id: uuid(),
+            title: "Skill 1"
+        }
+    },
+    {
+        id: uuid(),
+        type: NotificationTypeEnum.FeedbackReceived,
+        requestee_name: "Jane Doe",
+        skill: {
+            id: uuid(),
+            title: "Skill 2"
+        }
+    },
+    {
+        id: uuid(),
+        type: NotificationTypeEnum.EndorsementReceived,
+        requestee_name: "John Doe",
+        skill: {
+            id: uuid(),
+            title: "Skill 3"
+        }
+    },
+    {
+        id: uuid(),
+        type: NotificationTypeEnum.EndorsementReviewed,
+        requestee_name: "Jane Doe",
+        skill: {
+            id: uuid(),
+            title: "Skill 4"
+        }
+    }
+]

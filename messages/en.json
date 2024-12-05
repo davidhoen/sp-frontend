@@ -44,6 +44,15 @@
       "competencies": "A competence is a collection of related skills that together enable you to perform well in a specific area. The competence “Researching” might include skills such as “Interviewing” and “Reflecting”.",
       "groups": "A group is a training program that you can enroll in and work on different skills.",
       "profiles": "A profile represents a set of competencies needed to excel in a role or field. If you master multiple competencies of a profile, it means you are an excellent candidate for that role or field."
+    },
+    "notifications": {
+      "title": "Notifications",
+      "noNotificationsDescription": "You currently have no notifications. Once you receive feedback or endorsements, they will appear here.",
+      "feedbackReceived": "added feedback to your skill",
+      "feedbackRequest": "requested feedback on for skill",
+      "endorsementReceived": "endorsed your skill",
+      "endorsementRequest": "requested an endorsement for skill",
+      "endorsementReviewed": "reviewed your endorsement request"
     }
   },
   "modals": {
@@ -85,7 +94,7 @@
       "fromUserdescription": "Ask {name} for feedback on a specific skill."
     },
     "endorsementRequest": {
-      "title": "Endorsment request",
+      "title": "Endorsement request",
       "requestExpired": "This endorsement request has expired, please ask the student to send a new request.",
       "endorseUserSkill": "Endorse {name}'s skill",
       "skillInformation": "Skill information",

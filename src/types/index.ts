@@ -113,3 +113,22 @@ export type GroupsQueryType = {
   search: string,
   is_joined: string
 }
+
+export type NotificationType = {
+  id: string,
+  type: NotificationTypeEnum,
+  requester?: UserType,
+  requestee_name?: string,
+  skill: {
+    id: string,
+    title: string
+  },
+}
+
+export enum NotificationTypeEnum {
+  FeedbackRequest = "feedbackRequest",
+  FeedbackReceived = "feedbackReceived",
+  EndorsementRequest = "endorsementRequest",
+  EndorsementReceived = "endorsementReceived",
+  EndorsementReviewed = "endorsementReviewed",
+}

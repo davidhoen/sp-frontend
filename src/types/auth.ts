@@ -6,7 +6,10 @@ export interface UserType {
     role_id?: string
     image?: string
     role: Role
-    personal_coach?: UserType
+    personal_coach?: UserType;
+    is_teacher: boolean
+    is_head_teacher: boolean
+    is_admin: boolean
 }
 
 export interface UserInputType {
@@ -21,8 +24,6 @@ export interface UserInputType {
 export type Role = {
     id: string
     name: string
-    is_teacher: boolean
-    is_head_teacher: boolean
 }
 
 export interface ApiResponseGet<T> {
