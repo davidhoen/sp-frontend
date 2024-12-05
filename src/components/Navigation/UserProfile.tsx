@@ -38,7 +38,7 @@ export default function UserProfile() {
       <DropdownMenuTrigger>
         <UserAvatar user={user} />
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="pe-12">
+      <DropdownMenuContent align="end" className=" w-40">
         <DropdownMenuLabel className="pb-0">{getFullName(user)}</DropdownMenuLabel>
         <DropdownMenuLabel className="font-normal pt-1">{user.role.name}</DropdownMenuLabel>
         <DropdownMenuSeparator />

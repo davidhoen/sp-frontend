@@ -45,6 +45,15 @@
       "competencies": "Een competentie is een verzameling gerelateerde skills die je samen in staat stellen om goed te presteren op een specifiek gebied. De competentie “Onderzoeken” kan bijvoorbeeld skills omvatten als “Interviewen” en “Reflecteren”.",
       "groups": "Een groep is een trainingsprogramma waarvoor je je kunt inschrijven en aan verschillende skills kunt werken.",
       "profiles": "Een profiel vertegenwoordigt een set competenties die nodig zijn om uit te blinken in een functie of vakgebied. Als je meerdere competenties van een profiel beheerst, betekent dit dat je een uitstekende kandidaat bent voor die functie of dat gebied."
+    },
+    "notifications": {
+      "title": "Notificaties",
+      "noNotificationsDescription": "Je hebt momenteel geen notificaties. Zodra je feedback of onderschrijvingen ontvangt, worden ze hier weergegeven.",
+      "feedbackReceived": "heeft je feedback gegeven op je skill",
+      "feedbackRequest": "vraagt om feedback voor de skill",
+      "endorsementReceived": "onderschreef je skill",
+      "endorsementRequest": "vraagt om een onderschrijving voor de skill",
+      "endorsementReviewed": "heeft je onderschrijving beoordeeld voor je skill"
     }
   },
   "modals": {

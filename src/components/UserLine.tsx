@@ -14,7 +14,7 @@ export default function UserLine({ user }: { user: UserType, }) {
     const t = useTranslations("general")
     const { user: currentUser } = useUser()
 
-    const isTeacher = user.role.is_teacher
+    const isTeacher = user.is_teacher || user.is_head_teacher || user.is_admin
 
     return (
         <div className="flex justify-between border-2 rounded-md p-1 w-full">
