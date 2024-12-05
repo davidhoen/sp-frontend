@@ -38,7 +38,7 @@ export default function Notifications() {
         <DropdownMenuSeparator />
 
         {notifications && notifications?.length > 0 ? (
-          notifications.map((notification) => <Notification notification={notification} needsTeacherRouting={needsTeacherRouting} />)
+          notifications.map((notification) => <Notification key={notification.id} notification={notification} needsTeacherRouting={needsTeacherRouting} />)
         ) : (
           <p className="text-xs px-2 pb-2">{t("noNotificationsDescription")}</p>
         )}
