@@ -51,3 +51,7 @@ export const roleBasePathMap: { [key: string]: string } = {
     head_teacher: "/teacher",
     admin: "/teacher",
 };
+
+export const isTeacherUser = (user: UserType) => {
+    return user?.is_teacher || user?.is_head_teacher || user?.is_admin || false
+}

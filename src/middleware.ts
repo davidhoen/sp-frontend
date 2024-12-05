@@ -2,7 +2,7 @@ import createMiddleware from "next-intl/middleware";
 import { NextRequest, NextResponse } from "next/server";
 import { EXPIRED_SESSION_PARAM, FORGOT_PASSWORD_ROUTE, LOGIN_ROUTE, REGISTER_ROUTE, RESET_PASSWORD_ROUTE } from "./constants";
 import { locales, routing } from "./i18n/routing";
-import { roleBasePathMap } from "./lib";
+import { isTeacherUser, roleBasePathMap } from "./lib";
 import { auth, redirectToLoginWithExpiredCookie } from "./lib/auth/server";
 import { UserType } from "./types/auth";
 
@@ -65,6 +65,19 @@ export const middleware = async (req: NextRequest) => {
       // Send users to their dashboard if they are on a guest page
       const redirectResponse = await handleAuthenticatedUser(url, locale, user);
       if (redirectResponse) return redirectResponse;
+
+      // Send students to the student dashboard when trying to access the teacher env
+      if (!isTeacherUser(user) && urlWithoutLocale.startsWith("/teacher")) {
+        url.pathname = `/${locale}/student`;
+        return NextResponse.redirect(url);
+      }
+
+      // Send teachers to the teacher dashboard when trying to access the student env
+      if (isTeacherUser(user) && urlWithoutLocale.startsWith("/student")) {
+        url.pathname = `/${locale}/teacher`;
+        return NextResponse.redirect(url);
+      }
+
       return localizedResponse;
     }
 
