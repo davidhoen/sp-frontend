@@ -28,8 +28,8 @@ const AddFeedbackModal = ({ children, skillId, mutate }: { children: ReactNode, 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            title: undefined,
-            feedback: undefined
+            title: "",
+            feedback: ""
         }
     })
 

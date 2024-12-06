@@ -71,6 +71,10 @@
     "skillPlaceholder": "Select a skill",
     "email": "Email",
     "emailPlaceholder": "bob@example.com",
+    "loading": "Loading...",
+    "successfullySaved": "Successfully saved",
+    "genericError": "Something went wrong. Please try again later.",
+    "successfullySent": "Successfully sent",
     "updateStarRating": {
       "title": "Update stars rating",
       "description": "Provide feedback explaining why you updated your rating; keep in mind the new rating is temporary until a teacher endorses it.",

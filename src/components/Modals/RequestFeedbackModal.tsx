@@ -26,7 +26,7 @@ const RequestFeedbackModal = ({ children, requestFromUser, skillId }: { children
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            title: undefined,
+            title: "",
             skillId
         }
     })

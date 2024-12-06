@@ -73,6 +73,7 @@
     "loading": "Laden...",
     "successfullySaved": "Succesvol opgeslagen",
     "genericError": "Er is iets misgegaan. Probeer het later opnieuw.",
+    "successfullySent": "Succesvol verzonden",
     "updateStarRating": {
       "title": "Update sterrenbeoordeling",
       "description": "Geef feedback waarin je uitlegt waarom je je beoordeling hebt bijgewerkt; houd er rekening mee dat de nieuwe beoordeling tijdelijk is totdat een leraar deze goedkeurt.",

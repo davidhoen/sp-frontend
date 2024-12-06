@@ -18,7 +18,6 @@ import { useUser } from "@/providers/UserProvider"
 const UpdateRatingModal = ({ children, skillId, currentRating }: { children: ReactNode, skillId: string, currentRating?: RatingHistoryType }) => {
     const t = useTranslations("modals")
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const { user } = useUser()
 
     const minimalRating = currentRating?.rating || 0
 
@@ -31,7 +30,7 @@ const UpdateRatingModal = ({ children, skillId, currentRating }: { children: Rea
         resolver: zodResolver(formSchema),
         defaultValues: {
             rating: currentRating?.rating || 0,
-            feedback: undefined
+            feedback: ""
         }
     })
 
@@ -40,7 +39,6 @@ const UpdateRatingModal = ({ children, skillId, currentRating }: { children: Rea
             const res = axiosInstance.post(`/api/student/skills/${skillId}/rating_update`, {
                 ...values,
                 skillId,
-                userId: user?.id
             })
             await triggerPromiseToast(res, t)
             setIsModalOpen(false)

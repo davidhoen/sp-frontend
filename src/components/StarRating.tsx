@@ -1,9 +1,9 @@
 "use client"
 
-import React, { useState } from "react"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { useTranslations } from "next-intl"
 import { getStarTitles, roundToQuarter } from "@/lib"
+import { useTranslations } from "next-intl"
+import { useState } from "react"
 
 const adjustFillPercentage = (fill: number): number => {
   // round fill to the nearest quarter
