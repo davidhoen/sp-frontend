@@ -1,6 +1,6 @@
 "use client"
 
-import { getYouOrFullName } from "@/lib"
+import { getYouOrFullName, isTeacherUser } from "@/lib"
 import { useUser } from "@/providers/UserProvider"
 import { UserType } from "@/types/auth"
 import { BadgeCheckIcon, MessageCircleIcon } from "lucide-react"
@@ -13,8 +13,6 @@ import { Button } from "./ui/button"
 export default function UserLine({ user }: { user: UserType, }) {
     const t = useTranslations("general")
     const { user: currentUser } = useUser()
-
-    const isTeacher = user.is_teacher || user.is_head_teacher || user.is_admin
 
     return (
         <div className="flex justify-between border-2 rounded-md p-1 w-full">
@@ -37,7 +35,7 @@ export default function UserLine({ user }: { user: UserType, }) {
 
                     {/* Request endorsement */}
                     {/* Only teachers can provide a endorsement, so only show the button when its a teacher */}
-                    {isTeacher && <RequestEndorsementModal requestFromUser={user}>
+                    {isTeacherUser(user) && <RequestEndorsementModal requestFromUser={user}>
                         <Button variant="outline" className="px-0.5" size="icon">
                             <BadgeCheckIcon className="" strokeWidth={2.5} size={18} />
                         </Button>

@@ -29,6 +29,7 @@
     "requestEndorsement": "Onderschrijving aanvragen",
     "noEntitiesFound": "Geen {entities) gevonden",
     "topSkills": "Top skills",
+    "myPersonalCoach": "Mijn persoonlijke coach",
     "view": "Bekijk",
     "title": "Titel",
     "overview": "Overzicht",
@@ -72,6 +73,7 @@
     "loading": "Laden...",
     "successfullySaved": "Succesvol opgeslagen",
     "genericError": "Er is iets misgegaan. Probeer het later opnieuw.",
+    "successfullySent": "Succesvol verzonden",
     "updateStarRating": {
       "title": "Update sterrenbeoordeling",
       "description": "Geef feedback waarin je uitlegt waarom je je beoordeling hebt bijgewerkt; houd er rekening mee dat de nieuwe beoordeling tijdelijk is totdat een leraar deze goedkeurt.",
@@ -106,6 +108,12 @@
       "skillRating": "Skill beoordeling",
       "skillRatingDescription": "Beoordeel de skill van 1 tot 4 sterren",
       "submitEndorsement": "Onderschrijving versturen"
+    },
+    "updatePersonalCoach": {
+      "title": "Update persoonlijke coach",
+      "description": "Selecteer een coach om je te helpen met je persoonlijke ontwikkeling. Deze persoon krijgt inzicht tot je skills en je verdere voortgang.",
+      "yourCoach": "Jouw coach",
+      "selectCoach": "Selecteer een coach"
     }
   },
   "students": {

@@ -1,7 +1,6 @@
 "use client"
 
-import { triggerPromiseToast } from "@/lib"
-import axiosInstance from "@/lib/axios"
+import { useEvents } from "@/hooks/use-events"
 import { useUser } from "@/providers/UserProvider"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
@@ -11,39 +10,38 @@ import { z } from "zod"
 import { Button } from "../ui/button"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
-import { Input } from "../ui/input"
-import { Textarea } from "../ui/textarea"
+import Select from "../ui/select"
+import axiosInstance from "@/lib/axios"
+import { triggerPromiseToast } from "@/lib"
 
-const AddFeedbackModal = ({ children, skillId, mutate }: { children: ReactNode, skillId?: string, mutate?: () => void }) => {
+const UpdatePersonalCoachModal = ({ children }: { children: ReactNode }) => {
     const t = useTranslations("modals")
     const { user } = useUser()
 
+    // TODO: Replace with useCoaches of student
+    const { data: coaches } = useEvents()
+
     const [isModalOpen, setIsModalOpen] = useState(false)
 
-    const formSchema = z.object({
-        title: z.string(),
-        feedback: z.string()
-    })
+    const formSchema = z.object({ coachUserId: z.string() })
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            title: "",
-            feedback: ""
+            coachUserId: user?.personal_coach?.id,
         }
     })
 
+    const { formState: { isDirty, isValid } } = form
+
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            const res = axiosInstance.post(`/api/student/skills/${skillId}/feedback`, {
-                ...values,
-                skillId,
-                userId: user?.id
+            const res = axiosInstance.put(`/api/student/personal_coach`, {
+                personal_coach_id: values.coachUserId
             })
             await triggerPromiseToast(res, t)
-            mutate && mutate()
-            setIsModalOpen(false)
             form.reset()
+            setIsModalOpen(false)
         }
         catch (error) {
             console.error(error)
@@ -52,41 +50,27 @@ const AddFeedbackModal = ({ children, skillId, mutate }: { children: ReactNode, 
 
     return (
         <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-
-            <DialogTrigger asChild>{children}</DialogTrigger>
+            <DialogTrigger>
+                {children}
+            </DialogTrigger>
             <DialogContent>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-
                         <DialogHeader>
-                            <DialogTitle>{t("addFeedback.title")}</DialogTitle>
-                            <DialogDescription>{t("addFeedback.description")}</DialogDescription>
+                            <DialogTitle className="mb-2">{t("updatePersonalCoach.title")}</DialogTitle>
+                            <DialogDescription>
+                                {t("updatePersonalCoach.description")}
+                            </DialogDescription>
                         </DialogHeader>
 
-                        {/* Title  */}
                         <FormField
                             control={form.control}
-                            name="title"
-                            render={({ field }) => (
+                            name="coachUserId"
+                            render={({ field: { onChange } }) => (
                                 <FormItem>
-                                    <FormLabel>{t("feedbackTitle")}</FormLabel>
+                                    <FormLabel>{t("updatePersonalCoach.yourCoach")}</FormLabel>
                                     <FormControl>
-                                        <Input {...field} placeholder={t("feedbackTitlePlaceholder")} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
-                        {/* Feedback */}
-                        <FormField
-                            control={form.control}
-                            name="feedback"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>{t("feedback")}</FormLabel>
-                                    <FormControl>
-                                        <Textarea {...field} placeholder={t("feedbackPlaceholder")} />
+                                        <Select options={coaches} placeholder={t("updatePersonalCoach.selectCoach")} onChange={(selectedOption) => onChange(selectedOption?.value)} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -99,16 +83,13 @@ const AddFeedbackModal = ({ children, skillId, mutate }: { children: ReactNode, 
                                 <Button type="button" variant="outline">{t("cancel")}</Button>
                             </DialogClose>
                             {/* Submit */}
-                            <Button type="submit">{t("save")}</Button>
+                            <Button type="submit" disabled={!isDirty || !isValid}>{t("save")}</Button>
                         </DialogFooter>
-
                     </form>
                 </Form>
-
             </DialogContent>
-        </Dialog >
-
+        </Dialog>
     )
 }
 
-export default AddFeedbackModal
+export default UpdatePersonalCoachModal

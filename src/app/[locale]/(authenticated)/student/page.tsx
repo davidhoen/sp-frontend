@@ -34,7 +34,7 @@ const DashboardPage = async () => {
     { /* Competencies  */}
     <div>
       <SectionTitle information={t("general.definitions.competencies")} numberOfItems={competencies?.length}>{t("general.competencies")}</SectionTitle>
-      <div className="flex flex-wrap md:flex-nowrap md:flex-row gap-2 w-full mb-2">
+      <div className="grid sm:grid-cols-2 md:flex md:flex-row gap-2 w-full mb-2">
         {competencies?.slice(0, 3).map((competency) => {
           const rating = getCompetencyRating(competency)
           return (

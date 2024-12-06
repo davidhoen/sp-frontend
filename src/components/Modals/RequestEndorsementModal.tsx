@@ -34,8 +34,8 @@ const RequestEndorsementModal = ({ children, skillId, requestFromUser }: { child
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            title: undefined,
-            email: undefined,
+            title: "",
+            email: "",
             skillId,
         }
     })
@@ -48,7 +48,7 @@ const RequestEndorsementModal = ({ children, skillId, requestFromUser }: { child
                 requestee_email: values.email,
                 requestee: requestFromUser?.id
             })
-            await triggerPromiseToast(res, t)
+            await triggerPromiseToast(res, t, { success: t("successfullySent") })
             form.reset()
             setIsModalOpen(false)
         }

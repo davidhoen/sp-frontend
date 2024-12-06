@@ -21,7 +21,7 @@ export default function Notifications() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" className="relative" aria-label={`${notifications?.length} notifications`}>
           <BellIcon className="h-6 w-6" />
           {/* Number of notifications */}
