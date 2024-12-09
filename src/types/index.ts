@@ -108,10 +108,16 @@ export type EndorsementRequestType = {
   requester: UserType
 }
 
-export type GroupsQueryType = {
+export type StudentGroupsQueryType = {
   page: string,
   search: string,
   is_joined: string
+}
+
+export type TeacherGroupsQueryType = {
+  page: string,
+  search: string,
+  is_archived: string
 }
 
 export type NotificationType = {

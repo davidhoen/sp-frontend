@@ -7,12 +7,12 @@ import Skeletons from "@/components/Skeletons"
 import PageTitle from "@/components/Typography/PageTitle"
 import { getGroups } from "@/lib/queries/client/queries"
 import { cn } from "@/lib/utils"
-import { GroupsQueryType, GroupType } from "@/types"
+import { StudentGroupsQueryType, GroupType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useTranslations } from "next-intl"
 import { useCallback, useEffect, useState } from "react"
 
-const GroupsOverview = ({ searchParams }: { searchParams: GroupsQueryType }) => {
+const GroupsOverview = ({ searchParams }: { searchParams: StudentGroupsQueryType }) => {
     const t = useTranslations("general")
 
     const [groups, setGroups] = useState<PagingSchema<GroupType>>();
@@ -22,11 +22,11 @@ const GroupsOverview = ({ searchParams }: { searchParams: GroupsQueryType }) => 
     const fetchGroups = useCallback(async () => {
         setIsLoading(true);
         try {
-            const page = parseInt(searchParams.page) || 1;
+            const page = searchParams.page || "1";
             const search = searchParams.search ?? ""
             const isJoined = searchParams.is_joined ?? ""
 
-            const filteredGroups = await getGroups({ page, search, isJoined });
+            const filteredGroups = await getGroups({ query: { page, search, isJoined } });
 
             setGroups(filteredGroups);
         }
