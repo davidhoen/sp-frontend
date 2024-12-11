@@ -15,7 +15,7 @@ export function FeedbacksList({ skillId }: { skillId: string }) {
         <SectionTitle numberOfItems={feedbacks?.length}>{t("feedback")}</SectionTitle>
         {isLoading && <Skeletons amount={3} className="w-full h-36" />}
         <div className="flex flex-col md:flex-row gap-2 mb-4">
-            {(!isLoading && feedbacks) && feedbacks.map((feedback) => <ContentCard key={feedback.id} content={feedback} />)}
+            {(!isLoading && feedbacks) && feedbacks?.map((feedback) => <ContentCard key={feedback.id} content={feedback} />)}
         </div>
     </>
 }

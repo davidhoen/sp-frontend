@@ -1,6 +1,6 @@
 "use client"
 
-import { useEvents } from "@/hooks/use-events"
+// import { useEvents } from "@/hooks/use-events"
 import { getFullName } from "@/lib"
 import { UserType } from "@/types/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -18,7 +18,13 @@ const RequestFeedbackModal = ({ children, requestFromUser, skillId }: { children
     const t = useTranslations("modals")
 
     // TODO: Replace with useSkills hook
-    const { data: events, isLoading } = useEvents()
+    // const { data: events, isLoading } = useEvents()
+    
+    const events = [
+        { value: "1", label: "Event 1" },
+        { value: "2", label: "Event 2" },
+        { value: "3", label: "Event 3" },
+    ]
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const formSchema = z.object({ title: z.string(), skillId: z.string() })

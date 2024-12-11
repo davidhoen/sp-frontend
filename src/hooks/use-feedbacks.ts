@@ -7,7 +7,7 @@ export const useFeedbacks = (skillId: string) => {
     return useSWR(url, () =>
         axiosInstance.get(url)
             .then((res: { data: FeedbackType[] }) => {
-                return res.data
+                return res.data.data
             })
             .catch((error) => {
                 console.error(error)

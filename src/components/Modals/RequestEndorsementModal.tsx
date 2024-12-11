@@ -1,6 +1,6 @@
 "use client"
 
-import { useEvents } from "@/hooks/use-events"
+// import { useEvents } from "@/hooks/use-events"
 import { getFullName, triggerPromiseToast } from "@/lib"
 import { UserType } from "@/types/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -20,7 +20,13 @@ import SetCookies from "../SetCookies"
 const RequestEndorsementModal = ({ children, skillId, requestFromUser }: { children: ReactNode, skillId?: string, requestFromUser?: UserType }) => {
     const t = useTranslations("modals")
     // TODO: Replace with useSkills of student
-    const { data: events } = useEvents()
+    // const { data: events } = useEvents()
+
+    const events = [
+        { value: "1", label: "Event 1" },
+        { value: "2", label: "Event 2" },
+        { value: "3", label: "Event 3" },
+    ]
 
     const [isModalOpen, setIsModalOpen] = useState(false)
 

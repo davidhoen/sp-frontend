@@ -15,11 +15,11 @@ import axiosInstance from "@/lib/axios"
 import { triggerPromiseToast } from "@/lib"
 import { useUser } from "@/providers/UserProvider"
 
-const UpdateRatingModal = ({ children, skillId, currentRating }: { children: ReactNode, skillId: string, currentRating?: RatingHistoryType }) => {
+const UpdateRatingModal = ({ children, skillId, currentRating }: { children: ReactNode, skillId: string, currentRating?: number }) => {
     const t = useTranslations("modals")
     const [isModalOpen, setIsModalOpen] = useState(false)
 
-    const minimalRating = currentRating?.rating || 0
+    const minimalRating = currentRating || 0
 
     const formSchema = z.object({
         rating: z.number().int().min(minimalRating, { message: t("updateStarRating.ratingToLow") }).max(4),
@@ -29,7 +29,7 @@ const UpdateRatingModal = ({ children, skillId, currentRating }: { children: Rea
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            rating: currentRating?.rating || 0,
+            rating: currentRating || 0,
             feedback: ""
         }
     })
