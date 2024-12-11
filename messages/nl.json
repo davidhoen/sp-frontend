@@ -1,5 +1,10 @@
 {
   "general": {
+    "actions": "Acties",
+    "edit": "Bewerken",
+    "delete": "Verwijderen",
+    "add": "Toevoegen",
+    "name": "Naam",
     "dashboard": "Dashboard",
     "viewProfile": "Bekijk profiel",
     "logout": "Uitloggen",
@@ -114,6 +119,10 @@
       "description": "Selecteer een coach om je te helpen met je persoonlijke ontwikkeling. Deze persoon krijgt inzicht tot je skills en je verdere voortgang.",
       "yourCoach": "Jouw coach",
       "selectCoach": "Selecteer een coach"
+    },
+    "upsertGroup": {
+      "create": "Groep aanmaken",
+      "update": "Groep bewerken"
     }
   },
   "students": {

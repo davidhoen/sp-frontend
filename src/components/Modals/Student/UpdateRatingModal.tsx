@@ -1,19 +1,18 @@
 "use client"
 
+import { triggerPromiseToast } from "@/lib"
+import axiosInstance from "@/lib/axios"
+import { RatingHistoryType } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { ReactNode, useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { Button } from "../ui/button"
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
-import { Textarea } from "../ui/textarea"
-import StarRating from "../StarRating"
-import { RatingHistoryType } from "@/types"
-import axiosInstance from "@/lib/axios"
-import { triggerPromiseToast } from "@/lib"
-import { useUser } from "@/providers/UserProvider"
+import StarRating from "../../StarRating"
+import { Button } from "../../ui/button"
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../ui/dialog"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../../ui/form"
+import { Textarea } from "../../ui/textarea"
 
 const UpdateRatingModal = ({ children, skillId, currentRating }: { children: ReactNode, skillId: string, currentRating?: RatingHistoryType }) => {
     const t = useTranslations("modals")

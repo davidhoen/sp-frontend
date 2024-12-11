@@ -1,5 +1,10 @@
 {
   "general": {
+    "actions": "Actions",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add",
+    "name": "Name",
     "dashboard": "Dashboard",
     "viewProfile": "View profile",
     "logout": "Logout",
@@ -115,6 +120,10 @@
       "description": "Select a coach to help you with your personal development. This person will have insight into your skills and your continued progress.",
       "yourCoach": "Your coach",
       "selectCoach": "Select a coach"
+    },
+    "upsertGroup": {
+      "create": "Create a group",
+      "update": "Update group"
     }
   },
   "students": {
