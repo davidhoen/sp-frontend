@@ -6,7 +6,7 @@ export const useFeedbacks = (skillId: string) => {
     const url = `/api/skills/${skillId}/feedbacks`
     return useSWR(url, () =>
         axiosInstance.get(url)
-            .then((res: { data: FeedbackType[] }) => {
+            .then((res: { data: { data: FeedbackType[] } }) => {
                 return res.data.data
             })
             .catch((error) => {

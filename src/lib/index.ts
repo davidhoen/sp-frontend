@@ -1,4 +1,4 @@
-import { CompetencyType, RatingHistoryType, TranslationFunction } from "@/types"
+import { CompetencyType, TranslationFunction } from "@/types"
 import { UserType } from "@/types/auth"
 import toast from "react-hot-toast"
 
@@ -15,11 +15,6 @@ export const getYouOrFullName = (entityUser: UserType, t: TranslationFunction, l
 export const getStarTitles = (t: TranslationFunction) => {
     return [t("insufficient"), t("sufficient"), t("good"), t("excellent")]
 }
-
-// export const getMostRecentRating = (ratings: RatingHistoryType[]) => {
-//     const rating = ratings?.sort((a, b) => b.created_at.getTime() - a.created_at.getTime())[0]
-//     return rating ? rating : undefined
-// }
 
 // Trigger the toast component with generic or custom translations
 export const triggerPromiseToast = <T extends any>(response: Promise<T>, t: TranslationFunction, messages?: { success?: string, error?: string }) => {
