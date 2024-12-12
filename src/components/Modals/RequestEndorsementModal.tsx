@@ -43,7 +43,7 @@ const RequestEndorsementModal = ({ children, skillId, groupId, requestFromUser }
         try {
             const res = axiosInstance.post(`/api/student/endorsements/request`, {
                 ...values,
-                skill: skillId,
+                skill: skillId || values.skillId,
                 requestee_email: values.email,
                 requestee: requestFromUser?.id
             })

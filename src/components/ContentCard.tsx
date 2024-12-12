@@ -22,7 +22,7 @@ export function ContentCard({ content }: { content: EndorsementType | FeedbackTy
                         {/* User name or "you" */}
                         <span className="font-semibold">{getYouOrFullName(content.created_by, t, user)}</span>
                         {/* Role */}
-                        <p className="text-sm text-muted-foreground">{content.created_by.role.name}</p>
+                        <p className="text-sm text-muted-foreground">{content.created_by?.role.name}</p>
                     </div>
                 </div>
                 {/* Date */}

@@ -1,7 +1,7 @@
 "use client"
 
-// import { useEvents } from "@/hooks/use-events"
-import { getFullName } from "@/lib"
+import { useGroupSkills } from "@/hooks/use-group-skills"
+import { getFullName, triggerPromiseToast } from "@/lib"
 import { UserType } from "@/types/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
@@ -13,7 +13,7 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
 import { Input } from "../ui/input"
 import Select from "../ui/select"
-import { useGroupSkills } from "@/hooks/use-group-skills"
+import axiosInstance from "@/lib/axios"
 
 const RequestFeedbackModal = ({ children, requestFromUser, groupId, skillId }: { children: ReactNode, requestFromUser: UserType, groupId?: string, skillId?: string, }) => {
     const t = useTranslations("modals")
@@ -32,10 +32,21 @@ const RequestFeedbackModal = ({ children, requestFromUser, groupId, skillId }: {
         }
     })
 
-    const onSubmit = (values: z.infer<typeof formSchema>) => {
-        console.log(values);
-        setIsModalOpen(false)
-        form.reset()
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        try {
+            const res = axiosInstance.post(`/api/student/feedbacks/request`, {
+                skill_id: values.skillId,
+                title: values.title,
+                user_id: requestFromUser?.id
+            })
+            await triggerPromiseToast(res, t)
+
+            setIsModalOpen(false)
+            form.reset()
+        }
+        catch (error) {
+            console.error(error)
+        }
     }
 
     return (
@@ -48,11 +59,7 @@ const RequestFeedbackModal = ({ children, requestFromUser, groupId, skillId }: {
                         <DialogHeader>
                             <DialogTitle>{t("requestFeedback.title")}</DialogTitle>
                             <DialogDescription>
-                                {requestFromUser ?
-                                    t("requestFeedback.fromUserdescription", { name: getFullName(requestFromUser) })
-                                    :
-                                    t("requestFeedback.fromEmaildescription")
-                                }
+                                {t("requestFeedback.fromUserdescription", { name: getFullName(requestFromUser) })}
                             </DialogDescription>
                         </DialogHeader>
 

@@ -3,7 +3,7 @@ import { FeedbackType } from "@/types"
 import useSWR from "swr"
 
 export const useFeedbacks = (skillId: string) => {
-    const url = `/api/skills/${skillId}/feedbacks`
+    const url = `/api/skills/${skillId}/feedbacks?with=createdBy`
     return useSWR(url, () =>
         axiosInstance.get(url)
             .then((res: { data: { data: FeedbackType[] } }) => {

@@ -86,6 +86,7 @@ export function TimeLine({ user, skillId }: { user: UserType, skillId: string })
                     className="inline-flex items-center rounded-full bg-background px-4 py-1.5 text-sm font-medium border shadow-sm hover:bg-muted transition-colors"
                 >
                     <ArrowUpDownIcon className="mr-1.5 h-4 w-4" />
+                    {/* TODO: Translate */}
                     Sort by date
                 </button>
             </div>
