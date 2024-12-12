@@ -43,7 +43,7 @@ export function Pager<T>({ pagerObject, renderItem, emptyMessage, renderAsTable,
         }
 
         {/* Render the pagination */}
-        {(paging && paging.last_page > 1) && <div className="flex justify-center mt-8">
+        {(paging && paging.last_page > 1) && <div className="flex justify-center mt-4">
             <Paginator
                 currentPage={paging.current_page}
                 itemCount={paging.total}

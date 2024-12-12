@@ -109,26 +109,24 @@ export function TimeLine({ user, skillId }: { user: UserType, skillId: string })
                         </div>
                     )}
 
-                    {items?.map((item, index) => {
-                        console.log(item, "item");
-                        return (
-                            <div key={index} className="relative flex items-start md:items-center w-full">
-                                {/* Date marker */}
-                                <div className="absolute left-0 md:left-1/2 flex flex-col items-center -translate-x-1/2 bg-background">
-                                    <div className="rounded-full h-8 w-8 md:h-10 md:w-10 border flex items-center justify-center">
-                                        {getIcon(item)}
-                                    </div>
-                                    <div className="mt-1.5 text-xs ">
-                                        <div>{new Date(item.created_at).toLocaleString('default', { month: 'short' }).toUpperCase()}</div>
-                                        <div>{new Date(item.created_at).getFullYear()}</div>
-                                    </div>
+                    {items?.map((item, index) => (
+                        <div key={index} className="relative flex items-start md:items-center w-full">
+                            {/* Date marker */}
+                            <div className="absolute left-0 md:left-1/2 flex flex-col items-center -translate-x-1/2 bg-background">
+                                <div className="rounded-full h-8 w-8 md:h-10 md:w-10 border flex items-center justify-center">
+                                    {getIcon(item)}
                                 </div>
-                                <div className={cn("ml-12 md:ml-0 w-full md:w-[calc(50%-20px)]", index % 2 === 0 ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8')}>
-                                    {getCard(item)}
+                                <div className="mt-1.5 text-xs ">
+                                    <div>{new Date(item.created_at).toLocaleString('default', { month: 'short' }).toUpperCase()}</div>
+                                    <div>{new Date(item.created_at).getFullYear()}</div>
                                 </div>
                             </div>
-                        )
-                    })}
+                            <div className={cn("ml-12 md:ml-0 w-full md:w-[calc(50%-20px)]", index % 2 === 0 ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8')}>
+                                {getCard(item)}
+                            </div>
+                        </div>
+                    )
+                    )}
                     {sortDescending && (
                         <AddFeedbackButton />
                     )}

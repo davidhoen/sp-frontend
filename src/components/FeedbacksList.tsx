@@ -8,6 +8,9 @@ import Skeletons from "./Skeletons";
 import SectionTitle from "./Typography/SectionTitle";
 import { Pager } from "./Pager";
 import { FeedbackType } from "@/types";
+import AddFeedbackModal from "./Modals/AddFeedbackModal";
+import { Button } from "./ui/button";
+import { PlusIcon } from "lucide-react";
 
 export function FeedbacksList({ skillId }: { skillId: string }) {
     let { data: feedbacks, isLoading } = useFeedbacks(skillId)
@@ -16,11 +19,25 @@ export function FeedbacksList({ skillId }: { skillId: string }) {
     const renderFeedbacks = (feedback: FeedbackType) => <ContentCard key={feedback.id} content={feedback} />
 
     return <>
-        <SectionTitle numberOfItems={feedbacks?.data?.length}>{t("feedback")}</SectionTitle>
+        {/* Title and add button */}
+        <div className="flex flex-col gap-2 sm:flex-row sm:justify-between sm:items-center">
+            {/* Title */}
+            <SectionTitle numberOfItems={feedbacks?.data?.length}>{t("feedback")}</SectionTitle>
+            {/* Request and add feedback buttons */}
+            <div className="flex gap-2 flex-wrap mb-4">
+                <AddFeedbackModal skillId={skillId} >
+                    <Button variant="outline" size="sm" className="w-full sm:w-fit">
+                        <PlusIcon size={16} />
+                        {t("addFeedback")}
+                    </Button>
+                </AddFeedbackModal>
+            </div>
+        </div>
+
         {!!feedbacks ?
-            <Pager pagerObject={feedbacks} renderItem={renderFeedbacks} emptyMessage={t("noEntitiesFound", { entities: t("feedbacks").toLowerCase() })} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-4 items-start" entityKey="feedback" />
+            <Pager pagerObject={feedbacks} renderItem={renderFeedbacks} emptyMessage={t("noEntitiesFound", { entities: t("feedbacks").toLowerCase() })} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-2 items-start" entityKey="feedbacks" />
             :
-            <Skeletons amount={3} className="w-full h-36" />
+            <Skeletons amount={4} className="w-full h-36" />
         }
     </>
 }

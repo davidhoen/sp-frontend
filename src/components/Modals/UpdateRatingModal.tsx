@@ -1,12 +1,14 @@
 "use client"
 
 import { triggerPromiseToast } from "@/lib"
+import { revalidate } from "@/lib/actions/revalidate.action"
 import axiosInstance from "@/lib/axios"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { ReactNode, useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import { useRefresh } from "../RefreshWrapper"
 import StarRating from "../StarRating"
 import { Button } from "../ui/button"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog"
@@ -39,6 +41,7 @@ const UpdateRatingModal = ({ children, skillId, currentRating }: { children: Rea
             await triggerPromiseToast(res, t)
             setIsModalOpen(false)
             form.reset()
+            window.location.reload()
         }
         catch (error) {
             console.error(error)
