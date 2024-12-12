@@ -1,6 +1,6 @@
 import { EXPIRED_SESSION_ROUTE } from "@/constants";
 import { AxiosResponse } from "axios";
-import { cookies } from "next/headers";
+import { cookies, type UnsafeUnwrappedCookies } from "next/headers";
 import { redirect } from "next/navigation";
 import axiosInstance from "../axios";
 import { serializeError } from "../utils";
@@ -97,8 +97,8 @@ class ServerSideRequestsManager {
   }: HandleRequestParams): Promise<ApiResponse<T>> {
     const headers = {
       Referer: process.env.FRONTEND_URL,
-      Cookie: renewedCookies?.cookies ?? cookies().toString(),
-      "X-XSRF-TOKEN": renewedCookies?.csrfTokenCookie ?? (cookies().get("XSRF-TOKEN")?.value as string),
+      Cookie: renewedCookies?.cookies ?? (await cookies() as unknown as UnsafeUnwrappedCookies).toString(),
+      "X-XSRF-TOKEN": renewedCookies?.csrfTokenCookie ?? ((await cookies() as unknown as UnsafeUnwrappedCookies).get("XSRF-TOKEN")?.value as string),
       ...extraHeaders,
     };
 

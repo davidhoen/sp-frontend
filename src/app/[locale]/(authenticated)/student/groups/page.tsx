@@ -10,9 +10,10 @@ import { cn } from "@/lib/utils"
 import { GroupsQueryType, GroupType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useTranslations } from "next-intl"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useState, use } from "react";
 
-const GroupsOverview = ({ searchParams }: { searchParams: GroupsQueryType }) => {
+const GroupsOverview = (props: { searchParams: Promise<GroupsQueryType> }) => {
+    const searchParams = use(props.searchParams);
     const t = useTranslations("general")
 
     const [groups, setGroups] = useState<PagingSchema<GroupType>>();

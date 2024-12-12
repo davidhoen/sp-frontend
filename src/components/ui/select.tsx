@@ -290,10 +290,10 @@ export default React.forwardRef(BaseSelect) as <
 >(
     p: Props<OptionType, IsMulti> & {
         ref?: Ref<
-            React.LegacyRef<
+            React.Ref<
                 SelectInstance<OptionType, IsMulti, GroupBase<OptionType>>
             >
         >;
         isMulti?: IsMulti;
     }
-) => ReactElement;
+) => ReactElement<any>;

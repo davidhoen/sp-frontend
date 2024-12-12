@@ -6,7 +6,8 @@ import { getGroup } from "@/lib/queries/server/queries"
 import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
 
-const GroupsDetail = async ({ params }: { params: { id: number } }) => {
+const GroupsDetail = async (props: { params: Promise<{ id: number }> }) => {
+    const params = await props.params;
     const t = await getTranslations("general")
     const group = await getGroup(params.id)
 

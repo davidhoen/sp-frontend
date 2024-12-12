@@ -12,7 +12,8 @@ import { PencilIcon } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 
-const SkillsDetail = async ({ params }: { params: { id: number } }) => {
+const SkillsDetail = async (props: { params: Promise<{ id: number }> }) => {
+    const params = await props.params;
     const t = await getTranslations("general")
 
     const skill = await getSkill(params.id)
