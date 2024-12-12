@@ -1,7 +1,7 @@
 "use client"
 
 import { Link } from "@/i18n/routing"
-import { getMostRecentRating } from "@/lib"
+// import { getMostRecentRating } from "@/lib"
 import { CompetencyType } from "@/types"
 import { BadgeCheckIcon, MessageCircleIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
@@ -13,8 +13,8 @@ export default function CompetenciesCard({ competency, mutate }: { competency: C
 
     // Sort competency skills by newest ratings rating
     competency.skills?.sort((a, b) => {
-        const ratingA = getMostRecentRating(a.ratings)?.rating || 0
-        const ratingB = getMostRecentRating(b.ratings)?.rating || 0
+        const ratingA = a.rating || 0
+        const ratingB = b.rating || 0
         return ratingB - ratingA
     })
 
@@ -34,7 +34,7 @@ export default function CompetenciesCard({ competency, mutate }: { competency: C
                     {competency?.skills?.slice(0, 3).map((skill, index) => (
                         <div className="flex justify-between" key={index}>
                             <span className="">{skill.title}</span>
-                            <StarRating rating={getMostRecentRating(skill.ratings)?.rating || 0} />
+                            <StarRating rating={skill.rating || 0} />
                         </div>
                     ))}
                 </div>

@@ -13,7 +13,7 @@ import { notFound } from "next/navigation";
 const EndorsementRequestPage = async ({ params }: { params: { id: number } }) => {
     const t = await getTranslations("modals")
 
-    const endorsementRequest = await getEndorsementRequestResponse(params.id) ?? fakeEndorsementRequest
+    const endorsementRequest = await getEndorsementRequestResponse(params.id)
 
     if (!endorsementRequest)
         notFound()

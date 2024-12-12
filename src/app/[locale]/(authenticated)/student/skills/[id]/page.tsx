@@ -9,7 +9,6 @@ import TimeLineWithUser from "@/components/Timeline/TimeLineWithUser"
 import PageTitle from "@/components/Typography/PageTitle"
 import SectionTitle from "@/components/Typography/SectionTitle"
 import { Button } from "@/components/ui/button"
-import { getMostRecentRating } from "@/lib"
 import { getSkill } from "@/lib/queries/server/queries"
 import { BadgeCheckIcon, PencilIcon, PlusIcon } from "lucide-react"
 import { getTranslations } from "next-intl/server"
@@ -17,8 +16,8 @@ import { notFound } from "next/navigation"
 
 const SkillsDetail = async ({ params }: { params: { id: number } }) => {
     const t = await getTranslations("general")
-    const skill = await getSkill(params.id)
 
+    const skill = await getSkill(params.id)
     if (!skill) notFound()
 
     return <div className="flex flex-col gap-2">
@@ -40,10 +39,10 @@ const SkillsDetail = async ({ params }: { params: { id: number } }) => {
 
             <div className="flex gap-4">
                 {/* Star rating */}
-                <StarRating rating={getMostRecentRating(skill.ratings)?.rating || 0} />
+                <StarRating rating={skill.rating || 0} />
 
                 {/* Edit rating */}
-                <UpdateRatingModal currentRating={getMostRecentRating(skill.ratings)} skillId={skill.id}>
+                <UpdateRatingModal currentRating={skill.rating} skillId={skill.id}>
                     <div className="flex items-center bg-border p-1 rounded-full"><PencilIcon size={15} /></div>
                 </UpdateRatingModal>
             </div>

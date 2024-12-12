@@ -40,7 +40,7 @@ export type SkillType = {
   is_added: boolean
   competency: CompetencyType
   created_at: Date
-  ratings: RatingHistoryType[]
+  rating: number
 }
 
 export type GroupType = {
