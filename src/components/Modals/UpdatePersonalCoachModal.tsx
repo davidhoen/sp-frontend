@@ -1,6 +1,6 @@
 "use client"
 
-import { useEvents } from "@/hooks/use-events"
+// import { useEvents } from "@/hooks/use-events"
 import { useUser } from "@/providers/UserProvider"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
@@ -19,7 +19,12 @@ const UpdatePersonalCoachModal = ({ children }: { children: ReactNode }) => {
     const { user } = useUser()
 
     // TODO: Replace with useCoaches of student
-    const { data: coaches } = useEvents()
+    // const { data: coaches } = useEvents()
+    const coaches = [
+        { value: "1", label: "Coach 1" },
+        { value: "2", label: "Coach 2" },
+        { value: "3", label: "Coach 3" },
+    ]
 
     const [isModalOpen, setIsModalOpen] = useState(false)
 

@@ -1,12 +1,11 @@
-import { getFullName, getStarTitles, getYouOrFullName } from "@/lib";
+import { getYouOrFullName } from "@/lib";
 import { useUser } from "@/providers/UserProvider";
-import { EndorsementType, FeedbackType, RatingHistoryType } from "@/types";
-import { useFormatter, useTranslations } from "next-intl";
-import UserAvatar from "../UserAvatar";
-import StarRating from "../StarRating";
+import { RatingType } from "@/types";
 import { UserType } from "@/types/auth";
+import { useTranslations } from "next-intl";
+import StarRating from "../StarRating";
 
-export function TimelineRatingUpdateCard({ ratingUpdate, user }: { ratingUpdate: RatingHistoryType, user: UserType }) {
+export function TimelineRatingUpdateCard({ ratingUpdate, user }: { ratingUpdate: RatingType, user: UserType }) {
     const { user: currentUser } = useUser()
     const t = useTranslations("general")
 

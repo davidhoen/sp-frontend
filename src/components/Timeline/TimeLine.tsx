@@ -15,13 +15,14 @@ import { TimelineRatingUpdateCard } from "./TimelineRatingUpdateCard";
 
 export function TimeLine({ user, skillId }: { user: UserType, skillId: string }) {
     const t = useTranslations("general")
-    let { data: allItems, isLoading, mutate } = useTimeLineItems(skillId)
+
+    let { data: allItems, isLoading } = useTimeLineItems(skillId)
 
     const [sortDescending, setSortDescending] = useState(true)
-    const [items, setItems] = useState<TimeLineItemType[] | undefined>(allItems)
+    const [items, setItems] = useState<TimeLineItemType[] | undefined>()
 
     const sortItems = () => {
-        const sortedItems = items?.sort((a, b) => {
+        const sortedItems = allItems?.sort((a, b) => {
             const dateA = new Date(a.created_at).getTime()
             const dateB = new Date(b.created_at).getTime()
             return sortDescending ? dateB - dateA : dateA - dateB
@@ -31,9 +32,8 @@ export function TimeLine({ user, skillId }: { user: UserType, skillId: string })
     }
 
     useEffect(() => {
-        // Causes build warning, but dont know how to fix
         sortItems()
-    }, [])
+    }, [allItems])
 
     const getIcon = (item: TimeLineItemType) => {
         switch (item.type) {
@@ -42,7 +42,7 @@ export function TimeLine({ user, skillId }: { user: UserType, skillId: string })
             case TimeLineItemTypeEnum.Endorsement:
                 // TODO: ADD GREEN COLOR
                 return <BadgeCheckIcon className="h-5 w-5" strokeWidth={2.5} />
-            case TimeLineItemTypeEnum.RatingUpdate:
+            case TimeLineItemTypeEnum.Rating:
                 return <StarIcon className="h-5 w-5 text-gold" strokeWidth={2.5} />
         }
     }
@@ -50,20 +50,22 @@ export function TimeLine({ user, skillId }: { user: UserType, skillId: string })
     const getCard = (item: TimeLineItemType) => {
         switch (item.type) {
             case TimeLineItemTypeEnum.Feedback:
-                if (item.feedback)
-                    return <TimeLineContentCard content={item.feedback} />
+                if (item.Feedback)
+                    return <TimeLineContentCard content={item.Feedback} />
             case TimeLineItemTypeEnum.Endorsement:
-                if (item.endorsement)
-                    return <TimeLineContentCard content={item.endorsement} />
-            case TimeLineItemTypeEnum.RatingUpdate:
-                if (item.ratingUpdate)
+                if (item.Endorsement)
+                    return <TimeLineContentCard content={item.Endorsement} />
+            case TimeLineItemTypeEnum.Rating:
+                if (item.Rating)
                     // The rating update does not have a user, so we pass the user from the parent component
-                    return <TimelineRatingUpdateCard ratingUpdate={item.ratingUpdate} user={user} />
+                    return <TimelineRatingUpdateCard ratingUpdate={item.Rating} user={user} />
+            default:
+                return <></>
         }
     }
 
     const AddFeedbackButton = () => (
-        <AddFeedbackModal skillId={skillId} mutate={mutate}>
+        <AddFeedbackModal skillId={skillId}>
             <div className="relative flex items-center">
                 <div className="absolute -left-4 md:left-1/2 flex flex-col items-center md:-translate-x-1/2" >
                     <button className="inline-flex items-center text-nowrap rounded-full bg-border px-4 py-1 text-sm font-medium border shadow-sm hover:bg-muted transition-colors">
@@ -84,6 +86,7 @@ export function TimeLine({ user, skillId }: { user: UserType, skillId: string })
                     className="inline-flex items-center rounded-full bg-background px-4 py-1.5 text-sm font-medium border shadow-sm hover:bg-muted transition-colors"
                 >
                     <ArrowUpDownIcon className="mr-1.5 h-4 w-4" />
+                    {/* TODO: Translate */}
                     Sort by date
                 </button>
             </div>
@@ -106,7 +109,7 @@ export function TimeLine({ user, skillId }: { user: UserType, skillId: string })
                         </div>
                     )}
 
-                    {!isLoading && items?.map((item, index) => (
+                    {items?.map((item, index) => (
                         <div key={index} className="relative flex items-start md:items-center w-full">
                             {/* Date marker */}
                             <div className="absolute left-0 md:left-1/2 flex flex-col items-center -translate-x-1/2 bg-background">
@@ -122,7 +125,8 @@ export function TimeLine({ user, skillId }: { user: UserType, skillId: string })
                                 {getCard(item)}
                             </div>
                         </div>
-                    ))}
+                    )
+                    )}
                     {sortDescending && (
                         <AddFeedbackButton />
                     )}

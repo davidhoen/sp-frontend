@@ -1,21 +1,19 @@
 "use client"
 
 import { Link, useRouter } from "@/i18n/routing"
-import { getMostRecentRating, triggerPromiseToast } from "@/lib"
+import { triggerPromiseToast } from "@/lib"
 import axiosInstance from "@/lib/axios"
+import { cn } from "@/lib/utils"
 import { SkillType } from "@/types"
 import { CheckIcon, PlusIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import StarRating from "./StarRating"
 import { Badge } from "./ui/badge"
 import { Button } from "./ui/button"
-import { cn } from "@/lib/utils"
 
 export default function SkillCard({ skill, className, mutate }: { skill: SkillType, className?: string, mutate?: () => void }) {
     const t = useTranslations("general")
     const router = useRouter()
-
-    const rating = skill.ratings ? getMostRecentRating(skill.ratings)?.rating || 0 : 0
 
     const addSkill = async () => {
         try {
@@ -46,10 +44,10 @@ export default function SkillCard({ skill, className, mutate }: { skill: SkillTy
                 <Badge variant="secondary">{skill.competency?.title}</Badge>
             </div>
             <div className="flex justify-between items-center">
-                <StarRating rating={rating} />
+                <StarRating rating={skill.rating} />
                 {/* Disable button when skill is not added (yet) */}
                 <Link href={`/student/skills/${skill.id}`}>
-                    <Button size="sm" disabled={!skill.is_added}>{t("addFeedback")}</Button>
+                    <Button size="sm" disabled={!skill.is_added}>{t("view")}</Button>
                 </Link>
             </div>
         </div>
