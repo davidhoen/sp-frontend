@@ -6,7 +6,7 @@ export const useTimeLineItems = (skillId: string) => {
     const url = `/api/skills/${skillId}/timeline`
     return useSWR(url, () =>
         axiosInstance.get(url)
-            .then((res: { data: TimeLineItemType[] }) => {
+            .then((res: { data: { data: TimeLineItemType[] } }) => {
                 return res.data.data
             })
             .catch((error) => {

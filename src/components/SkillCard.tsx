@@ -47,7 +47,7 @@ export default function SkillCard({ skill, className, mutate }: { skill: SkillTy
                 <StarRating rating={skill.rating} />
                 {/* Disable button when skill is not added (yet) */}
                 <Link href={`/student/skills/${skill.id}`}>
-                    <Button size="sm" disabled={!skill.is_added}>{t("addFeedback")}</Button>
+                    <Button size="sm" disabled={!skill.is_added}>{t("view")}</Button>
                 </Link>
             </div>
         </div>

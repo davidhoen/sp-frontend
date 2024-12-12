@@ -17,10 +17,8 @@ const UpdateRatingModal = ({ children, skillId, currentRating }: { children: Rea
     const t = useTranslations("modals")
     const [isModalOpen, setIsModalOpen] = useState(false)
 
-    const minimalRating = currentRating || 0
-
     const formSchema = z.object({
-        rating: z.number().int().min(minimalRating, { message: t("updateStarRating.ratingToLow") }).max(4),
+        rating: z.number().int().max(4),
         feedback: z.string().min(10)
     })
 

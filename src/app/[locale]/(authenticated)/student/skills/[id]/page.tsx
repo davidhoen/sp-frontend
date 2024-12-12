@@ -60,7 +60,7 @@ const SkillsDetail = async ({ params }: { params: { id: number } }) => {
 
             {/* Request and add feedback buttons */}
             <div className="flex gap-2 flex-wrap">
-                <AddFeedbackModal skillId={skill.id}>
+                <AddFeedbackModal skillId={skill.id} >
                     <Button variant="outline" size="sm" className="w-full sm:w-fit">
                         <PlusIcon size={16} />
                         {t("addFeedback")}
