@@ -9,6 +9,7 @@ type Props<T> = {
     renderAsTable?: boolean;
     headerItems?: string[];
     wrapperClass?: string;
+    entityKey?: string;
 }
 
 //This component renders a pager for a paging object with data
@@ -18,7 +19,7 @@ type Props<T> = {
 //@param renderAsTable: a boolean to indicate that the pager must be rendered as a table
 //@param headerItems: an array with headers when renderAsTable is true
 //@param wrapperClass: an optional string with classes to give to the content div or table
-export function Pager<T>({ pagerObject, renderItem, emptyMessage, renderAsTable, headerItems, wrapperClass }: Props<T>) {
+export function Pager<T>({ pagerObject, renderItem, emptyMessage, renderAsTable, headerItems, wrapperClass, entityKey }: Props<T>) {
     const paging = pagerObject?.meta;
 
     if (!pagerObject?.data || !pagerObject?.data.length)
@@ -47,6 +48,7 @@ export function Pager<T>({ pagerObject, renderItem, emptyMessage, renderAsTable,
                 currentPage={paging.current_page}
                 itemCount={paging.total}
                 pageSize={paging.per_page}
+                entityKey={entityKey}
             />
         </div>}
     </div>

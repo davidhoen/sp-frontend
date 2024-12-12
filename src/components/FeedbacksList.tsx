@@ -6,16 +6,21 @@ import { useTranslations } from "next-intl";
 import { ContentCard } from "./ContentCard";
 import Skeletons from "./Skeletons";
 import SectionTitle from "./Typography/SectionTitle";
+import { Pager } from "./Pager";
+import { FeedbackType } from "@/types";
 
 export function FeedbacksList({ skillId }: { skillId: string }) {
     let { data: feedbacks, isLoading } = useFeedbacks(skillId)
     const t = useTranslations("general")
 
+    const renderFeedbacks = (feedback: FeedbackType) => <ContentCard key={feedback.id} content={feedback} />
+
     return <>
-        <SectionTitle numberOfItems={feedbacks?.length}>{t("feedback")}</SectionTitle>
-        {isLoading && <Skeletons amount={3} className="w-full h-36" />}
-        <div className="flex flex-col md:flex-row gap-2 mb-4">
-            {(!isLoading && feedbacks) && feedbacks?.map((feedback) => <ContentCard key={feedback.id} content={feedback} />)}
-        </div>
+        <SectionTitle numberOfItems={feedbacks?.data?.length}>{t("feedback")}</SectionTitle>
+        {!!feedbacks ?
+            <Pager pagerObject={feedbacks} renderItem={renderFeedbacks} emptyMessage={t("noEntitiesFound", { entities: t("feedbacks").toLowerCase() })} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-4 items-start" entityKey="feedback" />
+            :
+            <Skeletons amount={3} className="w-full h-36" />
+        }
     </>
 }
