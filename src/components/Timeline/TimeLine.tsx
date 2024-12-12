@@ -17,11 +17,14 @@ export function TimeLine({ user, skillId }: { user: UserType, skillId: string })
     const t = useTranslations("general")
     let { data: allItems, isLoading, mutate } = useTimeLineItems(skillId)
 
+
+    console.log({allItems});
+    
     const [sortDescending, setSortDescending] = useState(true)
     const [items, setItems] = useState<TimeLineItemType[] | undefined>(allItems)
 
     const sortItems = () => {
-        const sortedItems = items?.sort((a, b) => {
+        const sortedItems = allItems?.sort((a, b) => {
             const dateA = new Date(a.created_at).getTime()
             const dateB = new Date(b.created_at).getTime()
             return sortDescending ? dateB - dateA : dateA - dateB
@@ -34,8 +37,11 @@ export function TimeLine({ user, skillId }: { user: UserType, skillId: string })
         // Causes build warning, but dont know how to fix
         sortItems()
     }, [])
+    console.log(items, "items");
 
     const getIcon = (item: TimeLineItemType) => {
+        console.log(item);
+        
         switch (item.type) {
             case TimeLineItemTypeEnum.Feedback:
                 return <MessageCircleIcon className="h-5 w-5 text-primary" strokeWidth={2.5} />
@@ -48,6 +54,8 @@ export function TimeLine({ user, skillId }: { user: UserType, skillId: string })
     }
 
     const getCard = (item: TimeLineItemType) => {
+        console.log(item, "item");
+        
         switch (item.type) {
             case TimeLineItemTypeEnum.Feedback:
                 if (item.feedback)
@@ -106,7 +114,9 @@ export function TimeLine({ user, skillId }: { user: UserType, skillId: string })
                         </div>
                     )}
 
-                    {!isLoading && items?.map((item, index) => (
+                    {items?.map((item, index) => {
+                        console.log(item, "item");
+                        return (
                         <div key={index} className="relative flex items-start md:items-center w-full">
                             {/* Date marker */}
                             <div className="absolute left-0 md:left-1/2 flex flex-col items-center -translate-x-1/2 bg-background">
@@ -122,7 +132,7 @@ export function TimeLine({ user, skillId }: { user: UserType, skillId: string })
                                 {getCard(item)}
                             </div>
                         </div>
-                    ))}
+                    )})}
                     {sortDescending && (
                         <AddFeedbackButton />
                     )}
