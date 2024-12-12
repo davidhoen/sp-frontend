@@ -7,7 +7,7 @@ export const useTimeLineItems = (skillId: string) => {
     return useSWR(url, () =>
         axiosInstance.get(url)
             .then((res: { data: TimeLineItemType[] }) => {
-                return res.data
+                return res.data.data
             })
             .catch((error) => {
                 console.error(error)

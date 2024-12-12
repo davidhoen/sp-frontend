@@ -1,7 +1,7 @@
 "use client"
 
 import { Link, useRouter } from "@/i18n/routing"
-import { getMostRecentRating, triggerPromiseToast } from "@/lib"
+import { triggerPromiseToast } from "@/lib"
 import axiosInstance from "@/lib/axios"
 import { SkillType } from "@/types"
 import { CheckIcon, PlusIcon } from "lucide-react"
@@ -15,7 +15,7 @@ export default function SkillCard({ skill, className, mutate }: { skill: SkillTy
     const t = useTranslations("general")
     const router = useRouter()
 
-    const rating = skill.ratings ? getMostRecentRating(skill.ratings)?.rating || 0 : 0
+    const rating = skill?.rating || 0 
 
     const addSkill = async () => {
         try {

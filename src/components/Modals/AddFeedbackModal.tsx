@@ -36,9 +36,10 @@ const AddFeedbackModal = ({ children, skillId, mutate }: { children: ReactNode, 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
             const res = axiosInstance.post(`/api/student/skills/${skillId}/feedback`, {
-                ...values,
-                skillId,
-                userId: user?.id
+                skill_id: skillId,
+                title: values.title,
+                content: values.feedback,
+                user_id: user?.id
             })
             await triggerPromiseToast(res, t)
             mutate && mutate()
