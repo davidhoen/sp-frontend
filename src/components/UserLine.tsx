@@ -10,7 +10,7 @@ import RequestFeedbackModal from "./Modals/RequestFeedbackModal"
 import UserAvatar from "./UserAvatar"
 import { Button } from "./ui/button"
 
-export default function UserLine({ user }: { user: UserType, }) {
+export default function UserLine({ user, groupId }: { user: UserType, groupId?: string }) {
     const t = useTranslations("general")
     const { user: currentUser } = useUser()
 
@@ -27,7 +27,7 @@ export default function UserLine({ user }: { user: UserType, }) {
             {user.id !== currentUser?.id &&
                 <div className="flex items-center gap-2">
                     {/* Add feedback */}
-                    <RequestFeedbackModal requestFromUser={user}>
+                    <RequestFeedbackModal requestFromUser={user} groupId={groupId}>
                         <Button variant="outline" className="px-0.5" size="icon">
                             <MessageCircleIcon className="" strokeWidth={2.5} size={18} />
                         </Button>
@@ -35,7 +35,7 @@ export default function UserLine({ user }: { user: UserType, }) {
 
                     {/* Request endorsement */}
                     {/* Only teachers can provide a endorsement, so only show the button when its a teacher */}
-                    {isTeacherUser(user) && <RequestEndorsementModal requestFromUser={user}>
+                    {isTeacherUser(user) && <RequestEndorsementModal requestFromUser={user} groupId={groupId}>
                         <Button variant="outline" className="px-0.5" size="icon">
                             <BadgeCheckIcon className="" strokeWidth={2.5} size={18} />
                         </Button>

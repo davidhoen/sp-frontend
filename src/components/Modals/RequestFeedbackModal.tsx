@@ -13,18 +13,13 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
 import { Input } from "../ui/input"
 import Select from "../ui/select"
+import { useGroupSkills } from "@/hooks/use-group-skills"
 
-const RequestFeedbackModal = ({ children, requestFromUser, skillId }: { children: ReactNode, requestFromUser: UserType, skillId?: string, }) => {
+const RequestFeedbackModal = ({ children, requestFromUser, groupId, skillId }: { children: ReactNode, requestFromUser: UserType, groupId?: string, skillId?: string, }) => {
     const t = useTranslations("modals")
 
-    // TODO: Replace with useSkills hook
-    // const { data: events, isLoading } = useEvents()
-    
-    const events = [
-        { value: "1", label: "Event 1" },
-        { value: "2", label: "Event 2" },
-        { value: "3", label: "Event 3" },
-    ]
+    const { data: skills } = useGroupSkills(groupId)
+
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const formSchema = z.object({ title: z.string(), skillId: z.string() })
@@ -83,7 +78,7 @@ const RequestFeedbackModal = ({ children, requestFromUser, skillId }: { children
                                 <FormItem>
                                     <FormLabel>{t("skill")}</FormLabel>
                                     <FormControl>
-                                        <Select options={events} onChange={(selectedOption) => onChange(selectedOption?.value)} placeholder={t("skillPlaceholder")} />
+                                        <Select options={skills} onChange={(selectedOption) => onChange(selectedOption?.value)} placeholder={t("skillPlaceholder")} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
