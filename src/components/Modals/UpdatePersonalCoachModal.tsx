@@ -13,18 +13,12 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import Select from "../ui/select"
 import axiosInstance from "@/lib/axios"
 import { triggerPromiseToast } from "@/lib"
+import { useCoaches } from "@/hooks/use-coaches"
 
 const UpdatePersonalCoachModal = ({ children }: { children: ReactNode }) => {
     const t = useTranslations("modals")
     const { user } = useUser()
-
-    // TODO: Replace with useCoaches of student
-    // const { data: coaches } = useEvents()
-    const coaches = [
-        { value: "1", label: "Coach 1" },
-        { value: "2", label: "Coach 2" },
-        { value: "3", label: "Coach 3" },
-    ]
+    const { data: coaches } = useCoaches()
 
     const [isModalOpen, setIsModalOpen] = useState(false)
 
