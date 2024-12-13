@@ -1,26 +1,25 @@
 "use client"
 
-import { useEvents } from "@/hooks/use-events"
+// import { useEvents } from "@/hooks/use-events"
+import { useGroupSkills } from "@/hooks/use-group-skills"
 import { getFullName, triggerPromiseToast } from "@/lib"
+import axiosInstance from "@/lib/axios"
 import { UserType } from "@/types/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { ReactNode, useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import SetCookies from "../SetCookies"
 import { Button } from "../ui/button"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
 import { Input } from "../ui/input"
 import Select from "../ui/select"
-import axios from "axios"
-import axiosInstance from "@/lib/axios"
-import SetCookies from "../SetCookies"
 
-const RequestEndorsementModal = ({ children, skillId, requestFromUser }: { children: ReactNode, skillId?: string, requestFromUser?: UserType }) => {
+const RequestEndorsementModal = ({ children, skillId, groupId, requestFromUser }: { children: ReactNode, skillId?: string, groupId?: string, requestFromUser?: UserType }) => {
     const t = useTranslations("modals")
-    // TODO: Replace with useSkills of student
-    const { data: events } = useEvents()
+    const { data: skills } = useGroupSkills(groupId)
 
     const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -44,7 +43,7 @@ const RequestEndorsementModal = ({ children, skillId, requestFromUser }: { child
         try {
             const res = axiosInstance.post(`/api/student/endorsements/request`, {
                 ...values,
-                skill: skillId,
+                skill: skillId || values.skillId,
                 requestee_email: values.email,
                 requestee: requestFromUser?.id
             })
@@ -100,7 +99,7 @@ const RequestEndorsementModal = ({ children, skillId, requestFromUser }: { child
                                     <FormItem>
                                         <FormLabel>{t("skill")}</FormLabel>
                                         <FormControl>
-                                            <Select options={events} onChange={(selectedOption) => onChange(selectedOption?.value)} placeholder={t("skillPlaceholder")} />
+                                            <Select options={skills} onChange={(selectedOption) => onChange(selectedOption?.value)} placeholder={t("skillPlaceholder")} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>

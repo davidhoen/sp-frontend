@@ -13,8 +13,9 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
 import { Input } from "../ui/input"
 import { Textarea } from "../ui/textarea"
+import { mutate, useSWRConfig } from "swr"
 
-const AddFeedbackModal = ({ children, skillId, mutate }: { children: ReactNode, skillId?: string, mutate?: () => void }) => {
+const AddFeedbackModal = ({ children, skillId }: { children: ReactNode, skillId?: string }) => {
     const t = useTranslations("modals")
     const { user } = useUser()
 
@@ -22,7 +23,7 @@ const AddFeedbackModal = ({ children, skillId, mutate }: { children: ReactNode, 
 
     const formSchema = z.object({
         title: z.string(),
-        feedback: z.string()
+        feedback: z.string().min(10)
     })
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -36,12 +37,15 @@ const AddFeedbackModal = ({ children, skillId, mutate }: { children: ReactNode, 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
             const res = axiosInstance.post(`/api/student/skills/${skillId}/feedback`, {
-                ...values,
-                skillId,
-                userId: user?.id
+                skill_id: skillId,
+                title: values.title,
+                content: values.feedback,
+                user_id: user?.id
             })
             await triggerPromiseToast(res, t)
-            mutate && mutate()
+
+            mutate((key) => typeof key === 'string' && key.startsWith('/api/skills/'))
+
             setIsModalOpen(false)
             form.reset()
         }

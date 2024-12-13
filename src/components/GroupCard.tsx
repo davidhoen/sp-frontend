@@ -56,7 +56,7 @@ export function GroupCard({ group, className }: { group: GroupType, className?: 
                 {/* Number of students with users icon */}
                 <div className="flex items-center gap-2 mt-4">
                     <UsersIcon size={18} />
-                    <span>{group.students.length} {t("students")}</span>
+                    <span>{group.students_count} {t("students")}</span>
                 </div>
 
                 {/* Chevron right in the right corner of the component */}

@@ -10,9 +10,10 @@ type Props = {
     itemCount: number;
     pageSize: number;
     currentPage: number;
+    entityKey?: string;
 };
 
-const PaginationComponent = ({ itemCount, pageSize, currentPage }: Props) => {
+const PaginationComponent = ({ itemCount, pageSize, currentPage, entityKey }: Props) => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const t = useTranslations("pagination");
@@ -59,8 +60,8 @@ const PaginationComponent = ({ itemCount, pageSize, currentPage }: Props) => {
 
     const changePage = (page: number) => {
         const params = new URLSearchParams(searchParams.toString());
-        params.set("page", page.toString());
-        router.push("?" + params.toString());
+        params.set(entityKey ? `${entityKey}Page` : "page", page.toString());
+        router.push("?" + params.toString(), { scroll: false });
     };
     return (
         <Pagination>

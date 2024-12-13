@@ -38,7 +38,7 @@ const fetchUser = async (req?: NextRequest) => {
   const referer = process.env.FRONTEND_URL as string; // * Important so it matches Sanctum's accepted domains
   const cookie = req?.headers.get("Cookie") || cookies().toString() || "";
 
-  const fetchResponse = await fetch(`${backendUrl}/api/user`, {
+  const fetchResponse = await fetch(`${backendUrl}/api/user?with=personalCoach,roles`, {
     method: "GET",
     credentials: "include",
     headers: {

@@ -26,7 +26,7 @@ const GroupsDetail = async ({ params }: { params: { id: number } }) => {
         <div>
             <SectionTitle>{t("teachers")}</SectionTitle>
             <div className="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-2">
-                {group?.teachers?.map((teacher) => <UserLine key={teacher.id} user={teacher} />)}
+                {group?.teachers?.map((teacher) => <UserLine key={teacher.id} user={teacher} groupId={group.id} />)}
             </div>
         </div>
 
@@ -42,7 +42,7 @@ const GroupsDetail = async ({ params }: { params: { id: number } }) => {
         <div>
             <SectionTitle>{t("students")}</SectionTitle>
             <div className="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-2">
-                {group?.students?.map((student) => <UserLine key={student.id} user={student} />)}
+                {group?.students?.map((student) => <UserLine key={student.id} user={student} groupId={group.id} />)}
             </div>
         </div>
     </div>
