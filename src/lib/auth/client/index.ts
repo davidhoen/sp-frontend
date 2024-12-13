@@ -13,7 +13,7 @@ export const login = async (
 ): Promise<UserType> => {
   await getCsrfToken(); // Get the CSRF token and store it in the cookies
   const response = await axiosInstance.post(
-    "/login",
+    "/login?with=roles,personalCoach",
     data
   );
 

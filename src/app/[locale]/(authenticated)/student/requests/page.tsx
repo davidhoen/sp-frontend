@@ -45,7 +45,7 @@ const StudentRequests = ({ searchParams }: { searchParams: GroupsQueryType }) =>
         fetchGroups();
     }, [fetchGroups, searchParams]);
 
-    const renderGroups = (request: GroupType) => <RequestCard />
+    const renderGroups = (request: GroupType) => <div></div>
 
     return <div className="w-full">
         <PageTitle information={t("definitions.feedbackRequests")}>{t("feedbackRequests")}</PageTitle>
