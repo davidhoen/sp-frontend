@@ -43,11 +43,13 @@
     "recentEndorsements": "Recent endorsements",
     "publicProfile": "Public profile",
     "viewAll": "See all",
+    "searchFeedbackRequests": "Search for a group, skill or student",
     "definitions": {
       "skills": "A skill is a specific ability that you can learn, develop, and apply. “Pitching” or “Networking” are examples of skills.",
       "competencies": "A competence is a collection of related skills that together enable you to perform well in a specific area. The competence “Researching” might include skills such as “Interviewing” and “Reflecting”.",
       "groups": "A group is a training program that you can enroll in and work on different skills.",
-      "profiles": "A profile represents a set of competencies needed to excel in a role or field. If you master multiple competencies of a profile, it means you are an excellent candidate for that role or field."
+      "profiles": "A profile represents a set of competencies needed to excel in a role or field. If you master multiple competencies of a profile, it means you are an excellent candidate for that role or field.",
+      "feedbackRequests": "Feedback requests are requests you can send to others to receive feedback on your skills. You can receive and send feedback requests to teachers and students."
     },
     "notifications": {
       "title": "Notifications",
