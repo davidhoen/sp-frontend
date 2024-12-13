@@ -69,10 +69,10 @@ export function GroupCard({ group, className }: { group: GroupType, className?: 
                 {/* Chip for every connected skill */}
                 <div className="flex flex-wrap gap-2 mt-4">
                     {/* Get max 3 skills */}
-                    {group.skills.slice(0, 3).map((skill) => (
+                    {group.skills.slice(0, 2).map((skill) => (
                         <span key={skill.id} className="bg-primary text-white px-2 py-1 text-xs rounded-full">{skill.title}</span>
                     ))}
-                    {group.skills.length > 3 && (
+                    {group.skills.length > 2 && (
                         <div className="flex items-center h-fit gap-1 bg-border rounded-full text-xs p-1">
                             <span>+{group.skills.length - 3}</span>
                         </div>

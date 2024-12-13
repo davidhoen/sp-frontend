@@ -38,7 +38,7 @@ export const logout = async () => {
 };
 
 export const fetchUser = async () => {
-  const response = await fetch("/api/user", { cache: "no-store" });
+  const response = await fetch("/api/user?with=roles,personalCoach", { cache: "no-store" });
   if (response.ok) {
     return await response.json();
   } else {
