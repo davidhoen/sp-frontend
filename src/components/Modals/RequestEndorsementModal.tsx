@@ -45,7 +45,8 @@ const RequestEndorsementModal = ({ children, skillId, groupId, requestFromUser }
                 ...values,
                 skill: skillId || values.skillId,
                 requestee_email: values.email,
-                requestee: requestFromUser?.id
+                requestee: requestFromUser?.id,
+                groupId: groupId || undefined
             })
             await triggerPromiseToast(res, t, { success: t("successfullySent") })
             form.reset()

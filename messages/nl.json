@@ -27,11 +27,14 @@
     "genericError": "Er is iets misgegaan. Probeer het later opnieuw.",
     "requestFeedback": "Vraag feedback",
     "requestEndorsement": "Onderschrijving aanvragen",
-    "noEntitiesFound": "Geen {entities) gevonden",
+    "noEntitiesFound": "Geen {entities} gevonden",
+    "allEntities": "Alle {entities}",
     "topSkills": "Top skills",
     "myPersonalCoach": "Mijn persoonlijke coach",
     "view": "Bekijk",
     "title": "Titel",
+    "other": "Overig",
+    "feedbackRequests": "Feedback verzoeken",
     "overview": "Overzicht",
     "students": "Studenten",
     "groups": "Groepen",
@@ -41,11 +44,13 @@
     "recentEndorsements": "Recente onderschrijvingen",
     "publicProfile": "Openbaar profiel",
     "viewAll": "Bekijk alles",
+    "searchFeedbackRequests": "Zoek een groep, skill of student",
     "definitions": {
       "skills": "Een skill is een specifieke vaardigheid die je kunt leren, ontwikkelen en toepassen. “Pitchen” of “Netwerken” zijn voorbeelden van skills.",
       "competencies": "Een competentie is een verzameling gerelateerde skills die je samen in staat stellen om goed te presteren op een specifiek gebied. De competentie “Onderzoeken” kan bijvoorbeeld skills omvatten als “Interviewen” en “Reflecteren”.",
       "groups": "Een groep is een trainingsprogramma waarvoor je je kunt inschrijven en aan verschillende skills kunt werken.",
-      "profiles": "Een profiel vertegenwoordigt een set competenties die nodig zijn om uit te blinken in een functie of vakgebied. Als je meerdere competenties van een profiel beheerst, betekent dit dat je een uitstekende kandidaat bent voor die functie of dat gebied."
+      "profiles": "Een profiel vertegenwoordigt een set competenties die nodig zijn om uit te blinken in een functie of vakgebied. Als je meerdere competenties van een profiel beheerst, betekent dit dat je een uitstekende kandidaat bent voor die functie of dat gebied.",
+      "feedbackRequests": "Feedback verzoeken zijn verzoeken die je kunt sturen naar anderen om feedback te ontvangen over je skills. Je kunt feedback verzoeken ontvangen en versturen aan docenten en studenten."
     },
     "notifications": {
       "title": "Notificaties",
@@ -110,7 +115,7 @@
       "submitEndorsement": "Onderschrijving versturen"
     },
     "updatePersonalCoach": {
-      "title": "Update persoonlijke coach",
+      "title": "Persoonlijke coach bijwerken",
       "description": "Selecteer een coach om je te helpen met je persoonlijke ontwikkeling. Deze persoon krijgt inzicht tot je skills en je verdere voortgang.",
       "yourCoach": "Jouw coach",
       "selectCoach": "Selecteer een coach"

@@ -106,7 +106,7 @@ const SkillsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => 
         <div className="my-4 overflow-x-auto no-scrollbar">
             {!!compentencies ?
                 <ToggleGroup type="multiple" value={competencyFilterValue} onValueChange={handleCompentencyFilter}>
-                    <ToggleGroupItem variant="outline" value="all">{t("allCompetencies")}</ToggleGroupItem>
+                    <ToggleGroupItem variant="outline" value="all">{t("allEntities", { entities: t("competencies").toLowerCase() })}</ToggleGroupItem>
                     {compentencies?.map((competency) => (<ToggleGroupItem key={competency.id} variant="outline" value={competency.id}>{competency.title}</ToggleGroupItem>))}
                 </ToggleGroup>
                 :
@@ -117,7 +117,7 @@ const SkillsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => 
         {/* Is added filter */}
         <div className="my-4">
             <ToggleGroup type="single" defaultValue={searchParams.is_added?.toString() || "all"} onValueChange={handleIsAddedFilter}>
-                <ToggleGroupItem variant="outline" value="all">{t("allSkills")}</ToggleGroupItem>
+                <ToggleGroupItem variant="outline" value="all">{t("allEntities", { entities: t("skills").toLowerCase() })}</ToggleGroupItem>
                 <ToggleGroupItem variant="outline" value="true">{t("addedSkills")}</ToggleGroupItem>
                 <ToggleGroupItem variant="outline" value="false">{t("notAdded")}</ToggleGroupItem>
             </ToggleGroup>
