@@ -37,7 +37,8 @@ const RequestFeedbackModal = ({ children, requestFromUser, groupId, skillId }: {
             const res = axiosInstance.post(`/api/student/feedbacks/request`, {
                 skill_id: values.skillId,
                 title: values.title,
-                user_id: requestFromUser?.id
+                user_id: requestFromUser?.id,
+                groupId: groupId || undefined
             })
             await triggerPromiseToast(res, t)
 

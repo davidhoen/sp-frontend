@@ -1,25 +1,51 @@
 "use client"
 
-import { Link } from "@/i18n/routing";
-import { getFullName } from "@/lib";
+import { Link, useRouter } from "@/i18n/routing";
+import { getFullName, triggerPromiseToast } from "@/lib";
 import { GroupType } from "@/types";
-import { ChevronRightIcon, UsersIcon } from "lucide-react";
+import { CheckIcon, ChevronRightIcon, PlusIcon, UsersIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "./ui/button";
 import UserAvatar from "./UserAvatar";
 import { cn } from "@/lib/utils";
+import axiosInstance from "@/lib/axios";
+import { useUser } from "@/providers/UserProvider";
 
 export function GroupCard({ group, className }: { group: GroupType, className?: string }) {
     const t = useTranslations("general")
+    const router = useRouter()
+    const { user } = useUser()
+
+    const isEnrolled = user && group.students?.some((student) => student.id === user.id)
+
+    const enrollGroup = async () => {
+        try {
+            const res = axiosInstance.get(`/api/student/groups/${group.id}/join`)
+            await triggerPromiseToast(res, t)
+            router.push(`/student/groups/${group.id}`)
+        } catch (error) {
+            console.error(error)
+        }
+    }
 
     return (
         <Link href={`/student/groups/${group.id}`}>
             <div className={cn("relative flex flex-col border rounded-lg px-4 py-3 hover:bg-muted", className)}>
 
                 {/* Name */}
-                <div className="mb-4">
+                <div className="flex justify-between mb-4">
                     <span className="font-bold text-xl">{group.name}</span>
+                    <div>
+                        <Button variant="secondary" className="rounded-full h-8 w-8" size="icon" onClick={enrollGroup}>
+                            {isEnrolled ?
+                                <CheckIcon size={18} />
+                                :
+                                <PlusIcon size={18} />
+                            }
+                        </Button>
+                    </div>
                 </div>
+
 
                 {/* Teachers */}
                 <div>
@@ -43,10 +69,10 @@ export function GroupCard({ group, className }: { group: GroupType, className?: 
                 {/* Chip for every connected skill */}
                 <div className="flex flex-wrap gap-2 mt-4">
                     {/* Get max 3 skills */}
-                    {group.skills.slice(0, 3).map((skill) => (
+                    {group.skills.slice(0, 2).map((skill) => (
                         <span key={skill.id} className="bg-primary text-white px-2 py-1 text-xs rounded-full">{skill.title}</span>
                     ))}
-                    {group.skills.length > 3 && (
+                    {group.skills.length > 2 && (
                         <div className="flex items-center h-fit gap-1 bg-border rounded-full text-xs p-1">
                             <span>+{group.skills.length - 3}</span>
                         </div>

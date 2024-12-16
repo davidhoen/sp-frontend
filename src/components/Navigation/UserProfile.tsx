@@ -2,12 +2,12 @@
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { EXPIRED_SESSION_ROUTE } from "@/constants"
-import { languageNames, locales, usePathname, useRouter } from "@/i18n/routing"
+import { languageNames, Link, locales, usePathname, useRouter } from "@/i18n/routing"
 import { getFullName } from "@/lib"
 import { logout } from "@/lib/auth/client"
 import { useUser } from "@/providers/UserProvider"
-import { LogOutIcon, UserIcon } from "lucide-react"
-import { useLocale, useTranslations } from "next-intl"
+import { LogOutIcon, MessageSquareDotIcon, UserIcon } from "lucide-react"
+import { useTranslations } from "next-intl"
 import Image from "next/image"
 import UpdatePersonalCoachModal from "../Modals/UpdatePersonalCoachModal"
 import UserAvatar from "../UserAvatar"
@@ -39,7 +39,7 @@ export default function UserProfile() {
       <DropdownMenuTrigger>
         <UserAvatar user={user} />
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className=" w-48">
+      <DropdownMenuContent align="end" className="w-48">
 
         <DropdownMenuLabel className="pb-0">{getFullName(user)}</DropdownMenuLabel>
         <DropdownMenuLabel className="font-normal pt-1">{user.role.name}</DropdownMenuLabel>
@@ -54,6 +54,13 @@ export default function UserProfile() {
           </DropdownMenuItem>
         </UpdatePersonalCoachModal>
 
+        {/* Requests */}
+        <Link href={"/student/requests"}>
+          <DropdownMenuItem className="text-left" onSelect={(e) => e.preventDefault()}>
+            <MessageSquareDotIcon size={16} strokeWidth={2.5} />
+            <span>{t("feedbackRequests")}</span>
+          </DropdownMenuItem>
+        </Link>
 
         {/* Langauges */}
         {locales.map(locale => {

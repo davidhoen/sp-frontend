@@ -14,8 +14,10 @@ import { useUser } from "@/providers/UserProvider"
 import { LoginRequest } from "@/schemas/zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Eye, EyeClosed } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
+import toast from "react-hot-toast"
 import { z } from "zod"
 
 interface Values {
@@ -27,6 +29,7 @@ interface Values {
 const LoginPage = () => {
   const router = useRouter()
   const { registerUser } = useUser()
+  const t = useTranslations("general")
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
@@ -53,6 +56,7 @@ const LoginPage = () => {
       registerUser(user)
       router.push(roleBasePathMap[user?.role.name] ?? "/");
     } catch (error: any) {
+      toast.error(t("genericError"))
       handleBackendFormErrors({
         setError: form.setError,
         error,
