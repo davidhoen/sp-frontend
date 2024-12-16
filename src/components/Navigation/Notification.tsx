@@ -2,6 +2,7 @@
 
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu"
 import { Link } from "@/i18n/routing"
+import { getFullName } from "@/lib"
 import { cn } from "@/lib/utils"
 import { useUser } from "@/providers/UserProvider"
 import { NotificationType, NotificationTypeEnum, TranslationFunction } from "@/types"
@@ -55,7 +56,7 @@ export default function Notification({ notification, needsTeacherRouting }: { no
                         <Icon strokeWidth={2.5} size={16} className={color} />
                     </div>
                     <div>
-                        <span className="font-bold">{notification.requestee_name}</span> {t(`notifications.${notification.type}`)} <span className={cn("font-bold", color)}>{notification.skill.title}</span>
+                        <span className="font-bold">{notification.requester ? getFullName(notification.requester) : notification.requestee_name}</span> {t(`notifications.${notification.type}`)} <span className={cn("font-bold", color)}>{notification.skill.title}</span>
                     </div>
                 </div>
             </Link>

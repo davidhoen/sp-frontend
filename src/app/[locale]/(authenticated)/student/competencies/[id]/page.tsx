@@ -1,3 +1,4 @@
+import { EndorsementsList } from "@/components/EndorsementsList"
 import ProfileTile from "@/components/ProfileTile"
 import SkillLine from "@/components/SkillLine"
 import StarRating from "@/components/StarRating"
@@ -13,12 +14,9 @@ const CompetencyDetail = async ({ params }: { params: { id: number } }) => {
 
     const competency = await getCompetency(params.id)
 
-
     if (!competency) notFound()
 
     const avgRating = getCompetencyRating(competency)
-
-
 
     return <div className="flex flex-col gap-2">
 
@@ -47,6 +45,11 @@ const CompetencyDetail = async ({ params }: { params: { id: number } }) => {
             <SectionTitle>{t("overview")}</SectionTitle>
             <p>{competency?.overview}</p>
         </div>
+
+        {/* Recent endorsement */}
+        {/* <div className="mt-6 mb-4">
+            <EndorsementsList skillId={skill.id} />
+        </div> */}
 
         {/* Related skills */}
         <div className="mt-6">

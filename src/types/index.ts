@@ -127,9 +127,9 @@ export type NotificationType = {
 }
 
 export enum NotificationTypeEnum {
-  FeedbackRequest = "feedbackRequest",
-  FeedbackReceived = "feedbackReceived",
-  EndorsementRequest = "endorsementRequest",
-  EndorsementReceived = "endorsementReceived",
-  EndorsementReviewed = "endorsementReviewed",
+  FeedbackRequest = "FeedbackRequest",
+  FeedbackReceived = "FeedbackReceived",
+  EndorsementRequest = "EndorsementRequest",
+  EndorsementReceived = "EndorsementReceived",
+  EndorsementReviewed = "EndorsementReviewed",
 }

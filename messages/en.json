@@ -57,11 +57,11 @@
     "notifications": {
       "title": "Notifications",
       "noNotificationsDescription": "You currently have no notifications. Once you receive feedback or endorsements, they will appear here.",
-      "feedbackReceived": "added feedback to your skill",
-      "feedbackRequest": "requested feedback on for skill",
-      "endorsementReceived": "endorsed your skill",
-      "endorsementRequest": "requested an endorsement for skill",
-      "endorsementReviewed": "reviewed your endorsement request"
+      "FeedbackReceived": "added feedback to your skill",
+      "FeedbackRequest": "requested feedback on for skill",
+      "EndorsementReceived": "endorsed your skill",
+      "EndorsementRequest": "requested an endorsement for skill",
+      "EndorsementReviewed": "reviewed your endorsement request"
     }
   },
   "modals": {
