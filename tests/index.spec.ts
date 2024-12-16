@@ -41,15 +41,15 @@ test('Select a personal coach', async ({ page }) => {
   await page.getByPlaceholder('Your password').click();
   await page.getByPlaceholder('Your password').fill('password');
   await page.getByRole('button', { name: 'Log in' }).click();
+
   await expect(page.locator('h1')).toContainText('Dashboard');
   //profile dropdown
   await page.locator('header').getByRole('button').nth(1).click();
   await page.getByRole('button', { name: 'My personal coach' }).click();
   await expect(page.getByRole('heading')).toContainText('Update personal coach');
-  await expect(page.getByRole('paragraph')).toContainText('Select a coach to help you with your personal development. This person will have insight into your skills and your continued progress.');
-  await page.locator('[id="\\:rk\\:-form-item"] svg').click();
-  await page.getByLabel('Update personal coach').click();
-  await page.getByRole('button', { name: 'Close' }).click();
+  await page.locator('[id="\\:rl\\:-form-item"] svg').click();
+  await page.getByRole('option', { name: 'TEACHER null' }).locator('div').first().click();
+  await page.getByRole('button', { name: 'Save' }).click();
   await expect(page.locator('h1')).toContainText('Dashboard');
 });
 
@@ -71,19 +71,18 @@ test('Add skill', async ({ page }) => {
   await page.getByText('A skill is a specific ability').click();
   await page.locator('div').filter({ hasText: /^Skills$/ }).click();*/
   //filtering(competence)
-  await page.getByRole('button', { name: 'cum' }).click();
-  await page.getByText('cum').nth(1).click();
+  await page.getByRole('button', { name: 'Realize' }).click();
+  await page.getByText('Realize').nth(1).click();
   await page.getByRole('button', { name: 'All competencies' }).click();
   //search
   await page.getByPlaceholder('Search', { exact: true }).click();
-  await page.getByPlaceholder('Search', { exact: true }).fill('b');
-  await page.goto('http://127.0.0.1:3000/en/student/skills/?search=b');
-  await page.getByText('beatae').click();
+  await page.getByPlaceholder('Search', { exact: true }).fill('f');
+  await page.goto('http://127.0.0.1:3000/en/student/skills/?search=f');
+  await page.getByText('Fake Skill #1').click();
   //add skill
-  await page.locator('div').filter({ hasText: /^beatae$/ }).getByRole('button').click();
+  await page.locator('div').filter({ hasText: /^Fake Skill #32$/ }).getByRole('button').click();
   //skills detail page
-  await page.getByRole('heading', { name: 'beatae' }).click();
-  await page.getByRole('link', { name: 'Director Director' }).click();
+  await page.getByRole('heading', { name: 'Fake Skill #32' }).click();
   await page.getByRole('heading', { name: 'Rating' }).click();
   await page.getByRole('heading', { name: 'Your journey' }).click();
   await page.getByText('Feedback0').click();
@@ -91,14 +90,14 @@ test('Add skill', async ({ page }) => {
   //filtering(added)
   await page.getByRole('link', { name: 'Skills' }).click();
   await page.getByRole('radio', { name: 'Added skills' }).click();
-  await page.getByText('beatae').click();
+  await page.getByText('Fake Skill #32').click();
 });
 
 test('Group', async ({ page }) => {
   //login
   await page.goto('http://127.0.0.1:3000/en/login/');
   await page.getByPlaceholder('Your email').click();
-  await page.getByPlaceholder('Your email').fill('student@sp.nl');
+  await page.getByPlaceholder('Your email').fill('std2@sp.nl');
   await page.getByPlaceholder('Your password').click();
   await page.getByPlaceholder('Your password').fill('password');
   await page.getByRole('button', { name: 'Log in' }).click();
@@ -108,18 +107,23 @@ test('Group', async ({ page }) => {
   await page.getByRole('heading', { name: 'Enrolled groups' }).click();
   //groups menu
   await page.getByRole('link', { name: 'Groups' }).click();
-  //search(not working)
+  //search
   await page.getByPlaceholder('Search', { exact: true }).click();
-  await page.getByPlaceholder('Search', { exact: true }).fill('m');
-  await page.goto('http://127.0.0.1:3000/en/student/groups/?search=m');
+  await page.getByPlaceholder('Search', { exact: true }).fill('f');
+  await page.goto('http://127.0.0.1:3000/en/student/groups/?search=f');
+  //filtering 
+  await page.getByRole('radio', { name: 'Enrolled groups' }).click();
+  await expect(page.locator('div').filter({ hasText: /^Fake Group #81$/ }).getByRole('button')).toBeVisible();
+  await page.getByRole('radio', { name: 'All groups' }).click();
+  await expect(page.locator('div').filter({ hasText: /^Fake Group #62$/ }).getByRole('button')).toBeVisible();
   //groups detail page
   await page.getByRole('link', { name: 'Groups' }).click();
-  await page.getByRole('link', { name: 'Mr. Jayme Wisoky Jr. ADMIN' }).click();
-  await page.getByRole('heading', { name: 'Mr. Jayme Wisoky Jr.' }).click();
-  await page.getByText('Molestiae totam sed').click();
+  await page.getByRole('link', { name: 'Fake Group #81 Ms Marit Fake' }).getByRole('button').nth(1).click();
+  await expect(page.locator('h1')).toContainText('Fake Group #81');
   await page.getByRole('heading', { name: 'Teachers' }).click();
-  await page.getByRole('heading', { name: 'Skills' }).click();
-  await page.getByRole('heading', { name: 'Students' }).click();
+  await expect(page.locator('#Teachers')).toContainText('Teachers');
+  await expect(page.locator('#Skills')).toContainText('Skills');
+  await expect(page.locator('#Students')).toContainText('Students');
 
   await page.getByRole('link', { name: 'Dashboard' }).click();
   await expect(page.locator('h1')).toContainText('Dashboard');
@@ -137,15 +141,16 @@ test('Writing feedback(individual)', async ({ page }) => {
   await expect(page.locator('h1')).toContainText('Dashboard');
   //skills menu
   await page.getByRole('link', { name: 'Skills', exact: true }).click();
-  await page.locator('div').filter({ hasText: /^rerumcumAdd feedback$/ }).getByRole('button').nth(1).click();
+  await page.locator('div').filter({ hasText: /^Fake Skill #1ManageView$/ }).getByRole('link').click();
   //add feedback
   await page.getByRole('heading', { name: 'Your journey' }).click();
   await page.getByRole('button', { name: 'Add feedback' }).first().click();
   //feedback modal
-  await page.getByPlaceholder('E.g. Practice presentation').fill('P');
+  await page.getByPlaceholder('E.g. Practice presentation').fill('test feedback');
   await page.getByPlaceholder('Type your feedback here').click();
-  await page.getByPlaceholder('Type your feedback here').fill('n');
+  await page.getByPlaceholder('Type your feedback here').fill('perfect working');
   await page.getByRole('button', { name: 'Save' }).click();
+  await page.getByRole('button', { name: 'Close' }).click();
 
   await page.getByRole('link', { name: 'Dashboard' }).click();
   await expect(page.locator('h1')).toContainText('Dashboard');
@@ -189,12 +194,10 @@ test('Viewing received feedback/endorsement', async ({ page }) => {
   await page.getByRole('button', { name: 'Log in' }).click();
 
   await expect(page.locator('h1')).toContainText('Dashboard');
-  //skills menu
-  await page.getByRole('link', { name: 'Skills', exact: true }).click();
   //skills detail page
-  await page.locator('div').filter({ hasText: /^rerumcumAdd feedback$/ }).getByRole('button').nth(1).click();
-  await page.getByRole('heading', { name: 'Your journey' }).click();
-  await page.getByRole('button', { name: 'Sort by date' }).click();
+  await page.getByRole('link', { name: 'Skills', exact: true }).click();
+  await page.locator('div').filter({ hasText: /^rerumcumView$/ }).getByRole('button').nth(1).click();
+  await expect(page.locator('#Feedback')).toContainText('Feedback');
   //notification
   await page.getByLabel('notifications').click();
   await page.getByText('You currently have no').click();
@@ -202,12 +205,16 @@ test('Viewing received feedback/endorsement', async ({ page }) => {
   //recent endorsements
   await page.getByRole('link', { name: 'Dashboard' }).click();
   await page.getByRole('heading', { name: 'Recent endorsements' }).click();
-  await page.getByRole('link', { name: 'delectus Laborum autem magni' }).click();
+  await expect(page.locator('[id="Recent\\ endorsements"]')).toContainText('Recent endorsements');
   //competencies detail page 
   await page.getByRole('link', { name: 'Competencies' }).click();
-  await page.locator('div:nth-child(4) > a > .inline-flex').click();
-  await page.getByRole('link', { name: 'hic Rating: 0 out of 4 stars' }).click();
-  await expect(page.locator('h1')).toContainText('hic');
+  await page.getByPlaceholder('Search', { exact: true }).click();
+  await page.getByPlaceholder('Search', { exact: true }).fill('r');
+  await page.goto('http://127.0.0.1:3000/en/student/competencies/?search=r');
+  await page.locator('div:nth-child(3) > a > .inline-flex').click();
+  await expect(page.locator('#Skills')).toContainText('Skills');
+  await page.getByRole('link', { name: 'hic Rating: 1 out of 4' }).click();
+  await expect(page.locator('#Feedback')).toContainText('Feedback');
   
   await page.getByRole('link', { name: 'Dashboard' }).click();
   await expect(page.locator('h1')).toContainText('Dashboard');
