@@ -1,36 +1,39 @@
 "use client"
 
+import AddFeedbackModal from "@/components/Modals/AddFeedbackModal"
 import { Pager } from "@/components/Pager"
 import SearchInput from "@/components/SearchInput"
 import Skeletons from "@/components/Skeletons"
 import PageTitle from "@/components/Typography/PageTitle"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import UserAvatar from "@/components/UserAvatar"
 import { usePathname, useRouter } from "@/i18n/routing"
-import { getGroups } from "@/lib/queries/client/queries"
+import { getFullName } from "@/lib"
+import { getGroups, getStudentRequests } from "@/lib/queries/client/queries"
 import { cn } from "@/lib/utils"
-import { GroupsQueryType, GroupType } from "@/types"
+import { GroupsQueryType, GroupType, StudentRequestType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
-import { useTranslations } from "next-intl"
+import { useFormatter, useTranslations } from "next-intl"
 import { useCallback, useEffect, useState } from "react"
 
 const StudentRequests = ({ searchParams }: { searchParams: GroupsQueryType }) => {
     const t = useTranslations("general")
-    const pathname = usePathname();
-    const { replace } = useRouter();
+    const format = useFormatter()
 
-    const [groups, setGroups] = useState<PagingSchema<GroupType>>();
+    const [requests, setRequests] = useState<PagingSchema<StudentRequestType>>();
     const [isLoading, setIsLoading] = useState(false);
 
-    //Method to get the groups for the current page
-    const fetchGroups = useCallback(async () => {
+    //Method to get the request for the current page
+    const fetchRequests = useCallback(async () => {
         setIsLoading(true);
         try {
             const page = parseInt(searchParams.page) || 1;
             const search = searchParams.search ?? ""
-            const isJoined = searchParams.is_joined ?? ""
 
-            const filteredGroups = await getGroups({ page, search, isJoined });
+            const filteredGroups = await getStudentRequests({ page, search });
 
-            setGroups(filteredGroups);
+            setRequests(filteredGroups);
         }
         catch (error) {
             console.error(error);
@@ -42,10 +45,40 @@ const StudentRequests = ({ searchParams }: { searchParams: GroupsQueryType }) =>
 
     useEffect(() => {
         //Get the groups on page mount and the search term changes
-        fetchGroups();
-    }, [fetchGroups, searchParams]);
+        fetchRequests();
+    }, [fetchRequests, searchParams]);
 
-    const renderGroups = (request: GroupType) => <div></div>
+    const renderRequest = (request: StudentRequestType) => <div className="border p-4 rounded-lg">
+        <div className="flex justify-between items-center">
+            <div className="flex gap-2">
+                <UserAvatar user={request.requester} />
+                <div className="flex flex-col gap-1">
+                    <span className="font-bold">{getFullName(request.requester)}</span>
+                    <div className="text-xs text-muted-content">{format.dateTime(new Date(request.created_at), { dateStyle: "medium" })}</div>
+                </div>
+            </div>
+            <Badge>{t("feedback")}</Badge>
+        </div>
+        <div className="flex flex-col mt-4">
+            <span className="font-bold">{t("group")}: </span>
+            <span>{request.group?.name}</span>
+        </div>
+        <div className="flex justify-between mt-4 mb-4">
+            <div className="flex flex-col">
+                <span className="font-bold">{t("skill")}: </span>
+                <Badge variant="secondary">{request.skill.title}</Badge>
+            </div>
+            <div className="flex flex-col ">
+                <span className="font-bold">{t("event")}: </span>
+                <span>{request.title}</span>
+            </div>
+        </div>
+        <div className="w-full flex justify-end">
+            <AddFeedbackModal request={request}>
+                <Button className="w-full md:w-fit">{t("addFeedback")}</Button>
+            </AddFeedbackModal>
+        </div>
+    </div>
 
     return <div className="w-full">
         <PageTitle information={t("definitions.feedbackRequests")}>{t("feedbackRequests")}</PageTitle>
@@ -56,8 +89,8 @@ const StudentRequests = ({ searchParams }: { searchParams: GroupsQueryType }) =>
         </div>
 
         <div className={cn("transition-all duration-500", isLoading ? "blur-md cursor-wait" : "blur-0")}>
-            {!!groups ?
-                <Pager pagerObject={groups} renderItem={renderGroups} emptyMessage={t("noEntitiesFound", { entities: t("groups").toLowerCase() })} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-8 items-start" />
+            {!!requests ?
+                <Pager pagerObject={requests} renderItem={renderRequest} emptyMessage={t("noEntitiesFound", { entities: t("groups").toLowerCase() })} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-8 items-start" />
                 :
                 <Skeletons amount={15} className="w-full h-28" />
             }

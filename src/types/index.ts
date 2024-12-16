@@ -133,3 +133,20 @@ export enum NotificationTypeEnum {
   EndorsementReceived = "EndorsementReceived",
   EndorsementReviewed = "EndorsementReviewed",
 }
+
+export type StudentRequestType = {
+  id: string,
+  title: string,
+  skill: SkillType,
+  requester: UserType,
+  group: GroupType,
+  status: StudentRequestStatusEnum
+  created_at: Date
+  updated_at: Date
+}
+
+export enum StudentRequestStatusEnum {
+  Pending = "pending",
+  Accepted = "accepted",
+  Rejected = "rejected",
+}

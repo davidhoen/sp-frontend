@@ -1,5 +1,6 @@
 {
   "general": {
+    "event": "Gebeurtenis",
     "dashboard": "Dashboard",
     "viewProfile": "Bekijk profiel",
     "logout": "Uitloggen",
@@ -12,6 +13,7 @@
     "userUpdatedRating": "{name} heeft skills beoordeling bijgewerkt",
     "addFeedback": "Feedback toevoegen",
     "addASkill": "Voeg een skill toe",
+    "skill": "Skill",
     "skills": "Skills",
     "competencies": "Competenties",
     "search": "Zoeken",
@@ -40,6 +42,7 @@
     "feedbackRequests": "Feedback verzoeken",
     "overview": "Overzicht",
     "students": "Studenten",
+    "group": "Groep",
     "groups": "Groepen",
     "teachers": "Docenten",
     "profiles": "Profielen",
@@ -90,7 +93,8 @@
     },
     "addFeedback": {
       "title": "Feedback toevoegen",
-      "description": "Geef voorbeelden, sterke punten, verbeterpunten en suggesties om je vaardigheden te reflecteren en te verbeteren"
+      "description": "Geef voorbeelden, sterke punten, verbeterpunten en suggesties om je vaardigheden te reflecteren en te verbeteren",
+      "requestDescription": "{requester} heeft je om feedback gevraagd voor de skill {skill} vanuit de {group} group."
     },
     "requestEndorsement": {
       "title": "Onderschrijving aanvragen",

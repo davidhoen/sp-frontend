@@ -1,6 +1,7 @@
 {
   "general": {
     "dashboard": "Dashboard",
+    "event": "Event",
     "viewProfile": "View profile",
     "logout": "Logout",
     "you": "You",
@@ -12,6 +13,7 @@
     "userUpdatedRating": "{name} updated skills rating",
     "addFeedback": "Add feedback",
     "addASkill": "Add a skill",
+    "skill": "Skill",
     "skills": "Skills",
     "competencies": "Competencies",
     "search": "Search",
@@ -38,6 +40,7 @@
     "view": "View",
     "overview": "Overview",
     "students": "Students",
+    "group": "Group",
     "groups": "Groups",
     "teachers": "Teachers",
     "feedbackRequests": "Feedback requests",
@@ -91,7 +94,8 @@
     },
     "addFeedback": {
       "title": "Add feedback",
-      "description": "Provide examples, strengths, areas for improvement, and suggestions to reflect on and improve your skills"
+      "description": "Provide examples, strengths, areas for improvement, and suggestions to reflect on and improve your skills",
+      "requestDescription": "{requester} has requested feedback on the skill {skill} from the {group} group."
     },
     "requestEndorsement": {
       "title": "Request endorsement",
