@@ -35,4 +35,3 @@ export const getGroups = async ({ page, search, isJoined }: { page: number; sear
         console.error(error);
     }
 }
-

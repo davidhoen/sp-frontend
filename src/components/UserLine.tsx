@@ -10,7 +10,7 @@ import RequestFeedbackModal from "./Modals/RequestFeedbackModal"
 import UserAvatar from "./UserAvatar"
 import { Button } from "./ui/button"
 
-export default function UserLine({ user, groupId }: { user: UserType, groupId?: string }) {
+export default function UserLine({ user, groupId, hideActions }: { user: UserType, groupId?: string, hideActions?: boolean }) {
     const t = useTranslations("general")
     const { user: currentUser } = useUser()
 
@@ -24,7 +24,7 @@ export default function UserLine({ user, groupId }: { user: UserType, groupId?: 
 
             {/* User actions  */}
             {/* Add actions for all users other then the current logged in user */}
-            {user.id !== currentUser?.id &&
+            {(!hideActions && user.id !== currentUser?.id) &&
                 <div className="flex items-center gap-2">
                     {/* Add feedback */}
                     <RequestFeedbackModal requestFromUser={user} groupId={groupId}>
