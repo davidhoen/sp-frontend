@@ -1,4 +1,5 @@
 import CompetencyCard from "@/components/CompetencyCard"
+import ProfileChart from "@/components/ProfileChart"
 import ProfileTile from "@/components/ProfileTile"
 import PageTitle from "@/components/Typography/PageTitle"
 import SectionTitle from "@/components/Typography/SectionTitle"
@@ -31,7 +32,12 @@ const ProfileDetail = async ({ params }: { params: { id: number } }) => {
         </div>
 
         {/* Chart */}
-        <div></div>
+        <div>
+            <SectionTitle>{t("profileChart", { profile: profile.title })}</SectionTitle>
+            <div className="border rounded-lg p-4">
+                <ProfileChart profile={profile} />
+            </div>
+        </div>
 
         {/* Other profiles */}
         <div>
