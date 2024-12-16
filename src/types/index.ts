@@ -147,6 +147,6 @@ export type StudentRequestType = {
 
 export enum StudentRequestStatusEnum {
   Pending = "pending",
-  Accepted = "accepted",
-  Rejected = "rejected",
+  Accepted = "answered",
+  Rejected = "declined",
 }

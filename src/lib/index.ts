@@ -32,8 +32,8 @@ export const getCompetencyRating = (competency: CompetencyType) => {
         return undefined
     }).filter((rating): rating is number => rating !== undefined)
 
-    // Get the average rating of the skills
-    return roundToQuarter(ratings?.reduce((acc, rating) => acc + (rating ?? 0), 0) / ratings?.length)
+    // Get the average rating of the skills or return 0
+    return ratings.length > 0 ? roundToQuarter(ratings?.reduce((acc, rating) => acc + (rating ?? 0), 0) / ratings?.length) : 0
 }
 
 export const roundToQuarter = (num: number) => {

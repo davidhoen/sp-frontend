@@ -1,5 +1,6 @@
 import { EndorsementsList } from "@/components/EndorsementsList"
 import ProfileTile from "@/components/ProfileTile"
+import { RecentEndorsementsList } from "@/components/RecentEndorsementList"
 import SkillLine from "@/components/SkillLine"
 import StarRating from "@/components/StarRating"
 import PageTitle from "@/components/Typography/PageTitle"
@@ -47,9 +48,9 @@ const CompetencyDetail = async ({ params }: { params: { id: number } }) => {
         </div>
 
         {/* Recent endorsement */}
-        {/* <div className="mt-6 mb-4">
-            <EndorsementsList skillId={skill.id} />
-        </div> */}
+        <div className="mt-6 mb-4">
+            <RecentEndorsementsList competencyId={competency.id} />
+        </div>
 
         {/* Related skills */}
         <div className="mt-6">
