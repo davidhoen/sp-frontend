@@ -36,3 +36,15 @@ export const getGroups = async ({ page, search, isJoined }: { page: number; sear
     }
 }
 
+export const getTeacherSkills = async ({ page, search, competencies }: { page: number; search: string; competencies: string; }) => {
+    try {
+        // Add page params and availableCompentencies to get the competencies connected to the skills
+        const route = `/api/teacher/skills?page=${page}&search=${search}&competencies=${competencies}`
+        const { data } = await axiosInstance.get<PagingSchema<SkillType>>(route);
+        return data;
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+
