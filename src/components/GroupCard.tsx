@@ -52,14 +52,14 @@ export function GroupCard({ group, className }: { group: GroupType, className?: 
                 <div>
                     <div className="flex gap-2 items-center">
                         {/* First teacher */}
-                        {group.teachers.length > 0 && (
+                        {(group.teachers && group.teachers.length > 0) && (
                             <div className="flex items-center gap-2">
                                 <UserAvatar user={group.teachers[0]} />
                                 <span>{getFullName(group.teachers[0])}</span>
                             </div>
                         )}
                         {/* Plus icon when more then one teacher is connected */}
-                        {group.teachers.length > 1 && (
+                        {(group.teachers && group.teachers.length > 1) && (
                             <div className="flex items-center h-fit gap-1 bg-border rounded-full text-xs p-1">
                                 <span>+{group.teachers.length - 1}</span>
                             </div>
@@ -70,8 +70,8 @@ export function GroupCard({ group, className }: { group: GroupType, className?: 
                 {/* Chip for every connected skill */}
                 <div className="flex flex-wrap gap-2 mt-4">
                     {/* Get max 3 skills */}
-                    {group.skills.slice(0, 2).map((skill) => <Chip key={skill.id}>{skill.title}</Chip>)}
-                    {group.skills.length > 2 && (
+                    {group.skills && group.skills.slice(0, 2).map((skill) => <Chip key={skill.id}>{skill.title}</Chip>)}
+                    {(group.skills && group.skills.length > 2) && (
                         <div className="flex items-center h-fit gap-1 bg-border rounded-full text-xs p-1">
                             <span>+{group.skills.length - 3}</span>
                         </div>
