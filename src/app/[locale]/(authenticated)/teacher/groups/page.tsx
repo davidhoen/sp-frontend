@@ -68,7 +68,7 @@ const GroupsOverview = ({ searchParams }: { searchParams: TeacherGroupsQueryType
 
     const tableHeaders = [t("name"), t("skills"), t("students"), t("actions")]
 
-    const renderGroupRow = (group: GroupType) => <TableRow>
+    const renderGroupRow = (group: GroupType) => <TableRow key={group.id}>
         <TableCell>{group.name}</TableCell>
         <TableCell>
             <div className="flex gap-2">

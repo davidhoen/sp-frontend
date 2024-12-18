@@ -54,6 +54,7 @@ export type GroupType = {
   created_by: UserType
   closed_at?: Date
   created_at: Date
+  archived_at?: Date
 }
 
 export type FeedbackType = {

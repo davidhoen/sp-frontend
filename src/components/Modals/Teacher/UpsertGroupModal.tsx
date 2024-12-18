@@ -13,6 +13,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "../../ui/input"
 import Select from "../../ui/select"
 import { useSkills } from "@/hooks/use-skills"
+import { Label } from "@/components/ui/label"
+import { Switch } from "@/components/ui/switch"
 
 const UpsertGroupModal = ({ children, group }: { children: ReactNode, group?: GroupType }) => {
   const t = useTranslations()
@@ -24,13 +26,13 @@ const UpsertGroupModal = ({ children, group }: { children: ReactNode, group?: Gr
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const formSchema = z.object({
-    name: z.string(),
-    desc: z.string(),
-    skillIds: z.array(z.string()),
-    teacherIds: z.array(z.string()),
-    studentIds: z.array(z.string()),
+    name: z.string().min(3),
+    desc: z.string().min(3),
+    skillIds: z.array(z.string()).min(1),
+    teacherIds: z.array(z.string()).min(1),
+    studentIds: z.array(z.string()).min(1),
+    archived: z.boolean().optional()
   })
-
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -39,7 +41,8 @@ const UpsertGroupModal = ({ children, group }: { children: ReactNode, group?: Gr
       desc: group?.desc ?? "",
       skillIds: group?.skills?.map(skill => skill.id) ?? [],
       teacherIds: group?.teachers?.map(teacher => teacher.id) ?? [],
-      studentIds: group?.students?.map(student => student.id) ?? []
+      studentIds: group?.students?.map(student => student.id) ?? [],
+      archived: !!group?.archived_at
     }
   })
 
@@ -52,9 +55,9 @@ const UpsertGroupModal = ({ children, group }: { children: ReactNode, group?: Gr
   return (
     <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent>
+      <DialogContent className="">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
 
             <DialogHeader>
               <DialogTitle>{t(group ? "modals.upsertGroup.create" : "modals.upsertGroup.update")}</DialogTitle>
@@ -92,11 +95,19 @@ const UpsertGroupModal = ({ children, group }: { children: ReactNode, group?: Gr
             <FormField
               control={form.control}
               name="skillIds"
-              render={({ field: { onChange } }) => (
+              render={({ field: { onChange, value } }) => (
                 <FormItem>
                   <FormLabel>{t("general.skills")}</FormLabel>
                   <FormControl>
-                    <Select options={skills} onChange={(selectedOption) => onChange(selectedOption?.values)} placeholder={t("modals.skillPlaceholder")} isMulti />
+                    <Select options={skills}
+                      placeholder={t("modals.skillPlaceholder")}
+                      value={skills?.filter(student => value.includes(student.value))}
+                      onChange={(selectedOptions) => {
+                        const values = selectedOptions ? selectedOptions.map(option => option.value) : [];
+                        onChange(values);
+                      }}
+                      isMulti
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -106,21 +117,19 @@ const UpsertGroupModal = ({ children, group }: { children: ReactNode, group?: Gr
             <FormField
               control={form.control}
               name="teacherIds"
-              render={({ field: { onChange } }) => (
-
+              render={({ field: { onChange, value } }) => (
                 <FormItem>
                   <FormLabel>{t("general.teachers")}</FormLabel>
                   <FormControl>
                     <Select
                       options={teachers}
-                      // onChange={(selectedOption) => onChange(selectedOption?.values)}
                       placeholder={t("modals.upsertGroup.teachersPlaceholder")}
-                      isMulti
+                      value={teachers?.filter(student => value.includes(student.value))}
                       onChange={(selectedOptions) => {
                         const values = selectedOptions ? selectedOptions.map(option => option.value) : [];
-                        selectField.onChange(values);
+                        onChange(values);
                       }}
-                      value={students?.filter(student => field.value.includes(student.value))}
+                      isMulti
                     />
                   </FormControl>
                   <FormMessage />
@@ -131,11 +140,40 @@ const UpsertGroupModal = ({ children, group }: { children: ReactNode, group?: Gr
             <FormField
               control={form.control}
               name="studentIds"
-              render={({ field: { onChange } }) => (
+              render={({ field: { onChange, value } }) => (
                 <FormItem>
                   <FormLabel>{t("general.students")}</FormLabel>
                   <FormControl>
-                    <Select options={students} onChange={(selectedOption) => onChange(selectedOption?.values)} placeholder={t("modals.upsertGroup.studentsPlaceholder")} isMulti />
+                    <Select
+                      options={students}
+                      placeholder={t("modals.upsertGroup.studentsPlaceholder")}
+                      value={students?.filter(student => value.includes(student.value))}
+                      onChange={(selectedOptions) => {
+                        const values = selectedOptions ? selectedOptions.map(option => option.value) : [];
+                        onChange(values);
+                      }}
+                      isMulti
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="archived"
+              render={({ field: { value, onChange } }) => (
+                <FormItem>
+                  <FormControl>
+                    <div className="flex items-center space-x-2">
+                      <Switch
+                        id="archived"
+                        checked={value}
+                        onCheckedChange={onChange}
+                      />
+                      <Label htmlFor="archived">{t("general.archived")}</Label>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
