@@ -46,6 +46,8 @@
     "overview": "Overview",
     "students": "Students",
     "group": "Group",
+    "activeGroups": "Active groups",
+    "archivedGroups": "Archived groups",
     "groups": "Groups",
     "teachers": "Teachers",
     "feedbackRequests": "Feedback requests",
@@ -74,6 +76,7 @@
     }
   },
   "modals": {
+    "description": "Description",
     "cancel": "Cancel",
     "save": "Save",
     "saveChanges": "Save changes",
@@ -136,7 +139,12 @@
     },
     "upsertGroup": {
       "create": "Create a group",
-      "update": "Update group"
+      "update": "Update group",
+      "namePlaceholder": "E.g. Conversations in organizations (24/25)",
+      "descriptionPlaceholder": "E.g. Learning conversation skills isn’t done through reading; the goal is for students to gain practical experience.",
+      "skillsPlaceholder": "Select the skill(s)",
+      "teachersPlaceholder": "Select the teacher(s)",
+      "studentsPlaceholder": "Select the student(s)"
     }
   },
   "students": {

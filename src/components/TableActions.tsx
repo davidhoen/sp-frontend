@@ -21,7 +21,7 @@ export function TableAction({ label, icon = CircleDashedIcon, type }: { label?: 
   }
   const Icon = icon
 
-  return <div className={cn("flex items-center gap-2 p-0.5 rounded-full bg-border")}>
+  return <div className={cn("flex items-center gap-2 p-0.5 rounded-full bg-border cursor-pointer")}>
     <div className="p-1.5 bg-background rounded-full">
       <Icon size={16} strokeWidth={2.5} />
     </div>

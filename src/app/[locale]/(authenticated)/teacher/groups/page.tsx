@@ -35,9 +35,9 @@ const GroupsOverview = ({ searchParams }: { searchParams: TeacherGroupsQueryType
         try {
             const page = searchParams.page || "1";
             const search = searchParams.search ?? ""
-            const isArchived = searchParams.is_archived ?? ""
+            const is_archived = searchParams.is_archived ?? ""
 
-            const filteredGroups = await getGroups({ query: { page, search, isArchived } })
+            const filteredGroups = await getGroups({ query: { page, search, is_archived } })
             filteredGroups?.data.map(group => ({ name: group.name, skills: group.skills, numberOfStudents: group.students?.length }));
             setGroups(filteredGroups);
         }
@@ -51,7 +51,7 @@ const GroupsOverview = ({ searchParams }: { searchParams: TeacherGroupsQueryType
 
     const handleIsArchived = useDebouncedCallback((value: string) => {
         const params = new URLSearchParams(searchParams);
-        if (value && value !== "all") {
+        if (value) {
             params.set('is_archived', value);
             // Remove page parameter when searching to avoid so results on search
             params.delete('page')
@@ -76,16 +76,16 @@ const GroupsOverview = ({ searchParams }: { searchParams: TeacherGroupsQueryType
                 {/* Plus icon when more then one teacher is connected */}
                 {group.skills.length > 3 && (
                     <div className="flex items-center h-fit gap-1 bg-border rounded-full text-xs p-1">
-                        <span>+{group.students.length - 1}</span>
+                        <span>+{group.skills.length - 1}</span>
                     </div>
                 )}
             </div>
         </TableCell>
-        <TableCell>{group.students.length}</TableCell>
+        <TableCell>{group.students_count}</TableCell>
         <TableCell className="flex gap-2">
             {/* Edit */}
-            <UpsertGroupModal>
-                <TableAction type="edit" />
+            <UpsertGroupModal group={group}>
+                <div><TableAction type="edit" /></div>
             </UpsertGroupModal>
             {/* Delete (for admins) */}
             {user?.is_admin && <TableAction type="delete" />}
@@ -109,10 +109,9 @@ const GroupsOverview = ({ searchParams }: { searchParams: TeacherGroupsQueryType
 
         {/* Is added filter */}
         <div className="my-4">
-            <ToggleGroup type="single" defaultValue={searchParams.is_archived?.toString() || "all"} onValueChange={handleIsArchived}>
-                <ToggleGroupItem variant="outline" value="all">{t("allSkills")}</ToggleGroupItem>
-                <ToggleGroupItem variant="outline" value="true">{t("addedSkills")}</ToggleGroupItem>
-                <ToggleGroupItem variant="outline" value="false">{t("notAdded")}</ToggleGroupItem>
+            <ToggleGroup type="single" defaultValue={searchParams.is_archived?.toString() || "false"} onValueChange={handleIsArchived}>
+                <ToggleGroupItem variant="outline" value="false">{t("activeGroups")}</ToggleGroupItem>
+                <ToggleGroupItem variant="outline" value="true">{t("archivedGroups")}</ToggleGroupItem>
             </ToggleGroup>
         </div>
 

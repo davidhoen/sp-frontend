@@ -22,6 +22,8 @@
     "skills": "Skills",
     "competencies": "Competenties",
     "search": "Zoeken",
+    "activeGroups": "Actieve groepen",
+    "archivedGroups": "Gearchiveerde groepen",
     "allSkills": "Alle skills",
     "allCompetencies": "Alle competenties",
     "addedSkills": "Toegevoegde skills",
@@ -77,6 +79,7 @@
   "modals": {
     "cancel": "Annuleren",
     "save": "Opslaan",
+    "description": "Beschrijving",
     "saveChanges": "Wijzigingen opslaan",
     "feedback": "Feedback",
     "feedbackDescription": "Geef gedetailleerde feedback over de vaardigheid van de student",
@@ -135,7 +138,12 @@
     },
     "upsertGroup": {
       "create": "Groep aanmaken",
-      "update": "Groep bewerken"
+      "update": "Groep bewerken",
+      "namePlaceholder": "Bijv. Gesprekken in organisaties (24/25)",
+      "descriptionPlaceholder": "Bijv. Deze groep is bedoeld voor studenten die hun gespreksvaardigheden willen verbeteren.",
+      "skillsPlaceholder": "Selecteer de skill(s)",
+      "teachersPlaceholder": "Selecteer de docent(en)",
+      "studentsPlaceholder": "Selecteer de student(en)"
     }
   },
   "students": {
