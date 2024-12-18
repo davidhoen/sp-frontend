@@ -1,34 +1,31 @@
 "use client"
 
-import { triggerPromiseToast } from "@/lib"
-import axiosInstance from "@/lib/axios"
-import { RatingHistoryType } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { ReactNode, useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import StarRating from "../../StarRating"
 import { Button } from "../../ui/button"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../ui/dialog"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../../ui/form"
 import { Textarea } from "../../ui/textarea"
+import StarRating from "../../StarRating"
+import axiosInstance from "@/lib/axios"
+import { triggerPromiseToast } from "@/lib"
 
-const UpdateRatingModal = ({ children, skillId, currentRating }: { children: ReactNode, skillId: string, currentRating?: RatingHistoryType }) => {
+const UpdateRatingModal = ({ children, skillId, currentRating }: { children: ReactNode, skillId: string, currentRating?: number }) => {
     const t = useTranslations("modals")
     const [isModalOpen, setIsModalOpen] = useState(false)
 
-    const minimalRating = currentRating?.rating || 0
-
     const formSchema = z.object({
-        rating: z.number().int().min(minimalRating, { message: t("updateStarRating.ratingToLow") }).max(4),
+        rating: z.number().int().max(4),
         feedback: z.string().min(10)
     })
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            rating: currentRating?.rating || 0,
+            rating: currentRating || 0,
             feedback: ""
         }
     })
@@ -42,6 +39,7 @@ const UpdateRatingModal = ({ children, skillId, currentRating }: { children: Rea
             await triggerPromiseToast(res, t)
             setIsModalOpen(false)
             form.reset()
+            window.location.reload()
         }
         catch (error) {
             console.error(error)

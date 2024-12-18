@@ -5,15 +5,20 @@ import { Pager } from "@/components/Pager"
 import SearchInput from "@/components/SearchInput"
 import Skeletons from "@/components/Skeletons"
 import PageTitle from "@/components/Typography/PageTitle"
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import { usePathname, useRouter } from "@/i18n/routing"
 import { getGroups } from "@/lib/queries/client/queries"
 import { cn } from "@/lib/utils"
 import { StudentGroupsQueryType, GroupType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useTranslations } from "next-intl"
 import { useCallback, useEffect, useState } from "react"
+import { useDebouncedCallback } from "use-debounce"
 
 const GroupsOverview = ({ searchParams }: { searchParams: StudentGroupsQueryType }) => {
     const t = useTranslations("general")
+    const pathname = usePathname();
+    const { replace } = useRouter();
 
     const [groups, setGroups] = useState<PagingSchema<GroupType>>();
     const [isLoading, setIsLoading] = useState(false);
@@ -38,6 +43,18 @@ const GroupsOverview = ({ searchParams }: { searchParams: StudentGroupsQueryType
         }
     }, [searchParams]);
 
+    const handleIsJoinedFilter = useDebouncedCallback((value: string) => {
+        const params = new URLSearchParams(searchParams);
+        if (value && value !== "all") {
+            params.set('is_joined', value);
+            // Remove page parameter when searching to avoid so results on search
+            params.delete('page')
+        } else {
+            params.delete('is_joined');
+        }
+        replace(`${pathname}?${params.toString()}`);
+    }, 300);
+
     useEffect(() => {
         //Get the groups on page mount and the search term changes
         fetchGroups();
@@ -51,6 +68,15 @@ const GroupsOverview = ({ searchParams }: { searchParams: StudentGroupsQueryType
         {/* Search */}
         <div className="my-4">
             <SearchInput placeholder={t("search")} />
+        </div>
+
+        {/* Is joined filter */}
+        <div className="my-4">
+            <ToggleGroup type="single" defaultValue={searchParams.is_joined?.toString() || "all"} onValueChange={handleIsJoinedFilter}>
+                <ToggleGroupItem variant="outline" value="all">{t("allEntities", { entities: t("groups").toLowerCase() })}</ToggleGroupItem>
+                <ToggleGroupItem variant="outline" value="true">{t("enrolledGroups")}</ToggleGroupItem>
+                <ToggleGroupItem variant="outline" value="false">{t("other")}</ToggleGroupItem>
+            </ToggleGroup>
         </div>
 
         <div className={cn("transition-all duration-500", isLoading ? "blur-md cursor-wait" : "blur-0")}>

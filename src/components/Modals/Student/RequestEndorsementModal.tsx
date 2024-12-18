@@ -1,6 +1,7 @@
 "use client"
 
-import { useEvents } from "@/hooks/use-events"
+// import { useEvents } from "@/hooks/use-events"
+import { useGroupSkills } from "@/hooks/use-group-skills"
 import { getFullName, triggerPromiseToast } from "@/lib"
 import axiosInstance from "@/lib/axios"
 import { UserType } from "@/types/auth"
@@ -16,10 +17,9 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "../../ui/input"
 import Select from "../../ui/select"
 
-const RequestEndorsementModal = ({ children, skillId, requestFromUser }: { children: ReactNode, skillId?: string, requestFromUser?: UserType }) => {
+const RequestEndorsementModal = ({ children, skillId, groupId, requestFromUser }: { children: ReactNode, skillId?: string, groupId?: string, requestFromUser?: UserType }) => {
     const t = useTranslations("modals")
-    // TODO: Replace with useSkills of student
-    const { data: events } = useEvents()
+    const { data: skills } = useGroupSkills(groupId)
 
     const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -43,9 +43,10 @@ const RequestEndorsementModal = ({ children, skillId, requestFromUser }: { child
         try {
             const res = axiosInstance.post(`/api/student/endorsements/request`, {
                 ...values,
-                skill: skillId,
+                skill: skillId || values.skillId,
                 requestee_email: values.email,
-                requestee: requestFromUser?.id
+                requestee: requestFromUser?.id,
+                groupId: groupId || undefined
             })
             await triggerPromiseToast(res, t, { success: t("successfullySent") })
             form.reset()
@@ -99,7 +100,7 @@ const RequestEndorsementModal = ({ children, skillId, requestFromUser }: { child
                                     <FormItem>
                                         <FormLabel>{t("skill")}</FormLabel>
                                         <FormControl>
-                                            <Select options={events} onChange={(selectedOption) => onChange(selectedOption?.value)} placeholder={t("skillPlaceholder")} />
+                                            <Select options={skills} onChange={(selectedOption) => onChange(selectedOption?.value)} placeholder={t("skillPlaceholder")} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>

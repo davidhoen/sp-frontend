@@ -1,4 +1,4 @@
-import { CompetencyType, EndorsementRequestType, EndorsementType, FeedbackType, GroupType, NotificationType, NotificationTypeEnum, RatingHistoryType, SkillType } from "@/types"
+import { CompetencyType, EndorsementRequestType, EndorsementType, FeedbackType, GroupType, NotificationType, NotificationTypeEnum, RatingType, SkillType } from "@/types"
 import { UserType } from "@/types/auth"
 import { v4 as uuid } from "uuid"
 
@@ -52,15 +52,13 @@ export const fakeTeacher: UserType = {
 
 export const feedback: FeedbackType = {
     id: uuid(),
-    user: fakeStudent,
+    created_by: fakeStudent,
     created_at: new Date(),
     title: "Start presentation",
     content: "Improvement could be incorporating more real-world examples to illustrate the points. Nevertheless, it was a compelling presentation."
 }
 
-
-
-export const ratingUpdate: RatingHistoryType = {
+export const ratingUpdate: RatingType = {
     rating: 3,
     created_at: new Date()
 }
@@ -82,13 +80,7 @@ export const fakeSkill: SkillType = {
     title: "Presenting",
     desc: "React is a JavaScript library for building user interfaces",
     competency: fakeCompetency,
-    ratings: [
-        ratingUpdate,
-        {
-            rating: 4,
-            created_at: new Date()
-        }
-    ],
+    rating: 4,
     created_at: new Date(),
     groups_count: 0,
     is_added: false,
@@ -99,18 +91,7 @@ export const fakeSkill2: SkillType = {
     title: "Creativity",
     desc: "React is a JavaScript library for building user interfaces",
     competency: fakeCompetency,
-    ratings: [{
-        rating: 1,
-        created_at: new Date()
-    },
-    {
-        rating: 2,
-        created_at: new Date()
-    },
-    {
-        rating: 3,
-        created_at: new Date()
-    }],
+    rating: 2,
     created_at: new Date(),
     groups_count: 0,
     is_added: false,
@@ -136,6 +117,7 @@ export const fakeGroup: GroupType = {
     created_at: new Date(),
     teachers: [fakeTeacher, fakeTeacher],
     students: [fakeStudent, fakeStudent2],
+    students_count: 2,
     skills: [fakeSkill, fakeSkill2],
 }
 

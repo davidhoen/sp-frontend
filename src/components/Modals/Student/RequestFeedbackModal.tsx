@@ -1,7 +1,7 @@
 "use client"
 
-import { useEvents } from "@/hooks/use-events"
-import { getFullName } from "@/lib"
+import { useGroupSkills } from "@/hooks/use-group-skills"
+import { getFullName, triggerPromiseToast } from "@/lib"
 import { UserType } from "@/types/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
@@ -13,12 +13,13 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../ui/form"
 import { Input } from "../../ui/input"
 import Select from "../../ui/select"
+import axiosInstance from "@/lib/axios"
 
-const RequestFeedbackModal = ({ children, requestFromUser, skillId }: { children: ReactNode, requestFromUser: UserType, skillId?: string, }) => {
+const RequestFeedbackModal = ({ children, requestFromUser, groupId, skillId }: { children: ReactNode, requestFromUser: UserType, groupId?: string, skillId?: string, }) => {
     const t = useTranslations("modals")
 
-    // TODO: Replace with useSkills hook
-    const { data: events, isLoading } = useEvents()
+    const { data: skills } = useGroupSkills(groupId)
+
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const formSchema = z.object({ title: z.string(), skillId: z.string() })
@@ -31,10 +32,22 @@ const RequestFeedbackModal = ({ children, requestFromUser, skillId }: { children
         }
     })
 
-    const onSubmit = (values: z.infer<typeof formSchema>) => {
-        console.log(values);
-        setIsModalOpen(false)
-        form.reset()
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        try {
+            const res = axiosInstance.post(`/api/student/feedbacks/request`, {
+                skill_id: values.skillId,
+                title: values.title,
+                user_id: requestFromUser?.id,
+                group_id: groupId || undefined
+            })
+            await triggerPromiseToast(res, t)
+
+            setIsModalOpen(false)
+            form.reset()
+        }
+        catch (error) {
+            console.error(error)
+        }
     }
 
     return (
@@ -47,11 +60,7 @@ const RequestFeedbackModal = ({ children, requestFromUser, skillId }: { children
                         <DialogHeader>
                             <DialogTitle>{t("requestFeedback.title")}</DialogTitle>
                             <DialogDescription>
-                                {requestFromUser ?
-                                    t("requestFeedback.fromUserdescription", { name: getFullName(requestFromUser) })
-                                    :
-                                    t("requestFeedback.fromEmaildescription")
-                                }
+                                {t("requestFeedback.fromUserdescription", { name: getFullName(requestFromUser) })}
                             </DialogDescription>
                         </DialogHeader>
 
@@ -77,7 +86,7 @@ const RequestFeedbackModal = ({ children, requestFromUser, skillId }: { children
                                 <FormItem>
                                     <FormLabel>{t("skill")}</FormLabel>
                                     <FormControl>
-                                        <Select options={events} onChange={(selectedOption) => onChange(selectedOption?.value)} placeholder={t("skillPlaceholder")} />
+                                        <Select options={skills} onChange={(selectedOption) => onChange(selectedOption?.value)} placeholder={t("skillPlaceholder")} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>

@@ -17,12 +17,12 @@ export function ContentCard({ content }: { content: EndorsementType | FeedbackTy
             {/* Header */}
             <div className="flex mb-2 justify-between">
                 <div className="flex gap-4">
-                    <UserAvatar user={content.user} />
+                    <UserAvatar user={content.created_by} />
                     <div>
                         {/* User name or "you" */}
-                        <span className="font-semibold">{getYouOrFullName(content.user, t, user)}</span>
+                        <span className="font-semibold">{getYouOrFullName(content.created_by, t, user)}</span>
                         {/* Role */}
-                        <p className="text-sm text-muted-foreground">{content.user.role.name}</p>
+                        <p className="text-sm text-muted-foreground">{content.created_by?.role.name}</p>
                     </div>
                 </div>
                 {/* Date */}

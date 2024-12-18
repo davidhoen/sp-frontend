@@ -18,7 +18,7 @@ const handleAuthenticatedUser = async (url: URL, locale: string, user: UserType)
   ].includes(urlWithoutLocale) || urlWithoutLocale.startsWith(RESET_PASSWORD_ROUTE);
 
   if (needsRedirectToDashboard) {
-    url.pathname = `/${locale}${roleBasePathMap[user?.role.name] || "/"}`;
+    url.pathname = `/${locale}${roleBasePathMap[user?.role?.name] || "/"}`;
     return NextResponse.redirect(url);
   }
 

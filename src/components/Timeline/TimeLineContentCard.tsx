@@ -19,11 +19,11 @@ export function TimeLineContentCard({ content }: { content: EndorsementType | Fe
                     <span className="font-sans font-bold text-lg">{content.title}</span>
                     <span className="text-muted-foreground text-sm">{t(contentType)}</span>
                 </div>
-                <UserAvatar user={content.user} />
+                <UserAvatar user={content.created_by} />
             </div>
 
             {/* User name or "you" */}
-            <span className="font-semibold">{getYouOrFullName(content.user, t, user)} ({content.user.role.name})</span>
+            <span className="font-semibold">{getYouOrFullName(content.created_by, t, user)} ({content.created_by?.role.name})</span>
 
             {/* Content */}
             <div>

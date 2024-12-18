@@ -10,26 +10,17 @@ import { Button } from "./ui/button";
 import { BadgeCheckIcon } from "lucide-react";
 import { Pager } from "./Pager";
 import { EndorsementType } from "@/types";
+import { useRecentEndorsements } from "@/hooks/use-recent-endorsements";
 
-export function EndorsementsList({ skillId }: { skillId: string }) {
-    let { data: endorsements, isLoading } = useEndorsements(skillId)
+export function RecentEndorsementsList({ competencyId }: { competencyId: string }) {
+    let { data: endorsements, isLoading } = useRecentEndorsements(competencyId)
     const t = useTranslations("general")
 
     const renderEndorsments = (endorsement: EndorsementType) => <ContentCard key={endorsement.id} content={endorsement} />
 
     return <>
-        {/* Title and add button */}
-        <div className="flex flex-col gap-2 sm:flex-row sm:justify-between sm:items-center">
-            {/* Title */}
-            <SectionTitle numberOfItems={endorsements?.data?.length}>{t("endorsements")}</SectionTitle>
-            {/* Request endorsement button */}
-            <RequestEndorsementModal skillId={skillId}>
-                <Button variant="outline" className="w-full sm:w-fit" size="sm">
-                    <BadgeCheckIcon size={16} />
-                    {t("requestEndorsement")}
-                </Button>
-            </RequestEndorsementModal>
-        </div>
+        {/* Title */}
+        <SectionTitle numberOfItems={endorsements?.data?.length}>{t("recentEndorsements")}</SectionTitle>
 
         {!!endorsements ?
             <Pager pagerObject={endorsements} renderItem={renderEndorsments} emptyMessage={t("noEntitiesFound", { entities: t("endorsements").toLowerCase() })} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-2 items-start" entityKey="endorsements" />

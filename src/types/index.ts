@@ -40,7 +40,7 @@ export type SkillType = {
   is_added: boolean
   competency: CompetencyType
   created_at: Date
-  ratings: RatingHistoryType[]
+  rating: number
 }
 
 export type GroupType = {
@@ -48,8 +48,9 @@ export type GroupType = {
   name: string
   desc: string
   teachers: UserType[]
-  students: UserType[]
+  students?: UserType[]
   skills: SkillType[]
+  students_count: number
   created_by: UserType
   closed_at?: Date
   created_at: Date
@@ -57,7 +58,7 @@ export type GroupType = {
 
 export type FeedbackType = {
   id: string
-  user: UserType
+  created_by: UserType
   created_at: Date
   title: string
   content: string
@@ -75,7 +76,7 @@ export type EndorsementType = {
   created_at: Date
 }
 
-export type RatingHistoryType = {
+export type RatingType = {
   rating: number
   created_at: Date
 }
@@ -83,15 +84,15 @@ export type RatingHistoryType = {
 export type TimeLineItemType = {
   type: TimeLineItemTypeEnum,
   created_at: Date,
-  endorsement?: EndorsementType,
-  feedback?: FeedbackType,
-  ratingUpdate?: RatingHistoryType
+  Endorsement?: EndorsementType,
+  Feedback?: FeedbackType,
+  Rating?: RatingType
 }
 
 export enum TimeLineItemTypeEnum {
-  Feedback,
-  Endorsement,
-  RatingUpdate
+  Feedback = "Feedback",
+  Endorsement = "Endorsement",
+  Rating = "Rating"
 }
 
 export type SkillsQueryType = {
@@ -132,9 +133,26 @@ export type NotificationType = {
 }
 
 export enum NotificationTypeEnum {
-  FeedbackRequest = "feedbackRequest",
-  FeedbackReceived = "feedbackReceived",
-  EndorsementRequest = "endorsementRequest",
-  EndorsementReceived = "endorsementReceived",
-  EndorsementReviewed = "endorsementReviewed",
+  FeedbackRequest = "FeedbackRequest",
+  FeedbackReceived = "FeedbackReceived",
+  EndorsementRequest = "EndorsementRequest",
+  EndorsementReceived = "EndorsementReceived",
+  EndorsementReviewed = "EndorsementReviewed",
+}
+
+export type StudentRequestType = {
+  id: string,
+  title: string,
+  skill: SkillType,
+  requester: UserType,
+  group: GroupType,
+  status: StudentRequestStatusEnum
+  created_at: Date
+  updated_at: Date
+}
+
+export enum StudentRequestStatusEnum {
+  Pending = "pending",
+  Accepted = "answered",
+  Rejected = "declined",
 }

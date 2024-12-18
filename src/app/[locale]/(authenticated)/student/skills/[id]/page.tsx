@@ -1,24 +1,21 @@
 import { EndorsementsList } from "@/components/EndorsementsList"
 import { FeedbacksList } from "@/components/FeedbacksList"
-import AddFeedbackModal from "@/components/Modals/AddFeedbackModal"
-import RequestEndorsementModal from "@/components/Modals/Student/RequestEndorsementModal"
 import UpdateRatingModal from "@/components/Modals/Student/UpdateRatingModal"
 import ProfileTile from "@/components/ProfileTile"
 import StarRating from "@/components/StarRating"
 import TimeLineWithUser from "@/components/Timeline/TimeLineWithUser"
 import PageTitle from "@/components/Typography/PageTitle"
 import SectionTitle from "@/components/Typography/SectionTitle"
-import { Button } from "@/components/ui/button"
-import { getMostRecentRating } from "@/lib"
 import { getSkill } from "@/lib/queries/server/queries"
-import { BadgeCheckIcon, PencilIcon, PlusIcon } from "lucide-react"
+import { PencilIcon } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
+import { Link } from "@/i18n/routing";
 
 const SkillsDetail = async ({ params }: { params: { id: number } }) => {
     const t = await getTranslations("general")
-    const skill = await getSkill(params.id)
 
+    const skill = await getSkill(params.id)
     if (!skill) notFound()
 
     return <div className="flex flex-col gap-2">
@@ -40,12 +37,12 @@ const SkillsDetail = async ({ params }: { params: { id: number } }) => {
 
             <div className="flex gap-4">
                 {/* Star rating */}
-                <StarRating rating={getMostRecentRating(skill.ratings)?.rating || 0} />
+                <StarRating rating={skill.rating || 0} />
 
                 {/* Edit rating */}
-                <UpdateRatingModal currentRating={getMostRecentRating(skill.ratings)} skillId={skill.id}>
+                {skill.is_added && <UpdateRatingModal currentRating={skill.rating} skillId={skill.id}>
                     <div className="flex items-center bg-border p-1 rounded-full"><PencilIcon size={15} /></div>
-                </UpdateRatingModal>
+                </UpdateRatingModal>}
             </div>
         </div>
 
@@ -58,31 +55,20 @@ const SkillsDetail = async ({ params }: { params: { id: number } }) => {
         {/* Feedbacks */}
         <div className="mt-6">
             <FeedbacksList skillId={skill.id} />
-
-            {/* Request and add feedback buttons */}
-            <div className="flex gap-2 flex-wrap">
-                <AddFeedbackModal skillId={skill.id}>
-                    <Button variant="outline" size="sm" className="w-full sm:w-fit">
-                        <PlusIcon size={16} />
-                        {t("addFeedback")}
-                    </Button>
-                </AddFeedbackModal>
-            </div>
-
         </div>
 
         {/* Endorsements */}
-        <div className="mt-6">
+        <div className="mt-6 mb-4">
             <EndorsementsList skillId={skill.id} />
-            {/* Request endorsement button */}
-            <RequestEndorsementModal skillId={skill.id}>
-                <Button variant="outline" className="w-full sm:w-fit" size="sm">
-                    <BadgeCheckIcon size={16} />
-                    {t("requestEndorsement")}
-                </Button>
-            </RequestEndorsementModal>
         </div>
 
+        {/* Competencies */}
+        <span className="font-bold">{t("competencies")}</span>
+        <div className="flex gap-2">
+            {skill.competency && <Link href={`/student/competencies/${skill.competency.id}`}>
+                <div className="bg-sidebar-accent px-4 py-1 rounded-full">{skill.competency.title}</div>
+            </Link>}
+        </div>
     </div>
 }
 
