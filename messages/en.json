@@ -1,6 +1,7 @@
 {
   "general": {
     "dashboard": "Dashboard",
+    "event": "Event",
     "viewProfile": "View profile",
     "logout": "Logout",
     "you": "You",
@@ -12,6 +13,7 @@
     "userUpdatedRating": "{name} updated skills rating",
     "addFeedback": "Add feedback",
     "addASkill": "Add a skill",
+    "skill": "Skill",
     "skills": "Skills",
     "competencies": "Competencies",
     "search": "Search",
@@ -29,16 +31,21 @@
     "requestEndorsement": "Request endorsement",
     "noEntitiesFound": "No {entities} found",
     "allEntities": "All {entities}",
+    "enrollForGroup": "Enroll for group",
+    "enrollToInteract": "Enroll for group to interact",
+    "enrollToInteractDescription": "Join this group to interact with the teachers and students.",
     "topSkills": "Top skills",
     "myPersonalCoach": "My personal coach",
     "other": "Other",
     "view": "View",
     "overview": "Overview",
     "students": "Students",
+    "group": "Group",
     "groups": "Groups",
     "teachers": "Teachers",
     "feedbackRequests": "Feedback requests",
     "profiles": "Profiles",
+    "profileChart": "{profile} chart",
     "enrolledGroups": "Enrolled groups",
     "recentEndorsements": "Recent endorsements",
     "publicProfile": "Public profile",
@@ -54,11 +61,11 @@
     "notifications": {
       "title": "Notifications",
       "noNotificationsDescription": "You currently have no notifications. Once you receive feedback or endorsements, they will appear here.",
-      "feedbackReceived": "added feedback to your skill",
-      "feedbackRequest": "requested feedback on for skill",
-      "endorsementReceived": "endorsed your skill",
-      "endorsementRequest": "requested an endorsement for skill",
-      "endorsementReviewed": "reviewed your endorsement request"
+      "FeedbackReceived": "added feedback to your skill",
+      "FeedbackRequest": "requested feedback on for skill",
+      "EndorsementReceived": "endorsed your skill",
+      "EndorsementRequest": "requested an endorsement for skill",
+      "EndorsementReviewed": "reviewed your endorsement request"
     }
   },
   "modals": {
@@ -88,7 +95,8 @@
     },
     "addFeedback": {
       "title": "Add feedback",
-      "description": "Provide examples, strengths, areas for improvement, and suggestions to reflect on and improve your skills"
+      "description": "Provide examples, strengths, areas for improvement, and suggestions to reflect on and improve your skills",
+      "requestDescription": "{requester} has requested feedback on the skill {skill} from the {group} group."
     },
     "requestEndorsement": {
       "title": "Request endorsement",

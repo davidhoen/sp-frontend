@@ -1,7 +1,7 @@
 "use client"
 
 import { Link, useRouter } from "@/i18n/routing";
-import { getFullName, triggerPromiseToast } from "@/lib";
+import { getFullName, isEnrolledToGroup, triggerPromiseToast } from "@/lib";
 import { GroupType } from "@/types";
 import { CheckIcon, ChevronRightIcon, PlusIcon, UsersIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -16,7 +16,7 @@ export function GroupCard({ group, className }: { group: GroupType, className?: 
     const router = useRouter()
     const { user } = useUser()
 
-    const isEnrolled = user && group.students?.some((student) => student.id === user.id)
+    const isEnrolled = isEnrolledToGroup(group, user)
 
     const enrollGroup = async () => {
         try {
