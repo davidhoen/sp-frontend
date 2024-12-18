@@ -1,4 +1,4 @@
-import { CompetencyType, TranslationFunction } from "@/types"
+import { CompetencyType, GroupType, TranslationFunction } from "@/types"
 import { UserType } from "@/types/auth"
 import toast from "react-hot-toast"
 
@@ -32,8 +32,8 @@ export const getCompetencyRating = (competency: CompetencyType) => {
         return undefined
     }).filter((rating): rating is number => rating !== undefined)
 
-    // Get the average rating of the skills
-    return roundToQuarter(ratings?.reduce((acc, rating) => acc + (rating ?? 0), 0) / ratings?.length)
+    // Get the average rating of the skills or return 0
+    return ratings.length > 0 ? roundToQuarter(ratings?.reduce((acc, rating) => acc + (rating ?? 0), 0) / ratings?.length) : 0
 }
 
 export const roundToQuarter = (num: number) => {
@@ -49,4 +49,8 @@ export const roleBasePathMap: { [key: string]: string } = {
 
 export const isTeacherUser = (user: UserType) => {
     return user?.is_teacher || user?.is_head_teacher || user?.is_admin || false
+}
+
+export const isEnrolledToGroup = (group: GroupType, user?: UserType | null) => {
+    return !!user && !!group.students?.some((student) => student.id === user.id)
 }

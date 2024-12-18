@@ -127,9 +127,26 @@ export type NotificationType = {
 }
 
 export enum NotificationTypeEnum {
-  FeedbackRequest = "feedbackRequest",
-  FeedbackReceived = "feedbackReceived",
-  EndorsementRequest = "endorsementRequest",
-  EndorsementReceived = "endorsementReceived",
-  EndorsementReviewed = "endorsementReviewed",
+  FeedbackRequest = "FeedbackRequest",
+  FeedbackReceived = "FeedbackReceived",
+  EndorsementRequest = "EndorsementRequest",
+  EndorsementReceived = "EndorsementReceived",
+  EndorsementReviewed = "EndorsementReviewed",
+}
+
+export type StudentRequestType = {
+  id: string,
+  title: string,
+  skill: SkillType,
+  requester: UserType,
+  group: GroupType,
+  status: StudentRequestStatusEnum
+  created_at: Date
+  updated_at: Date
+}
+
+export enum StudentRequestStatusEnum {
+  Pending = "pending",
+  Accepted = "answered",
+  Rejected = "declined",
 }

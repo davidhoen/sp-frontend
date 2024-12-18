@@ -1,5 +1,6 @@
 "use server"
 
+import { getCompetencyRating } from "@/lib";
 import { CompetencyType, EndorsementRequestType, EndorsementType, GroupType, ProfileType, SkillType } from "@/types";
 import { getData } from "./data-fetching";
 
@@ -84,6 +85,36 @@ export const getRecentEndorsements = async () => {
         const route = `/api/student/endorsements/recent?with=skill`;
         const { result } = await getData<EndorsementType[]>(route);
         return result;
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+
+export const getProfile = async (id: number) => {
+    try {
+        const { result } = await getData<ProfileType>(`/api/student/profiles/${id}`);
+        return result;
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+
+export const getProfileCompetencies = async (id: number) => {
+    try {
+        const { result } = await getData<CompetencyType[]>(`/api/competencies?with=skills.endorsements,profiles&profile=${id}`);
+
+        if (!result) return [];
+
+        // Get average rating for each competency
+        const competenciesWithRating = result.map(competency => {
+            const avgRating = getCompetencyRating(competency);
+            return { ...competency, avgRating };
+        });
+
+        // Sort the competencies average rating of the connected skills
+        return competenciesWithRating.sort((a, b) => b.avgRating - a.avgRating);
     }
     catch (error) {
         console.error(error);

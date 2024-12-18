@@ -1,30 +1,34 @@
 "use client"
 
-import { triggerPromiseToast } from "@/lib"
+import { getFullName, triggerPromiseToast } from "@/lib"
 import axiosInstance from "@/lib/axios"
 import { useUser } from "@/providers/UserProvider"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { ReactNode, useState } from "react"
 import { useForm } from "react-hook-form"
+import { mutate } from "swr"
 import { z } from "zod"
 import { Button } from "../ui/button"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
 import { Input } from "../ui/input"
 import { Textarea } from "../ui/textarea"
-import { mutate, useSWRConfig } from "swr"
+import { StudentRequestType } from "@/types"
 
-const AddFeedbackModal = ({ children, skillId }: { children: ReactNode, skillId?: string }) => {
+
+// This component can be used for writing self feedback (request is empty)
+// OR
+// Writing feedback for a peer student 
+const AddFeedbackModal = ({ children, request, skillId }: { children: ReactNode, request?: StudentRequestType, skillId?: string }) => {
     const t = useTranslations("modals")
     const { user } = useUser()
 
     const [isModalOpen, setIsModalOpen] = useState(false)
 
-    const formSchema = z.object({
-        title: z.string(),
-        feedback: z.string().min(10)
-    })
+    const formSchema = z.object(request ?
+        { feedback: z.string().min(10) } :
+        { title: z.string(), feedback: z.string().min(10) })
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -36,11 +40,13 @@ const AddFeedbackModal = ({ children, skillId }: { children: ReactNode, skillId?
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            const res = axiosInstance.post(`/api/student/skills/${skillId}/feedback`, {
+            const url = request ? `/api/student/feedbacks/{id}/respond` : `/api/student/skills/${skillId}/feedback`
+            const res = axiosInstance.post(url, {
                 skill_id: skillId,
                 title: values.title,
                 content: values.feedback,
-                user_id: user?.id
+                user_id: user?.id,
+                request_id: request?.id
             })
             await triggerPromiseToast(res, t)
 
@@ -64,11 +70,15 @@ const AddFeedbackModal = ({ children, skillId }: { children: ReactNode, skillId?
 
                         <DialogHeader>
                             <DialogTitle>{t("addFeedback.title")}</DialogTitle>
-                            <DialogDescription>{t("addFeedback.description")}</DialogDescription>
+                            <DialogDescription>{request ?
+                                t("addFeedback.requestDescription", { requester: getFullName(request.requester), skill: request.skill.title, group: request.group.name })
+                                :
+                                t("addFeedback.description")}
+                            </DialogDescription>
                         </DialogHeader>
 
                         {/* Title  */}
-                        <FormField
+                        {!request && <FormField
                             control={form.control}
                             name="title"
                             render={({ field }) => (
@@ -80,7 +90,7 @@ const AddFeedbackModal = ({ children, skillId }: { children: ReactNode, skillId?
                                     <FormMessage />
                                 </FormItem>
                             )}
-                        />
+                        />}
 
                         {/* Feedback */}
                         <FormField

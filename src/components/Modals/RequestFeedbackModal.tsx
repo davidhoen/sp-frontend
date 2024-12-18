@@ -38,7 +38,7 @@ const RequestFeedbackModal = ({ children, requestFromUser, groupId, skillId }: {
                 skill_id: values.skillId,
                 title: values.title,
                 user_id: requestFromUser?.id,
-                groupId: groupId || undefined
+                group_id: groupId || undefined
             })
             await triggerPromiseToast(res, t)
 
