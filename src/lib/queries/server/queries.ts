@@ -60,7 +60,7 @@ export const getGroup = async (id: number) => {
 
 export const getEnrolledGroups = async () => {
     try {
-        const route = `/api/student/groups?with=teachers,skills`
+        const route = `/api/student/groups?with=teachers,skills,students`
         const { result } = await getData<GroupType[]>(route);
         return result;
     }
