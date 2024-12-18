@@ -6,7 +6,7 @@ import Skeletons from "@/components/Skeletons"
 import SkillCard from "@/components/SkillCard"
 import PageTitle from "@/components/Typography/PageTitle"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
-import { usePathname, useRouter } from "@/i18n/routing"
+import { usePathname, useRouter, Link } from "@/i18n/routing"
 import { getTeacherSkills } from "@/lib/queries/client/queries"
 import { cn } from "@/lib/utils"
 import { CompetencyType, SkillsQueryType, SkillType } from "@/types"
@@ -14,9 +14,11 @@ import { PagingSchema } from "@/types/pagination"
 import { useTranslations } from "next-intl"
 import { useCallback, useEffect, useState } from "react"
 import { useDebouncedCallback } from "use-debounce"
+import { Button } from "@/components/ui/button"
+import { PlusIcon } from "lucide-react"
 
 const SkillsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => {
-    const t = useTranslations("general")
+    const t = useTranslations("general");
     const pathname = usePathname();
     const { replace } = useRouter();
 
@@ -79,7 +81,7 @@ const SkillsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => 
         fetchSkills();
     }, [fetchSkills, searchParams]);
 
-    const renderSkill = (skill: SkillType) => <SkillCard key={skill.id} skill={skill} mutate={fetchSkills}/>
+    const renderSkill = (skill: SkillType) => <SkillCard key={skill.id} skill={skill} />
 
     return <div className="w-full">
         <PageTitle information={t("definitions.skills")}>{t("skills")}</PageTitle>
@@ -100,10 +102,17 @@ const SkillsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => 
                 <Skeletons amount={7} wrapperClass="flex gap-4" className="h-10 w-full" />
             }
         </div>
+
+        {/* Action buttons (add skill) */}
+        <div className="my-4">
+        <Link href={{ pathname: `/teacher/`, query: "is_added=false" }}>
+            <Button className="rounded-full"><PlusIcon size={16} />{t("addASkill")}</Button>
+        </Link>
+        </div>
         
         <div className={cn("transition-all duration-500", Loading ? "blur-md cursor-wait" : "blur-0")}>
                    {!!skills ?
-                       <Pager pagerObject={skills} renderItem={renderSkill} emptyMessage={t("noEntitiesFound", { entities: t("groups").toLowerCase() })} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-8 items-start" />
+                       <Pager pagerObject={skills} renderItem={renderSkill} emptyMessage={t("noEntitiesFound", { entities: t("skills").toLowerCase() })} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-8 items-start" />
                        :
                        <Skeletons amount={15} className="w-full h-28" />
                    }
