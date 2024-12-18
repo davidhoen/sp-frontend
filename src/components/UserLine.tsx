@@ -23,7 +23,7 @@ export default function UserLine({ user, groupId, hideActions }: { user: UserTyp
             </div>
 
             {/* User actions  */}
-            {/* Add actions for all users other then the current logged in user */}
+            {/* Add actions for all users other then the current logged in user   */}
             {(!hideActions && user.id !== currentUser?.id) &&
                 <div className="flex items-center gap-2">
                     {/* Add feedback */}
