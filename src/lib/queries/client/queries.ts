@@ -16,7 +16,7 @@ export const getSkills = async ({ page, search, competencies, isAdded }: { page:
 
 export const getCompetencies = async ({ page, search }: { page: number; search: string; }) => {
     try {
-        const route = `/api/competencies?page=${page}&search=${search}`
+        const route = `/api/competencies?with=skills&page=${page}&search=${search}`
         const { data } = await axiosInstance.get<PagingSchema<CompetencyType>>(route);
         return data;
     }

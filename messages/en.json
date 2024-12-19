@@ -78,7 +78,8 @@
       "FeedbackRequest": "requested feedback on for skill",
       "EndorsementReceived": "endorsed your skill",
       "EndorsementRequest": "requested an endorsement for skill",
-      "EndorsementReviewed": "reviewed your endorsement request"
+      "EndorsementReviewed": "reviewed your endorsement request",
+      "EndorsementRequestReview": "{student} requested a review for an endorsement from {requestee}"
     }
   },
   "modals": {
@@ -118,7 +119,8 @@
       "fromUserdescription": "Ask {name} for an endorsement on a specific skill.",
       "workEmail": "Work email",
       "workEmailPlaceholder": "bob@company.com",
-      "workEmailDescription": "An email will be sent with a link to your skill. This link will work only once."
+      "workEmailDescription": "An email will be sent with a link to your skill. This link will work only once.",
+      "noPersonalCoach": "You don't have a personal coach yet. Choose a personal coach to request an endorsement."
     },
     "requestFeedback": {
       "title": "Request feedback",

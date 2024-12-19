@@ -139,6 +139,7 @@ export enum NotificationTypeEnum {
   EndorsementRequest = "EndorsementRequest",
   EndorsementReceived = "EndorsementReceived",
   EndorsementReviewed = "EndorsementReviewed",
+  EndorsementRequestReviewed = "EndorsementRequestReviewed",
 }
 
 export type StudentRequestType = {

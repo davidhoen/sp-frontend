@@ -1,6 +1,7 @@
 "use client"
 
 // import { useEvents } from "@/hooks/use-events"
+import { Alert } from "@/components/ui/alert"
 import { useGroupSkills } from "@/hooks/use-group-skills"
 import { getFullName, triggerPromiseToast } from "@/lib"
 import axiosInstance from "@/lib/axios"
@@ -22,12 +23,13 @@ const RequestEndorsementModal = ({ children, skillId, groupId, requestFromUser }
     const { data: skills } = useGroupSkills(groupId)
 
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [showPersonalCoachError, setShowPersonalCoachError] = useState(false)
 
     const formSchema = z.object(
         requestFromUser ?
-            { title: z.string(), skillId: z.string() }
+            { title: z.string().min(3), skillId: z.string() }
             :
-            { title: z.string(), email: z.string().email() }
+            { title: z.string().min(3), email: z.string().email() }
     )
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -38,6 +40,8 @@ const RequestEndorsementModal = ({ children, skillId, groupId, requestFromUser }
             skillId,
         }
     })
+
+    const { formState: { errors } } = form
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
@@ -52,8 +56,11 @@ const RequestEndorsementModal = ({ children, skillId, groupId, requestFromUser }
             form.reset()
             setIsModalOpen(false)
         }
-        catch (error) {
-            console.error(error)
+        catch (error: any) {
+            // Handle error when user does not have a personal coach
+            if (error?.response?.status === 403 && error?.response?.data?.error === "no_personal_coach") {
+                setShowPersonalCoachError(true)
+            }
         }
     }
 
@@ -122,6 +129,10 @@ const RequestEndorsementModal = ({ children, skillId, groupId, requestFromUser }
                                 )}
                             />
                         }
+
+                        {(errors && errors.length > 0 && showPersonalCoachError) && <div className="space-y-2 w-full">
+                            <Alert variant="destructive">{t("requestEndorsement.noPersonalCoach")}</Alert>
+                        </div>}
 
                         <DialogFooter>
                             {/* Cancel */}

@@ -89,7 +89,7 @@ const StudentRequests = ({ searchParams }: { searchParams: StudentGroupsQueryTyp
 
         <div className={cn("transition-all duration-500", isLoading ? "blur-md cursor-wait" : "blur-0")}>
             {!!requests ?
-                <Pager pagerObject={requests} renderItem={renderRequest} emptyMessage={t("noEntitiesFound", { entities: t("groups").toLowerCase() })} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-8 items-start" />
+                <Pager pagerObject={requests} renderItem={renderRequest} emptyMessage={t("noEntitiesFound", { entities: t("requests").toLowerCase() })} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-8 items-start" />
                 :
                 <Skeletons amount={15} className="w-full h-28" />
             }

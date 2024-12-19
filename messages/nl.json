@@ -117,7 +117,8 @@
       "fromUserdescription": "Vraag {name} om een onderschrijving over een specifieke skill.",
       "workEmail": "Werk e-mailadres",
       "workEmailPlaceholder": "bob@bedrijf.nl",
-      "workEmailDescription": "Er wordt een e-mail verstuurd met een link naar je vaardigheid. Deze link werkt maar één keer."
+      "workEmailDescription": "Er wordt een e-mail verstuurd met een link naar je vaardigheid. Deze link werkt maar één keer.",
+      "noPersonalCoach": "Je hebt nog geen persoonlijke coach. Kies een persoonlijke coach om een onderschrijving aan te vragen."
     },
     "requestFeedback": {
       "title": "Feedback aanvragen",
