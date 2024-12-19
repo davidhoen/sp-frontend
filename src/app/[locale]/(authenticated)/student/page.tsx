@@ -1,14 +1,13 @@
+import CompetencyCard from "@/components/CompetencyCard"
 import { GroupCard } from "@/components/GroupCard"
 import ProfileTile from "@/components/ProfileTile"
-import StarRating from "@/components/StarRating"
 import PageTitle from "@/components/Typography/PageTitle"
 import SectionTitle from "@/components/Typography/SectionTitle"
 import { Button } from "@/components/ui/button"
 import UserAvatar from "@/components/UserAvatar"
 import { Link } from "@/i18n/routing"
-import { getCompetencyRating } from "@/lib"
 import { getEnrolledGroups, getProfiles, getRecentEndorsements, getStudentCompetencies } from "@/lib/queries/server/queries"
-import { BadgeCheckIcon, PlusIcon, UserIcon } from "lucide-react"
+import { PlusIcon, UserIcon } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 
 const DashboardPage = async () => {
@@ -34,37 +33,12 @@ const DashboardPage = async () => {
     { /* Competencies  */}
     <div>
       <SectionTitle information={t("general.definitions.competencies")} numberOfItems={competencies?.length}>{t("general.competencies")}</SectionTitle>
+
       <div className="grid sm:grid-cols-2 md:flex md:flex-row gap-2 w-full mb-2">
-        {competencies?.slice(0, 3).map((competency) => {
-          const rating = getCompetencyRating(competency)
-          return (
-            <Link key={competency.id} href={`/student/competencies/${competency.id}`}>
-              <div className="flex justify-between items-center p-4 border rounded-lg w-full md:w-80 min-w-max hover:bg-muted">
-
-                <div className="flex flex-col">
-                  {/* Title and # skills */}
-                  <div className="flex items-center gap-2">
-                    <span className="font-medium">{competency.title}</span>
-                    <span className="text-xs text-muted-foreground">{competency.skills?.length} {t("general.skills")}</span>
-                  </div>
-                  {/* # endorsements */}
-                  <div className="flex items-center gap-1">
-                    <BadgeCheckIcon size={16} />
-                    <span className="">{competency.endorsements_count || 0} {t("general.endorsements")}</span>
-                  </div>
-                </div>
-
-                {/* Average rating */}
-                <div>
-                  <StarRating rating={rating} />
-                </div>
-
-              </div>
-            </Link>
-          )
-        })}
+        {competencies?.slice(0, 3).map((competency) => <CompetencyCard key={competency.id} competency={competency} />)}
       </div>
-      {/* View all competencies */}
+
+      {/* View all competencies button */}
       {(competencies && competencies?.length > 3) &&
         <div className="mx-auto md:mx-2 mb-3">
           <Link href="/student/competencies">

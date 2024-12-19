@@ -1,5 +1,5 @@
 import axiosInstance from "@/lib/axios";
-import { CompetencyType, EndorsementRequestType, GroupType, ProfileType, SkillType } from "@/types";
+import { CompetencyType, EndorsementRequestType, GroupType, ProfileType, SkillType, StudentRequestType } from "@/types";
 import { PagingSchema } from "@/types/pagination";
 
 export const getSkills = async ({ page, search, competencies, isAdded }: { page: number; search: string; competencies: string; isAdded: string; }) => {
@@ -36,6 +36,7 @@ export const getGroups = async ({ page, search, isJoined }: { page: number; sear
     }
 }
 
+
 export const getTeacherSkills = async ({ page, search, competencies }: { page: number; search: string; competencies: string; }) => {
     try {
         // Add page params and availableCompentencies to get the competencies connected to the skills
@@ -48,3 +49,13 @@ export const getTeacherSkills = async ({ page, search, competencies }: { page: n
     }
 }
 
+export const getStudentRequests = async ({ page, search }: { page: number; search: string }) => {
+    try {
+        const route = `/api/student/requests?with=requester,skill,group&page=${page}&search=${search}`
+        const { data } = await axiosInstance.get<PagingSchema<StudentRequestType>>(route);
+        return data;
+    }
+    catch (error) {
+        console.error(error);
+    }
+}

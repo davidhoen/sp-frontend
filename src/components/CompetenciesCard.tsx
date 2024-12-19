@@ -1,13 +1,13 @@
 "use client"
 
 import { Link } from "@/i18n/routing"
-// import { getMostRecentRating } from "@/lib"
 import { CompetencyType } from "@/types"
 import { BadgeCheckIcon, MessageCircleIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import StarRating from "./StarRating"
 import { Button } from "./ui/button"
 
+// This component is only used on the compentecies overview page. The card will display more information about the competency.
 export default function CompetenciesCard({ competency, mutate }: { competency: CompetencyType, mutate?: () => void }) {
     const t = useTranslations("general")
 

@@ -1,5 +1,6 @@
 {
   "general": {
+    "event": "Gebeurtenis",
     "dashboard": "Dashboard",
     "viewProfile": "Bekijk profiel",
     "logout": "Uitloggen",
@@ -12,6 +13,7 @@
     "userUpdatedRating": "{name} heeft skills beoordeling bijgewerkt",
     "addFeedback": "Feedback toevoegen",
     "addASkill": "Voeg een skill toe",
+    "skill": "Skill",
     "skills": "Skills",
     "competencies": "Competenties",
     "search": "Zoeken",
@@ -30,6 +32,9 @@
     "noEntitiesFound": "Geen {entities} gevonden",
     "allEntities": "Alle {entities}",
     "topSkills": "Top skills",
+    "enrollForGroup": "Inschrijven voor groep",
+    "enrollToInteract": "Schirijf je in, om met de groep te communiceren",
+    "enrollToInteractDescription": "Word lid van deze groep voor interactie met de docenten en studenten.",
     "myPersonalCoach": "Mijn persoonlijke coach",
     "view": "Bekijk",
     "title": "Titel",
@@ -37,6 +42,7 @@
     "feedbackRequests": "Feedback verzoeken",
     "overview": "Overzicht",
     "students": "Studenten",
+    "group": "Groep",
     "groups": "Groepen",
     "teachers": "Docenten",
     "profiles": "Profielen",
@@ -44,6 +50,7 @@
     "recentEndorsements": "Recente onderschrijvingen",
     "publicProfile": "Openbaar profiel",
     "viewAll": "Bekijk alles",
+    "profileChart": "{profile} grafiek",
     "searchFeedbackRequests": "Zoek een groep, skill of student",
     "definitions": {
       "skills": "Een skill is een specifieke vaardigheid die je kunt leren, ontwikkelen en toepassen. “Pitchen” of “Netwerken” zijn voorbeelden van skills.",
@@ -55,11 +62,11 @@
     "notifications": {
       "title": "Notificaties",
       "noNotificationsDescription": "Je hebt momenteel geen notificaties. Zodra je feedback of onderschrijvingen ontvangt, worden ze hier weergegeven.",
-      "feedbackReceived": "heeft je feedback gegeven op je skill",
-      "feedbackRequest": "vraagt om feedback voor de skill",
-      "endorsementReceived": "onderschreef je skill",
-      "endorsementRequest": "vraagt om een onderschrijving voor de skill",
-      "endorsementReviewed": "heeft je onderschrijving beoordeeld voor je skill"
+      "FeedbackReceived": "heeft je feedback gegeven op je skill",
+      "FeedbackRequest": "vraagt om feedback voor de skill",
+      "EndorsementReceived": "onderschreef je skill",
+      "EndorsementRequest": "vraagt om een onderschrijving voor de skill",
+      "EndorsementReviewed": "heeft je onderschrijving beoordeeld voor je skill"
     }
   },
   "modals": {
@@ -87,7 +94,8 @@
     },
     "addFeedback": {
       "title": "Feedback toevoegen",
-      "description": "Geef voorbeelden, sterke punten, verbeterpunten en suggesties om je vaardigheden te reflecteren en te verbeteren"
+      "description": "Geef voorbeelden, sterke punten, verbeterpunten en suggesties om je vaardigheden te reflecteren en te verbeteren",
+      "requestDescription": "{requester} heeft je om feedback gevraagd voor de skill {skill} vanuit de {group} group."
     },
     "requestEndorsement": {
       "title": "Onderschrijving aanvragen",
