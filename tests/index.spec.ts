@@ -156,6 +156,53 @@ test('Writing feedback(individual)', async ({ page }) => {
   await expect(page.locator('h1')).toContainText('Dashboard');
 });
 
+test('Requesting Feedback(peer)', async ({ page }) => {
+  //login
+  await page.goto('http://127.0.0.1:3000/en/login/');
+  await page.getByPlaceholder('Your email').click();
+  await page.getByPlaceholder('Your email').fill('student@sp.nl');
+  await page.getByPlaceholder('Your password').click();
+  await page.getByPlaceholder('Your password').fill('password');
+  await page.getByRole('button', { name: 'Log in' }).click();
+
+  await expect(page.locator('h1')).toContainText('Dashboard');
+  //groups menu
+  await page.getByRole('link', { name: 'Groups' }).click();
+  //groups detail page
+  await page.getByRole('link', { name: 'Fake Group #49 Ms Mirjam Fake' }).getByRole('button').nth(1).click();
+  await page.locator('div').filter({ hasText: /^YouMr Student2Mr Student3$/ }).getByRole('button').first().click();
+  await page.getByPlaceholder('E.g. Practice presentation').click();
+  await page.getByPlaceholder('E.g. Practice presentation').fill('p');
+  await page.locator('form svg').click();
+  await page.getByRole('option', { name: 'Fake Skill #' }).locator('div').first().click();
+  await page.getByRole('button', { name: 'Save' }).click();
+  
+  await page.getByRole('link', { name: 'Dashboard' }).click();
+  await expect(page.locator('h1')).toContainText('Dashboard');
+});
+
+test('Writing Feedback(peer)', async ({ page }) => {
+  //login
+  await page.goto('http://127.0.0.1:3000/en/login/');
+  await page.getByPlaceholder('Your email').click();
+  await page.getByPlaceholder('Your email').fill('std2@sp.nl');
+  await page.getByPlaceholder('Your password').click();
+  await page.getByPlaceholder('Your password').fill('password');
+  await page.getByRole('button', { name: 'Log in' }).click();
+
+  await expect(page.locator('h1')).toContainText('Dashboard');
+  //notification
+  await page.getByLabel('notifications').click();
+  await page.getByRole('link', { name: 'Mr Student requested' }).first().click();
+  await page.locator('html').click();
+  await page.getByRole('button', { name: 'Add feedback' }).nth(1).click();
+  await page.getByPlaceholder('Type your feedback here').fill('good presentation');
+  await page.getByRole('button', { name: 'Save' }).click();
+  
+  await page.getByRole('link', { name: 'Dashboard' }).click();
+  await expect(page.locator('h1')).toContainText('Dashboard');
+});
+
 test('Requesting feedback(teacher)', async ({ page }) => {
   //login
   await page.goto('http://127.0.0.1:3000/en/login/');
@@ -166,20 +213,42 @@ test('Requesting feedback(teacher)', async ({ page }) => {
   await page.getByRole('button', { name: 'Log in' }).click();
   
   await expect(page.locator('h1')).toContainText('Dashboard');
-
+  //groups menu
   await page.getByRole('link', { name: 'Groups' }).click();
-  await page.getByRole('link', { name: 'Mr. Jayme Wisoky Jr. ADMIN' }).click();
-  await expect(page.getByRole('heading', { name: 'Mr. Jayme Wisoky Jr.' })).toBeVisible();
-  await page.getByRole('heading', { name: 'Mr. Jayme Wisoky Jr.' }).click();
-  await expect(page.locator('h1')).toContainText('Mr. Jayme Wisoky Jr.');
-  await page.getByText('Molestiae totam sed').click();
-  await expect(page.getByRole('paragraph')).toContainText('Molestiae totam sed aspernatur exercitationem totam fugiat.');
-  await page.locator('div').filter({ hasText: /^TeachersADMIN null$/ }).getByRole('button').click();
-  await page.getByPlaceholder('E.g. Practice presentation').fill('p');
-  //await page.locator('[id="\\:rq\\:-form-item"] path').click();
-  //await page.getByLabel('Request feedback').click();
-  await page.getByRole('button', { name: 'Close' }).click();
+  //groups detail page
+  await page.getByRole('link', { name: 'Fake Group #49 Ms Mirjam Fake' }).getByRole('button').nth(1).click();
+  await page.locator('div').filter({ hasText: /^TeachersMs Mirjam$/ }).getByRole('button').first().click();
+  await page.getByPlaceholder('E.g. Practice presentation').click();
+  await page.getByPlaceholder('E.g. Practice presentation').fill('practice presentation');
+  await page.locator('form svg').click();
+  await page.getByRole('option', { name: 'Fake Skill #' }).locator('div').first().click();
+  await page.getByRole('button', { name: 'Save' }).click();
   
+  await page.getByRole('link', { name: 'Dashboard' }).click();
+  await expect(page.locator('h1')).toContainText('Dashboard');
+});
+
+test('Requesting endorsement(external party)', async ({ page }) => {
+  //login
+  await page.goto('http://127.0.0.1:3000/en/login/');
+  await page.getByPlaceholder('Your email').click();
+  await page.getByPlaceholder('Your email').fill('student@sp.nl');
+  await page.getByPlaceholder('Your password').click();
+  await page.getByPlaceholder('Your password').fill('password');
+  await page.getByRole('button', { name: 'Log in' }).click();
+
+  await expect(page.locator('h1')).toContainText('Dashboard');
+  //skills menu
+  await page.getByRole('link', { name: 'Skills', exact: true }).click();
+  //skills detail apge
+  await page.locator('div').filter({ hasText: /^Fake Skill #77RealizeView$/ }).getByRole('button').nth(1).click();
+  await page.getByRole('button', { name: 'Request endorsement' }).click();
+  await page.getByPlaceholder('E.g. Final presentation').click();
+  await page.getByPlaceholder('E.g. Final presentation').fill('final presentation');
+  await page.getByPlaceholder('bob@company.com').click();
+  await page.getByPlaceholder('bob@company.com').fill('thankyou@sookmyung.ac.kr');
+  await page.getByRole('button', { name: 'Save' }).click();
+
   await page.getByRole('link', { name: 'Dashboard' }).click();
   await expect(page.locator('h1')).toContainText('Dashboard');
 });
