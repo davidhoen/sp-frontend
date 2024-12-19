@@ -1,6 +1,14 @@
 {
   "general": {
+    "actions": "Acties",
+    "cancel": "Annuleren",
+    "confirmAction": "Weet je het zeker?",
+    "continue": "Doorgaan",
     "event": "Gebeurtenis",
+    "edit": "Bewerken",
+    "delete": "Verwijderen",
+    "add": "Toevoegen",
+    "name": "Naam",
     "dashboard": "Dashboard",
     "viewProfile": "Bekijk profiel",
     "logout": "Uitloggen",
@@ -17,6 +25,9 @@
     "skills": "Skills",
     "competencies": "Competenties",
     "search": "Zoeken",
+    "activeGroups": "Actieve groepen",
+    "archivedGroups": "Gearchiveerde groepen",
+    "archived": "Gearchiveerd",
     "allSkills": "Alle skills",
     "allCompetencies": "Alle competenties",
     "addedSkills": "Toegevoegde skills",
@@ -52,6 +63,7 @@
     "viewAll": "Bekijk alles",
     "profileChart": "{profile} grafiek",
     "searchFeedbackRequests": "Zoek een groep, skill of student",
+    "confirmDeleteEntity": "Weet je zeker dat je deze {entity} wilt verwijderen?",
     "definitions": {
       "skills": "Een skill is een specifieke vaardigheid die je kunt leren, ontwikkelen en toepassen. “Pitchen” of “Netwerken” zijn voorbeelden van skills.",
       "competencies": "Een competentie is een verzameling gerelateerde skills die je samen in staat stellen om goed te presteren op een specifiek gebied. De competentie “Onderzoeken” kan bijvoorbeeld skills omvatten als “Interviewen” en “Reflecteren”.",
@@ -72,6 +84,7 @@
   "modals": {
     "cancel": "Annuleren",
     "save": "Opslaan",
+    "description": "Beschrijving",
     "saveChanges": "Wijzigingen opslaan",
     "feedback": "Feedback",
     "feedbackDescription": "Geef gedetailleerde feedback over de vaardigheid van de student",
@@ -127,6 +140,15 @@
       "description": "Selecteer een coach om je te helpen met je persoonlijke ontwikkeling. Deze persoon krijgt inzicht tot je skills en je verdere voortgang.",
       "yourCoach": "Jouw coach",
       "selectCoach": "Selecteer een coach"
+    },
+    "upsertGroup": {
+      "create": "Groep aanmaken",
+      "update": "Groep bewerken",
+      "namePlaceholder": "Bijv. Gesprekken in organisaties (24/25)",
+      "descriptionPlaceholder": "Bijv. Deze groep is bedoeld voor studenten die hun gespreksvaardigheden willen verbeteren.",
+      "skillsPlaceholder": "Selecteer de skill(s)",
+      "teachersPlaceholder": "Selecteer de docent(en)",
+      "studentsPlaceholder": "Selecteer de student(en)"
     }
   },
   "students": {

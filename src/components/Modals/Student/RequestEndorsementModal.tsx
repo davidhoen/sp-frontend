@@ -10,12 +10,12 @@ import { useTranslations } from "next-intl"
 import { ReactNode, useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import SetCookies from "../SetCookies"
-import { Button } from "../ui/button"
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
-import { Input } from "../ui/input"
-import Select from "../ui/select"
+import SetCookies from "../../SetCookies"
+import { Button } from "../../ui/button"
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../ui/dialog"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../../ui/form"
+import { Input } from "../../ui/input"
+import Select from "../../ui/select"
 
 const RequestEndorsementModal = ({ children, skillId, groupId, requestFromUser }: { children: ReactNode, skillId?: string, groupId?: string, requestFromUser?: UserType }) => {
     const t = useTranslations("modals")

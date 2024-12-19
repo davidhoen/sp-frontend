@@ -8,6 +8,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "./ui/button";
 import UserAvatar from "./UserAvatar";
 import { cn } from "@/lib/utils";
+import { Chip } from "./Chip";
 import axiosInstance from "@/lib/axios";
 import { useUser } from "@/providers/UserProvider";
 
@@ -69,9 +70,7 @@ export function GroupCard({ group, className }: { group: GroupType, className?: 
                 {/* Chip for every connected skill */}
                 <div className="flex flex-wrap gap-2 mt-4">
                     {/* Get max 3 skills */}
-                    {group.skills && group.skills.slice(0, 2).map((skill) => (
-                        <span key={skill.id} className="bg-primary text-white px-2 py-1 text-xs rounded-full">{skill.title}</span>
-                    ))}
+                    {group.skills && group.skills.slice(0, 2).map((skill) => <Chip key={skill.id}>{skill.title}</Chip>)}
                     {(group.skills && group.skills.length > 2) && (
                         <div className="flex items-center h-fit gap-1 bg-border rounded-full text-xs p-1">
                             <span>+{group.skills.length - 3}</span>

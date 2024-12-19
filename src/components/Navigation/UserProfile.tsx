@@ -9,7 +9,7 @@ import { useUser } from "@/providers/UserProvider"
 import { LogOutIcon, MessageSquareDotIcon, UserIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
-import UpdatePersonalCoachModal from "../Modals/UpdatePersonalCoachModal"
+import UpdatePersonalCoachModal from "../Modals/Student/UpdatePersonalCoachModal"
 import UserAvatar from "../UserAvatar"
 import { Skeleton } from "../ui/skeleton"
 

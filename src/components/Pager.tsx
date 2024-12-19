@@ -1,6 +1,7 @@
+import { PagingSchema } from "@/types/pagination";
 import { ReactNode } from "react";
 import Paginator from "./Paginator";
-import { PagingSchema } from "@/types/pagination";
+import { Table, TableBody, TableHead, TableHeader, TableRow } from "./ui/table";
 
 type Props<T> = {
     pagerObject?: PagingSchema<T> | null;
@@ -27,16 +28,18 @@ export function Pager<T>({ pagerObject, renderItem, emptyMessage, renderAsTable,
 
     return <div>
         {renderAsTable
-            ? <table className={wrapperClass || "table table-zebra"}>
+            ? <Table className={wrapperClass || "table table-zebra"}>
                 {!!headerItems?.length &&
-                    <thead>
-                        <tr>
-                            {headerItems.map(headerItem => <th key={headerItem}>{headerItem}</th>)}
-                        </tr>
-                    </thead>
+                    <TableHeader>
+                        <TableRow>
+                            {headerItems.map(headerItem => <TableHead key={headerItem}>{headerItem}</TableHead>)}
+                        </TableRow>
+                    </TableHeader>
                 }
-                {pagerObject?.data.map((item, index) => renderItem(item, index))}
-            </table>
+                <TableBody>
+                    {pagerObject?.data.map((item, index) => renderItem(item, index))}
+                </TableBody>
+            </Table>
             : <div className={wrapperClass || "grid grid-cols-1 md:grid-cols-3 gap-8"}>
                 {pagerObject?.data.map((item, index) => renderItem(item, index))}
             </div>
