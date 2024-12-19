@@ -54,6 +54,7 @@ export type GroupType = {
   created_by: UserType
   closed_at?: Date
   created_at: Date
+  archived_at?: Date
 }
 
 export type FeedbackType = {
@@ -109,10 +110,16 @@ export type EndorsementRequestType = {
   requester: UserType
 }
 
-export type GroupsQueryType = {
+export type StudentGroupsQueryType = {
   page: string,
   search: string,
   is_joined: string
+}
+
+export type TeacherGroupsQueryType = {
+  page: string,
+  search: string,
+  is_archived: string
 }
 
 export type NotificationType = {

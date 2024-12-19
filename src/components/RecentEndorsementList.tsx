@@ -1,16 +1,12 @@
 "use client"
 
-import { useEndorsements } from "@/hooks/use-endorsements";
+import { useRecentEndorsements } from "@/hooks/use-recent-endorsements";
+import { EndorsementType } from "@/types";
 import { useTranslations } from "next-intl";
 import { ContentCard } from "./ContentCard";
+import { Pager } from "./Pager";
 import Skeletons from "./Skeletons";
 import SectionTitle from "./Typography/SectionTitle";
-import RequestEndorsementModal from "./Modals/RequestEndorsementModal";
-import { Button } from "./ui/button";
-import { BadgeCheckIcon } from "lucide-react";
-import { Pager } from "./Pager";
-import { EndorsementType } from "@/types";
-import { useRecentEndorsements } from "@/hooks/use-recent-endorsements";
 
 export function RecentEndorsementsList({ competencyId }: { competencyId: string }) {
     let { data: endorsements, isLoading } = useRecentEndorsements(competencyId)

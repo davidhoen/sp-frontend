@@ -5,8 +5,8 @@ import { useUser } from "@/providers/UserProvider"
 import { UserType } from "@/types/auth"
 import { BadgeCheckIcon, MessageCircleIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
-import RequestEndorsementModal from "./Modals/RequestEndorsementModal"
-import RequestFeedbackModal from "./Modals/RequestFeedbackModal"
+import RequestEndorsementModal from "./Modals/Student/RequestEndorsementModal"
+import RequestFeedbackModal from "./Modals/Student/RequestFeedbackModal"
 import UserAvatar from "./UserAvatar"
 import { Button } from "./ui/button"
 
@@ -23,7 +23,7 @@ export default function UserLine({ user, groupId, hideActions }: { user: UserTyp
             </div>
 
             {/* User actions  */}
-            {/* Add actions for all users other then the current logged in user */}
+            {/* Add actions for all users other then the current logged in user   */}
             {(!hideActions && user.id !== currentUser?.id) &&
                 <div className="flex items-center gap-2">
                     {/* Add feedback */}

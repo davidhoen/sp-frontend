@@ -1,9 +1,9 @@
 
 import { ContentCard } from "@/components/ContentCard"
 import AddFeedbackModal from "@/components/Modals/AddFeedbackModal"
-import RequestEndorsementModal from "@/components/Modals/RequestEndorsementModal"
-import RequestFeedbackModal from "@/components/Modals/RequestFeedbackModal"
-import UpdateRatingModal from "@/components/Modals/UpdateRatingModal"
+import RequestEndorsementModal from "@/components/Modals/Student/RequestEndorsementModal"
+import RequestFeedbackModal from "@/components/Modals/Student/RequestFeedbackModal"
+import UpdateRatingModal from "@/components/Modals/Student/UpdateRatingModal"
 import UserProfile from "@/components/Navigation/UserProfile"
 import ProfileTile from "@/components/ProfileTile"
 import SkillCard from "@/components/SkillCard"

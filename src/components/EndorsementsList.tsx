@@ -5,11 +5,11 @@ import { useTranslations } from "next-intl";
 import { ContentCard } from "./ContentCard";
 import Skeletons from "./Skeletons";
 import SectionTitle from "./Typography/SectionTitle";
-import RequestEndorsementModal from "./Modals/RequestEndorsementModal";
 import { Button } from "./ui/button";
 import { BadgeCheckIcon } from "lucide-react";
 import { Pager } from "./Pager";
 import { EndorsementType } from "@/types";
+import RequestEndorsementModal from "./Modals/Student/RequestEndorsementModal";
 
 export function EndorsementsList({ skillId }: { skillId: string }) {
     let { data: endorsements, isLoading } = useEndorsements(skillId)

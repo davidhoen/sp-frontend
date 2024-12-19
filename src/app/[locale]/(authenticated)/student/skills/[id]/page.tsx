@@ -1,16 +1,16 @@
-import { EndorsementsList } from "@/components/EndorsementsList";
-import { FeedbacksList } from "@/components/FeedbacksList";
-import UpdateRatingModal from "@/components/Modals/UpdateRatingModal";
-import ProfileTile from "@/components/ProfileTile";
-import StarRating from "@/components/StarRating";
-import TimeLineWithUser from "@/components/Timeline/TimeLineWithUser";
-import PageTitle from "@/components/Typography/PageTitle";
-import SectionTitle from "@/components/Typography/SectionTitle";
+import { EndorsementsList } from "@/components/EndorsementsList"
+import { FeedbacksList } from "@/components/FeedbacksList"
+import UpdateRatingModal from "@/components/Modals/Student/UpdateRatingModal"
+import ProfileTile from "@/components/ProfileTile"
+import StarRating from "@/components/StarRating"
+import TimeLineWithUser from "@/components/Timeline/TimeLineWithUser"
+import PageTitle from "@/components/Typography/PageTitle"
+import SectionTitle from "@/components/Typography/SectionTitle"
+import { getSkill } from "@/lib/queries/server/queries"
+import { PencilIcon } from "lucide-react"
+import { getTranslations } from "next-intl/server"
+import { notFound } from "next/navigation"
 import { Link } from "@/i18n/routing";
-import { getSkill } from "@/lib/queries/server/queries";
-import { PencilIcon } from "lucide-react";
-import { getTranslations } from "next-intl/server";
-import { notFound } from "next/navigation";
 
 const SkillsDetail = async ({ params }: { params: { id: number } }) => {
     const t = await getTranslations("general")

@@ -10,11 +10,11 @@ import { useTranslations } from "next-intl"
 import { ReactNode, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { Button } from "../ui/button"
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
-import Select from "../ui/select"
-import UserAvatar from "../UserAvatar"
+import { Button } from "../../ui/button"
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../ui/dialog"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../ui/form"
+import Select from "../../ui/select"
+import UserAvatar from "../../UserAvatar"
 
 const UpdatePersonalCoachModal = ({ children }: { children: ReactNode }) => {
     const t = useTranslations("modals")
