@@ -17,12 +17,11 @@ import axiosInstance from "@/lib/axios"
 
 const RequestFeedbackModal = ({ children, requestFromUser, groupId, skillId }: { children: ReactNode, requestFromUser: UserType, groupId?: string, skillId?: string, }) => {
     const t = useTranslations("modals")
-
     const { data: skills } = useGroupSkills(groupId)
 
     const [isModalOpen, setIsModalOpen] = useState(false)
 
-    const formSchema = z.object({ title: z.string(), skillId: z.string() })
+    const formSchema = z.object({ title: z.string().min(3), skillId: z.string() })
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -86,7 +85,11 @@ const RequestFeedbackModal = ({ children, requestFromUser, groupId, skillId }: {
                                 <FormItem>
                                     <FormLabel>{t("skill")}</FormLabel>
                                     <FormControl>
-                                        <Select options={skills} onChange={(selectedOption) => onChange(selectedOption?.value)} placeholder={t("skillPlaceholder")} />
+                                        <Select
+                                            options={skills}
+                                            onChange={(selectedOption) => onChange(selectedOption?.value)}
+                                            placeholder={t("skillPlaceholder")}
+                                        />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>

@@ -7,6 +7,7 @@ import { getFullName, triggerPromiseToast } from "@/lib"
 import axiosInstance from "@/lib/axios"
 import { UserType } from "@/types/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { UserSearchIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { ReactNode, useState } from "react"
 import { useForm } from "react-hook-form"
@@ -41,8 +42,6 @@ const RequestEndorsementModal = ({ children, skillId, groupId, requestFromUser }
         }
     })
 
-    const { formState: { errors } } = form
-
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
             const res = axiosInstance.post(`/api/student/endorsements/request`, {
@@ -61,6 +60,8 @@ const RequestEndorsementModal = ({ children, skillId, groupId, requestFromUser }
             if (error?.response?.status === 403 && error?.response?.data?.error === "no_personal_coach") {
                 setShowPersonalCoachError(true)
             }
+            else
+                setShowPersonalCoachError(false)
         }
     }
 
@@ -130,8 +131,12 @@ const RequestEndorsementModal = ({ children, skillId, groupId, requestFromUser }
                             />
                         }
 
-                        {(errors && errors.length > 0 && showPersonalCoachError) && <div className="space-y-2 w-full">
-                            <Alert variant="destructive">{t("requestEndorsement.noPersonalCoach")}</Alert>
+                        {/* Show personal coach alert, when api tells its missing */}
+                        {showPersonalCoachError && <div className="space-y-2 w-full">
+                            <Alert variant="destructive" className="text-sm flex gap-4 items-center">
+                                <div><UserSearchIcon size={24} /></div>
+                                <div>{t("requestEndorsement.noPersonalCoach")}</div>
+                            </Alert>
                         </div>}
 
                         <DialogFooter>
