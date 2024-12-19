@@ -27,7 +27,7 @@ export const getCompetencies = async ({ page, search }: { page: number; search: 
 
 export const getGroups = async ({ page, search, isJoined }: { page: number; search: string; isJoined: string }) => {
     try {
-        const route = `/api/groups?with=teachers,skills&page=${page}&search=${search}&is_joined=${isJoined}`
+        const route = `/api/groups?with=teachers,skills,students&page=${page}&search=${search}&is_joined=${isJoined}`
         const { data } = await axiosInstance.get<PagingSchema<GroupType>>(route);
         return data;
     }
