@@ -28,7 +28,7 @@ export const getCompetencies = async ({ page, search }: { page: number; search: 
 export const getGroups = async ({ query }: { query: Record<string, string> }) => {
     try {
         const queryString = new URLSearchParams(query).toString();
-        const route = `/api/groups?with=teachers,students,skills&${queryString}`
+        const route = `/api/groups?with=teachers,students,skills,students&${queryString}`
         const { data } = await axiosInstance.get<PagingSchema<GroupType>>(route);
         return data;
     }
