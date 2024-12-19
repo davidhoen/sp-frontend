@@ -1,19 +1,16 @@
 "use client"
 
-import { Chip } from "@/components/Chip"
 import UpsertGroupModal from "@/components/Modals/Teacher/UpsertGroupModal"
 import { Pager } from "@/components/Pager"
+import GroupRow from "@/components/Rows/GroupRow"
 import SearchInput from "@/components/SearchInput"
 import Skeletons from "@/components/Skeletons"
-import { TableAction } from "@/components/TableActions"
 import PageTitle from "@/components/Typography/PageTitle"
 import { Button } from "@/components/ui/button"
-import { TableCell, TableRow } from "@/components/ui/table"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
-import { Link, usePathname, useRouter } from "@/i18n/routing"
+import { usePathname, useRouter } from "@/i18n/routing"
 import { getGroups } from "@/lib/queries/client/queries"
 import { cn } from "@/lib/utils"
-import { useUser } from "@/providers/UserProvider"
 import { GroupType, TeacherGroupsQueryType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useTranslations } from "next-intl"
@@ -22,7 +19,6 @@ import { useDebouncedCallback } from "use-debounce"
 
 const GroupsOverview = ({ searchParams }: { searchParams: TeacherGroupsQueryType }) => {
     const t = useTranslations("general")
-    const { user } = useUser()
     const { replace } = useRouter()
     const pathname = usePathname();
 
@@ -67,34 +63,7 @@ const GroupsOverview = ({ searchParams }: { searchParams: TeacherGroupsQueryType
     }, [fetchGroups, searchParams]);
 
     const tableHeaders = [t("name"), t("skills"), t("students"), t("actions")]
-
-    const renderGroupRow = (group: GroupType) => <TableRow key={group.id}>
-        <TableCell>{group.name}</TableCell>
-        <TableCell>
-            <div className="flex gap-2">
-                {group.skills?.slice(0, 3).map(skill => <Chip key={skill.id}>{skill.title}</Chip>)}
-                {/* Plus icon when more then one teacher is connected */}
-                {group.skills.length > 3 && (
-                    <div className="flex items-center h-fit gap-1 bg-border rounded-full text-xs p-1">
-                        <span>+{group.skills.length - 1}</span>
-                    </div>
-                )}
-            </div>
-        </TableCell>
-        <TableCell>{group.students_count}</TableCell>
-        <TableCell className="flex gap-2">
-            {/* Edit */}
-            <UpsertGroupModal group={group}>
-                <div><TableAction type="edit" /></div>
-            </UpsertGroupModal>
-            {/* Delete (for admins) */}
-            {user?.is_admin && <TableAction type="delete" />}
-            {/* View */}
-            <Link href={`/teacher/groups/${group.id}`}>
-                <TableAction type="view" />
-            </Link>
-        </TableCell>
-    </TableRow>
+    const renderGroupRow = (group: GroupType) => <GroupRow key={group.id} group={group} />
 
     return <div className="w-full">
         <PageTitle information={t("definitions.groups")}>{t("groups")}</PageTitle>

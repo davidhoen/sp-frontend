@@ -1,7 +1,10 @@
 {
   "general": {
-    "event": "Gebeurtenis",
     "actions": "Acties",
+    "cancel": "Annuleren",
+    "confirmAction": "Weet je het zeker?",
+    "continue": "Doorgaan",
+    "event": "Gebeurtenis",
     "edit": "Bewerken",
     "delete": "Verwijderen",
     "add": "Toevoegen",
@@ -60,6 +63,7 @@
     "viewAll": "Bekijk alles",
     "profileChart": "{profile} grafiek",
     "searchFeedbackRequests": "Zoek een groep, skill of student",
+    "confirmDeleteEntity": "Weet je zeker dat je deze {entity} wilt verwijderen?",
     "definitions": {
       "skills": "Een skill is een specifieke vaardigheid die je kunt leren, ontwikkelen en toepassen. “Pitchen” of “Netwerken” zijn voorbeelden van skills.",
       "competencies": "Een competentie is een verzameling gerelateerde skills die je samen in staat stellen om goed te presteren op een specifiek gebied. De competentie “Onderzoeken” kan bijvoorbeeld skills omvatten als “Interviewen” en “Reflecteren”.",
