@@ -1,56 +1,45 @@
 "use client"
 
+import { useGroupSkills } from "@/hooks/use-group-skills"
 import { getFullName, triggerPromiseToast } from "@/lib"
-import axiosInstance from "@/lib/axios"
-import { useUser } from "@/providers/UserProvider"
+import { UserType } from "@/types/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { ReactNode, useState } from "react"
 import { useForm } from "react-hook-form"
-import { mutate } from "swr"
 import { z } from "zod"
-import { Button } from "../ui/button"
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
-import { Input } from "../ui/input"
-import { Textarea } from "../ui/textarea"
-import { StudentRequestType } from "@/types"
+import { Button } from "../../ui/button"
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../ui/dialog"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../ui/form"
+import { Input } from "../../ui/input"
+import Select from "../../ui/select"
+import axiosInstance from "@/lib/axios"
 
-
-// This component can be used for writing self feedback (request is empty)
-// OR
-// Writing feedback for a peer student 
-const AddFeedbackModal = ({ children, request, skillId }: { children: ReactNode, request?: StudentRequestType, skillId?: string }) => {
+const RequestFeedbackModal = ({ children, requestFromUser, groupId, skillId }: { children: ReactNode, requestFromUser: UserType, groupId?: string, skillId?: string, }) => {
     const t = useTranslations("modals")
-    const { user } = useUser()
+    const { data: skills } = useGroupSkills(groupId)
 
     const [isModalOpen, setIsModalOpen] = useState(false)
 
-    const formSchema = z.object(request ?
-        { feedback: z.string().min(10) } :
-        { title: z.string(), feedback: z.string().min(10) })
+    const formSchema = z.object({ title: z.string().min(3), skillId: z.string() })
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             title: "",
-            feedback: ""
+            skillId
         }
     })
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            const url = request ? `/api/student/feedbacks/${request.id}/respond` : `/api/student/skills/${skillId}/feedback`
-            const res = axiosInstance.post(url, {
-                skill_id: skillId,
+            const res = axiosInstance.post(`/api/student/feedbacks/request`, {
+                skill_id: values.skillId,
                 title: values.title,
-                content: values.feedback,
-                user_id: user?.id,
-                request_id: request?.id
+                user_id: requestFromUser?.id,
+                group_id: groupId || undefined
             })
             await triggerPromiseToast(res, t)
-
-            mutate((key) => typeof key === 'string' && key.startsWith('/api/skills/'))
 
             setIsModalOpen(false)
             form.reset()
@@ -62,23 +51,20 @@ const AddFeedbackModal = ({ children, request, skillId }: { children: ReactNode,
 
     return (
         <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-
             <DialogTrigger asChild>{children}</DialogTrigger>
             <DialogContent>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
 
                         <DialogHeader>
-                            <DialogTitle>{t("addFeedback.title")}</DialogTitle>
-                            <DialogDescription>{request ?
-                                t("addFeedback.requestDescription", { requester: getFullName(request.requester), skill: request.skill.title, group: request.group.name })
-                                :
-                                t("addFeedback.description")}
+                            <DialogTitle>{t("requestFeedback.title")}</DialogTitle>
+                            <DialogDescription>
+                                {t("requestFeedback.fromUserdescription", { name: getFullName(requestFromUser) })}
                             </DialogDescription>
                         </DialogHeader>
 
-                        {/* Title  */}
-                        {!request && <FormField
+                        {/* Title of the feedback */}
+                        <FormField
                             control={form.control}
                             name="title"
                             render={({ field }) => (
@@ -90,17 +76,20 @@ const AddFeedbackModal = ({ children, request, skillId }: { children: ReactNode,
                                     <FormMessage />
                                 </FormItem>
                             )}
-                        />}
+                        />
 
-                        {/* Feedback */}
                         <FormField
                             control={form.control}
-                            name="feedback"
-                            render={({ field }) => (
+                            name="skillId"
+                            render={({ field: { onChange } }) => (
                                 <FormItem>
-                                    <FormLabel>{t("feedback")}</FormLabel>
+                                    <FormLabel>{t("skill")}</FormLabel>
                                     <FormControl>
-                                        <Textarea {...field} placeholder={t("feedbackPlaceholder")} />
+                                        <Select
+                                            options={skills}
+                                            onChange={(selectedOption) => onChange(selectedOption?.value)}
+                                            placeholder={t("skillPlaceholder")}
+                                        />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -125,4 +114,4 @@ const AddFeedbackModal = ({ children, request, skillId }: { children: ReactNode,
     )
 }
 
-export default AddFeedbackModal
+export default RequestFeedbackModal

@@ -9,13 +9,13 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { usePathname, useRouter } from "@/i18n/routing"
 import { getGroups } from "@/lib/queries/client/queries"
 import { cn } from "@/lib/utils"
-import { GroupsQueryType, GroupType } from "@/types"
+import { StudentGroupsQueryType, GroupType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useTranslations } from "next-intl"
 import { useCallback, useEffect, useState } from "react"
 import { useDebouncedCallback } from "use-debounce"
 
-const GroupsOverview = ({ searchParams }: { searchParams: GroupsQueryType }) => {
+const GroupsOverview = ({ searchParams }: { searchParams: StudentGroupsQueryType }) => {
     const t = useTranslations("general")
     const pathname = usePathname();
     const { replace } = useRouter();
@@ -27,11 +27,11 @@ const GroupsOverview = ({ searchParams }: { searchParams: GroupsQueryType }) => 
     const fetchGroups = useCallback(async () => {
         setIsLoading(true);
         try {
-            const page = parseInt(searchParams.page) || 1;
+            const page = searchParams.page || "1";
             const search = searchParams.search ?? ""
-            const isJoined = searchParams.is_joined ?? ""
+            const is_joined = searchParams.is_joined ?? ""
 
-            const filteredGroups = await getGroups({ page, search, isJoined });
+            const filteredGroups = await getGroups({ query: { page, search, is_joined } });
 
             setGroups(filteredGroups);
         }

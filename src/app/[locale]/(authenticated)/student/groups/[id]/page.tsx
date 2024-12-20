@@ -48,7 +48,7 @@ const GroupsDetail = async ({ params }: { params: { id: number } }) => {
         <div>
             <SectionTitle>{t("teachers")}</SectionTitle>
             <div className="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-2">
-                {group?.teachers?.map((teacher) => <UserLine key={teacher.id} user={teacher} groupId={group.id} />)}
+                {group?.teachers?.map((teacher) => <UserLine key={teacher.id} user={teacher} groupId={group.id} hideActions={!isEnrolled} />)}
             </div>
         </div>
 

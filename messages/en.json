@@ -1,5 +1,13 @@
 {
   "general": {
+    "actions": "Actions",
+    "cancel": "Cancel",
+    "confirmAction": "Are you sure?",
+    "continue": "Continue",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add",
+    "name": "Name",
     "dashboard": "Dashboard",
     "event": "Event",
     "viewProfile": "View profile",
@@ -8,6 +16,7 @@
     "definition": "Definition:",
     "endorsement": "Endorsement",
     "endorsements": "Endorsements",
+    "requests": "Requests",
     "feedback": "Feedback",
     "feedbacks": "Feedbacks",
     "userUpdatedRating": "{name} updated skills rating",
@@ -41,6 +50,9 @@
     "overview": "Overview",
     "students": "Students",
     "group": "Group",
+    "activeGroups": "Active groups",
+    "archivedGroups": "Archived groups",
+    "archived": "Archived",
     "groups": "Groups",
     "teachers": "Teachers",
     "feedbackRequests": "Feedback requests",
@@ -51,6 +63,7 @@
     "publicProfile": "Public profile",
     "viewAll": "See all",
     "searchFeedbackRequests": "Search for a group, skill or student",
+    "confirmDeleteEntity": "Are you sure you want to delete this {entity}?",
     "definitions": {
       "skills": "A skill is a specific ability that you can learn, develop, and apply. “Pitching” or “Networking” are examples of skills.",
       "competencies": "A competence is a collection of related skills that together enable you to perform well in a specific area. The competence “Researching” might include skills such as “Interviewing” and “Reflecting”.",
@@ -61,14 +74,16 @@
     "notifications": {
       "title": "Notifications",
       "noNotificationsDescription": "You currently have no notifications. Once you receive feedback or endorsements, they will appear here.",
-      "FeedbackReceived": "added feedback to your skill",
-      "FeedbackRequest": "requested feedback on for skill",
-      "EndorsementReceived": "endorsed your skill",
-      "EndorsementRequest": "requested an endorsement for skill",
-      "EndorsementReviewed": "reviewed your endorsement request"
+      "feedbackReceived": "<user>{requestee}</user> has requested feedback on the skill <skill>{skillName}</skill>",
+      "feedbackRequest": "<user>{requester}</user> requested feedback on for skill <skill>{skillName}</skill>",
+      "endorsementRequest": "<user>{requester}</user> requested an endorsement for skill <skill>{skillName}</skill>",
+      "endorsementRequestReview": "<user>{student}</user> requested a review for an endorsement from <user>{requestee}</user>",
+      "endorsementReceived": "<user>{requestee}</user> endorsed your skill <skill>{skillName}</skill>",
+      "endorsementReviewed": "<user>{reviewer}</user> reviewed your endorsement for skill <skill>{skillName}</skill>"
     }
   },
   "modals": {
+    "description": "Description",
     "cancel": "Cancel",
     "save": "Save",
     "saveChanges": "Save changes",
@@ -104,7 +119,8 @@
       "fromUserdescription": "Ask {name} for an endorsement on a specific skill.",
       "workEmail": "Work email",
       "workEmailPlaceholder": "bob@company.com",
-      "workEmailDescription": "An email will be sent with a link to your skill. This link will work only once."
+      "workEmailDescription": "An email will be sent with a link to your skill. This link will work only once.",
+      "noPersonalCoach": "You don't have a personal coach yet. Choose a personal coach to request an endorsement."
     },
     "requestFeedback": {
       "title": "Request feedback",
@@ -128,6 +144,15 @@
       "description": "Select a coach to help you with your personal development. This person will have insight into your skills and your continued progress.",
       "yourCoach": "Your coach",
       "selectCoach": "Select a coach"
+    },
+    "upsertGroup": {
+      "create": "Create a group",
+      "update": "Update group",
+      "namePlaceholder": "E.g. Conversations in organizations (24/25)",
+      "descriptionPlaceholder": "E.g. Learning conversation skills isn’t done through reading; the goal is for students to gain practical experience.",
+      "skillsPlaceholder": "Select the skill(s)",
+      "teachersPlaceholder": "Select the teacher(s)",
+      "studentsPlaceholder": "Select the student(s)"
     }
   },
   "students": {

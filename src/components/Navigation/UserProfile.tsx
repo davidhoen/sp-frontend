@@ -3,13 +3,13 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { EXPIRED_SESSION_ROUTE } from "@/constants"
 import { languageNames, Link, locales, usePathname, useRouter } from "@/i18n/routing"
-import { getFullName } from "@/lib"
+import { getFullName, isTeacherUser } from "@/lib"
 import { logout } from "@/lib/auth/client"
 import { useUser } from "@/providers/UserProvider"
 import { LogOutIcon, MessageSquareDotIcon, UserIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
-import UpdatePersonalCoachModal from "../Modals/UpdatePersonalCoachModal"
+import UpdatePersonalCoachModal from "../Modals/Student/UpdatePersonalCoachModal"
 import UserAvatar from "../UserAvatar"
 import { Skeleton } from "../ui/skeleton"
 
@@ -46,21 +46,23 @@ export default function UserProfile() {
 
         <DropdownMenuSeparator />
 
-        {/* Update personal coach */}
-        <UpdatePersonalCoachModal>
-          <DropdownMenuItem className="text-left" onSelect={(e) => e.preventDefault()}>
-            <UserIcon size={16} strokeWidth={2.5} />
-            <span>{t("myPersonalCoach")}</span>
-          </DropdownMenuItem>
-        </UpdatePersonalCoachModal>
+        {!isTeacherUser(user) && <>
+          {/* Update personal coach */}
+          <UpdatePersonalCoachModal>
+            <DropdownMenuItem className="text-left" onSelect={(e) => e.preventDefault()}>
+              <UserIcon size={16} strokeWidth={2.5} />
+              <span>{t("myPersonalCoach")}</span>
+            </DropdownMenuItem>
+          </UpdatePersonalCoachModal>
 
-        {/* Requests */}
-        <Link href={"/student/requests"}>
-          <DropdownMenuItem className="text-left" onSelect={(e) => e.preventDefault()}>
-            <MessageSquareDotIcon size={16} strokeWidth={2.5} />
-            <span>{t("feedbackRequests")}</span>
-          </DropdownMenuItem>
-        </Link>
+          {/* Requests */}
+          <Link href={"/student/requests"}>
+            <DropdownMenuItem className="text-left" onSelect={(e) => e.preventDefault()}>
+              <MessageSquareDotIcon size={16} strokeWidth={2.5} />
+              <span>{t("feedbackRequests")}</span>
+            </DropdownMenuItem>
+          </Link>
+        </>}
 
         {/* Langauges */}
         {locales.map(locale => {

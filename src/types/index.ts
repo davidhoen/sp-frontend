@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl"
 import { UserType } from "./auth"
+import { EndorsementFormValues } from "@/schemas/zod"
 
 export type NavItem = {
   title: string
@@ -54,6 +55,7 @@ export type GroupType = {
   created_by: UserType
   closed_at?: Date
   created_at: Date
+  archived_at?: Date
 }
 
 export type FeedbackType = {
@@ -71,7 +73,10 @@ export type EndorsementType = {
   content: string
   rating: number
   skill: SkillType
-  is_approved: boolean
+  approved_at: Date
+  data?: EndorsementFormValues & {
+    approved_by: UserType
+  }
   created_by: UserType
   created_at: Date
 }
@@ -109,10 +114,16 @@ export type EndorsementRequestType = {
   requester: UserType
 }
 
-export type GroupsQueryType = {
+export type StudentGroupsQueryType = {
   page: string,
   search: string,
   is_joined: string
+}
+
+export type TeacherGroupsQueryType = {
+  page: string,
+  search: string,
+  is_archived: string
 }
 
 export type NotificationType = {
@@ -124,14 +135,16 @@ export type NotificationType = {
     id: string,
     title: string
   },
+  endorsement?: EndorsementType,
 }
 
 export enum NotificationTypeEnum {
-  FeedbackRequest = "FeedbackRequest",
-  FeedbackReceived = "FeedbackReceived",
-  EndorsementRequest = "EndorsementRequest",
-  EndorsementReceived = "EndorsementReceived",
-  EndorsementReviewed = "EndorsementReviewed",
+  FeedbackRequest = "FeedbackRequest", // Teacher or student received feedback request
+  FeedbackReceived = "FeedbackReceived", // Student received feedback
+  EndorsementRequest = "EndorsementRequest", // Teacher received endorsement request
+  EndorsementRequestReview = "EndorsementRequestReview", // Teacher received endorsement request review 
+  EndorsementReceived = "EndorsementReceived", // Student received endorsement
+  EndorsementReviewed = "EndorsementReviewed", // Teacher reviewed (external) endorsement
 }
 
 export type StudentRequestType = {

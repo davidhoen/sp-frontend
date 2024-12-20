@@ -1,6 +1,14 @@
 {
   "general": {
+    "actions": "Acties",
+    "cancel": "Annuleren",
+    "confirmAction": "Weet je het zeker?",
+    "continue": "Doorgaan",
     "event": "Gebeurtenis",
+    "edit": "Bewerken",
+    "delete": "Verwijderen",
+    "add": "Toevoegen",
+    "name": "Naam",
     "dashboard": "Dashboard",
     "viewProfile": "Bekijk profiel",
     "logout": "Uitloggen",
@@ -15,8 +23,12 @@
     "addASkill": "Voeg een skill toe",
     "skill": "Skill",
     "skills": "Skills",
+    "requests": "Verzoeken",
     "competencies": "Competenties",
     "search": "Zoeken",
+    "activeGroups": "Actieve groepen",
+    "archivedGroups": "Gearchiveerde groepen",
+    "archived": "Gearchiveerd",
     "allSkills": "Alle skills",
     "allCompetencies": "Alle competenties",
     "addedSkills": "Toegevoegde skills",
@@ -33,7 +45,7 @@
     "allEntities": "Alle {entities}",
     "topSkills": "Top skills",
     "enrollForGroup": "Inschrijven voor groep",
-    "enrollToInteract": "Schirijf je in, om met de groep te communiceren",
+    "enrollToInteract": "Schrijf je in, om met de groep te communiceren",
     "enrollToInteractDescription": "Word lid van deze groep voor interactie met de docenten en studenten.",
     "myPersonalCoach": "Mijn persoonlijke coach",
     "view": "Bekijk",
@@ -52,6 +64,7 @@
     "viewAll": "Bekijk alles",
     "profileChart": "{profile} grafiek",
     "searchFeedbackRequests": "Zoek een groep, skill of student",
+    "confirmDeleteEntity": "Weet je zeker dat je deze {entity} wilt verwijderen?",
     "definitions": {
       "skills": "Een skill is een specifieke vaardigheid die je kunt leren, ontwikkelen en toepassen. “Pitchen” of “Netwerken” zijn voorbeelden van skills.",
       "competencies": "Een competentie is een verzameling gerelateerde skills die je samen in staat stellen om goed te presteren op een specifiek gebied. De competentie “Onderzoeken” kan bijvoorbeeld skills omvatten als “Interviewen” en “Reflecteren”.",
@@ -62,16 +75,18 @@
     "notifications": {
       "title": "Notificaties",
       "noNotificationsDescription": "Je hebt momenteel geen notificaties. Zodra je feedback of onderschrijvingen ontvangt, worden ze hier weergegeven.",
-      "FeedbackReceived": "heeft je feedback gegeven op je skill",
-      "FeedbackRequest": "vraagt om feedback voor de skill",
-      "EndorsementReceived": "onderschreef je skill",
-      "EndorsementRequest": "vraagt om een onderschrijving voor de skill",
-      "EndorsementReviewed": "heeft je onderschrijving beoordeeld voor je skill"
+      "feedbackReceived": "<user>{reviewer}</user> heeft feedback gegeven op je skill <skill>{skillName}</skill>",
+      "feedbackRequest": "<user>{requester}</user> vraagt om feedback voor de skill <skill>{skillName}</skill>",
+      "endorsementRequest": "<user>{requester}</user> vraagt om een onderschrijving voor de skill <skill>{skillName}</skill>",
+      "endorsementRequestReview": "<user>{student}</user> vraagt om een beoordeling voor een onderschrijving van <user>{requestee}</user>",
+      "endorsementReceived": "<user>{requestee}</user> onderschreef je skill <skill>{skillName}</skill>",
+      "endorsementReviewed": "<user>{reviewer}</user> heeft je onderschrijving beoordeeld voor je skill <skill>{skillName}</skill>"
     }
   },
   "modals": {
     "cancel": "Annuleren",
     "save": "Opslaan",
+    "description": "Beschrijving",
     "saveChanges": "Wijzigingen opslaan",
     "feedback": "Feedback",
     "feedbackDescription": "Geef gedetailleerde feedback over de vaardigheid van de student",
@@ -103,7 +118,8 @@
       "fromUserdescription": "Vraag {name} om een onderschrijving over een specifieke skill.",
       "workEmail": "Werk e-mailadres",
       "workEmailPlaceholder": "bob@bedrijf.nl",
-      "workEmailDescription": "Er wordt een e-mail verstuurd met een link naar je vaardigheid. Deze link werkt maar één keer."
+      "workEmailDescription": "Er wordt een e-mail verstuurd met een link naar je vaardigheid. Deze link werkt maar één keer.",
+      "noPersonalCoach": "Je hebt nog geen persoonlijke coach. Kies een persoonlijke coach om een onderschrijving aan te vragen."
     },
     "requestFeedback": {
       "title": "Feedback aanvragen",
@@ -127,6 +143,15 @@
       "description": "Selecteer een coach om je te helpen met je persoonlijke ontwikkeling. Deze persoon krijgt inzicht tot je skills en je verdere voortgang.",
       "yourCoach": "Jouw coach",
       "selectCoach": "Selecteer een coach"
+    },
+    "upsertGroup": {
+      "create": "Groep aanmaken",
+      "update": "Groep bewerken",
+      "namePlaceholder": "Bijv. Gesprekken in organisaties (24/25)",
+      "descriptionPlaceholder": "Bijv. Deze groep is bedoeld voor studenten die hun gespreksvaardigheden willen verbeteren.",
+      "skillsPlaceholder": "Selecteer de skill(s)",
+      "teachersPlaceholder": "Selecteer de docent(en)",
+      "studentsPlaceholder": "Selecteer de student(en)"
     }
   },
   "students": {

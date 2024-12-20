@@ -8,16 +8,15 @@ import PageTitle from "@/components/Typography/PageTitle"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import UserAvatar from "@/components/UserAvatar"
-import { usePathname, useRouter } from "@/i18n/routing"
 import { getFullName } from "@/lib"
-import { getGroups, getStudentRequests } from "@/lib/queries/client/queries"
+import { getStudentRequests } from "@/lib/queries/client/queries"
 import { cn } from "@/lib/utils"
-import { GroupsQueryType, GroupType, StudentRequestType } from "@/types"
+import { StudentGroupsQueryType, StudentRequestType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useFormatter, useTranslations } from "next-intl"
 import { useCallback, useEffect, useState } from "react"
 
-const StudentRequests = ({ searchParams }: { searchParams: GroupsQueryType }) => {
+const StudentRequests = ({ searchParams }: { searchParams: StudentGroupsQueryType }) => {
     const t = useTranslations("general")
     const format = useFormatter()
 
@@ -90,7 +89,7 @@ const StudentRequests = ({ searchParams }: { searchParams: GroupsQueryType }) =>
 
         <div className={cn("transition-all duration-500", isLoading ? "blur-md cursor-wait" : "blur-0")}>
             {!!requests ?
-                <Pager pagerObject={requests} renderItem={renderRequest} emptyMessage={t("noEntitiesFound", { entities: t("groups").toLowerCase() })} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-8 items-start" />
+                <Pager pagerObject={requests} renderItem={renderRequest} emptyMessage={t("noEntitiesFound", { entities: t("requests").toLowerCase() })} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-8 items-start" />
                 :
                 <Skeletons amount={15} className="w-full h-28" />
             }
