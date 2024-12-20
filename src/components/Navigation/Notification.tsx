@@ -7,6 +7,7 @@ import { NotificationType, NotificationTypeEnum, TranslationFunction } from "@/t
 import { BadgeCheckIcon, MessageCircleIcon, MessageCircleQuestionIcon } from 'lucide-react'
 import { useTranslations } from "next-intl"
 import RichText from "../RichText"
+import axiosInstance from "@/lib/axios"
 
 // Configuration object for notification types
 const notificationConfig = {
@@ -126,8 +127,17 @@ export default function Notification({ notification, needsTeacherRouting }: { no
     const href = config.getHref(notification, t, needsTeacherRouting)
     const content = config.getContent(notification, t)
 
+    const markAsRead = async () => {
+        try {
+            await axiosInstance.get(`/api/notifications/${notification.id}/read`)
+        }
+        catch (error) {
+            console.error(error)
+        }
+    }
+
     return (
-        <DropdownMenuItem key={notification.id}>
+        <DropdownMenuItem key={notification.id} onClick={markAsRead}>
             <Link href={href}>
                 <div className="flex gap-2">
                     <div className="pt-1">
