@@ -29,9 +29,9 @@ const GroupsOverview = ({ searchParams }: { searchParams: StudentGroupsQueryType
         try {
             const page = searchParams.page || "1";
             const search = searchParams.search ?? ""
-            const isJoined = searchParams.is_joined ?? ""
+            const is_joined = searchParams.is_joined ?? ""
 
-            const filteredGroups = await getGroups({ query: { page, search, isJoined } });
+            const filteredGroups = await getGroups({ query: { page, search, is_joined } });
 
             setGroups(filteredGroups);
         }
