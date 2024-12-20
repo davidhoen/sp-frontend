@@ -20,7 +20,7 @@ import { StudentRequestType } from "@/types"
 // This component can be used for writing self feedback (request is empty)
 // OR
 // Writing feedback for a peer student 
-const AddFeedbackModal = ({ children, request, skillId }: { children: ReactNode, request?: StudentRequestType, skillId?: string }) => {
+const AddFeedbackModal = ({ children, request, skillId, parentMutate }: { children: ReactNode, request?: StudentRequestType, skillId?: string, parentMutate?: () => void }) => {
     const t = useTranslations("modals")
     const { user } = useUser()
 
@@ -51,6 +51,7 @@ const AddFeedbackModal = ({ children, request, skillId }: { children: ReactNode,
             await triggerPromiseToast(res, t)
 
             mutate((key) => typeof key === 'string' && key.startsWith('/api/skills/'))
+            parentMutate && parentMutate()
 
             setIsModalOpen(false)
             form.reset()
