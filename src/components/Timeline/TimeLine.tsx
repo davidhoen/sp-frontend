@@ -7,7 +7,7 @@ import { TimeLineItemType, TimeLineItemTypeEnum } from "@/types";
 import { UserType } from "@/types/auth";
 import { ArrowUpDownIcon, BadgeCheckIcon, MessageCircleIcon, PlusIcon, StarIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import AddFeedbackModal from "../Modals/AddFeedbackModal";
 import { Skeleton } from "../ui/skeleton";
 import { TimeLineContentCard } from "./TimeLineContentCard";
@@ -21,19 +21,25 @@ export function TimeLine({ user, skillId }: { user: UserType, skillId: string })
     const [sortDescending, setSortDescending] = useState(true)
     const [items, setItems] = useState<TimeLineItemType[] | undefined>()
 
-    const sortItems = () => {
-        const sortedItems = allItems?.sort((a, b) => {
+    const getSortedItems = useCallback((items: TimeLineItemType[] | undefined, isDescending: boolean) => {
+        if (!items) return undefined;
+        return [...items].sort((a, b) => {
             const dateA = new Date(a.created_at).getTime()
             const dateB = new Date(b.created_at).getTime()
-            return sortDescending ? dateB - dateA : dateA - dateB
+            return isDescending ? dateB - dateA : dateA - dateB
         })
+    }, [])
+
+    const sortItems = useCallback(() => {
+        const sortedItems = getSortedItems(allItems, !sortDescending)
         setItems(sortedItems)
         setSortDescending(!sortDescending)
-    }
+    }, [allItems, sortDescending, getSortedItems])
 
     useEffect(() => {
-        sortItems()
-    }, [allItems])
+        const sortedItems = getSortedItems(allItems, sortDescending)
+        setItems(sortedItems)
+    }, [allItems, sortDescending, getSortedItems])
 
     const getIcon = (item: TimeLineItemType) => {
         switch (item.type) {
@@ -87,7 +93,7 @@ export function TimeLine({ user, skillId }: { user: UserType, skillId: string })
                 >
                     <ArrowUpDownIcon className="mr-1.5 h-4 w-4" />
                     {/* TODO: Translate */}
-                    Sort by date
+                    {sortDescending ? t("newestFirst") : t("oldestFirst")}
                 </button>
             </div>
 
@@ -98,7 +104,7 @@ export function TimeLine({ user, skillId }: { user: UserType, skillId: string })
 
                 {/* Timeline items */}
                 <div className="space-y-8 p-4 w-full">
-                    {!sortDescending && (
+                    {sortDescending && (
                         <AddFeedbackButton />
                     )}
 
@@ -127,7 +133,7 @@ export function TimeLine({ user, skillId }: { user: UserType, skillId: string })
                         </div>
                     )
                     )}
-                    {sortDescending && (
+                    {!sortDescending && (
                         <AddFeedbackButton />
                     )}
                 </div>
