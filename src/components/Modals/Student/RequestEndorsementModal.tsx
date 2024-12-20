@@ -1,11 +1,13 @@
 "use client"
 
 // import { useEvents } from "@/hooks/use-events"
+import { Alert } from "@/components/ui/alert"
 import { useGroupSkills } from "@/hooks/use-group-skills"
 import { getFullName, triggerPromiseToast } from "@/lib"
 import axiosInstance from "@/lib/axios"
 import { UserType } from "@/types/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { UserSearchIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { ReactNode, useState } from "react"
 import { useForm } from "react-hook-form"
@@ -22,12 +24,13 @@ const RequestEndorsementModal = ({ children, skillId, groupId, requestFromUser }
     const { data: skills } = useGroupSkills(groupId)
 
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [showPersonalCoachError, setShowPersonalCoachError] = useState(false)
 
     const formSchema = z.object(
         requestFromUser ?
-            { title: z.string(), skillId: z.string() }
+            { title: z.string().min(3), skillId: z.string() }
             :
-            { title: z.string(), email: z.string().email() }
+            { title: z.string().min(3), email: z.string().email() }
     )
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -52,8 +55,13 @@ const RequestEndorsementModal = ({ children, skillId, groupId, requestFromUser }
             form.reset()
             setIsModalOpen(false)
         }
-        catch (error) {
-            console.error(error)
+        catch (error: any) {
+            // Handle error when user does not have a personal coach
+            if (error?.response?.status === 403 && error?.response?.data?.error === "no_personal_coach") {
+                setShowPersonalCoachError(true)
+            }
+            else
+                setShowPersonalCoachError(false)
         }
     }
 
@@ -122,6 +130,14 @@ const RequestEndorsementModal = ({ children, skillId, groupId, requestFromUser }
                                 )}
                             />
                         }
+
+                        {/* Show personal coach alert, when api tells its missing */}
+                        {showPersonalCoachError && <div className="space-y-2 w-full">
+                            <Alert variant="destructive" className="text-sm flex gap-4 items-center">
+                                <div><UserSearchIcon size={24} /></div>
+                                <div>{t("requestEndorsement.noPersonalCoach")}</div>
+                            </Alert>
+                        </div>}
 
                         <DialogFooter>
                             {/* Cancel */}

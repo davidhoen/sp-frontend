@@ -73,7 +73,7 @@ export function GroupCard({ group, className }: { group: GroupType, className?: 
                     {group.skills && group.skills.slice(0, 2).map((skill) => <Chip key={skill.id}>{skill.title}</Chip>)}
                     {(group.skills && group.skills.length > 2) && (
                         <div className="flex items-center h-fit gap-1 bg-border rounded-full text-xs p-1">
-                            <span>+{group.skills.length - 3}</span>
+                            <span>+{group.skills.length - 2}</span>
                         </div>
                     )}
                 </div>

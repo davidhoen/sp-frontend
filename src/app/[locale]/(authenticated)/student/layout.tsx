@@ -1,13 +1,16 @@
 
 import SideBar from "@/components/Navigation/SideBar"
+import { getTranslations } from "next-intl/server"
 import { ReactNode } from "react"
 
-const StudentLayout = ({ children }: { children: ReactNode }) => {
+const StudentLayout = async ({ children }: { children: ReactNode }) => {
+  const t = await getTranslations("general")
+
   const menuItems = [
-    { title: "Dashboard", url: `/student`, icon: "Book" },
-    { title: "Skills", url: `/student/skills`, icon: "Star" },
-    { title: "Groups", url: `/student/groups`, icon: "Users" },
-    { title: "Competencies", url: `/student/competencies`, icon: "Star" },
+    { title: t("dashboard"), url: `/student`, icon: "Book" },
+    { title: t("skills"), url: `/student/skills`, icon: "Star" },
+    { title: t("groups"), url: `/student/groups`, icon: "Users" },
+    { title: t("competencies"), url: `/student/competencies`, icon: "Star" },
   ]
 
   return <SideBar items={menuItems}>

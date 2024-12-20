@@ -40,7 +40,7 @@ const AddFeedbackModal = ({ children, request, skillId }: { children: ReactNode,
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            const url = request ? `/api/student/feedbacks/{id}/respond` : `/api/student/skills/${skillId}/feedback`
+            const url = request ? `/api/student/feedbacks/${request.id}/respond` : `/api/student/skills/${skillId}/feedback`
             const res = axiosInstance.post(url, {
                 skill_id: skillId,
                 title: values.title,

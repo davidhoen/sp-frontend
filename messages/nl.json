@@ -23,6 +23,7 @@
     "addASkill": "Voeg een skill toe",
     "skill": "Skill",
     "skills": "Skills",
+    "requests": "Verzoeken",
     "competencies": "Competenties",
     "search": "Zoeken",
     "activeGroups": "Actieve groepen",
@@ -44,7 +45,7 @@
     "allEntities": "Alle {entities}",
     "topSkills": "Top skills",
     "enrollForGroup": "Inschrijven voor groep",
-    "enrollToInteract": "Schirijf je in, om met de groep te communiceren",
+    "enrollToInteract": "Schrijf je in, om met de groep te communiceren",
     "enrollToInteractDescription": "Word lid van deze groep voor interactie met de docenten en studenten.",
     "myPersonalCoach": "Mijn persoonlijke coach",
     "view": "Bekijk",
@@ -74,11 +75,12 @@
     "notifications": {
       "title": "Notificaties",
       "noNotificationsDescription": "Je hebt momenteel geen notificaties. Zodra je feedback of onderschrijvingen ontvangt, worden ze hier weergegeven.",
-      "FeedbackReceived": "heeft je feedback gegeven op je skill",
-      "FeedbackRequest": "vraagt om feedback voor de skill",
-      "EndorsementReceived": "onderschreef je skill",
-      "EndorsementRequest": "vraagt om een onderschrijving voor de skill",
-      "EndorsementReviewed": "heeft je onderschrijving beoordeeld voor je skill"
+      "feedbackReceived": "<user>{reviewer}</user> heeft feedback gegeven op je skill <skill>{skillName}</skill>",
+      "feedbackRequest": "<user>{requester}</user> vraagt om feedback voor de skill <skill>{skillName}</skill>",
+      "endorsementRequest": "<user>{requester}</user> vraagt om een onderschrijving voor de skill <skill>{skillName}</skill>",
+      "endorsementRequestReview": "<user>{student}</user> vraagt om een beoordeling voor een onderschrijving van <user>{requestee}</user>",
+      "endorsementReceived": "<user>{requestee}</user> onderschreef je skill <skill>{skillName}</skill>",
+      "endorsementReviewed": "<user>{reviewer}</user> heeft je onderschrijving beoordeeld voor je skill <skill>{skillName}</skill>"
     }
   },
   "modals": {
@@ -116,7 +118,8 @@
       "fromUserdescription": "Vraag {name} om een onderschrijving over een specifieke skill.",
       "workEmail": "Werk e-mailadres",
       "workEmailPlaceholder": "bob@bedrijf.nl",
-      "workEmailDescription": "Er wordt een e-mail verstuurd met een link naar je vaardigheid. Deze link werkt maar één keer."
+      "workEmailDescription": "Er wordt een e-mail verstuurd met een link naar je vaardigheid. Deze link werkt maar één keer.",
+      "noPersonalCoach": "Je hebt nog geen persoonlijke coach. Kies een persoonlijke coach om een onderschrijving aan te vragen."
     },
     "requestFeedback": {
       "title": "Feedback aanvragen",
