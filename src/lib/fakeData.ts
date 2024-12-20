@@ -103,7 +103,7 @@ export const endorsement: EndorsementType = {
     title: "Midterm evaluation",
     content: "Impressive command over the subject matter and ability to engage the audience",
     rating: 3,
-    is_approved: true,
+    approved_at: new Date(),
     skill: fakeSkill,
     created_by: fakeStudent,
     created_at: new Date()
