@@ -75,11 +75,12 @@
     "notifications": {
       "title": "Notificaties",
       "noNotificationsDescription": "Je hebt momenteel geen notificaties. Zodra je feedback of onderschrijvingen ontvangt, worden ze hier weergegeven.",
-      "FeedbackReceived": "heeft je feedback gegeven op je skill",
-      "FeedbackRequest": "vraagt om feedback voor de skill",
-      "EndorsementReceived": "onderschreef je skill",
-      "EndorsementRequest": "vraagt om een onderschrijving voor de skill",
-      "EndorsementReviewed": "heeft je onderschrijving beoordeeld voor je skill"
+      "feedbackReceived": "<user>{reviewer}</user> heeft feedback gegeven op je skill <skill>{skillName}</skill>",
+      "feedbackRequest": "<user>{requester}</user> vraagt om feedback voor de skill <skill>{skillName}</skill>",
+      "endorsementRequest": "<user>{requester}</user> vraagt om een onderschrijving voor de skill <skill>{skillName}</skill>",
+      "endorsementRequestReview": "<user>{student}</user> vraagt om een beoordeling voor een onderschrijving van <user>{requestee}</user>",
+      "endorsementReceived": "<user>{requestee}</user> onderschreef je skill <skill>{skillName}</skill>",
+      "endorsementReviewed": "<user>{reviewer}</user> heeft je onderschrijving beoordeeld voor je skill <skill>{skillName}</skill>"
     }
   },
   "modals": {

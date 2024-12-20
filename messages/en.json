@@ -74,12 +74,12 @@
     "notifications": {
       "title": "Notifications",
       "noNotificationsDescription": "You currently have no notifications. Once you receive feedback or endorsements, they will appear here.",
-      "FeedbackReceived": "added feedback to your skill",
-      "FeedbackRequest": "requested feedback on for skill",
-      "EndorsementReceived": "endorsed your skill",
-      "EndorsementRequest": "requested an endorsement for skill",
-      "EndorsementReviewed": "reviewed your endorsement request",
-      "EndorsementRequestReview": "{student} requested a review for an endorsement from {requestee}"
+      "feedbackReceived": "<user>{requestee}</user> has requested feedback on the skill <skill>{skillName}</skill>",
+      "feedbackRequest": "<user>{requester}</user> requested feedback on for skill <skill>{skillName}</skill>",
+      "endorsementRequest": "<user>{requester}</user> requested an endorsement for skill <skill>{skillName}</skill>",
+      "endorsementRequestReview": "<user>{student}</user> requested a review for an endorsement from <user>{requestee}</user>",
+      "endorsementReceived": "<user>{requestee}</user> endorsed your skill <skill>{skillName}</skill>",
+      "endorsementReviewed": "<user>{reviewer}</user> reviewed your endorsement for skill <skill>{skillName}</skill>"
     }
   },
   "modals": {

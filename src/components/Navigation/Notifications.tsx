@@ -1,14 +1,12 @@
 "use client"
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { useNotifications } from "@/hooks/use-notifications"
 import { useUser } from "@/providers/UserProvider"
-import { NotificationType, NotificationTypeEnum } from "@/types"
 import { BellIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { v4 } from "uuid"
 import { Button } from "../ui/button"
 import Notification from "./Notification"
-import { useNotifications } from "@/hooks/use-notifications"
 
 export default function Notifications() {
   const t = useTranslations("general.notifications")
@@ -17,7 +15,7 @@ export default function Notifications() {
   // When a teacher clicks on the notification, they should be taken to the requests page
   const needsTeacherRouting = user?.is_teacher || user?.is_head_teacher || user?.is_admin || false
 
-  let { data: notifications } = useNotifications()
+  const { data: notifications } = useNotifications()
 
   return (
     <DropdownMenu>
@@ -34,7 +32,6 @@ export default function Notifications() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-64">
         <DropdownMenuLabel>{t("title")}</DropdownMenuLabel>
-
         <DropdownMenuSeparator />
         {(notifications && notifications.length > 0) ? (
           notifications?.map((notification) => <Notification key={notification.id} notification={notification} needsTeacherRouting={needsTeacherRouting} />)
