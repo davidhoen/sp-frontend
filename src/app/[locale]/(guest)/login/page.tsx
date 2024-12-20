@@ -15,7 +15,7 @@ import { LoginRequest } from "@/schemas/zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Eye, EyeClosed } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { useState } from "react"
+import { Fragment, useState } from "react"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import { z } from "zod"
@@ -106,7 +106,7 @@ const LoginPage = () => {
                 <FormLabel>Password</FormLabel>
                 <div className="background-light900_dark slate-border flex items-center justify-between rounded-md border">
                   <FormControl>
-                    <>
+                    <div className="flex justify-between w-full">
                       <Input
                         type={isPasswordVisible ? "text" : "password"}
                         placeholder="Your password"
@@ -114,7 +114,7 @@ const LoginPage = () => {
                         {...field}
                       />
                       <div
-                        className="flex cursor-pointer select-none items-center pr-3"
+                        className="flex cursor-pointer select-none items-center pr-4"
                         onClick={togglePasswordVisibility}
                       >
                         {isPasswordVisible ? (
@@ -123,7 +123,7 @@ const LoginPage = () => {
                           <Eye className="text-slate900_light800 size-3" />
                         )}
                       </div>
-                    </>
+                    </div>
                   </FormControl>
                 </div>
                 <FormMessage />
@@ -169,8 +169,8 @@ const LoginPage = () => {
             }
           />
         </form>
-      </Form>
-    </AuthCard>
+      </Form >
+    </AuthCard >
   )
 }
 

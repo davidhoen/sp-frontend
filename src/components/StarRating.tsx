@@ -53,19 +53,7 @@ const StarButton = ({ index, fill, onClick, title }: {
   )
 }
 
-export default function StarRating({
-  rating: initialRating,
-  allowEdit,
-  onRatingChange,
-  maxStars = 4,
-  showRatingTitle
-}: {
-  rating: number,
-  allowEdit?: boolean,
-  onRatingChange?: (newRating: number) => void,
-  maxStars?: number,
-  showRatingTitle?: boolean
-}) {
+export default function StarRating({ rating: initialRating, allowEdit, onRatingChange, maxStars = 4, showRatingTitle }: { rating: number, allowEdit?: boolean, onRatingChange?: (newRating: number) => void, maxStars?: number, showRatingTitle?: boolean }) {
   // Move hooks to the top level
   const t = useTranslations("ratings")
   const [rating, setRating] = useState(initialRating)

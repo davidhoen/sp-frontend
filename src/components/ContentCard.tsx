@@ -26,7 +26,7 @@ export function ContentCard({ content }: { content: EndorsementType | FeedbackTy
                     </div>
                 </div>
                 {/* Date */}
-                <p className="text-muted-foreground text-xs">{format.dateTime(content.created_at, { year: "numeric", month: "short", day: "numeric" })}</p>
+                <p className="text-muted-foreground text-xs">{format.dateTime(new Date(content.created_at), { year: "numeric", month: "short", day: "numeric" })}</p>
             </div>
             {/* Content */}
             <div>
