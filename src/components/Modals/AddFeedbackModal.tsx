@@ -15,6 +15,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "../ui/input"
 import { Textarea } from "../ui/textarea"
 import { StudentRequestType } from "@/types"
+import { Alert } from "../ui/alert"
 
 
 // This component can be used for writing self feedback (request is empty)
@@ -26,9 +27,7 @@ const AddFeedbackModal = ({ children, request, skillId, parentMutate }: { childr
 
     const [isModalOpen, setIsModalOpen] = useState(false)
 
-    const formSchema = z.object(request ?
-        { feedback: z.string().min(10) } :
-        { title: z.string(), feedback: z.string().min(10) })
+    const formSchema = z.object({ title: z.string(), feedback: z.string().min(10) })
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -67,7 +66,7 @@ const AddFeedbackModal = ({ children, request, skillId, parentMutate }: { childr
             <DialogTrigger asChild>{children}</DialogTrigger>
             <DialogContent>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
 
                         <DialogHeader>
                             <DialogTitle>{t("addFeedback.title")}</DialogTitle>
@@ -78,8 +77,11 @@ const AddFeedbackModal = ({ children, request, skillId, parentMutate }: { childr
                             </DialogDescription>
                         </DialogHeader>
 
+                        {/* Title of the request  */}
+                        {request && <Alert className="text-sm">{request.title}</Alert>}
+
                         {/* Title  */}
-                        {!request && <FormField
+                        <FormField
                             control={form.control}
                             name="title"
                             render={({ field }) => (
@@ -91,7 +93,7 @@ const AddFeedbackModal = ({ children, request, skillId, parentMutate }: { childr
                                     <FormMessage />
                                 </FormItem>
                             )}
-                        />}
+                        />
 
                         {/* Feedback */}
                         <FormField

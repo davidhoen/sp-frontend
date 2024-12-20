@@ -112,7 +112,7 @@
     "addFeedback": {
       "title": "Feedback toevoegen",
       "description": "Geef voorbeelden, sterke punten, verbeterpunten en suggesties om je vaardigheden te reflecteren en te verbeteren",
-      "requestDescription": "{requester} heeft je om feedback gevraagd voor de skill {skill} vanuit de {group} group."
+      "requestDescription": "{requester} heeft je om feedback gevraagd voor de skill {skill} vanuit de {group} groep."
     },
     "requestEndorsement": {
       "title": "Onderschrijving aanvragen",
