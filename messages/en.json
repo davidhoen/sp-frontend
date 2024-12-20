@@ -76,6 +76,7 @@
     "notifications": {
       "title": "Notifications",
       "noNotificationsDescription": "You currently have no notifications. Once you receive feedback or endorsements, they will appear here.",
+      "unread": "Unread",
       "feedbackReceived": "<user>{requestee}</user> provided feedback on your <skill>{skillName}</skill> skill",
       "feedbackRequest": "<user>{requester}</user> requested feedback on for skill <skill>{skillName}</skill>",
       "endorsementRequest": "<user>{requester}</user> requested an endorsement for skill <skill>{skillName}</skill>",

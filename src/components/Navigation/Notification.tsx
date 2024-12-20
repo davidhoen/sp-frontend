@@ -147,6 +147,7 @@ export default function Notification({ notification, needsTeacherRouting }: { no
                     <Icon strokeWidth={2.5} size={16} className={config.color} />
                 </div>
                 <div>{content}</div>
+                {!notification.read_at && <div className="bg-destructive p-1 rounded-full"></div>}
             </div>
         </DropdownMenuItem>
     )

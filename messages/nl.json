@@ -77,6 +77,7 @@
     "notifications": {
       "title": "Notificaties",
       "noNotificationsDescription": "Je hebt momenteel geen notificaties. Zodra je feedback of onderschrijvingen ontvangt, worden ze hier weergegeven.",
+      "unread": "Ongelezen",
       "feedbackReceived": "<user>{requestee}</user> heeft feedback gegeven op je skill <skill>{skillName}</skill>",
       "feedbackRequest": "<user>{requester}</user> vraagt om feedback voor de skill <skill>{skillName}</skill>",
       "endorsementRequest": "<user>{requester}</user> vraagt om een onderschrijving voor de skill <skill>{skillName}</skill>",
