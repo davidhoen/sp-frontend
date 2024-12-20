@@ -8,6 +8,7 @@ import { BadgeCheckIcon, MessageCircleIcon, MessageCircleQuestionIcon } from 'lu
 import { useTranslations } from "next-intl"
 import RichText from "../RichText"
 import axiosInstance from "@/lib/axios"
+import { mutate } from "swr"
 
 // Configuration object for notification types
 const notificationConfig = {
@@ -130,6 +131,7 @@ export default function Notification({ notification, needsTeacherRouting }: { no
     const markAsRead = async () => {
         try {
             await axiosInstance.get(`/api/notifications/${notification.id}/read`)
+            mutate("/api/notifications")
         }
         catch (error) {
             console.error(error)
@@ -137,7 +139,7 @@ export default function Notification({ notification, needsTeacherRouting }: { no
     }
 
     return (
-        <DropdownMenuItem key={notification.id} onClick={markAsRead}>
+        <DropdownMenuItem key={notification.id} onClick={markAsRead} asChild>
             <Link href={href}>
                 <div className="flex gap-2">
                     <div className="pt-1">
