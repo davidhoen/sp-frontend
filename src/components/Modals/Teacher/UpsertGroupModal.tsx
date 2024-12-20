@@ -60,7 +60,7 @@ const UpsertGroupModal = ({ children, group }: { children: ReactNode, group?: Gr
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
 
             <DialogHeader>
-              <DialogTitle>{t(group ? "modals.upsertGroup.create" : "modals.upsertGroup.update")}</DialogTitle>
+              <DialogTitle>{t(group ? "modals.upsertGroup.update" : "modals.upsertGroup.create")}</DialogTitle>
             </DialogHeader>
 
             {/* Title of the feedback */}

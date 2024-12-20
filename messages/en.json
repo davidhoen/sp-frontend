@@ -23,6 +23,7 @@
     "addASkill": "Add a skill",
     "skill": "Skill",
     "skills": "Skills",
+    "competence": "Comeptence",
     "competencies": "Competencies",
     "search": "Search",
     "allSkills": "All skills",
@@ -94,6 +95,7 @@
     "endorsementTitlePlaceholder": "E.g. Final presentation",
     "skill": "Skill",
     "skillPlaceholder": "Select a skill",
+    "competencePlaceholder": "Select a competence",
     "email": "Email",
     "emailPlaceholder": "bob@example.com",
     "loading": "Loading...",
@@ -150,6 +152,13 @@
       "skillsPlaceholder": "Select the skill(s)",
       "teachersPlaceholder": "Select the teacher(s)",
       "studentsPlaceholder": "Select the student(s)"
+    },
+    "upsertSkill": {
+      "create": "Create a skill",
+      "update": "Update skill",
+      "namePlaceholder": "E.g. Presenting",
+      "descriptionPlaceholder": "E.g. Effectively communicating information or ideas to an audience.",
+      "competenciesPlaceholder": "Select the competence"
     }
   },
   "students": {

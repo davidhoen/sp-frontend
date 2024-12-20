@@ -14,10 +14,10 @@ export const getSkills = async ({ page, search, competencies, isAdded }: { page:
     }
 }
 
-export const getTeacherSkills = async ({ page, search, competencies }: { page: number; search: string; competencies: string; }) => {
+export const getTeacherSkills = async ({ query }: { query: Record<string, string> }) => {
     try {
-        // Add page params and availableCompentencies to get the competencies connected to the skills
-        const route = `/api/teacher/skills?page=${page}&search=${search}&competencies=${competencies}`
+        const queryString = new URLSearchParams(query).toString();
+        const route = `/api/teacher/skills?with=competency&${queryString}`
         const { data } = await axiosInstance.get<PagingSchema<SkillType>>(route);
         return data;
     }

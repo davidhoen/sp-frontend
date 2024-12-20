@@ -3,7 +3,7 @@
 import { Pager } from "@/components/Pager"
 import SearchInput from "@/components/SearchInput"
 import Skeletons from "@/components/Skeletons"
-import SkillCard from "@/components/SkillCard"
+import SkillRow from "@/components/Rows/SkillRow"
 import PageTitle from "@/components/Typography/PageTitle"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { usePathname, useRouter, Link } from "@/i18n/routing"
@@ -15,7 +15,7 @@ import { useTranslations } from "next-intl"
 import { useCallback, useEffect, useState } from "react"
 import { useDebouncedCallback } from "use-debounce"
 import { Button } from "@/components/ui/button"
-import { PlusIcon } from "lucide-react"
+import UpsertSkillModal from "@/components/Modals/Teacher/UpsertSkillModal"
 
 const SkillsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => {
     const t = useTranslations("general");
@@ -59,12 +59,12 @@ const SkillsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => 
     const fetchSkills = useCallback(async () => {
         setLoading(true);
         try {
-            const page = parseInt(searchParams.page) || 1;
+            const page = searchParams.page || "1";
             const search = searchParams.search ?? ""
             const competencies = searchParams.competencies ?? ""
 
-            const filteredSkills = await getTeacherSkills({ page, search, competencies });
-
+            const filteredSkills = await getTeacherSkills({query: { page, search, competencies }});
+            filteredSkills?.data.map(skills => ({skills: skills, competencies: skills.competency, numberOfGroup: skills.groups_count}))
             setSkills(filteredSkills);
             setCompentencies(filteredSkills?.meta?.competencies);
         }
@@ -81,18 +81,22 @@ const SkillsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => 
         fetchSkills();
     }, [fetchSkills, searchParams]);
 
-    const renderSkill = (skill: SkillType) => <SkillCard key={skill.id} skill={skill} />
+    const tableHeaders = [t("skills"), t("competence"), t("groups"), t("actions")]
+    const renderSkillRow = (skill: SkillType) => <SkillRow key={skill.id} skill={skill} />
 
     return <div className="w-full">
         <PageTitle information={t("definitions.skills")}>{t("skills")}</PageTitle>
 
         {/* Search */}
-        <div className="my-4">
+        <div className="flex justify-between my-4">
             <SearchInput placeholder={t("search")} />
+            <UpsertSkillModal>
+                <Button>{t("addASkill")}</Button>
+            </UpsertSkillModal>
         </div>
 
         {/* Compentencies filter*/}
-        <div className="my-4 overflow-x-auto no-scrollbar">
+        <div className="my-4">
             {!!competencies ?
                 <ToggleGroup type="multiple" value={competencyFilterValue} onValueChange={handleCompentencyFilter}>
                     <ToggleGroupItem variant="outline" value="all">{t("allEntities", { entities: t("competencies").toLowerCase() })}</ToggleGroupItem>
@@ -102,19 +106,12 @@ const SkillsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => 
                 <Skeletons amount={7} wrapperClass="flex gap-4" className="h-10 w-full" />
             }
         </div>
-
-        {/* Action buttons (add skill) */}
-        <div className="my-4">
-        <Link href={{ pathname: `/teacher/`, query: "is_added=false" }}>
-            <Button className="rounded-full"><PlusIcon size={16} />{t("addASkill")}</Button>
-        </Link>
-        </div>
         
         <div className={cn("transition-all duration-500", Loading ? "blur-md cursor-wait" : "blur-0")}>
                    {!!skills ?
-                       <Pager pagerObject={skills} renderItem={renderSkill} emptyMessage={t("noEntitiesFound", { entities: t("skills").toLowerCase() })} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-8 items-start" />
+                       <Pager pagerObject={skills} renderItem={renderSkillRow} headerItems={tableHeaders} emptyMessage={t("noEntitiesFound", { entities: t("skills").toLowerCase() })} renderAsTable />
                        :
-                       <Skeletons amount={15} className="w-full h-28" />
+                       <Skeletons amount={15} className="w-full h-14" wrapperClass="grid gap-2" />
                    }
         </div>
     </div>
