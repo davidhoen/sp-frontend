@@ -7,7 +7,7 @@ import { PagingSchema } from "@/types/pagination"
 export const useRecentEndorsements = (competencyId: string) => {
     const searchParams = useSearchParams()
     const page = searchParams.get('endorsementsPage') || 1
-    const url = `/api/student/endorsements/recent?with=skill?with=createdBy&page=${page}&per_page=4?competency=${competencyId}`
+    const url = `/api/student/endorsements/recent?with=skill,createdBy&page=${page}&per_page=4&competency=${competencyId}`
     return useSWR(url, () =>
         axiosInstance.get<PagingSchema<EndorsementType>>(url)
             .then((res) => {

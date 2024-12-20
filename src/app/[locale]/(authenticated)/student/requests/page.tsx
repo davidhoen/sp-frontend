@@ -48,7 +48,7 @@ const StudentRequests = (props: { searchParams: Promise<StudentGroupsQueryType> 
         fetchRequests();
     }, [fetchRequests, searchParams]);
 
-    const renderRequest = (request: StudentRequestType) => <div className="border p-4 rounded-lg">
+    const renderRequest = (request: StudentRequestType) => <div key={request.id} className="border p-4 rounded-lg">
         <div className="flex justify-between items-center">
             <div className="flex gap-2">
                 <UserAvatar user={request.requester} />
