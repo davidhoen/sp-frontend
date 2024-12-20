@@ -27,9 +27,7 @@ const AddFeedbackModal = ({ children, request, skillId, parentMutate }: { childr
 
     const [isModalOpen, setIsModalOpen] = useState(false)
 
-    const formSchema = z.object(request ?
-        { feedback: z.string().min(10) } :
-        { title: z.string(), feedback: z.string().min(10) })
+    const formSchema = z.object({ title: z.string(), feedback: z.string().min(10) })
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
