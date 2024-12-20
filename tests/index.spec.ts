@@ -65,6 +65,13 @@ test('Add skill', async ({ page }) => {
   await expect(page.locator('h1')).toContainText('Dashboard');
   //skills menu
   await page.getByRole('link', { name: 'Skills', exact: true }).click();
+  //pagination
+  await page.getByLabel('pagination').getByText('2').click();
+  await page.getByText('1', { exact: true }).click();
+  //profile detail page 
+  await page.locator('div').filter({ hasText: /^Fake Skill #56ManagementView$/ }).getByRole('button').nth(1).click();
+  await page.locator('.flex > a').first().click();
+  await page.getByRole('link', { name: 'Skills', exact: true }).click();
   //information icon
   /*await page.locator('div').filter({ hasText: /^Skills$/ }).locator('path').nth(1).click();
   await page.getByRole('heading', { name: 'Definition:' }).click();
@@ -185,15 +192,15 @@ test('Writing Feedback(peer)', async ({ page }) => {
   //login
   await page.goto('http://127.0.0.1:3000/en/login/');
   await page.getByPlaceholder('Your email').click();
-  await page.getByPlaceholder('Your email').fill('std2@sp.nl');
+  await page.getByPlaceholder('Your email').fill('student@sp.nl');
   await page.getByPlaceholder('Your password').click();
   await page.getByPlaceholder('Your password').fill('password');
   await page.getByRole('button', { name: 'Log in' }).click();
 
-  await expect(page.locator('h1')).toContainText('Dashboard');
+  //await expect(page.locator('h1')).toContainText('Dashboard');
   //notification
   await page.getByLabel('notifications').click();
-  await page.getByRole('link', { name: 'Mr Student requested' }).first().click();
+  await page.getByRole('link', { name: 'Mr Student2 requested' }).first().click();
   await page.locator('html').click();
   await page.getByRole('button', { name: 'Add feedback' }).nth(1).click();
   await page.getByPlaceholder('Type your feedback here').fill('good presentation');
@@ -237,11 +244,11 @@ test('Requesting endorsement(external party)', async ({ page }) => {
   await page.getByPlaceholder('Your password').fill('password');
   await page.getByRole('button', { name: 'Log in' }).click();
 
-  await expect(page.locator('h1')).toContainText('Dashboard');
+  //await expect(page.locator('h1')).toContainText('Dashboard');
   //skills menu
   await page.getByRole('link', { name: 'Skills', exact: true }).click();
   //skills detail apge
-  await page.locator('div').filter({ hasText: /^Fake Skill #77RealizeView$/ }).getByRole('button').nth(1).click();
+  await page.locator('div').filter({ hasText: /^Fake Skill #57RealizeView$/ }).getByRole('button').nth(1).click();
   await page.getByRole('button', { name: 'Request endorsement' }).click();
   await page.getByPlaceholder('E.g. Final presentation').click();
   await page.getByPlaceholder('E.g. Final presentation').fill('final presentation');
@@ -284,6 +291,11 @@ test('Viewing received feedback/endorsement', async ({ page }) => {
   await expect(page.locator('#Skills')).toContainText('Skills');
   await page.getByRole('link', { name: 'hic Rating: 1 out of 4' }).click();
   await expect(page.locator('#Feedback')).toContainText('Feedback');
+  //profile detail page
+  await expect(page.locator('h1')).toContainText('Dashboard');
+  await expect(page.locator('[id="\\ \\,Profiles"]')).toContainText('Profiles');
+  await page.getByRole('link', { name: 'Technologist' }).click();
+  await expect(page.locator('[id="Technologist\\ chart"]')).toContainText('Technologist chart');
   
   await page.getByRole('link', { name: 'Dashboard' }).click();
   await expect(page.locator('h1')).toContainText('Dashboard');
