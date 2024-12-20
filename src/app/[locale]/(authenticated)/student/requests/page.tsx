@@ -73,7 +73,7 @@ const StudentRequests = ({ searchParams }: { searchParams: StudentGroupsQueryTyp
             </div>
         </div>
         <div className="w-full flex justify-end">
-            <AddFeedbackModal request={request}>
+            <AddFeedbackModal request={request} parentMutate={fetchRequests}>
                 <Button className="w-full md:w-fit">{t("addFeedback")}</Button>
             </AddFeedbackModal>
         </div>
