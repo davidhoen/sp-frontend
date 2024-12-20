@@ -136,7 +136,7 @@ export type NotificationType = {
     title: string
   },
   endorsement?: EndorsementType,
-  read_at: Date
+  read_at?: Date
 }
 
 export enum NotificationTypeEnum {

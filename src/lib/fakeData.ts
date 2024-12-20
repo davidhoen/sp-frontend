@@ -136,7 +136,8 @@ export const fakeNotifications: NotificationType[] = [
         skill: {
             id: uuid(),
             title: "Skill 1"
-        }
+        },
+        read_at: new Date()
     },
     {
         id: uuid(),
