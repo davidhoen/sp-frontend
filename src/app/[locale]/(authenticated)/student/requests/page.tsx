@@ -14,9 +14,10 @@ import { cn } from "@/lib/utils"
 import { StudentGroupsQueryType, StudentRequestType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useFormatter, useTranslations } from "next-intl"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useState, use } from "react";
 
-const StudentRequests = ({ searchParams }: { searchParams: StudentGroupsQueryType }) => {
+const StudentRequests = (props: { searchParams: Promise<StudentGroupsQueryType> }) => {
+    const searchParams = use(props.searchParams);
     const t = useTranslations("general")
     const format = useFormatter()
 

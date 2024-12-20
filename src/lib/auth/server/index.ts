@@ -36,7 +36,7 @@ export const redirectToLoginWithExpiredCookie = (url: URL, locale: string) => {
 const fetchUser = async (req?: NextRequest) => {
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const referer = process.env.FRONTEND_URL as string; // * Important so it matches Sanctum's accepted domains
-  const cookie = req?.headers.get("Cookie") || cookies().toString() || "";
+  const cookie = req?.headers.get("Cookie") || (await cookies()).toString() || "";
 
   const fetchResponse = await fetch(`${backendUrl}/api/user?with=roles,personalCoach`, {
     method: "GET",
@@ -93,7 +93,7 @@ export const getRenewedCookies = async (req?: NextRequest) => {
 
 export const auth = async () => {
   try {
-    const token = cookies().get(AUTH_COOKIE_NAME)?.value;
+    const token = (await cookies()).get(AUTH_COOKIE_NAME)?.value;
 
     if (!token) {
       return { user: null };
