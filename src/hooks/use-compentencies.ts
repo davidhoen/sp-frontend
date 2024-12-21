@@ -2,7 +2,7 @@ import axiosInstance from "@/lib/axios"
 import { CompetencyType } from "@/types"
 import useSWR from "swr"
 
-export const useCompentencies = () => {
+export const useCompetencies = () => {
     const url = "/api/student/competencies"
     return useSWR(url, () =>
         axiosInstance.get(url)
