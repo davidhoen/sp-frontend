@@ -10,7 +10,8 @@ import { getEndorsementRequestResponse } from "@/lib/queries/server/queries";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 
-const EndorsementRequestPage = async ({ params }: { params: { id: number } }) => {
+const EndorsementRequestPage = async (props: { params: Promise<{ id: number }> }) => {
+    const params = await props.params;
     const t = await getTranslations("modals")
 
     const endorsementRequest = await getEndorsementRequestResponse(params.id)

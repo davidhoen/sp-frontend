@@ -171,7 +171,7 @@ const RegisterPage = () => {
                 </FormLabel>
                 <div className="background-light900_dark slate-border flex items-center justify-between rounded-md border">
                   <FormControl>
-                    <>
+                    <div className="flex justify-between w-full">
                       <Input
                         type={isPasswordVisible ? "text" : "password"}
                         placeholder="Password"
@@ -179,7 +179,7 @@ const RegisterPage = () => {
                         {...field}
                       />
                       <div
-                        className="flex cursor-pointer select-none items-center pr-3"
+                        className="flex cursor-pointer select-none items-center pr-4"
                         onClick={togglePasswordVisibility}
                       >
                         {isPasswordVisible ? (
@@ -188,7 +188,7 @@ const RegisterPage = () => {
                           <EyeIcon className="text-slate900_light800 size-4" />
                         )}
                       </div>
-                    </>
+                    </div>
                   </FormControl>
                 </div>
                 <FormMessage />
@@ -206,7 +206,7 @@ const RegisterPage = () => {
                 </FormLabel>
                 <div className="background-light900_dark slate-border flex items-center justify-between rounded-md border">
                   <FormControl>
-                    <>
+                    <div className="flex justify-between w-full">
                       <Input
                         type={isPasswordVisible ? "text" : "password"}
                         placeholder="Confirm your password"
@@ -223,7 +223,7 @@ const RegisterPage = () => {
                           <EyeIcon className="text-slate900_light800 size-4" />
                         )}
                       </div>
-                    </>
+                    </div>
                   </FormControl>
                 </div>
                 <FormMessage />

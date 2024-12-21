@@ -14,9 +14,10 @@ import { cn } from "@/lib/utils"
 import { StudentGroupsQueryType, StudentRequestType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useFormatter, useTranslations } from "next-intl"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useState, use } from "react";
 
-const StudentRequests = ({ searchParams }: { searchParams: StudentGroupsQueryType }) => {
+const StudentRequests = (props: { searchParams: Promise<StudentGroupsQueryType> }) => {
+    const searchParams = use(props.searchParams);
     const t = useTranslations("general")
     const format = useFormatter()
 
@@ -47,7 +48,7 @@ const StudentRequests = ({ searchParams }: { searchParams: StudentGroupsQueryTyp
         fetchRequests();
     }, [fetchRequests, searchParams]);
 
-    const renderRequest = (request: StudentRequestType) => <div className="border p-4 rounded-lg">
+    const renderRequest = (request: StudentRequestType) => <div key={request.id} className="border p-4 rounded-lg">
         <div className="flex justify-between items-center">
             <div className="flex gap-2">
                 <UserAvatar user={request.requester} />

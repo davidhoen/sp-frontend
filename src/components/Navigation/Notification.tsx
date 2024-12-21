@@ -1,7 +1,7 @@
 'use client'
 
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu"
-import { Link } from "@/i18n/routing"
+import { Link, useRouter } from "@/i18n/routing"
 import { getFullName } from "@/lib"
 import { NotificationType, NotificationTypeEnum, TranslationFunction } from "@/types"
 import { BadgeCheckIcon, MessageCircleIcon, MessageCircleQuestionIcon } from 'lucide-react'
@@ -117,6 +117,7 @@ const notificationConfig = {
 
 export default function Notification({ notification, needsTeacherRouting }: { notification: NotificationType, needsTeacherRouting: boolean }) {
     const t = useTranslations("general")
+    const { push } = useRouter()
 
     const config = notificationConfig[notification.type]
     if (!config) {
@@ -131,7 +132,8 @@ export default function Notification({ notification, needsTeacherRouting }: { no
     const markAsRead = async () => {
         try {
             await axiosInstance.get(`/api/notifications/${notification.id}/read`)
-            mutate("/api/notifications")
+            await mutate("/api/notifications")
+            push(href)
         }
         catch (error) {
             console.error(error)
@@ -140,14 +142,13 @@ export default function Notification({ notification, needsTeacherRouting }: { no
 
     return (
         <DropdownMenuItem key={notification.id} onClick={markAsRead} asChild>
-            <Link href={href}>
-                <div className="flex gap-2">
-                    <div className="pt-1">
-                        <Icon strokeWidth={2.5} size={16} className={config.color} />
-                    </div>
-                    <div>{content}</div>
+            <div className="flex gap-2">
+                <div className="pt-1">
+                    <Icon strokeWidth={2.5} size={16} className={config.color} />
                 </div>
-            </Link>
+                <div>{content}</div>
+                {!notification.read_at && <div className="bg-destructive p-1 rounded-full"></div>}
+            </div>
         </DropdownMenuItem>
     )
 }

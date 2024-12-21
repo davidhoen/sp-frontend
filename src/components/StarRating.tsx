@@ -1,26 +1,14 @@
 "use client"
-
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { getStarTitles, roundToQuarter } from "@/lib"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 
 const adjustFillPercentage = (fill: number): number => {
-  // round fill to the nearest quarter
   fill = roundToQuarter(fill)
-
-  // 1/4 star
-  if (fill == 0.25) {
-    return 0.35
-  }
-  // 2/4 star
-  else if (fill == 0.5) {
-    return 0.5
-  }
-  // 3/4 star
-  else if (fill == 0.75) {
-    return 0.62
-  }
+  if (fill == 0.25) return 0.35
+  else if (fill == 0.5) return 0.5
+  else if (fill == 0.75) return 0.62
   return fill
 }
 
@@ -45,44 +33,37 @@ const Star = ({ fill, onClick }: { fill: number, onClick?: () => void }) => {
   )
 }
 
-export default function StarRating({ rating: initialRating, allowEdit, onRatingChange, maxStars = 4, showRatingTitle }: { rating: number, allowEdit?: boolean, onRatingChange?: (newRating: number) => void, maxStars?: number, showRatingTitle?: boolean }) {
-  const t = useTranslations("ratings")
-  const starTitles = getStarTitles(t)
+const StarButton = ({ index, fill, onClick, title }: {
+  index: number,
+  fill: number,
+  onClick: (rating: number) => void,
+  title: string
+}) => {
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <div className="flex">
+          <Star fill={fill} onClick={() => onClick(index + 1)} />
+        </div>
+      </TooltipTrigger>
+      <TooltipContent>
+        <p>{title}</p>
+      </TooltipContent>
+    </Tooltip>
+  )
+}
 
+export default function StarRating({ rating: initialRating, allowEdit, onRatingChange, maxStars = 4, showRatingTitle }: { rating: number, allowEdit?: boolean, onRatingChange?: (newRating: number) => void, maxStars?: number, showRatingTitle?: boolean }) {
+  // Move hooks to the top level
+  const t = useTranslations("ratings")
   const [rating, setRating] = useState(initialRating)
+  const starTitles = getStarTitles(t)
 
   const handleRatingChange = (newRating: number) => {
     if (allowEdit) {
       setRating(newRating)
-      if (onRatingChange) {
-        onRatingChange(newRating)
-      }
+      onRatingChange?.(newRating)
     }
-  }
-
-  const stars = []
-  for (let i = 0; i < maxStars; i++) {
-    const starRating = i + 1
-    // Calculates the fill for each star based on the rating. Ensures the fill is between 0 and 1.
-    const fill = Math.max(0, Math.min(1, rating - i))
-    stars.push(
-      // On edit mode, show a tooltip with the star title (e.g. "Good")
-      allowEdit ?
-        <Tooltip key={i}>
-          <TooltipTrigger asChild>
-            <div className="flex">
-              <Star key={i} fill={fill} onClick={() => handleRatingChange(starRating)} />
-            </div>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>
-              {starTitles[i]}
-            </p>
-          </TooltipContent>
-        </Tooltip>
-        :
-        <Star key={i} fill={fill} />
-    )
   }
 
   // Round down for the star title
@@ -90,25 +71,42 @@ export default function StarRating({ rating: initialRating, allowEdit, onRatingC
   // Round rating to the nearest quarter for the number of stars
   const quarterRating = Math.round(rating * 4) / 4
 
+  const renderStars = () => {
+    return Array.from({ length: maxStars }, (_, i) => {
+      const fill = Math.max(0, Math.min(1, rating - i))
+
+      if (allowEdit) {
+        return (
+          <StarButton
+            key={i}
+            index={i}
+            fill={fill}
+            onClick={handleRatingChange}
+            title={starTitles[i]}
+          />
+        )
+      }
+
+      return <Star key={i} fill={fill} />
+    })
+  }
+
   return (
     <div aria-label={`Rating: ${rating} out of ${maxStars} stars`}>
       <TooltipProvider>
         <div className="flex items-center gap-2">
-          {allowEdit ?
-            <div className="flex">{stars}</div>
-            :
-            // When not editing, and just viewing, show a tooltip with the star title and the rating (e.g. "Good (3.5)")
+          {allowEdit ? (
+            <div className="flex">{renderStars()}</div>
+          ) : (
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="flex w-fit">{stars}</div>
+                <div className="flex w-fit">{renderStars()}</div>
               </TooltipTrigger>
               <TooltipContent>
-                <p>
-                  {starTitles[roundedRating]} ({quarterRating})
-                </p>
+                <p>{starTitles[roundedRating]} ({quarterRating})</p>
               </TooltipContent>
             </Tooltip>
-          }
+          )}
           {showRatingTitle && <p className="text-sm">{starTitles[roundedRating]}</p>}
         </div>
       </TooltipProvider>

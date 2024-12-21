@@ -64,6 +64,8 @@
     "viewAll": "See all",
     "searchFeedbackRequests": "Search for a group, skill or student",
     "confirmDeleteEntity": "Are you sure you want to delete this {entity}?",
+    "newestFirst": "Newest first",
+    "oldestFirst": "Oldest first",
     "definitions": {
       "skills": "A skill is a specific ability that you can learn, develop, and apply. “Pitching” or “Networking” are examples of skills.",
       "competencies": "A competence is a collection of related skills that together enable you to perform well in a specific area. The competence “Researching” might include skills such as “Interviewing” and “Reflecting”.",
@@ -74,7 +76,8 @@
     "notifications": {
       "title": "Notifications",
       "noNotificationsDescription": "You currently have no notifications. Once you receive feedback or endorsements, they will appear here.",
-      "feedbackReceived": "<user>{requestee}</user> has requested feedback on the skill <skill>{skillName}</skill>",
+      "unread": "Unread",
+      "feedbackReceived": "<user>{requestee}</user> provided feedback on your <skill>{skillName}</skill> skill",
       "feedbackRequest": "<user>{requester}</user> requested feedback on for skill <skill>{skillName}</skill>",
       "endorsementRequest": "<user>{requester}</user> requested an endorsement for skill <skill>{skillName}</skill>",
       "endorsementRequestReview": "<user>{student}</user> requested a review for an endorsement from <user>{requestee}</user>",
