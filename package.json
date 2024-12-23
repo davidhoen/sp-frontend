@@ -45,7 +45,7 @@
     "cookie": "^1.0.2",
     "date-fns": "^4.1.0",
     "jose": "^5.9.6",
-    "lucide-react": "^0.453.0",
+    "lucide-react": "^0.469.0",
     "next": "15.1.2",
     "next-intl": "^3.22.0",
     "qs": "^6.13.1",
