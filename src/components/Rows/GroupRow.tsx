@@ -10,16 +10,25 @@ import UpsertGroupModal from "../Modals/Teacher/UpsertGroupModal"
 import { TableAction } from "../TableActions"
 import { TableCell, TableRow } from "../ui/table"
 import { Link } from "@/i18n/routing"
+import { triggerPromiseToast } from "@/lib"
+import axiosInstance from "@/lib/axios"
 
-export default function GroupRow({ group }: { group: GroupType }) {
+export default function GroupRow({ group, mutate }: { group: GroupType, mutate: () => void }) {
     const { user } = useUser()
     const t = useTranslations("general")
 
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
-    const deleteGroup = (groupId: string) => {
-        console.log("Delete group with id: ", groupId)
-        setIsDeleteModalOpen(false)
+    const deleteGroup = async () => {
+        try {
+            const res = axiosInstance.delete(`/api/teacher/groups/${group.id}`,)
+            await triggerPromiseToast(res, t, { success: t("successfullyDeleted") })
+            mutate && mutate()
+            setIsDeleteModalOpen(false)
+        }
+        catch (error) {
+            console.error(error)
+        }
     }
 
     return <>
@@ -44,7 +53,7 @@ export default function GroupRow({ group }: { group: GroupType }) {
             <TableCell className="flex gap-2">
 
                 {/* Edit */}
-                <UpsertGroupModal group={group}>
+                <UpsertGroupModal group={group} mutate={mutate}>
                     <div><TableAction type="edit" /></div>
                 </UpsertGroupModal>
 
@@ -60,7 +69,7 @@ export default function GroupRow({ group }: { group: GroupType }) {
 
         {/* Delete group modal */}
         <ConfirmActionDialog
-            onContinue={() => deleteGroup(group.id)}
+            onContinue={() => deleteGroup()}
             onCancel={() => setIsDeleteModalOpen(false)}
             isOpen={isDeleteModalOpen}
             description={t("confirmDeleteEntity", { entity: t("group").toLowerCase() })}

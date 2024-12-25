@@ -64,7 +64,7 @@ const GroupsOverview = (props: { searchParams: Promise<TeacherGroupsQueryType> }
     }, [fetchGroups, searchParams]);
 
     const tableHeaders = [t("name"), t("skills"), t("students"), t("actions")]
-    const renderGroupRow = (group: GroupType) => <GroupRow key={group.id} group={group} />
+    const renderGroupRow = (group: GroupType) => <GroupRow key={group.id} group={group} mutate={fetchGroups} />
 
     return <div className="w-full">
         <PageTitle information={t("definitions.groups")}>{t("groups")}</PageTitle>
@@ -72,7 +72,7 @@ const GroupsOverview = (props: { searchParams: Promise<TeacherGroupsQueryType> }
         {/* Search */}
         <div className="flex justify-between my-4">
             <SearchInput placeholder={t("search")} />
-            <UpsertGroupModal>
+            <UpsertGroupModal mutate={fetchGroups}>
                 <Button>{t("add")}</Button>
             </UpsertGroupModal>
         </div>
