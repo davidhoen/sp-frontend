@@ -44,7 +44,7 @@ const GroupsDetail = async (props: { params: Promise<{ id: number }> }) => {
 
                 <div className="flex gap-2">
                     <Button className="rounded-full">{t("archiveGroup")}</Button>
-                    <UpsertGroupModal group={group}>
+                    <UpsertGroupModal group={group} >
                         <Button variant="ghost" className="bg-border text-inherit rounded-full"><PencilIcon size={18} /></Button>
                     </UpsertGroupModal>
                 </div>
@@ -57,7 +57,7 @@ const GroupsDetail = async (props: { params: Promise<{ id: number }> }) => {
         {/* Teachers */}
         <div>
             <SectionTitle>{t("teachers")}</SectionTitle>
-            <div className="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-2">
+            <div className="flex gap-2">
                 {group?.teachers?.map((teacher) => <UserLine key={teacher.id} user={teacher} hideActions={true} className="w-fit pr-8" />)}
             </div>
         </div>
@@ -72,7 +72,7 @@ const GroupsDetail = async (props: { params: Promise<{ id: number }> }) => {
 
         {/* Students */}
         <div>
-            <GroupStudentsList groupId={group.id} />
+            {/* <GroupStudentsList groupId={group.id} /> */}
         </div>
     </div>
 }
