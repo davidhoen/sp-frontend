@@ -33,7 +33,7 @@ const UpsertGroupModal = ({ children, group, mutate }: { children: ReactNode, gr
     name: z.string().min(3),
     desc: z.string().min(3),
     skillIds: z.array(z.string()).min(1),
-    teacherIds: z.array(z.string()),
+    teacherIds: z.array(z.string()).min(1),
     studentIds: z.array(z.string()),
     archived: z.boolean().optional()
   })

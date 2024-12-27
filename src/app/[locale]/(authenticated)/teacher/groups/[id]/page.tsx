@@ -20,11 +20,12 @@ const GroupsDetail = async (props: { params: Promise<{ id: number }> }) => {
     if (!group) notFound()
 
     return <div className="flex flex-col gap-6">
+        {/* Breadcrumb */}
         <div>
             <Breadcrumb>
                 <BreadcrumbList>
                     <BreadcrumbItem>
-                        <BreadcrumbLink>
+                        <BreadcrumbLink asChild>
                             <Link href="/teacher/groups">{t("groups")}</Link>
                         </BreadcrumbLink>
                     </BreadcrumbItem>
@@ -61,17 +62,9 @@ const GroupsDetail = async (props: { params: Promise<{ id: number }> }) => {
             </div>
         </div>
 
-        {/* Skills */}
+        {/* Skills and students */}
         <div>
-            <SectionTitle>{t("skills")}</SectionTitle>
-            <div className="flex gap-2">
-                {group?.skills?.map((skill) => <Link key={skill.id} href={`/student/skills/${skill.id}`}><Chip key={skill.id}>{skill.title}</Chip></Link>)}
-            </div>
-        </div>
-
-        {/* Students */}
-        <div>
-            {/* <GroupStudentsList groupId={group.id} /> */}
+            <GroupStudentsList group={group} />
         </div>
     </div>
 }
