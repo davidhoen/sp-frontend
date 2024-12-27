@@ -58,7 +58,7 @@ export default function GroupRow({ group, mutate }: { group: GroupType, mutate: 
                 </UpsertGroupModal>
 
                 {/* Delete (for admins) */}
-                {!user?.is_admin && <div onClick={() => setIsDeleteModalOpen(true)}><TableAction type="delete" /></div>}
+                {user?.is_admin && <div onClick={() => setIsDeleteModalOpen(true)}><TableAction type="delete" /></div>}
 
                 {/* View */}
                 <Link href={`/teacher/groups/${group.id}`}>

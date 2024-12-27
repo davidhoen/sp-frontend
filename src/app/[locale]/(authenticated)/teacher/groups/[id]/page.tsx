@@ -20,7 +20,6 @@ const GroupsDetail = async (props: { params: Promise<{ id: number }> }) => {
     if (!group) notFound()
 
     return <div className="flex flex-col gap-6">
-
         <div>
             <Breadcrumb>
                 <BreadcrumbList>
