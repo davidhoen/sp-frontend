@@ -11,7 +11,7 @@ export function SidebarLeft({ items, ...props }: React.ComponentProps<typeof Sid
   return (
     <Sidebar className="border-r-0" {...props}>
       <SidebarHeader>
-        <div className="ml-4">
+        <div className="ml-4 m-2">
           <Logo />
         </div>
         <NavMain items={items} />

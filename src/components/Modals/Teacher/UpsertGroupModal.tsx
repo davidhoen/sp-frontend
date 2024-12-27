@@ -4,7 +4,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { GroupType } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
-import { ReactNode, useState } from "react"
+import { ReactNode, useEffect, useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Button } from "../../ui/button"
@@ -15,13 +15,19 @@ import Select from "../../ui/select"
 import { useSkills } from "@/hooks/use-skills"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
+import { triggerPromiseToast } from "@/lib"
+import axiosInstance from "@/lib/axios"
+import { useCoaches } from "@/hooks/use-coaches"
+import { useStudents } from "@/hooks/use-students"
+import { useRouter } from "@/i18n/routing"
 
-const UpsertGroupModal = ({ children, group }: { children: ReactNode, group?: GroupType }) => {
+const UpsertGroupModal = ({ children, group, mutate }: { children: ReactNode, group?: GroupType, mutate?: () => void }) => {
   const t = useTranslations()
+  const { refresh } = useRouter()
 
   const { data: skills } = useSkills()
-  const { data: teachers } = useSkills()
-  const { data: students } = useSkills()
+  const { data: teachers } = useCoaches()
+  const { data: students } = useStudents()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -30,32 +36,56 @@ const UpsertGroupModal = ({ children, group }: { children: ReactNode, group?: Gr
     desc: z.string().min(3),
     skillIds: z.array(z.string()).min(1),
     teacherIds: z.array(z.string()).min(1),
-    studentIds: z.array(z.string()).min(1),
+    studentIds: z.array(z.string()),
     archived: z.boolean().optional()
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: group?.name ?? "",
-      desc: group?.desc ?? "",
-      skillIds: group?.skills?.map(skill => skill.id) ?? [],
-      teacherIds: group?.teachers?.map(teacher => teacher.id) ?? [],
-      studentIds: group?.students?.map(student => student.id) ?? [],
-      archived: !!group?.archived_at
-    }
   })
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-    setIsModalOpen(false)
-    form.reset()
+  // Reset form when group changes or modal opens
+  useEffect(() => {
+    if (isModalOpen) {
+      form.reset({
+        name: group?.name ?? "",
+        desc: group?.desc ?? "",
+        skillIds: group?.skills?.map(skill => skill.id) ?? [],
+        teacherIds: group?.teachers?.map(teacher => teacher.id) ?? [],
+        studentIds: group?.students?.map(student => student.id) ?? [],
+        archived: !!group?.archived_at
+      })
+    }
+  }, [group, isModalOpen, form])
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const url = group ? `/api/teacher/groups/${group.id}` : `/api/teacher/groups/create`
+      const axiosMethod = group ? axiosInstance.put : axiosInstance.post
+      const res = axiosMethod(url, {
+        name: values.name,
+        desc: values.desc,
+        skills: values.skillIds,
+        teachers: values.teacherIds,
+        students: values.studentIds,
+        archived_at: !!values.archived ? new Date() : null
+      })
+      await triggerPromiseToast(res, t, { success: t("modals.successfullySaved"), error: t("modals.genericError"), loading: t("modals.loading") })
+
+      refresh()
+
+      setIsModalOpen(false)
+      form.reset()
+    }
+    catch (error) {
+      console.error(error)
+    }
   }
 
   return (
     <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="">
+      <DialogContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
 

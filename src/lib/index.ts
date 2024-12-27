@@ -17,9 +17,9 @@ export const getStarTitles = (t: TranslationFunction) => {
 }
 
 // Trigger the toast component with generic or custom translations
-export const triggerPromiseToast = <T extends any>(response: Promise<T>, t: TranslationFunction, messages?: { success?: string, error?: string }) => {
+export const triggerPromiseToast = <T extends any>(response: Promise<T>, t: TranslationFunction, messages?: { success?: string, error?: string, loading?: string }) => {
     return toast.promise(response, {
-        loading: t('loading'),
+        loading: messages?.loading ?? t('loading'),
         success: messages?.success ?? t('successfullySaved'),
         error: messages?.error ?? t('genericError'),
     });

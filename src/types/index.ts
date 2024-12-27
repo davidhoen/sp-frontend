@@ -164,3 +164,5 @@ export enum StudentRequestStatusEnum {
   Accepted = "answered",
   Rejected = "declined",
 }
+
+export type UserWithSkills = UserType & { skills: SkillType[] }
