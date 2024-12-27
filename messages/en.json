@@ -37,6 +37,7 @@
     "successfullySent": "Successfully sent",
     "successfullySaved": "Successfully saved",
     "successfullyDeleted": "Successfully removed",
+    "confirmArchiveGroup": "Are you sure you want to archive this group?",
     "genericError": "Something went wrong. Please try again later.",
     "requestFeedback": "Request feedback",
     "requestEndorsement": "Request endorsement",

@@ -1,3 +1,4 @@
+import ArchiveGroupButton from "@/components/ArchiveGroupButton"
 import { Chip } from "@/components/Chip"
 import { GroupStudentsList } from "@/components/GroupStudentsList"
 import UpsertGroupModal from "@/components/Modals/Teacher/UpsertGroupModal"
@@ -43,7 +44,7 @@ const GroupsDetail = async (props: { params: Promise<{ id: number }> }) => {
                 <PageTitle className="mb-4">{group.name}</PageTitle>
 
                 <div className="flex gap-2">
-                    <Button className="rounded-full">{t("archiveGroup")}</Button>
+                    <ArchiveGroupButton group={group} />
                     <UpsertGroupModal group={group} >
                         <Button variant="ghost" className="bg-border text-inherit rounded-full"><PencilIcon size={18} /></Button>
                     </UpsertGroupModal>

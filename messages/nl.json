@@ -73,6 +73,7 @@
     "newestFirst": "Nieuwste eerst",
     "oldestFirst": "Oudste eerst",
     "remove": "Verwijderen",
+    "confirmArchiveGroup": "Weet je zeker dat je deze groep wilt archiveren?",
     "definitions": {
       "skills": "Een skill is een specifieke vaardigheid die je kunt leren, ontwikkelen en toepassen. “Pitchen” of “Netwerken” zijn voorbeelden van skills.",
       "competencies": "Een competentie is een verzameling gerelateerde skills die je samen in staat stellen om goed te presteren op een specifiek gebied. De competentie “Onderzoeken” kan bijvoorbeeld skills omvatten als “Interviewen” en “Reflecteren”.",

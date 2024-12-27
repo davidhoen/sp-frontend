@@ -27,7 +27,7 @@ export default function GroupStudentRow({ student, group, mutate }: { student: U
             const res = axiosInstance.put(`/api/teacher/groups/${group.id}`, {
                 ...group,
                 skills: group.skills?.map(skill => skill.id),
-                teachers: group.teachers?.map(skill => skill.id),
+                teachers: group.teachers?.map(teacher => teacher.id),
                 students
             })
             await triggerPromiseToast(res, t, { success: t("successfullyDeleted") })

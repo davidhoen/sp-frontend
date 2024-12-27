@@ -19,9 +19,11 @@ import { triggerPromiseToast } from "@/lib"
 import axiosInstance from "@/lib/axios"
 import { useCoaches } from "@/hooks/use-coaches"
 import { useStudents } from "@/hooks/use-students"
+import { useRouter } from "@/i18n/routing"
 
 const UpsertGroupModal = ({ children, group, mutate }: { children: ReactNode, group?: GroupType, mutate?: () => void }) => {
   const t = useTranslations()
+  const { refresh } = useRouter()
 
   const { data: skills } = useSkills()
   const { data: teachers } = useCoaches()
@@ -69,7 +71,9 @@ const UpsertGroupModal = ({ children, group, mutate }: { children: ReactNode, gr
         archived_at: !!values.archived ? new Date() : null
       })
       await triggerPromiseToast(res, t, { success: t("modals.successfullySaved"), error: t("modals.genericError"), loading: t("modals.loading") })
-      mutate ? mutate() : window.location.reload()
+
+      refresh()
+
       setIsModalOpen(false)
       form.reset()
     }

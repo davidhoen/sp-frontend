@@ -24,7 +24,6 @@ export function GroupStudentsList({ group }: { group: GroupType }) {
     const [isLoading, setIsLoading] = useState(false);
     const [competencyFilterValue, setCompetencyFilterValue] = useState(searchParams.get("skills")?.split(',') || ["all"]);
 
-
     //Method to get the groups for the current page
     const fetchGroups = useCallback(async () => {
         setIsLoading(true);
@@ -40,7 +39,7 @@ export function GroupStudentsList({ group }: { group: GroupType }) {
         finally {
             setIsLoading(false);
         }
-    }, [searchParams]);
+    }, [searchParams, group]);
 
     const handleSkillsFilter = useDebouncedCallback((values: string[]) => {
         const params = new URLSearchParams(searchParams);
