@@ -14,10 +14,11 @@ import { cn } from "@/lib/utils"
 import { GroupType, TeacherGroupsQueryType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useTranslations } from "next-intl"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useState, use } from "react";
 import { useDebouncedCallback } from "use-debounce"
 
-const GroupsOverview = ({ searchParams }: { searchParams: TeacherGroupsQueryType }) => {
+const GroupsOverview = (props: { searchParams: Promise<TeacherGroupsQueryType> }) => {
+    const searchParams = use(props.searchParams);
     const t = useTranslations("general")
     const { replace } = useRouter()
     const pathname = usePathname();
@@ -63,7 +64,7 @@ const GroupsOverview = ({ searchParams }: { searchParams: TeacherGroupsQueryType
     }, [fetchGroups, searchParams]);
 
     const tableHeaders = [t("name"), t("skills"), t("students"), t("actions")]
-    const renderGroupRow = (group: GroupType) => <GroupRow key={group.id} group={group} />
+    const renderGroupRow = (group: GroupType) => <GroupRow key={group.id} group={group} mutate={fetchGroups} />
 
     return <div className="w-full">
         <PageTitle information={t("definitions.groups")}>{t("groups")}</PageTitle>
@@ -71,7 +72,7 @@ const GroupsOverview = ({ searchParams }: { searchParams: TeacherGroupsQueryType
         {/* Search */}
         <div className="flex justify-between my-4">
             <SearchInput placeholder={t("search")} />
-            <UpsertGroupModal>
+            <UpsertGroupModal mutate={fetchGroups}>
                 <Button>{t("add")}</Button>
             </UpsertGroupModal>
         </div>

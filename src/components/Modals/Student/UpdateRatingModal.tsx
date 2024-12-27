@@ -48,8 +48,7 @@ const UpdateRatingModal = ({ children, skillId, currentRating }: { children: Rea
 
     return (
         <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-
-            <DialogTrigger>{children}</DialogTrigger>
+            <DialogTrigger asChild>{children}</DialogTrigger>
             <DialogContent>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

@@ -10,9 +10,10 @@ import { cn } from "@/lib/utils"
 import { CompetencyType, SkillsQueryType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useTranslations } from "next-intl"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useState, use } from "react";
 
-const CompetenciesOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => {
+const CompetenciesOverview = (props: { searchParams: Promise<SkillsQueryType> }) => {
+    const searchParams = use(props.searchParams);
     const t = useTranslations("general")
 
     const [competencies, setCompetencies] = useState<PagingSchema<CompetencyType>>();

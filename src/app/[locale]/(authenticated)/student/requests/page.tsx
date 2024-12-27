@@ -14,9 +14,10 @@ import { cn } from "@/lib/utils"
 import { StudentGroupsQueryType, StudentRequestType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useFormatter, useTranslations } from "next-intl"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useState, use } from "react";
 
-const StudentRequests = ({ searchParams }: { searchParams: StudentGroupsQueryType }) => {
+const StudentRequests = (props: { searchParams: Promise<StudentGroupsQueryType> }) => {
+    const searchParams = use(props.searchParams);
     const t = useTranslations("general")
     const format = useFormatter()
 
@@ -47,7 +48,7 @@ const StudentRequests = ({ searchParams }: { searchParams: StudentGroupsQueryTyp
         fetchRequests();
     }, [fetchRequests, searchParams]);
 
-    const renderRequest = (request: StudentRequestType) => <div className="border p-4 rounded-lg">
+    const renderRequest = (request: StudentRequestType) => <div key={request.id} className="border p-4 rounded-lg">
         <div className="flex justify-between items-center">
             <div className="flex gap-2">
                 <UserAvatar user={request.requester} />
@@ -73,7 +74,7 @@ const StudentRequests = ({ searchParams }: { searchParams: StudentGroupsQueryTyp
             </div>
         </div>
         <div className="w-full flex justify-end">
-            <AddFeedbackModal request={request}>
+            <AddFeedbackModal request={request} parentMutate={fetchRequests}>
                 <Button className="w-full md:w-fit">{t("addFeedback")}</Button>
             </AddFeedbackModal>
         </div>
@@ -89,7 +90,7 @@ const StudentRequests = ({ searchParams }: { searchParams: StudentGroupsQueryTyp
 
         <div className={cn("transition-all duration-500", isLoading ? "blur-md cursor-wait" : "blur-0")}>
             {!!requests ?
-                <Pager pagerObject={requests} renderItem={renderRequest} emptyMessage={t("noEntitiesFound", { entities: t("groups").toLowerCase() })} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-8 items-start" />
+                <Pager pagerObject={requests} renderItem={renderRequest} emptyMessage={t("noEntitiesFound", { entities: t("requests").toLowerCase() })} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-8 items-start" />
                 :
                 <Skeletons amount={15} className="w-full h-28" />
             }

@@ -11,7 +11,8 @@ import { UserPlusIcon } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
 
-const GroupsDetail = async ({ params }: { params: { id: number } }) => {
+const GroupsDetail = async (props: { params: Promise<{ id: number }> }) => {
+    const params = await props.params;
     const t = await getTranslations("general")
     const group = await getGroup(params.id)
     const { user } = await auth()
@@ -48,7 +49,7 @@ const GroupsDetail = async ({ params }: { params: { id: number } }) => {
         <div>
             <SectionTitle>{t("teachers")}</SectionTitle>
             <div className="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-2">
-                {group?.teachers?.map((teacher) => <UserLine key={teacher.id} user={teacher} groupId={group.id} />)}
+                {group?.teachers?.map((teacher) => <UserLine key={teacher.id} user={teacher} groupId={group.id} hideActions={!isEnrolled} />)}
             </div>
         </div>
 

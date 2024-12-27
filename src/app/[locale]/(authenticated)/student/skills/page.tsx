@@ -12,10 +12,11 @@ import { cn } from "@/lib/utils"
 import { CompetencyType, SkillsQueryType, SkillType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useTranslations } from "next-intl"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useState, use } from "react";
 import { useDebouncedCallback } from "use-debounce"
 
-const SkillsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => {
+const SkillsOverview = (props: { searchParams: Promise<SkillsQueryType> }) => {
+    const searchParams = use(props.searchParams);
     const t = useTranslations("general")
     const pathname = usePathname();
     const { replace } = useRouter();

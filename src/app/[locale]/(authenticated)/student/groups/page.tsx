@@ -12,10 +12,11 @@ import { cn } from "@/lib/utils"
 import { StudentGroupsQueryType, GroupType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useTranslations } from "next-intl"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useState, use } from "react";
 import { useDebouncedCallback } from "use-debounce"
 
-const GroupsOverview = ({ searchParams }: { searchParams: StudentGroupsQueryType }) => {
+const GroupsOverview = (props: { searchParams: Promise<StudentGroupsQueryType> }) => {
+    const searchParams = use(props.searchParams);
     const t = useTranslations("general")
     const pathname = usePathname();
     const { replace } = useRouter();
@@ -29,9 +30,9 @@ const GroupsOverview = ({ searchParams }: { searchParams: StudentGroupsQueryType
         try {
             const page = searchParams.page || "1";
             const search = searchParams.search ?? ""
-            const isJoined = searchParams.is_joined ?? ""
+            const is_joined = searchParams.is_joined ?? ""
 
-            const filteredGroups = await getGroups({ query: { page, search, isJoined } });
+            const filteredGroups = await getGroups({ query: { page, search, is_joined } });
 
             setGroups(filteredGroups);
         }

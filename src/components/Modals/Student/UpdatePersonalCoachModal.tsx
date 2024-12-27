@@ -1,6 +1,5 @@
 "use client"
 
-// import { useEvents } from "@/hooks/use-events"
 import { useCoaches } from "@/hooks/use-coaches"
 import { getFullName, triggerPromiseToast } from "@/lib"
 import axiosInstance from "@/lib/axios"
@@ -18,23 +17,27 @@ import UserAvatar from "../../UserAvatar"
 
 const UpdatePersonalCoachModal = ({ children }: { children: ReactNode }) => {
     const t = useTranslations("modals")
-    let { data: coaches } = useCoaches()
+    const { data: coaches } = useCoaches()
 
     const [currentCoach, setCurrentCoach] = useState<UserType | undefined>(undefined)
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     useEffect(() => {
-        fetchCurrentCoach()
-    }, [])
-
-    const fetchCurrentCoach = async () => {
-        await axiosInstance.get<{ data: UserType }>("/api/user?with=personalCoach")
-            .then(({ data: { data: user } }) => {
+        const fetchCurrentCoach = async () => {
+            try {
+                const { data: { data: user } } = await axiosInstance.get<{ data: UserType }>("/api/user?with=personalCoach")
                 if (user.personal_coach) {
                     setCurrentCoach(user.personal_coach)
                 }
-            })
-    }
+            } catch (error) {
+                console.error("Error fetching current coach:", error)
+            }
+        }
+
+        if (isModalOpen) {
+            fetchCurrentCoach()
+        }
+    }, [isModalOpen])
 
     const formSchema = z.object({ coachUserId: z.string() })
     const form = useForm<z.infer<typeof formSchema>>({
@@ -51,7 +54,6 @@ const UpdatePersonalCoachModal = ({ children }: { children: ReactNode }) => {
             await triggerPromiseToast(res, t)
             form.reset()
             setIsModalOpen(false)
-            fetchCurrentCoach()
         }
         catch (error) {
             console.error(error)
@@ -60,9 +62,7 @@ const UpdatePersonalCoachModal = ({ children }: { children: ReactNode }) => {
 
     return (
         <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-            <DialogTrigger>
-                {children}
-            </DialogTrigger>
+            <DialogTrigger asChild>{children}</DialogTrigger>
             <DialogContent>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

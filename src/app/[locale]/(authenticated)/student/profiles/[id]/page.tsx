@@ -7,7 +7,8 @@ import { getProfile, getProfileCompetencies, getProfiles } from "@/lib/queries/s
 import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
 
-const ProfileDetail = async ({ params }: { params: { id: number } }) => {
+const ProfileDetail = async (props: { params: Promise<{ id: number }> }) => {
+    const params = await props.params;
     const t = await getTranslations("general")
     const profile = await getProfile(params.id)
     const competencies = await getProfileCompetencies(params.id)
