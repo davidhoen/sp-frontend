@@ -129,7 +129,8 @@ const UpsertGroupModal = ({ children, group, mutate }: { children: ReactNode, gr
                 <FormItem>
                   <FormLabel>{t("general.skills")}</FormLabel>
                   <FormControl>
-                    <Select options={skills}
+                    <Select
+                      options={skills}
                       placeholder={t("modals.skillPlaceholder")}
                       value={skills?.filter(student => value.includes(student.value))}
                       onChange={(selectedOptions) => {

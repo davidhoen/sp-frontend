@@ -12,12 +12,13 @@ import { cn } from "@/lib/utils"
 import { CompetencyType, SkillsQueryType, SkillType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useTranslations } from "next-intl"
-import { useCallback, useEffect, useState } from "react"
+import { use, useCallback, useEffect, useState } from "react"
 import { useDebouncedCallback } from "use-debounce"
 import { Button } from "@/components/ui/button"
 import UpsertSkillModal from "@/components/Modals/Teacher/UpsertSkillModal"
 
-const SkillsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => {
+const SkillsOverview = (props: { searchParams: Promise<SkillsQueryType> }) => {
+    const searchParams = use(props.searchParams);
     const t = useTranslations("general");
     const pathname = usePathname();
     const { replace } = useRouter();
@@ -25,7 +26,7 @@ const SkillsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => 
     const [skills, setSkills] = useState<PagingSchema<SkillType>>();
     const [competencies, setCompentencies] = useState<CompetencyType[]>();
     const [competencyFilterValue, setCompetencyFilterValue] = useState(searchParams.competencies?.split(',') || ["all"]);
-    const [Loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const handleCompentencyFilter = useDebouncedCallback((values: string[]) => {
         const params = new URLSearchParams(searchParams);
@@ -63,8 +64,8 @@ const SkillsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => 
             const search = searchParams.search ?? ""
             const competencies = searchParams.competencies ?? ""
 
-            const filteredSkills = await getTeacherSkills({query: { page, search, competencies }});
-            filteredSkills?.data.map(skills => ({skills: skills, competencies: skills.competency, numberOfGroup: skills.groups_count}))
+            const filteredSkills = await getTeacherSkills({ query: { page, search, competencies } });
+            filteredSkills?.data.map(skills => ({ skills: skills, competencies: skills.competency, numberOfGroup: skills.groups_count }))
             setSkills(filteredSkills);
             setCompentencies(filteredSkills?.meta?.competencies);
         }
@@ -77,12 +78,12 @@ const SkillsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => 
     }, [searchParams]);
 
     useEffect(() => {
-        //Get the groups on page mount and the search term changes
+        //Get the skills on page mount and the search term changes
         fetchSkills();
     }, [fetchSkills, searchParams]);
 
     const tableHeaders = [t("skills"), t("competence"), t("groups"), t("actions")]
-    const renderSkillRow = (skill: SkillType) => <SkillRow key={skill.id} skill={skill} />
+    const renderSkillRow = (skill: SkillType) => <SkillRow key={skill.id} skill={skill} mutate={fetchSkills} />
 
     return <div className="w-full">
         <PageTitle information={t("definitions.skills")}>{t("skills")}</PageTitle>
@@ -106,13 +107,13 @@ const SkillsOverview = ({ searchParams }: { searchParams: SkillsQueryType }) => 
                 <Skeletons amount={7} wrapperClass="flex gap-4" className="h-10 w-full" />
             }
         </div>
-        
-        <div className={cn("transition-all duration-500", Loading ? "blur-md cursor-wait" : "blur-0")}>
-                   {!!skills ?
-                       <Pager pagerObject={skills} renderItem={renderSkillRow} headerItems={tableHeaders} emptyMessage={t("noEntitiesFound", { entities: t("skills").toLowerCase() })} renderAsTable />
-                       :
-                       <Skeletons amount={15} className="w-full h-14" wrapperClass="grid gap-2" />
-                   }
+
+        <div className={cn("transition-all duration-500", loading ? "blur-md cursor-wait" : "blur-0")}>
+            {!!skills ?
+                <Pager pagerObject={skills} renderItem={renderSkillRow} headerItems={tableHeaders} emptyMessage={t("noEntitiesFound", { entities: t("skills").toLowerCase() })} renderAsTable />
+                :
+                <Skeletons amount={15} className="w-full h-14" wrapperClass="grid gap-2" />
+            }
         </div>
     </div>
 }

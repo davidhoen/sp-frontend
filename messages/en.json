@@ -24,7 +24,7 @@
     "addASkill": "Add a skill",
     "skill": "Skill",
     "skills": "Skills",
-    "competence": "Comeptence",
+    "competence": "Competence",
     "competencies": "Competencies",
     "search": "Search",
     "allSkills": "All skills",
@@ -34,6 +34,7 @@
     "noSkillFound": "This skill does not exist or could not be found at this time.",
     "rating": "Rating",
     "yourJourney": "Your journey",
+    "title": "Title",
     "loading": "Loading...",
     "successfullySent": "Successfully sent",
     "successfullySaved": "Successfully saved",
@@ -169,9 +170,9 @@
     "upsertSkill": {
       "create": "Create a skill",
       "update": "Update skill",
-      "namePlaceholder": "E.g. Presenting",
+      "titlePlaceholder": "E.g. Presenting",
       "descriptionPlaceholder": "E.g. Effectively communicating information or ideas to an audience.",
-      "competenciesPlaceholder": "Select the competence"
+      "competencyPlaceholder": "Select the competence"
     }
   },
   "students": {

@@ -3,12 +3,12 @@ import { CompetencyType } from "@/types"
 import useSWR from "swr"
 
 export const useCompetencies = () => {
-    const url = "/api/student/competencies"
+    const url = "/api/competencies"
     return useSWR(url, () =>
         axiosInstance.get(url)
-            .then((res: { data: { competencies: CompetencyType[] } }) => {
-                if (res.data.competencies.length === 0) return []
-                return res.data.competencies.map((competency) => ({
+            .then((res: { data: { data: CompetencyType[] } }) => {
+                if (res.data?.data.length === 0) return []
+                return res.data.data.map((competency) => ({
                     label: competency.title,
                     value: competency.id
                 }))

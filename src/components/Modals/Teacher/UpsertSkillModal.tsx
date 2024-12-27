@@ -4,7 +4,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { SkillType } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
-import { ReactNode, useState } from "react"
+import { ReactNode, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Button } from "../../ui/button"
@@ -13,33 +13,56 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "../../ui/input"
 import Select from "../../ui/select"
 import { useCompetencies } from "@/hooks/use-compentencies"
+import axiosInstance from "@/lib/axios"
+import { triggerPromiseToast } from "@/lib"
+import { useRouter } from "@/i18n/routing"
+import { useUser } from "@/providers/UserProvider"
 
 const UpsertSkillModal = ({ children, skill }: { children: ReactNode, skill?: SkillType }) => {
   const t = useTranslations()
+  const { refresh } = useRouter()
 
   const { data: competencies } = useCompetencies()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const formSchema = z.object({
-    name: z.string().min(3),
+    title: z.string().min(3),
     desc: z.string().min(3),
-    competenceIds: z.array(z.string()).min(1)
+    competencyId: z.string()
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: skill?.title ?? "",
-      desc: skill?.desc ?? "",
-      competenceIds: skill?.competency ? [skill.competency.id] : []
-    }
+    resolver: zodResolver(formSchema)
   })
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-    setIsModalOpen(false)
-    form.reset()
+  // Reset form when skill changes or modal opens
+  useEffect(() => {
+    if (isModalOpen) {
+      form.reset({
+        title: skill?.title ?? "",
+        desc: skill?.desc ?? "",
+        competencyId: skill?.competency?.id ?? ""
+      })
+    }
+  }, [skill, isModalOpen, form])
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const url = skill ? `/api/teacher/skills/${skill.id}` : `/api/teacher/skills/create`
+      const axiosMethod = skill ? axiosInstance.put : axiosInstance.post
+      const res = axiosMethod(url, {
+        ...values,
+        competency_id: values.competencyId
+      })
+      await triggerPromiseToast(res, t, { success: t("modals.successfullySaved"), error: t("modals.genericError"), loading: t("modals.loading") })
+      refresh()
+      setIsModalOpen(false)
+      form.reset()
+    }
+    catch (error) {
+      console.error(error)
+    }
   }
 
   return (
@@ -53,15 +76,15 @@ const UpsertSkillModal = ({ children, skill }: { children: ReactNode, skill?: Sk
               <DialogTitle>{t(skill ? "modals.upsertSkill.update" : "modals.upsertSkill.create")}</DialogTitle>
             </DialogHeader>
 
-            {/* Title of the feedback */}
+            {/* Title of the skills */}
             <FormField
               control={form.control}
-              name="name"
+              name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("general.name")}</FormLabel>
+                  <FormLabel>{t("general.title")}</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder={t("modals.upsertSkill.namePlaceholder")} />
+                    <Input {...field} placeholder={t("modals.upsertSkill.titlePlaceholder")} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -84,19 +107,16 @@ const UpsertSkillModal = ({ children, skill }: { children: ReactNode, skill?: Sk
 
             <FormField
               control={form.control}
-              name="competenceIds"
+              name="competencyId"
               render={({ field: { onChange, value } }) => (
                 <FormItem>
                   <FormLabel>{t("general.competence")}</FormLabel>
                   <FormControl>
-                    <Select options={competencies}
+                    <Select
+                      options={competencies}
                       placeholder={t("modals.competencePlaceholder")}
-                      value={competencies}
-                      onChange={(selectedOptions) => {
-                        const values = selectedOptions ? selectedOptions.map(option => option.value) : [];
-                        onChange(values);
-                      }}
-                      isMulti
+                      value={competencies?.filter(competency => value.includes(competency.value))}
+                      onChange={(selectedOption) => onChange(selectedOption?.value)}
                     />
                   </FormControl>
                   <FormMessage />

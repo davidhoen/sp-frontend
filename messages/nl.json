@@ -164,6 +164,13 @@
       "skillsPlaceholder": "Selecteer de skill(s)",
       "teachersPlaceholder": "Selecteer de docent(en)",
       "studentsPlaceholder": "Selecteer de student(en)"
+    },
+    "upsertSkill": {
+      "create": "Skill aanmaken",
+      "update": "Skill bewerken",
+      "titlePlaceholder": "Bijv. Presenteren",
+      "descriptionPlaceholder": "Bijv. Presenteren is het overbrengen van informatie aan een publiek.",
+      "competencyPlaceholder": "Selecteer de competentie"
     }
   },
   "students": {

@@ -10,16 +10,25 @@ import UpsertSkillModal from "../Modals/Teacher/UpsertSkillModal"
 import { TableAction } from "../TableActions"
 import { TableCell, TableRow } from "../ui/table"
 import { Link } from "@/i18n/routing"
+import axiosInstance from "@/lib/axios"
+import { triggerPromiseToast } from "@/lib"
 
-export default function SkillRow({ skill }: { skill: SkillType }) {
+export default function SkillRow({ skill, mutate }: { skill: SkillType, mutate: () => void }) {
     const { user } = useUser()
     const t = useTranslations("general")
 
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
-    const deleteSkill = (skillId: string) => {
-        console.log("Delete skill with id: ", skillId)
-        setIsDeleteModalOpen(false)
+    const deleteSkill = async () => {
+        try {
+            const res = axiosInstance.delete(`/api/teacher/skills/${skill.id}`,)
+            await triggerPromiseToast(res, t, { success: t("successfullyDeleted") })
+            mutate && mutate()
+            setIsDeleteModalOpen(false)
+        }
+        catch (error) {
+            console.error(error)
+        }
     }
 
     return <>
@@ -48,9 +57,9 @@ export default function SkillRow({ skill }: { skill: SkillType }) {
             </TableCell>
         </TableRow>
 
-        {/* Delete group modal */}
+        {/* Delete skills modal */}
         <ConfirmActionDialog
-            onContinue={() => deleteSkill(skill.id)}
+            onContinue={() => deleteSkill()}
             onCancel={() => setIsDeleteModalOpen(false)}
             isOpen={isDeleteModalOpen}
             description={t("confirmDeleteEntity", { entity: t("skill").toLowerCase() })}
