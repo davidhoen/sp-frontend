@@ -6,7 +6,7 @@ import StarRating from "@/components/StarRating"
 import TimeLineWithUser from "@/components/Timeline/TimeLineWithUser"
 import PageTitle from "@/components/Typography/PageTitle"
 import SectionTitle from "@/components/Typography/SectionTitle"
-import { getSkill } from "@/lib/queries/server/queries"
+import { getStudentSkill } from "@/lib/queries/server/queries"
 import { PencilIcon } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
@@ -16,7 +16,7 @@ const SkillsDetail = async (props: { params: Promise<{ id: number }> }) => {
     const params = await props.params;
     const t = await getTranslations("general")
 
-    const skill = await getSkill(params.id)
+    const skill = await getStudentSkill(params.id)
     if (!skill) notFound()
 
     return <div className="flex flex-col gap-2">

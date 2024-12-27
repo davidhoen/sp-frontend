@@ -54,6 +54,7 @@
     "confirmRemoveFromGroup": "Weet je zeker dat je deze student uit de groep wilt verwijderen?",
     "view": "Bekijk",
     "title": "Titel",
+    "lastEditedByOn": "Laatst bewerkt door {name} op {date}",
     "other": "Overig",
     "feedbackRequests": "Feedback verzoeken",
     "overview": "Overzicht",

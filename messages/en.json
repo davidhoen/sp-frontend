@@ -35,6 +35,7 @@
     "rating": "Rating",
     "yourJourney": "Your journey",
     "title": "Title",
+    "lastEditedByOn": "Last edited by {name} on {date}",
     "loading": "Loading...",
     "successfullySent": "Successfully sent",
     "successfullySaved": "Successfully saved",
