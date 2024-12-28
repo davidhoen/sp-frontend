@@ -59,7 +59,7 @@ const SkillDetail = async (props: { params: Promise<{ id: number }> }) => {
 
         {/* Competency */}
         <div>
-            <div className="font-bold mb-2">{t("competence")}</div>
+            <div className="font-bold mb-2">{t("competency")}</div>
             {skill.competency && <Link href={`/student/competencies/${skill.competency.id}`}>
                 <div className="bg-sidebar-accent px-4 py-1 rounded-full w-fit">{skill.competency.title}</div>
             </Link>}

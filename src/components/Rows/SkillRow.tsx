@@ -35,8 +35,8 @@ export default function SkillRow({ skill, mutate }: { skill: SkillType, mutate: 
         <TableRow>
             {/* SKill */}
             <TableCell>{skill.title}</TableCell>
-            {/* Competence */}
-            <TableCell>{skill.competency.title}</TableCell>
+            {/* Competency */}
+            <TableCell>{skill.competency?.title}</TableCell>
             {/* Number of Groups */}
             <TableCell>{skill.groups_count}</TableCell>
             {/* Actions */}

@@ -34,6 +34,7 @@
     "archivedGroups": "Gearchiveerde groepen",
     "archived": "Gearchiveerd",
     "archive": "Archiveren",
+    "competency": "Competentie",
     "allSkills": "Alle skills",
     "allCompetencies": "Alle competenties",
     "addedSkills": "Toegevoegde skills",
@@ -106,6 +107,7 @@
     "description": "Beschrijving",
     "saveChanges": "Wijzigingen opslaan",
     "feedback": "Feedback",
+    "overview": "Overzicht",
     "feedbackDescription": "Geef gedetailleerde feedback over de vaardigheid van de student",
     "feedbackPlaceholder": "Type hier je feedback",
     "feedbackTitle": "Feedback titel",
@@ -178,6 +180,15 @@
       "titlePlaceholder": "Bijv. Presenteren",
       "descriptionPlaceholder": "Bijv. Presenteren is het overbrengen van informatie aan een publiek.",
       "competencyPlaceholder": "Selecteer de competentie"
+    },
+    "upsertCompetency": {
+      "create": "Competentie aanmaken",
+      "update": "Competentie bewerken",
+      "titlePlaceholder": "Bijv. Onderzoeken",
+      "descriptionPlaceholder": "Bijv. Beschrijving van de competentie, inclusief waarom deze belangrijk is en in welke situaties deze wordt toegepast.",
+      "overviewPlaceholder": "Bijv. Overzicht van de competentie, inclusief de belangrijkste skills die hierbij horen en hoe deze bijdragen aan succes in een vakgebied.",
+      "skillsPlaceholder": "Selecteer de skill(s)",
+      "profilesPlaceholder": "Selecteer de profiel(en)"
     },
     "upsertProfile": {
       "create": "Profiel aanmaken",

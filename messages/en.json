@@ -8,6 +8,7 @@
     "delete": "Delete",
     "add": "Add",
     "name": "Name",
+    "title": "Title",
     "dashboard": "Dashboard",
     "event": "Event",
     "viewProfile": "View profile",
@@ -27,7 +28,6 @@
     "addASkill": "Add a skill",
     "skill": "Skill",
     "skills": "Skills",
-    "competence": "Competence",
     "profile": "Profile",
     "competencies": "Competencies",
     "search": "Search",
@@ -38,7 +38,6 @@
     "noSkillFound": "This skill does not exist or could not be found at this time.",
     "rating": "Rating",
     "yourJourney": "Your journey",
-    "title": "Title",
     "lastEditedByOn": "Last edited by {name} on {date}",
     "loading": "Loading...",
     "successfullySent": "Successfully sent",
@@ -68,6 +67,7 @@
     "archivedGroups": "Archived groups",
     "archived": "Archived",
     "archive": "Archive",
+    "competency": "Competency",
     "groups": "Groups",
     "teachers": "Teachers",
     "feedbackRequests": "Feedback requests",
@@ -84,7 +84,7 @@
     "remove": "Remove",
     "definitions": {
       "skills": "A skill is a specific ability that you can learn, develop, and apply. “Pitching” or “Networking” are examples of skills.",
-      "competencies": "A competence is a collection of related skills that together enable you to perform well in a specific area. The competence “Researching” might include skills such as “Interviewing” and “Reflecting”.",
+      "competencies": "A competency is a collection of related skills that together enable you to perform well in a specific area. The competency “Researching” might include skills such as “Interviewing” and “Reflecting”.",
       "groups": "A group is a training program that you can enroll in and work on different skills.",
       "profiles": "A profile represents a set of competencies needed to excel in a role or field. If you master multiple competencies of a profile, it means you are an excellent candidate for that role or field.",
       "feedbackRequests": "Feedback requests are requests you can send to others to receive feedback on your skills. You can receive and send feedback requests to teachers and students."
@@ -115,7 +115,7 @@
     "endorsementTitlePlaceholder": "E.g. Final presentation",
     "skill": "Skill",
     "skillPlaceholder": "Select a skill",
-    "competencePlaceholder": "Select a competence",
+    "overview": "Overview",
     "email": "Email",
     "emailPlaceholder": "bob@example.com",
     "loading": "Loading...",
@@ -179,7 +179,16 @@
       "update": "Update skill",
       "titlePlaceholder": "E.g. Presenting",
       "descriptionPlaceholder": "E.g. Effectively communicating information or ideas to an audience.",
-      "competencyPlaceholder": "Select the competence"
+      "competencyPlaceholder": "Select the competency"
+    },
+    "upsertCompetency": {
+      "create": "Create a competency",
+      "update": "Update competency",
+      "titlePlaceholder": "E.g. Researching",
+      "descriptionPlaceholder": "E.g. A description of the competency, including why it is important and in which situations it is applied.",
+      "overviewPlaceholder": "E.g. An overview of the competency, including the key skills it encompasses and how they contribute to success in a field.",
+      "skillsPlaceholder": "Select the skill(s)",
+      "profilesPlaceholder": "Select the profile(s)"
     },
     "upsertProfile": {
       "create": "Create a profile",

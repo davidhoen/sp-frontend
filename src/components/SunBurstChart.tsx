@@ -1,5 +1,4 @@
 'use client'
-
 import React, { useEffect, useRef } from 'react'
 import Sunburst from 'sunburst-chart'
 
@@ -21,6 +20,9 @@ const SunburstChart: React.FC<SunburstChartProps> = ({ data, width = 500, height
     useEffect(() => {
         if (typeof window === 'undefined' || !chartRef.current) return
 
+        // Store the current value of chartRef in a variable
+        const element = chartRef.current
+
         const chart = Sunburst()
         chart
             .width(width)
@@ -40,13 +42,14 @@ const SunburstChart: React.FC<SunburstChartProps> = ({ data, width = 500, height
                 }
                 return colors[d.name as keyof typeof colors] || colors.default
             })
-            .transitionDuration(0) // Add this line to disable transitions
+            .transitionDuration(0)
 
-        chart(chartRef.current)
+        chart(element)
 
+        // Use the stored element reference in cleanup
         return () => {
-            if (chartRef.current) {
-                chartRef.current.innerHTML = ''
+            if (element) {
+                element.innerHTML = ''
             }
         }
     }, [data, width, height])
@@ -55,4 +58,3 @@ const SunburstChart: React.FC<SunburstChartProps> = ({ data, width = 500, height
 }
 
 export default SunburstChart
-
