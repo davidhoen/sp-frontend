@@ -12,6 +12,7 @@ import { ConfirmActionDialog } from "../Modals/ConfirmActionModal"
 import UpsertProfileModal from "../Modals/Teacher/UpsertProfileModal"
 import { TableAction } from "../TableActions"
 import { TableCell, TableRow } from "../ui/table"
+import ProfileTile from "../ProfileTile"
 
 export default function ProfileRow({ profile, mutate }: { profile: ProfileWithCompetencies, mutate: () => void }) {
     const { user } = useUser()
@@ -34,7 +35,7 @@ export default function ProfileRow({ profile, mutate }: { profile: ProfileWithCo
     return <>
         <TableRow>
             {/* Title */}
-            <TableCell>{profile.title}</TableCell>
+            <TableCell><ProfileTile profile={profile} className="h-11 w-44" /></TableCell>
             {/* Competencies */}
             <TableCell>
                 <div className="flex gap-2">
@@ -51,7 +52,7 @@ export default function ProfileRow({ profile, mutate }: { profile: ProfileWithCo
                 </UpsertProfileModal>
 
                 {/* Delete (for admins) */}
-                {user?.is_admin && <div onClick={() => setIsDeleteModalOpen(true)}><TableAction type="delete" /></div>}
+                {!user?.is_admin && <div onClick={() => setIsDeleteModalOpen(true)}><TableAction type="delete" /></div>}
             </TableCell>
         </TableRow>
 

@@ -1,9 +1,11 @@
 import { icons, Loader2Icon, LucideIcon } from "lucide-react"
 import { useState, useMemo, useEffect } from "react"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose, DialogDescription } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { useTranslations } from "next-intl"
+import { Link } from "@/i18n/routing"
 
 interface IconPickerProps {
     value: string
@@ -11,6 +13,8 @@ interface IconPickerProps {
 }
 
 export function IconPicker({ value, onChange }: IconPickerProps) {
+    const t = useTranslations("general")
+
     const [open, setOpen] = useState(false)
     const [searchTerm, setSearchTerm] = useState("")
     const [isLoading, setIsLoading] = useState(true);
@@ -39,16 +43,19 @@ export function IconPicker({ value, onChange }: IconPickerProps) {
             >
                 <div className="flex items-center gap-2">
                     {SelectedIcon ? <SelectedIcon size={16} /> : <div className="h-4 w-4" />}
-                    <span>{value || "Select an icon"}</span>
+                    <span>{value || t("selectIcon")}</span>
                 </div>
             </Button>
             <DialogContent className="max-w-3xl">
                 <DialogHeader>
-                    <DialogTitle>Select an icon</DialogTitle>
+                    <DialogTitle>{t("selectIcon")}</DialogTitle>
+                    <DialogDescription>{t.rich("iconPickerDescription", {
+                        link: (chunks) => <u><Link href="https://lucide.dev/icons/?focus" target="_blank" rel="noopener noreferrer">{chunks}</Link></u>
+                    })}</DialogDescription>
                 </DialogHeader>
                 <div className="p-4">
                     <Input
-                        placeholder="Search icons..."
+                        placeholder={t("searchIcons")}
                         value={searchTerm}
                         onChange={({ target: { value } }) => setSearchTerm(value)}
                         className="mb-4"
@@ -82,7 +89,7 @@ export function IconPicker({ value, onChange }: IconPickerProps) {
                 </div>
                 <DialogFooter>
                     <DialogClose asChild>
-                        <Button variant="outline">Cancel</Button>
+                        <Button variant="outline">{t("cancel")}</Button>
                     </DialogClose>
                 </DialogFooter>
             </DialogContent>

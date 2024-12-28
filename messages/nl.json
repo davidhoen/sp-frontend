@@ -12,6 +12,7 @@
     "profile": "Profiel",
     "color": "Kleur",
     "icon": "Icoon",
+    "iconPickerDescription": "Kies uit één van de onderstaande Lucide iconen. Voor een volledig overzicht en uitgebreidere zoekfunctie, ga naar de <link>Lucide iconen lijst.</link>",
     "dashboard": "Dashboard",
     "viewProfile": "Bekijk profiel",
     "logout": "Uitloggen",
@@ -77,6 +78,8 @@
     "newestFirst": "Nieuwste eerst",
     "oldestFirst": "Oudste eerst",
     "remove": "Verwijderen",
+    "selectIcon": "Selecteer een icoon",
+    "searchIcons": "Zoek een icoon...",
     "confirmArchiveGroup": "Weet je zeker dat je deze groep wilt archiveren?",
     "definitions": {
       "skills": "Een skill is een specifieke vaardigheid die je kunt leren, ontwikkelen en toepassen. “Pitchen” of “Netwerken” zijn voorbeelden van skills.",
