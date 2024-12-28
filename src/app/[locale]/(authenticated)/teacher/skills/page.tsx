@@ -97,7 +97,7 @@ const SkillsOverview = (props: { searchParams: Promise<SkillsQueryType> }) => {
         </div>
 
         {/* Compentencies filter*/}
-        <div className="my-4">
+        <div className="my-4 overflow-x-auto no-scrollbar">
             {!!competencies ?
                 <ToggleGroup type="multiple" value={competencyFilterValue} onValueChange={handleCompentencyFilter}>
                     <ToggleGroupItem variant="outline" value="all">{t("allEntities", { entities: t("competencies").toLowerCase() })}</ToggleGroupItem>

@@ -166,3 +166,5 @@ export enum StudentRequestStatusEnum {
 }
 
 export type UserWithSkills = UserType & { skills: SkillType[] }
+
+export type SkillWithGroups = SkillType & { groups: GroupType[] }

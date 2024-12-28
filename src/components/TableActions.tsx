@@ -1,10 +1,10 @@
 "use client"
 
 import { cn } from "@/lib/utils";
-import { CircleDashedIcon, EyeIcon, LucideIcon, PencilLineIcon, TrashIcon } from "lucide-react";
+import { ArchiveIcon, CircleDashedIcon, EyeIcon, LucideIcon, PencilLineIcon, TrashIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-export function TableAction({ label, icon = CircleDashedIcon, type }: { label?: string, icon?: LucideIcon, type?: "edit" | "delete" | "view" }) {
+export function TableAction({ label, icon = CircleDashedIcon, type, resizes }: { label?: string, icon?: LucideIcon, type?: "edit" | "delete" | "view" | "archive", resizes?: boolean }) {
   const t = useTranslations("general")
 
   if (type === "edit") {
@@ -19,12 +19,16 @@ export function TableAction({ label, icon = CircleDashedIcon, type }: { label?: 
     icon = EyeIcon
     label = t("view")
   }
+  else if (type === "archive") {
+    icon = ArchiveIcon
+    label = t("archive")
+  }
   const Icon = icon
 
-  return <div className={cn("flex items-center gap-2 p-0.5 rounded-full bg-border cursor-pointer")}>
-    <div className="p-1.5 bg-background rounded-full">
+  return <div className={cn("flex items-center gap-2 p-0.5 rounded-full bg-border cursor-pointer w-fit h-fit", resizes && "")}>
+    <div className={cn("p-1.5 bg-background rounded-full", resizes && "bg-inherit sm:bg-background")}>
       <Icon size={16} strokeWidth={2.5} />
     </div>
-    <span className="font-medium mr-3">{label}</span>
+    <span className={cn("font-medium mr-3", resizes && "hidden sm:block")}>{label}</span>
   </div>
 }

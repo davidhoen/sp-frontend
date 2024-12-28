@@ -1,7 +1,7 @@
 "use server"
 
 import { getCompetencyRating } from "@/lib";
-import { CompetencyType, EndorsementRequestType, EndorsementType, GroupType, ProfileType, SkillType } from "@/types";
+import { CompetencyType, EndorsementRequestType, EndorsementType, GroupType, ProfileType, SkillType, SkillWithGroups } from "@/types";
 import { getData } from "./data-fetching";
 
 // Only the detail pages are rendered serverside 
@@ -18,7 +18,7 @@ export const getStudentSkill = async (id: number) => {
 
 export const getTeacherSkill = async (id: number) => {
     try {
-        const { result } = await getData<SkillType>(`/api/teacher/skills/${id}?with=skill,createdBy`);
+        const { result } = await getData<SkillWithGroups>(`/api/teacher/skills/${id}?with=groups`);
         return result
     }
     catch (error) {
