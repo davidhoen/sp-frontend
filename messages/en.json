@@ -25,7 +25,6 @@
     "addASkill": "Add a skill",
     "skill": "Skill",
     "skills": "Skills",
-    "competence": "Competence",
     "competencies": "Competencies",
     "search": "Search",
     "allSkills": "All skills",
@@ -35,7 +34,6 @@
     "noSkillFound": "This skill does not exist or could not be found at this time.",
     "rating": "Rating",
     "yourJourney": "Your journey",
-    "title": "Title",
     "lastEditedByOn": "Last edited by {name} on {date}",
     "loading": "Loading...",
     "successfullySent": "Successfully sent",
@@ -80,7 +78,7 @@
     "remove": "Remove",
     "definitions": {
       "skills": "A skill is a specific ability that you can learn, develop, and apply. “Pitching” or “Networking” are examples of skills.",
-      "competencies": "A competence is a collection of related skills that together enable you to perform well in a specific area. The competence “Researching” might include skills such as “Interviewing” and “Reflecting”.",
+      "competencies": "A competency is a collection of related skills that together enable you to perform well in a specific area. The competency “Researching” might include skills such as “Interviewing” and “Reflecting”.",
       "groups": "A group is a training program that you can enroll in and work on different skills.",
       "profiles": "A profile represents a set of competencies needed to excel in a role or field. If you master multiple competencies of a profile, it means you are an excellent candidate for that role or field.",
       "feedbackRequests": "Feedback requests are requests you can send to others to receive feedback on your skills. You can receive and send feedback requests to teachers and students."

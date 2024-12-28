@@ -31,7 +31,7 @@ const UpsertCompetencyModal = ({ children, competency, mutate }: { children: Rea
     title: z.string().min(3),
     desc: z.string().min(3),
     overview: z.string().min(3),
-    skillIds: z.array(z.string()).min(1),
+    skillIds: z.array(z.string()),
     profileIds: z.array(z.string()).min(1),
   })
 

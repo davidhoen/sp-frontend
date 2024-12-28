@@ -110,7 +110,7 @@ const UpsertSkillModal = ({ children, skill }: { children: ReactNode, skill?: Sk
               name="competencyId"
               render={({ field: { onChange, value } }) => (
                 <FormItem>
-                  <FormLabel>{t("general.competence")}</FormLabel>
+                  <FormLabel>{t("general.competency")}</FormLabel>
                   <FormControl>
                     <Select
                       options={competencies}
