@@ -93,7 +93,7 @@ const UpsertGroupModal = ({ children, group, mutate }: { children: ReactNode, gr
               <DialogTitle>{t(group ? "modals.upsertGroup.update" : "modals.upsertGroup.create")}</DialogTitle>
             </DialogHeader>
 
-            {/* Title of the feedback */}
+            {/* Name of the group */}
             <FormField
               control={form.control}
               name="name"

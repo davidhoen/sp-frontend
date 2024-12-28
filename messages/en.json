@@ -13,6 +13,8 @@
     "viewProfile": "View profile",
     "logout": "Logout",
     "you": "You",
+    "color": "Color",
+    "icon": "Icon",
     "definition": "Definition:",
     "endorsement": "Endorsement",
     "endorsements": "Endorsements",
@@ -25,6 +27,7 @@
     "skill": "Skill",
     "skills": "Skills",
     "competence": "Competence",
+    "profile": "Profile",
     "competencies": "Competencies",
     "search": "Search",
     "allSkills": "All skills",
@@ -174,6 +177,13 @@
       "titlePlaceholder": "E.g. Presenting",
       "descriptionPlaceholder": "E.g. Effectively communicating information or ideas to an audience.",
       "competencyPlaceholder": "Select the competence"
+    },
+    "upsertProfile": {
+      "create": "Create a profile",
+      "update": "Update profile",
+      "titlePlaceholder": "Bijv. Technologist",
+      "descriptionPlaceholder": "E.g. This profile includes competencies needed to excel in a specific role or field.",
+      "competenciesPlaceholder": "Select the competencies"
     }
   },
   "students": {

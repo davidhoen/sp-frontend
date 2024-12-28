@@ -9,6 +9,9 @@
     "delete": "Verwijderen",
     "add": "Toevoegen",
     "name": "Naam",
+    "profile": "Profiel",
+    "color": "Kleur",
+    "icon": "Icoon",
     "dashboard": "Dashboard",
     "viewProfile": "Bekijk profiel",
     "logout": "Uitloggen",
@@ -172,6 +175,13 @@
       "titlePlaceholder": "Bijv. Presenteren",
       "descriptionPlaceholder": "Bijv. Presenteren is het overbrengen van informatie aan een publiek.",
       "competencyPlaceholder": "Selecteer de competentie"
+    },
+    "upsertProfile": {
+      "create": "Profiel aanmaken",
+      "update": "Profiel bewerken",
+      "titlePlaceholder": "Bijv. Technoloog",
+      "descriptionPlaceholder": "Bijv. Dit profiel bevat competenties die nodig zijn om uit te blinken in een specifieke rol of vakgebied.",
+      "competenciesPlaceholder": "Selecteer de competentie(s)"
     }
   },
   "students": {

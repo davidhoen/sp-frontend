@@ -1,7 +1,6 @@
 "use client"
 
 import { icons } from "lucide-react"
-
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar"
 import { Link, usePathname } from "@/i18n/routing"
 import { cn } from "@/lib/utils"

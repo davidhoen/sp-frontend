@@ -79,7 +79,7 @@ export const getEnrolledGroups = async () => {
     }
 }
 
-export const getProfiles = async () => {
+export const getStudentProfiles = async () => {
     try {
         const route = `/api/student/profiles`
         const { result } = await getData<ProfileType[]>(route);
