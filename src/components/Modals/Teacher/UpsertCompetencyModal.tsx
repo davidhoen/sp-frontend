@@ -83,7 +83,7 @@ const UpsertCompetencyModal = ({ children, competency, mutate }: { children: Rea
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
 
             <DialogHeader>
-              <DialogTitle>{t(competency ? "modals.upsertCompetency.create" : "modals.upsertCompetency.update")}</DialogTitle>
+              <DialogTitle>{t(competency ? "modals.upsertCompetency.update" : "modals.upsertCompetency.create")}</DialogTitle>
             </DialogHeader>
 
             {/* Title of the competency */}
