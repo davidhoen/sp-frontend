@@ -90,7 +90,7 @@ const UpsertGroupModal = ({ children, group, mutate }: { children: ReactNode, gr
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
 
             <DialogHeader>
-              <DialogTitle>{t(group ? "modals.upsertGroup.create" : "modals.upsertGroup.update")}</DialogTitle>
+              <DialogTitle>{t(group ? "modals.upsertGroup.update" : "modals.upsertGroup.create")}</DialogTitle>
             </DialogHeader>
 
             {/* Title of the feedback */}
@@ -129,7 +129,8 @@ const UpsertGroupModal = ({ children, group, mutate }: { children: ReactNode, gr
                 <FormItem>
                   <FormLabel>{t("general.skills")}</FormLabel>
                   <FormControl>
-                    <Select options={skills}
+                    <Select
+                      options={skills}
                       placeholder={t("modals.skillPlaceholder")}
                       value={skills?.filter(student => value.includes(student.value))}
                       onChange={(selectedOptions) => {

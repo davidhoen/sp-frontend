@@ -2,6 +2,7 @@ import ArchiveGroupButton from "@/components/ArchiveGroupButton"
 import { Chip } from "@/components/Chip"
 import { GroupStudentsList } from "@/components/GroupStudentsList"
 import UpsertGroupModal from "@/components/Modals/Teacher/UpsertGroupModal"
+import { TableAction } from "@/components/TableActions"
 import PageTitle from "@/components/Typography/PageTitle"
 import SectionTitle from "@/components/Typography/SectionTitle"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
@@ -39,14 +40,14 @@ const GroupsDetail = async (props: { params: Promise<{ id: number }> }) => {
         </div>
 
         <div className="">
-            <div className="flex flex-col sm:flex-row sm:justify-between lg:justify-normal lg:gap-8 mb-4">
+            <div className="flex flex-col sm:flex-row sm:justify-between items-center lg:justify-normal lg:gap-8 mb-4">
                 {/* Title */}
                 <PageTitle className="mb-4">{group.name}</PageTitle>
 
                 <div className="flex gap-2">
                     <ArchiveGroupButton group={group} />
                     <UpsertGroupModal group={group} >
-                        <Button variant="ghost" className="bg-border text-inherit rounded-full"><PencilIcon size={18} /></Button>
+                        <div><TableAction type="edit" resizes /></div>
                     </UpsertGroupModal>
                 </div>
             </div>
