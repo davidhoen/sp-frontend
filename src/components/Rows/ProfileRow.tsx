@@ -52,7 +52,7 @@ export default function ProfileRow({ profile, mutate }: { profile: ProfileWithCo
                 </UpsertProfileModal>
 
                 {/* Delete (for admins) */}
-                {!user?.is_admin && <div onClick={() => setIsDeleteModalOpen(true)}><TableAction type="delete" /></div>}
+                {user?.is_admin && <div onClick={() => setIsDeleteModalOpen(true)}><TableAction type="delete" /></div>}
             </TableCell>
         </TableRow>
 
