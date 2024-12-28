@@ -30,6 +30,7 @@
     "archivedGroups": "Gearchiveerde groepen",
     "archived": "Gearchiveerd",
     "archiveGroup": "Groep archiveren",
+    "competency": "Competentie",
     "allSkills": "Alle skills",
     "allCompetencies": "Alle competenties",
     "addedSkills": "Toegevoegde skills",
@@ -99,6 +100,7 @@
     "description": "Beschrijving",
     "saveChanges": "Wijzigingen opslaan",
     "feedback": "Feedback",
+    "overview": "Overzicht",
     "feedbackDescription": "Geef gedetailleerde feedback over de vaardigheid van de student",
     "feedbackPlaceholder": "Type hier je feedback",
     "feedbackTitle": "Feedback titel",
@@ -164,6 +166,15 @@
       "skillsPlaceholder": "Selecteer de skill(s)",
       "teachersPlaceholder": "Selecteer de docent(en)",
       "studentsPlaceholder": "Selecteer de student(en)"
+    },
+    "upsertCompetency": {
+      "create": "Competentie aanmaken",
+      "update": "Competentie bewerken",
+      "titlePlaceholder": "Bijv. Onderzoeken",
+      "descriptionPlaceholder": "Bijv. Beschrijving van de competentie, inclusief waarom deze belangrijk is en in welke situaties deze wordt toegepast.",
+      "overviewPlaceholder": "Bijv. Overzicht van de competentie, inclusief de belangrijkste skills die hierbij horen en hoe deze bijdragen aan succes in een vakgebied.",
+      "skillsPlaceholder": "Selecteer de skill(s)",
+      "profilesPlaceholder": "Selecteer de profiel(en)"
     }
   },
   "students": {

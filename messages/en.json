@@ -8,6 +8,7 @@
     "delete": "Delete",
     "add": "Add",
     "name": "Name",
+    "title": "Title",
     "dashboard": "Dashboard",
     "event": "Event",
     "viewProfile": "View profile",
@@ -59,6 +60,7 @@
     "archivedGroups": "Archived groups",
     "archived": "Archived",
     "archiveGroup": "Archive group",
+    "competency": "Competency",
     "groups": "Groups",
     "teachers": "Teachers",
     "feedbackRequests": "Feedback requests",
@@ -106,6 +108,7 @@
     "endorsementTitlePlaceholder": "E.g. Final presentation",
     "skill": "Skill",
     "skillPlaceholder": "Select a skill",
+    "overview": "Overview",
     "email": "Email",
     "emailPlaceholder": "bob@example.com",
     "loading": "Loading...",
@@ -163,6 +166,15 @@
       "skillsPlaceholder": "Select the skill(s)",
       "teachersPlaceholder": "Select the teacher(s)",
       "studentsPlaceholder": "Select the student(s)"
+    },
+    "upsertCompetency": {
+      "create": "Create a competency",
+      "update": "Update competency",
+      "titlePlaceholder": "E.g. Researching",
+      "descriptionPlaceholder": "E.g. A description of the competency, including why it is important and in which situations it is applied.",
+      "overviewPlaceholder": "E.g. An overview of the competency, including the key skills it encompasses and how they contribute to success in a field.",
+      "skillsPlaceholder": "Select the skill(s)",
+      "profilesPlaceholder": "Select the profile(s)"
     }
   },
   "students": {
