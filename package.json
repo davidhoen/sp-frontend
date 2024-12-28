@@ -68,7 +68,7 @@
   "devDependencies": {
     "@playwright/test": "^1.49.0",
     "@types/cookie": "^1.0.0",
-    "@types/node": "^20",
+    "@types/node": "^22",
     "@types/qs": "^6.9.17",
     "@types/react": "19.0.2",
     "@types/react-dom": "19.0.2",
