@@ -8,7 +8,7 @@ import { getData } from "./data-fetching";
 
 export const getStudentSkill = async (id: number) => {
     try {
-        const { result } = await getData<SkillType>(`/api/student/skills/${id}?with=skill,createdBy`);
+        const { result } = await getData<SkillType>(`/api/student/skills/${id}`);
         return result
     }
     catch (error) {

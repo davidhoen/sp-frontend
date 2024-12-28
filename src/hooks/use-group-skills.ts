@@ -3,7 +3,8 @@ import { SkillType } from "@/types"
 import useSWR from "swr"
 
 export const useGroupSkills = (id?: string) => {
-    const url = id ? `/api/student/groups/${id}/skills` : ``
+    // Crazy number of skills to prevent pagination in dropdowns
+    const url = id ? `/api/student/groups/${id}/skills?per_page=500` : ``
     return useSWR(url, () =>
         axiosInstance.get(url)
             .then((res: { data: { data: SkillType[] } }) => {
