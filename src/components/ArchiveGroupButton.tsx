@@ -8,6 +8,7 @@ import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { ConfirmActionDialog } from "./Modals/ConfirmActionModal"
 import { Button } from "./ui/button"
+import { TableAction } from "./TableActions"
 
 export default function ArchiveGroupButton({ group }: { group: GroupType }) {
     const t = useTranslations("general")
@@ -34,7 +35,9 @@ export default function ArchiveGroupButton({ group }: { group: GroupType }) {
 
     return (
         <>
-            {!group.archived_at && <Button className="rounded-full" onClick={() => setIsArchiveModalOpen(true)}>{t("archiveGroup")}</Button>}
+            {!group.archived_at && <div onClick={() => setIsArchiveModalOpen(true)}>
+                <TableAction type="archive" resizes />
+            </div>}
             {/* Archive group modal */}
             <ConfirmActionDialog
                 onContinue={() => archiveGroup()}

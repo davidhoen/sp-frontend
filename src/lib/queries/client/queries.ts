@@ -1,5 +1,5 @@
 import axiosInstance from "@/lib/axios";
-import { CompetencyType, EndorsementRequestType, GroupType, ProfileType, SkillType, StudentRequestType, UserWithSkills } from "@/types";
+import { CompetencyType, GroupType, SkillType, StudentRequestType, UserWithSkills } from "@/types";
 import { UserType } from "@/types/auth";
 import { PagingSchema } from "@/types/pagination";
 
@@ -7,6 +7,18 @@ export const getSkills = async ({ page, search, competencies, isAdded }: { page:
     try {
         // Add page params and availableCompentencies to get the competencies connected to the skills
         const route = `/api/student/skills/?availableCompentencies=true&page=${page}&search=${search}&competencies=${competencies}&is_added=${isAdded}`
+        const { data } = await axiosInstance.get<PagingSchema<SkillType>>(route);
+        return data;
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+
+export const getTeacherSkills = async ({ query }: { query: Record<string, string> }) => {
+    try {
+        const queryString = new URLSearchParams(query).toString();
+        const route = `/api/teacher/skills?with=competency&${queryString}`
         const { data } = await axiosInstance.get<PagingSchema<SkillType>>(route);
         return data;
     }

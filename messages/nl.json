@@ -29,7 +29,7 @@
     "activeGroups": "Actieve groepen",
     "archivedGroups": "Gearchiveerde groepen",
     "archived": "Gearchiveerd",
-    "archiveGroup": "Groep archiveren",
+    "archive": "Archiveren",
     "competency": "Competentie",
     "allSkills": "Alle skills",
     "allCompetencies": "Alle competenties",
@@ -55,6 +55,7 @@
     "confirmRemoveFromGroup": "Weet je zeker dat je deze student uit de groep wilt verwijderen?",
     "view": "Bekijk",
     "title": "Titel",
+    "lastEditedByOn": "Laatst bewerkt door {name} op {date}",
     "other": "Overig",
     "feedbackRequests": "Feedback verzoeken",
     "overview": "Overzicht",
@@ -166,6 +167,13 @@
       "skillsPlaceholder": "Selecteer de skill(s)",
       "teachersPlaceholder": "Selecteer de docent(en)",
       "studentsPlaceholder": "Selecteer de student(en)"
+    },
+    "upsertSkill": {
+      "create": "Skill aanmaken",
+      "update": "Skill bewerken",
+      "titlePlaceholder": "Bijv. Presenteren",
+      "descriptionPlaceholder": "Bijv. Presenteren is het overbrengen van informatie aan een publiek.",
+      "competencyPlaceholder": "Selecteer de competentie"
     },
     "upsertCompetency": {
       "create": "Competentie aanmaken",

@@ -25,6 +25,7 @@
     "addASkill": "Add a skill",
     "skill": "Skill",
     "skills": "Skills",
+    "competence": "Competence",
     "competencies": "Competencies",
     "search": "Search",
     "allSkills": "All skills",
@@ -34,6 +35,8 @@
     "noSkillFound": "This skill does not exist or could not be found at this time.",
     "rating": "Rating",
     "yourJourney": "Your journey",
+    "title": "Title",
+    "lastEditedByOn": "Last edited by {name} on {date}",
     "loading": "Loading...",
     "successfullySent": "Successfully sent",
     "successfullySaved": "Successfully saved",
@@ -59,7 +62,7 @@
     "activeGroups": "Active groups",
     "archivedGroups": "Archived groups",
     "archived": "Archived",
-    "archiveGroup": "Archive group",
+    "archive": "Archive",
     "competency": "Competency",
     "groups": "Groups",
     "teachers": "Teachers",
@@ -166,6 +169,13 @@
       "skillsPlaceholder": "Select the skill(s)",
       "teachersPlaceholder": "Select the teacher(s)",
       "studentsPlaceholder": "Select the student(s)"
+    },
+    "upsertSkill": {
+      "create": "Create a skill",
+      "update": "Update skill",
+      "titlePlaceholder": "E.g. Presenting",
+      "descriptionPlaceholder": "E.g. Effectively communicating information or ideas to an audience.",
+      "competencyPlaceholder": "Select the competency"
     },
     "upsertCompetency": {
       "create": "Create a competency",
