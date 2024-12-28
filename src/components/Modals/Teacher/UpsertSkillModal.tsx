@@ -114,7 +114,7 @@ const UpsertSkillModal = ({ children, skill }: { children: ReactNode, skill?: Sk
                   <FormControl>
                     <Select
                       options={competencies}
-                      placeholder={t("modals.competencePlaceholder")}
+                      placeholder={t("modals.upsertSkill.competencyPlaceholder")}
                       value={competencies?.filter(competency => value.includes(competency.value))}
                       onChange={(selectedOption) => onChange(selectedOption?.value)}
                     />
