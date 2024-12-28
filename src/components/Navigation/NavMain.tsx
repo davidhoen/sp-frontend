@@ -6,13 +6,16 @@ import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/c
 import { Link, usePathname } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
 import { NavItem } from "@/types"
+import { useUser } from "@/providers/UserProvider"
 
 export function NavMain({ items }: { items: NavItem[] }) {
   const pathname = usePathname()
   const { setOpenMobile } = useSidebar()
+  const { user } = useUser()
   return (
     <SidebarMenu className="px-4">
       {items.map(item => {
+        // if (item.adminOnly && !user?.is_admin) return null
         item.isActive = pathname === item.url + '/'
         const Icon = icons[item.icon as keyof typeof icons] || icons["CircleDashed"]
         return (

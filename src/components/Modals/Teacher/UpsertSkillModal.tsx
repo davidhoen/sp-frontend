@@ -110,11 +110,11 @@ const UpsertSkillModal = ({ children, skill }: { children: ReactNode, skill?: Sk
               name="competencyId"
               render={({ field: { onChange, value } }) => (
                 <FormItem>
-                  <FormLabel>{t("general.competence")}</FormLabel>
+                  <FormLabel>{t("general.competency")}</FormLabel>
                   <FormControl>
                     <Select
                       options={competencies}
-                      placeholder={t("modals.competencePlaceholder")}
+                      placeholder={t("modals.upsertSkill.competencyPlaceholder")}
                       value={competencies?.filter(competency => value.includes(competency.value))}
                       onChange={(selectedOption) => onChange(selectedOption?.value)}
                     />

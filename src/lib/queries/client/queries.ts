@@ -27,9 +27,10 @@ export const getTeacherSkills = async ({ query }: { query: Record<string, string
     }
 }
 
-export const getCompetencies = async ({ page, search }: { page: number; search: string; }) => {
+export const getCompetencies = async ({ query }: { query: Record<string, string> }) => {
     try {
-        const route = `/api/competencies?with=skills&page=${page}&search=${search}`
+        const queryString = new URLSearchParams(query).toString();
+        const route = `/api/competencies?with=skills,profiles&${queryString}`
         const { data } = await axiosInstance.get<PagingSchema<CompetencyType>>(route);
         return data;
     }

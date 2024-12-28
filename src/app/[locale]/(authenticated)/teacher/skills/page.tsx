@@ -82,7 +82,7 @@ const SkillsOverview = (props: { searchParams: Promise<SkillsQueryType> }) => {
         fetchSkills();
     }, [fetchSkills, searchParams]);
 
-    const tableHeaders = [t("skills"), t("competence"), t("groups"), t("actions")]
+    const tableHeaders = [t("skills"), t("competency"), t("groups"), t("actions")]
     const renderSkillRow = (skill: SkillType) => <SkillRow key={skill.id} skill={skill} mutate={fetchSkills} />
 
     return <div className="w-full">
@@ -101,7 +101,7 @@ const SkillsOverview = (props: { searchParams: Promise<SkillsQueryType> }) => {
             {!!competencies ?
                 <ToggleGroup type="multiple" value={competencyFilterValue} onValueChange={handleCompentencyFilter}>
                     <ToggleGroupItem variant="outline" value="all">{t("allEntities", { entities: t("competencies").toLowerCase() })}</ToggleGroupItem>
-                    {competencies?.map((competency) => (<ToggleGroupItem key={competency.id} variant="outline" value={competency.id}>{competency.title}</ToggleGroupItem>))}
+                    {competencies?.map((competency) => competency && (<ToggleGroupItem key={competency.id} variant="outline" value={competency.id}>{competency.title}</ToggleGroupItem>))}
                 </ToggleGroup>
                 :
                 <Skeletons amount={7} wrapperClass="flex gap-4" className="h-10 w-full" />

@@ -7,6 +7,7 @@ export type NavItem = {
   url: string
   icon: string,
   isActive?: boolean
+  adminOnly?: boolean
 }
 
 export type TranslationFunction = ReturnType<typeof useTranslations>;
