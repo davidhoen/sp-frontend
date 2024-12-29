@@ -1,7 +1,7 @@
 {
   "name": "skills-passport-frontend",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.2.0",
+  "private": false,
   "keywords": [
     "skillspassport",
     "laravel",
@@ -9,7 +9,7 @@
     "laravel-breeze",
     "next",
     "typescript",
-    "next-v14"
+    "next-v15"
   ],
   "scripts": {
     "dev": "next dev --turbopack",
