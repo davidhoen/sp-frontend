@@ -1,5 +1,5 @@
 import axiosInstance from "@/lib/axios";
-import { CompetencyType, GroupType, SkillType, StudentRequestType, UserWithSkills } from "@/types";
+import { CompetencyType, GroupType, SkillType, StudentRequestType, UserWithSkills, UserWithSkillsAndGroups } from "@/types";
 import { UserType } from "@/types/auth";
 import { PagingSchema } from "@/types/pagination";
 
@@ -67,6 +67,18 @@ export const getGroupStudents = async ({ groupId, query }: { groupId: string, qu
         const queryString = new URLSearchParams(query).toString();
         const route = `/api/teacher/groups/${groupId}/students?with=skills&${queryString}`
         const { data } = await axiosInstance.get<PagingSchema<UserWithSkills>>(route);
+        return data;
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+
+export const getStudents = async ({ query }: { query: Record<string, string> }) => {
+    try {
+        const queryString = new URLSearchParams(query).toString();
+        const route = `/api/teacher/students?with=skills,groups&${queryString}`
+        const { data } = await axiosInstance.get<PagingSchema<UserWithSkillsAndGroups>>(route);
         return data;
     }
     catch (error) {

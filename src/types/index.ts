@@ -40,6 +40,8 @@ export type SkillType = {
   desc?: string
   groups_count: number
   is_added: boolean
+  feedbacks_count?: number
+  endorsements_count?: number
   competency: CompetencyType
   created_at: Date
   rating: number
@@ -127,6 +129,11 @@ export type TeacherGroupsQueryType = {
   is_archived: string
 }
 
+export type StudentsQueryType = {
+  page: string,
+  search: string,
+}
+
 export type NotificationType = {
   id: string,
   type: NotificationTypeEnum,
@@ -167,5 +174,7 @@ export enum StudentRequestStatusEnum {
 }
 
 export type UserWithSkills = UserType & { skills: SkillType[] }
+
+export type UserWithSkillsAndGroups = UserWithSkills & { groups: GroupType[] }
 
 export type SkillWithGroups = SkillType & { groups: GroupType[] }

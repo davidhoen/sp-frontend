@@ -1,7 +1,7 @@
 "use server"
 
 import { getCompetencyRating } from "@/lib";
-import { CompetencyType, EndorsementRequestType, EndorsementType, GroupType, ProfileType, SkillType, SkillWithGroups } from "@/types";
+import { CompetencyType, EndorsementRequestType, EndorsementType, GroupType, ProfileType, SkillType, SkillWithGroups, UserWithSkillsAndGroups } from "@/types";
 import { getData } from "./data-fetching";
 
 // Only the detail pages are rendered serverside 
@@ -125,6 +125,16 @@ export const getProfileCompetencies = async (id: number) => {
 
         // Sort the competencies average rating of the connected skills
         return competenciesWithRating.sort((a, b) => b.avgRating - a.avgRating);
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+
+export const getStudent = async (id: number) => {
+    try {
+        const { result } = await getData<UserWithSkillsAndGroups>(`/api/teacher/students/${id}?with=groups`);
+        return result
     }
     catch (error) {
         console.error(error);
