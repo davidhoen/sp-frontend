@@ -6,14 +6,14 @@ import SectionTitle from "@/components/Typography/SectionTitle"
 import { Button } from "@/components/ui/button"
 import UserAvatar from "@/components/UserAvatar"
 import { Link } from "@/i18n/routing"
-import { getEnrolledGroups, getProfiles, getRecentEndorsements, getStudentCompetencies } from "@/lib/queries/server/queries"
+import { getEnrolledGroups, getStudentProfiles, getRecentEndorsements, getStudentCompetencies } from "@/lib/queries/server/queries"
 import { PlusIcon, UserIcon } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 
 const DashboardPage = async () => {
   const t = await getTranslations()
 
-  const profiles = await getProfiles()
+  const profiles = await getStudentProfiles()
   const groups = await getEnrolledGroups()
   const competencies = await getStudentCompetencies()
   const recentEndorsements = await getRecentEndorsements()
