@@ -4,7 +4,8 @@ import { UserType } from "@/types/auth"
 import useSWR from "swr"
 
 export const useCoaches = () => {
-    const url = `/api/student/teachers`
+    // Crazy number of coaches to prevent pagination in dropdowns
+    const url = `/api/student/teachers?per_page=500`
     return useSWR(url, () =>
         axiosInstance.get(url)
             .then((res: { data: { data: UserType[] } }) => {

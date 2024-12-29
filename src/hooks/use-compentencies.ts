@@ -3,7 +3,8 @@ import { CompetencyType } from "@/types"
 import useSWR from "swr"
 
 export const useCompetencies = () => {
-    const url = "/api/competencies"
+    // Crazy number of competencies to prevent pagination in dropdowns
+    const url = "/api/competencies?per_page=500"
     return useSWR(url, () =>
         axiosInstance.get(url)
             .then((res: { data: { data: CompetencyType[] } }) => {

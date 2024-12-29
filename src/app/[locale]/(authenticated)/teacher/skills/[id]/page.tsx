@@ -60,7 +60,7 @@ const SkillDetail = async (props: { params: Promise<{ id: number }> }) => {
         {/* Competency */}
         <div>
             <div className="font-bold mb-2">{t("competency")}</div>
-            {skill.competency && <Link href={`/student/competencies/${skill.competency.id}`}>
+            {skill.competency && <Link href={`/teacher/competencies`}>
                 <div className="bg-sidebar-accent px-4 py-1 rounded-full w-fit">{skill.competency.title}</div>
             </Link>}
         </div>
@@ -68,10 +68,10 @@ const SkillDetail = async (props: { params: Promise<{ id: number }> }) => {
         {/* Groups */}
         <div>
             <SectionTitle numberOfItems={skill.groups?.length}>{t("groups")}</SectionTitle>
-            <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-8 items-start">
-                {skill?.groups?.map((group) => <div key={group.id}>
+            <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-2 md:gap-4 items-stretch ">
+                {skill?.groups?.map((group) => <div key={group.id} className="border p-4 rounded-lg hover:bg-muted">
                     <Link href={`/teacher/groups/${group.id}`}>
-                        <span className="text-xl font-sans">{group.name}</span>
+                        <span className="text-xl font-semibold font-sans">{group.name}</span>
                         <p>{group.desc}</p>
                         <div className="flex items-center gap-2 mt-4">
                             <UsersIcon size={18} />

@@ -55,7 +55,7 @@ const CompetenciesOverview = (props: { searchParams: Promise<SkillsQueryType> })
 
         <div className={cn("transition-all duration-500", isLoading ? "blur-md cursor-wait" : "blur-0")}>
             {!!competencies ?
-                <Pager pagerObject={competencies} renderItem={renderCompetencies} emptyMessage={t("noEntitiesFound", { entities: t("competencies").toLowerCase() })} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-8 items-start" />
+                <Pager pagerObject={competencies} renderItem={renderCompetencies} emptyMessage={t("noEntitiesFound", { entities: t("competencies").toLowerCase() })} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-8 items-stretch" />
                 :
                 <Skeletons amount={15} className="w-full h-28" />
             }
