@@ -3,15 +3,15 @@ import axiosInstance from "@/lib/axios"
 import { UserType } from "@/types/auth"
 import useSWR from "swr"
 
-export const useCoaches = () => {
-    // Crazy number of coaches to prevent pagination in dropdowns
-    const url = `/api/student/teachers?per_page=500`
+export const useStudents = () => {
+    // Crazy number of students to prevent pagination in dropdowns
+    const url = `/api/teacher/students?per_page=500`
     return useSWR(url, () =>
         axiosInstance.get(url)
             .then((res: { data: { data: UserType[] } }) => {
-                return res.data.data.map((teacher) => ({
-                    label: getFullName(teacher),
-                    value: teacher.id
+                return res.data.data.map((student) => ({
+                    label: getFullName(student),
+                    value: student.id
                 }))
             })
             .catch((error) => {

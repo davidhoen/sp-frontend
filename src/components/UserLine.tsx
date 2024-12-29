@@ -9,13 +9,14 @@ import RequestEndorsementModal from "./Modals/Student/RequestEndorsementModal"
 import RequestFeedbackModal from "./Modals/Student/RequestFeedbackModal"
 import UserAvatar from "./UserAvatar"
 import { Button } from "./ui/button"
+import { cn } from "@/lib/utils"
 
-export default function UserLine({ user, groupId, hideActions }: { user: UserType, groupId?: string, hideActions?: boolean }) {
+export default function UserLine({ user, groupId, hideActions, className }: { user: UserType, groupId?: string, hideActions?: boolean, className?: string }) {
     const t = useTranslations("general")
     const { user: currentUser } = useUser()
 
     return (
-        <div className="flex justify-between border-2 rounded-md p-1 w-full">
+        <div className={cn("flex justify-between border-2 rounded-lg py-1 px-2 w-full", className)}>
             {/* Picture and name */}
             <div className="flex items-center gap-2">
                 <UserAvatar user={user} />

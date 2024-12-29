@@ -1,14 +1,24 @@
 "use server"
 
 import { getCompetencyRating } from "@/lib";
-import { CompetencyType, EndorsementRequestType, EndorsementType, GroupType, ProfileType, SkillType } from "@/types";
+import { CompetencyType, EndorsementRequestType, EndorsementType, GroupType, ProfileType, SkillType, SkillWithGroups } from "@/types";
 import { getData } from "./data-fetching";
 
-// For now only the detail pages are server side rendered
+// Only the detail pages are rendered serverside 
 
-export const getSkill = async (id: number) => {
+export const getStudentSkill = async (id: number) => {
     try {
-        const { result } = await getData<SkillType>(`/api/student/skills/${id}?with=skill,createdBy`);
+        const { result } = await getData<SkillType>(`/api/student/skills/${id}`);
+        return result
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+
+export const getTeacherSkill = async (id: number) => {
+    try {
+        const { result } = await getData<SkillWithGroups>(`/api/teacher/skills/${id}?with=groups`);
         return result
     }
     catch (error) {
@@ -69,7 +79,7 @@ export const getEnrolledGroups = async () => {
     }
 }
 
-export const getProfiles = async () => {
+export const getStudentProfiles = async () => {
     try {
         const route = `/api/student/profiles`
         const { result } = await getData<ProfileType[]>(route);

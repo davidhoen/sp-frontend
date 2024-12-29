@@ -1,18 +1,20 @@
 "use client"
 
-import CompetenciesCard from "@/components/CompetenciesCard"
+import UpsertCompetencyModal from "@/components/Modals/Teacher/UpsertCompetencyModal"
 import { Pager } from "@/components/Pager"
+import CompetencyRow from "@/components/Rows/CompetencyRow"
 import SearchInput from "@/components/SearchInput"
 import Skeletons from "@/components/Skeletons"
 import PageTitle from "@/components/Typography/PageTitle"
+import { Button } from "@/components/ui/button"
 import { getCompetencies } from "@/lib/queries/client/queries"
 import { cn } from "@/lib/utils"
-import { CompetencyType, SkillsQueryType } from "@/types"
+import { CompetencyType, TeacherGroupsQueryType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useTranslations } from "next-intl"
-import { useCallback, useEffect, useState, use } from "react";
+import { use, useCallback, useEffect, useState } from "react"
 
-const CompetenciesOverview = (props: { searchParams: Promise<SkillsQueryType> }) => {
+const CompetenciesOverview = (props: { searchParams: Promise<TeacherGroupsQueryType> }) => {
     const searchParams = use(props.searchParams);
     const t = useTranslations("general")
 
@@ -43,21 +45,25 @@ const CompetenciesOverview = (props: { searchParams: Promise<SkillsQueryType> })
         fetchCompetencies();
     }, [fetchCompetencies, searchParams]);
 
-    const renderCompetencies = (competency: CompetencyType) => <CompetenciesCard key={competency.id} competency={competency} />
+    const tableHeaders = [t("competency"), t("skills"), t("profiles"), t("actions")]
+    const renderGroupRow = (competency: CompetencyType) => <CompetencyRow key={competency.id} competency={competency} mutate={fetchCompetencies} />
 
     return <div className="w-full">
         <PageTitle information={t("definitions.competencies")}>{t("competencies")}</PageTitle>
 
         {/* Search */}
-        <div className="my-4">
+        <div className="flex justify-between my-4">
             <SearchInput placeholder={t("search")} />
+            <UpsertCompetencyModal mutate={fetchCompetencies}>
+                <Button>{t("add")}</Button>
+            </UpsertCompetencyModal>
         </div>
 
         <div className={cn("transition-all duration-500", isLoading ? "blur-md cursor-wait" : "blur-0")}>
             {!!competencies ?
-                <Pager pagerObject={competencies} renderItem={renderCompetencies} emptyMessage={t("noEntitiesFound", { entities: t("competencies").toLowerCase() })} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-8 items-stretch" />
+                <Pager pagerObject={competencies} renderItem={renderGroupRow} headerItems={tableHeaders} emptyMessage={t("noEntitiesFound", { entities: t("competencies").toLowerCase() })} renderAsTable />
                 :
-                <Skeletons amount={15} className="w-full h-28" />
+                <Skeletons amount={15} className="w-full h-14" wrapperClass="grid gap-2" />
             }
         </div>
     </div>

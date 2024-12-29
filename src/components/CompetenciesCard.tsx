@@ -19,7 +19,7 @@ export default function CompetenciesCard({ competency, mutate }: { competency: C
     })
 
     return (
-        <div className="flex flex-col border rounded-lg px-4 py-3">
+        <div className="relative flex flex-col border rounded-lg px-4 py-3 pb-12">
 
             {/* Title and description */}
             <div className="mb-4">
@@ -52,11 +52,13 @@ export default function CompetenciesCard({ competency, mutate }: { competency: C
                 </div>
             </div>
 
-            <Link href={`/student/competencies/${competency.id}`}>
-                <Button variant="outline" className="w-full">
-                    {t("view")}
-                </Button>
-            </Link>
+            <div className="absolute bottom-2 w-full">
+                <Link href={`/student/competencies/${competency.id}`}>
+                    <Button variant="outline" className="w-full">
+                        {t("view")}
+                    </Button>
+                </Link>
+            </div>
 
         </div>
     )

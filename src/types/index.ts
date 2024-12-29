@@ -7,6 +7,7 @@ export type NavItem = {
   url: string
   icon: string,
   isActive?: boolean
+  adminOnly?: boolean
 }
 
 export type TranslationFunction = ReturnType<typeof useTranslations>;
@@ -126,6 +127,10 @@ export type TeacherGroupsQueryType = {
   is_archived: string
 }
 
+export type TeacherProfileQueryType = {
+  page: string,
+}
+
 export type NotificationType = {
   id: string,
   type: NotificationTypeEnum,
@@ -164,3 +169,9 @@ export enum StudentRequestStatusEnum {
   Accepted = "answered",
   Rejected = "declined",
 }
+
+export type UserWithSkills = UserType & { skills: SkillType[] }
+
+export type SkillWithGroups = SkillType & { groups: GroupType[] }
+
+export type ProfileWithCompetencies = ProfileType & { competencies: CompetencyType[] }
