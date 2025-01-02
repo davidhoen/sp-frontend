@@ -7,59 +7,30 @@ import SearchInput from "@/components/SearchInput"
 import PageTitle from "@/components/Typography/PageTitle"
 import { Button } from "@/components/ui/button"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
-import { usePathname, useRouter } from "@/i18n/routing"
+import { useFetchData } from "@/hooks/use-fetch-data"
+import { useQueryFilter } from "@/hooks/use-query-filter"
 import { getGroups } from "@/lib/queries/client/queries"
 import { GroupType, TeacherGroupsQueryType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useTranslations } from "next-intl"
-import { use, useCallback, useEffect, useState } from "react"
-import { useDebouncedCallback } from "use-debounce"
+import { use, useCallback, useEffect } from "react"
 
 const GroupsOverview = (props: { searchParams: Promise<TeacherGroupsQueryType> }) => {
     const searchParams = use(props.searchParams);
     const t = useTranslations("general")
-    const { replace } = useRouter()
-    const pathname = usePathname();
 
-    const [groups, setGroups] = useState<PagingSchema<GroupType>>();
-    const [loading, setLoading] = useState(true);
+    const handleFilter = useQueryFilter();
+    const onArchiveChange = handleFilter({ key: 'is_archived' });
 
-    //Method to get the groups for the current page
-    const fetchGroups = useCallback(async () => {
-        setLoading(true);
-        try {
-            const page = searchParams.page || "1";
-            const search = searchParams.search ?? ""
-            const is_archived = searchParams.is_archived ?? ""
+    const { data: groups, loading, fetchData } = useFetchData<PagingSchema<GroupType>>();
 
-            const filteredGroups = await getGroups({ query: { page, search, is_archived } })
-            filteredGroups?.data.map(group => ({ name: group.name, skills: group.skills, numberOfStudents: group.students?.length }));
-            setGroups(filteredGroups);
-        }
-        catch (error) {
-            console.error(error);
-        }
-        finally {
-            setLoading(false);
-        }
-    }, [searchParams]);
-
-    const handleIsArchived = useDebouncedCallback((value: string) => {
-        const params = new URLSearchParams(searchParams);
-        if (value) {
-            params.set('is_archived', value);
-            // Remove page parameter when searching to avoid so results on search
-            params.delete('page')
-        } else {
-            params.delete('is_archived');
-        }
-        replace(`${pathname}?${params.toString()}`);
-    }, 300);
+    const fetchGroups = useCallback(() => {
+        fetchData(getGroups);
+    }, [fetchData]);
 
     useEffect(() => {
-        //Get the groups on page mount and the search term changes
         fetchGroups();
-    }, [fetchGroups, searchParams]);
+    }, [fetchGroups])
 
     const tableHeaders = [t("name"), t("skills"), t("students"), t("actions")]
     const renderGroupRow = (group: GroupType) => <GroupRow key={group.id} group={group} mutate={fetchGroups} />
@@ -77,7 +48,7 @@ const GroupsOverview = (props: { searchParams: Promise<TeacherGroupsQueryType> }
 
         {/* Is added filter */}
         <div className="my-4">
-            <ToggleGroup type="single" defaultValue={searchParams.is_archived?.toString() || "false"} onValueChange={handleIsArchived}>
+            <ToggleGroup type="single" defaultValue={searchParams.is_archived?.toString() || "false"} onValueChange={onArchiveChange}>
                 <ToggleGroupItem variant="outline" value="false">{t("activeGroups")}</ToggleGroupItem>
                 <ToggleGroupItem variant="outline" value="true">{t("archivedGroups")}</ToggleGroupItem>
             </ToggleGroup>
