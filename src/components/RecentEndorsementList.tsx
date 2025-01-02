@@ -18,11 +18,13 @@ export function RecentEndorsementsList({ competencyId }: { competencyId: string 
         {/* Title */}
         <SectionTitle numberOfItems={endorsements?.data?.length}>{t("recentEndorsements")}</SectionTitle>
 
-        {!!endorsements ?
-            <Pager pagerObject={endorsements} renderItem={renderEndorsments} emptyMessage={t("noEntitiesFound", { entities: t("endorsements").toLowerCase() })} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-2 items-start" entityKey="endorsements" />
-            :
-            <Skeletons amount={4} className="w-full h-36" />
-        }
+        <Pager
+            pagerObject={endorsements}
+            renderItem={renderEndorsments}
+            loading={isLoading}
+            emptyMessage={t("noEntitiesFound", { entities: t("endorsements").toLowerCase() })} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-2 items-start"
+            entityKey="endorsements"
+        />
     </>
 
 }

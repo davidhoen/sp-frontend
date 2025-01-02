@@ -8,6 +8,7 @@ import { getFullName } from "@/lib"
 import { auth } from "@/lib/auth/server"
 import { fakeSkill } from "@/lib/fakeData"
 import { getTranslations } from "next-intl/server"
+import { notFound } from "next/navigation"
 
 const StudentSkillDetail = async (props: { params: Promise<{ skillId: number }> }) => {
     const params = await props.params;
@@ -18,7 +19,7 @@ const StudentSkillDetail = async (props: { params: Promise<{ skillId: number }> 
     // Replace with current user
     const { user: student } = await auth()
 
-    // if (!student) notFound()
+    if (!student) notFound()
 
     return <div className="flex flex-col gap-6">
 

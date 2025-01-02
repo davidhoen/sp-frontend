@@ -91,7 +91,13 @@ export function GroupStudentsList({ group }: { group: GroupType }) {
         {/* Title */}
         <SectionTitle numberOfItems={students?.data?.length}>{t("students")}</SectionTitle>
 
-        <Pager pagerObject={students} headerItems={tableHeaders} loading={loading} renderItem={renderGroupStudentRow} emptyMessage={t("noEntitiesFound", { entities: t("students").toLowerCase() })} renderAsTable />
+        <Pager
+            pagerObject={students}
+            headerItems={tableHeaders}
+            loading={loading}
+            renderItem={renderGroupStudentRow} emptyMessage={t("noEntitiesFound", { entities: t("students").toLowerCase() })}
+            renderAsTable
+        />
 
     </>
 }
