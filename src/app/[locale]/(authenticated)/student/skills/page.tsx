@@ -6,91 +6,40 @@ import Skeletons from "@/components/Skeletons"
 import SkillCard from "@/components/SkillCard"
 import PageTitle from "@/components/Typography/PageTitle"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
-import { usePathname, useRouter } from "@/i18n/routing"
+import { useFetchData } from "@/hooks/use-fetch-data"
+import { useQueryFilter } from "@/hooks/use-query-filter"
 import { getSkills } from "@/lib/queries/client/queries"
 import { CompetencyType, SkillsQueryType, SkillType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useTranslations } from "next-intl"
 import { use, useCallback, useEffect, useState } from "react"
-import { useDebouncedCallback } from "use-debounce"
 
 const SkillsOverview = (props: { searchParams: Promise<SkillsQueryType> }) => {
     const searchParams = use(props.searchParams);
     const t = useTranslations("general")
-    const pathname = usePathname();
-    const { replace } = useRouter();
-
-    const [skills, setSkills] = useState<PagingSchema<SkillType>>();
-    const [compentencies, setCompentencies] = useState<CompetencyType[]>();
-    const [loading, setLoading] = useState(true);
+    const [competencies, setCompentencies] = useState<CompetencyType[]>();
     const [competencyFilterValue, setCompetencyFilterValue] = useState(searchParams.competencies?.split(',') || ["all"]);
 
-    const handleCompentencyFilter = useDebouncedCallback((values: string[]) => {
-        const params = new URLSearchParams(searchParams);
-        if (values.length > 0) {
-            let filterValues = values;
-            const newestValue = values[values.length - 1];
+    const handleFilter = useQueryFilter();
 
-            // When all is selected, remove all other values and reset the competencies parameter
-            if (newestValue === "all") {
-                filterValues = ["all"];
-                params.delete('competencies');
-            }
-            else {
-                // When a different value is selected, remove all and add the selected value
-                filterValues = values.filter((value) => value !== "all")
-                params.set('competencies', filterValues.join(",").toString());
-            }
+    const onAddedChange = handleFilter({ key: 'is_added', removeOnAll: true });
+    const onCompetenciesChange = handleFilter({
+        key: 'competencies',
+        type: 'array',
+        setValue: setCompetencyFilterValue
+    });
 
-            setCompetencyFilterValue(filterValues);
-            // Remove page parameter when searching to avoid so results on search
-            params.delete('page')
-        }
-        else
-            // Remove competencies parameter when no competencies are selected
-            params.delete('competencies');
+    const { data: skills, loading, fetchData } = useFetchData<PagingSchema<SkillType>>();
 
-        replace(`${pathname}?${params.toString()}`);
-    }, 300);
-
-    const handleIsAddedFilter = useDebouncedCallback((value: string) => {
-        const params = new URLSearchParams(searchParams);
-        if (value && value !== "all") {
-            params.set('is_added', value);
-            // Remove page parameter when searching to avoid so results on search
-            params.delete('page')
-        } else {
-            params.delete('is_added');
-        }
-        replace(`${pathname}?${params.toString()}`);
-    }, 300);
-
-    //Method to get the skills for the current page
-    const fetchSkills = useCallback(async () => {
-        setLoading(true);
-        try {
-            const page = parseInt(searchParams.page) || 1;
-            const search = searchParams.search ?? ""
-            const competencies = searchParams.competencies ?? ""
-            const isAdded = searchParams.is_added ?? ""
-
-            const filteredSkills = await getSkills({ page, search, competencies, isAdded });
-
-            setSkills(filteredSkills);
-            setCompentencies(filteredSkills?.meta?.competencies);
-        }
-        catch (error) {
-            console.error(error);
-        }
-        finally {
-            setLoading(false);
-        }
-    }, [searchParams]);
+    const fetchSkills = useCallback(() => {
+        fetchData(getSkills, {
+            onSuccess: (data) => setCompentencies(data?.meta?.competencies)
+        });
+    }, [fetchData]);
 
     useEffect(() => {
-        //Get the skills on page mount and when a filter value changes
         fetchSkills();
-    }, [fetchSkills, searchParams]);
+    }, [fetchSkills]);
 
     const renderSkill = (skill: SkillType) => <SkillCard key={skill.id} skill={skill} mutate={fetchSkills} />
 
@@ -104,10 +53,10 @@ const SkillsOverview = (props: { searchParams: Promise<SkillsQueryType> }) => {
 
         {/* Compentencies filter*/}
         <div className="my-4 overflow-x-auto no-scrollbar">
-            {!!compentencies ?
-                <ToggleGroup type="multiple" value={competencyFilterValue} onValueChange={handleCompentencyFilter}>
+            {!!competencies ?
+                <ToggleGroup type="multiple" value={competencyFilterValue} onValueChange={onCompetenciesChange}>
                     <ToggleGroupItem variant="outline" value="all">{t("allEntities", { entities: t("competencies").toLowerCase() })}</ToggleGroupItem>
-                    {compentencies?.map((competency) => (<ToggleGroupItem key={competency.id} variant="outline" value={competency.id}>{competency.title}</ToggleGroupItem>))}
+                    {competencies?.map((competency) => (<ToggleGroupItem key={competency.id} variant="outline" value={competency.id}>{competency.title}</ToggleGroupItem>))}
                 </ToggleGroup>
                 :
                 <Skeletons amount={7} wrapperClass="flex gap-4" className="h-10 w-full" />
@@ -116,7 +65,7 @@ const SkillsOverview = (props: { searchParams: Promise<SkillsQueryType> }) => {
 
         {/* Is added filter */}
         <div className="my-4">
-            <ToggleGroup type="single" defaultValue={searchParams.is_added?.toString() || "all"} onValueChange={handleIsAddedFilter}>
+            <ToggleGroup type="single" defaultValue={searchParams.is_added?.toString() || "all"} onValueChange={onAddedChange}>
                 <ToggleGroupItem variant="outline" value="all">{t("allEntities", { entities: t("skills").toLowerCase() })}</ToggleGroupItem>
                 <ToggleGroupItem variant="outline" value="true">{t("addedSkills")}</ToggleGroupItem>
                 <ToggleGroupItem variant="outline" value="false">{t("notAdded")}</ToggleGroupItem>

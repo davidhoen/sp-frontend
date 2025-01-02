@@ -3,50 +3,31 @@
 import AddFeedbackModal from "@/components/Modals/AddFeedbackModal"
 import { Pager } from "@/components/Pager"
 import SearchInput from "@/components/SearchInput"
-import Skeletons from "@/components/Skeletons"
 import PageTitle from "@/components/Typography/PageTitle"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import UserAvatar from "@/components/UserAvatar"
+import { useFetchData } from "@/hooks/use-fetch-data"
 import { getFullName } from "@/lib"
 import { getStudentRequests } from "@/lib/queries/client/queries"
-import { cn } from "@/lib/utils"
-import { RequestType, StudentGroupsQueryType } from "@/types"
+import { RequestType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useFormatter, useTranslations } from "next-intl"
-import { use, useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect } from "react"
 
-const StudentRequests = (props: { searchParams: Promise<StudentGroupsQueryType> }) => {
-    const searchParams = use(props.searchParams);
+const StudentRequests = () => {
     const t = useTranslations("general")
     const format = useFormatter()
 
-    const [requests, setRequests] = useState<PagingSchema<RequestType>>();
-    const [loading, setLoading] = useState(true);
+    const { data: requests, loading, fetchData } = useFetchData<PagingSchema<RequestType>>();
 
-    //Method to get the request for the current page
-    const fetchRequests = useCallback(async () => {
-        setLoading(true);
-        try {
-            const page = parseInt(searchParams.page) || 1;
-            const search = searchParams.search ?? ""
-
-            const filteredGroups = await getStudentRequests({ page, search });
-
-            setRequests(filteredGroups);
-        }
-        catch (error) {
-            console.error(error);
-        }
-        finally {
-            setLoading(false);
-        }
-    }, [searchParams]);
+    const fetchRequests = useCallback(() => {
+        fetchData(getStudentRequests);
+    }, [fetchData]);
 
     useEffect(() => {
-        //Get the groups on page mount and the search term changes
         fetchRequests();
-    }, [fetchRequests, searchParams]);
+    }, [fetchRequests])
 
     const renderRequest = (request: RequestType) => <div key={request.id} className="border p-4 rounded-lg">
         <div className="flex justify-between items-center">

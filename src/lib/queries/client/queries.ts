@@ -19,11 +19,10 @@ async function queryAPI<T>(route: string, params: QueryParams = {}) {
     }
 }
 
-export const getSkills = (params: { page: number; search: string; competencies: string; isAdded: string }) =>
+export const getSkills = ({ query }: { query: Record<string, string> }) =>
     queryAPI<SkillType>('/api/student/skills', {
+        ...query,
         availableCompentencies: true,
-        ...params,
-        is_added: params.isAdded
     });
 
 export const getTeacherSkills = ({ query }: { query: Record<string, string> }) =>

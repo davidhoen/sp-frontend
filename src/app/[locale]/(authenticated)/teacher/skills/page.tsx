@@ -10,13 +10,11 @@ import { Button } from "@/components/ui/button"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { useFetchData } from "@/hooks/use-fetch-data"
 import { useQueryFilter } from "@/hooks/use-query-filter"
-import { usePathname, useRouter } from "@/i18n/routing"
-import { getSkills, getTeacherSkills } from "@/lib/queries/client/queries"
+import { getTeacherSkills } from "@/lib/queries/client/queries"
 import { CompetencyType, SkillsQueryType, SkillType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useTranslations } from "next-intl"
 import { use, useCallback, useEffect, useState } from "react"
-import { useDebouncedCallback } from "use-debounce"
 
 const SkillsOverview = (props: { searchParams: Promise<SkillsQueryType> }) => {
     const searchParams = use(props.searchParams);
