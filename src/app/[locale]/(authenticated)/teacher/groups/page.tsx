@@ -19,8 +19,7 @@ const GroupsOverview = (props: { searchParams: Promise<TeacherGroupsQueryType> }
     const searchParams = use(props.searchParams);
     const t = useTranslations("general")
 
-    const handleFilter = useQueryFilter();
-    const onArchiveChange = handleFilter({ key: 'is_archived' });
+    const onArchiveChange = useQueryFilter({ key: 'is_archived' });
 
     const { data: groups, loading, fetchData } = useFetchData<PagingSchema<GroupType>>();
 
@@ -46,7 +45,7 @@ const GroupsOverview = (props: { searchParams: Promise<TeacherGroupsQueryType> }
             </UpsertGroupModal>
         </div>
 
-        {/* Is added filter */}
+        {/* Is archived filter */}
         <div className="my-4">
             <ToggleGroup type="single" defaultValue={searchParams.is_archived?.toString() || "false"} onValueChange={onArchiveChange}>
                 <ToggleGroupItem variant="outline" value="false">{t("activeGroups")}</ToggleGroupItem>

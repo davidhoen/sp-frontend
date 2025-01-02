@@ -14,8 +14,7 @@ import { useCallback, useEffect } from "react"
 const FeedbackRequests = () => {
     const t = useTranslations("general");
 
-    const handleFilter = useQueryFilter();
-    const onArchiveChange = handleFilter({ key: 'is_archived' });
+    const onArchiveChange = useQueryFilter({ key: 'is_archived' });
 
     const { data: feedbacks, loading, fetchData } = useFetchData<PagingSchema<RequestType>>();
 

@@ -17,8 +17,7 @@ const GroupsOverview = (props: { searchParams: Promise<StudentGroupsQueryType> }
     const searchParams = use(props.searchParams);
     const t = useTranslations("general")
 
-    const handleFilter = useQueryFilter();
-    const onJoinedChange = handleFilter({ key: 'is_joined', removeOnAll: true });
+    const onJoinedChange = useQueryFilter({ key: 'is_joined', removeOnAll: true });
 
     const { data: groups, loading, fetchData } = useFetchData<PagingSchema<GroupType>>();
 

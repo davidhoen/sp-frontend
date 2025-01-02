@@ -20,10 +20,9 @@ const SkillsOverview = (props: { searchParams: Promise<SkillsQueryType> }) => {
     const [competencies, setCompentencies] = useState<CompetencyType[]>();
     const [competencyFilterValue, setCompetencyFilterValue] = useState(searchParams.competencies?.split(',') || ["all"]);
 
-    const handleFilter = useQueryFilter();
 
-    const onAddedChange = handleFilter({ key: 'is_added', removeOnAll: true });
-    const onCompetenciesChange = handleFilter({
+    const onAddedChange = useQueryFilter({ key: 'is_added', removeOnAll: true });
+    const onCompetenciesChange = useQueryFilter({
         key: 'competencies',
         type: 'array',
         setValue: setCompetencyFilterValue

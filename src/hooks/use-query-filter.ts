@@ -9,38 +9,38 @@ type FilterConfig = {
     setValue?: (value: any) => void;
 }
 
-export function useQueryFilter() {
+type FilterValue = string | string[];
+
+export function useQueryFilter(config: FilterConfig) {
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const { replace } = useRouter();
 
-    const handleFilter = useCallback((config: FilterConfig) => {
-        return useDebouncedCallback((value: string | string[]) => {
-            const params = new URLSearchParams(searchParams);
-            const { key, type = 'single', removeOnAll = true, setValue } = config;
+    const handleFilter = useDebouncedCallback((value: FilterValue) => {
+        const params = new URLSearchParams(searchParams);
+        const { key, type = 'single', removeOnAll = true, setValue } = config;
 
-            if (type === 'array' && Array.isArray(value)) {
-                const newestValue = value[value.length - 1];
-                if (newestValue === 'all' || !value.length) {
-                    params.delete(key);
-                    setValue?.(newestValue === 'all' ? ['all'] : []);
-                } else {
-                    const filtered = value.filter(v => v !== 'all');
-                    params.set(key, filtered.join(','));
-                    setValue?.(filtered);
-                }
-            } else if (type === 'single' && typeof value === 'string') {
-                if (value && (!removeOnAll || value !== 'all')) {
-                    params.set(key, value);
-                } else {
-                    params.delete(key);
-                }
+        if (type === 'array' && Array.isArray(value)) {
+            const newestValue = value[value.length - 1];
+            if (newestValue === 'all' || !value.length) {
+                params.delete(key);
+                setValue?.(newestValue === 'all' ? ['all'] : []);
+            } else {
+                const filtered = value.filter(v => v !== 'all');
+                params.set(key, filtered.join(','));
+                setValue?.(filtered);
             }
+        } else if (type === 'single' && typeof value === 'string') {
+            if (value && (!removeOnAll || value !== 'all')) {
+                params.set(key, value);
+            } else {
+                params.delete(key);
+            }
+        }
 
-            params.delete('page');
-            replace(`${pathname}?${params.toString()}`);
-        }, 300);
-    }, [pathname, replace, searchParams]);
+        params.delete('page');
+        replace(`${pathname}?${params.toString()}`);
+    }, 300);
 
     return handleFilter;
 }
