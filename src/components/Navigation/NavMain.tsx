@@ -11,11 +11,12 @@ export function NavMain({ items }: { items: NavItem[] }) {
   const pathname = usePathname()
   const { setOpenMobile } = useSidebar()
   const { user } = useUser()
+
   return (
     <SidebarMenu className="px-4">
       {items.map(item => {
-        // if (item.adminOnly && !user?.is_admin) return null
-        item.isActive = pathname === item.url + '/'
+        if (item.adminOnly && !user?.is_admin) return null
+        item.isActive = (!item.isDashboard && pathname.startsWith(item.url)) || (item.isDashboard && pathname === item.url + "/")
         const Icon = icons[item.icon as keyof typeof icons] || icons["CircleDashed"]
         return (
           <SidebarMenuItem key={item.title}>
