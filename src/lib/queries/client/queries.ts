@@ -1,99 +1,54 @@
 import axiosInstance from "@/lib/axios";
-import { CompetencyType, GroupType, ProfileType, ProfileWithCompetencies, SkillType, StudentRequestType, UserWithSkills, UserWithSkillsAndGroups } from "@/types";
-import { UserType } from "@/types/auth";
+import { CompetencyType, GroupType, ProfileWithCompetencies, RequestType, SkillType, UserWithSkills, UserWithSkillsAndGroups } from "@/types";
 import { PagingSchema } from "@/types/pagination";
 
-export const getSkills = async ({ page, search, competencies, isAdded }: { page: number; search: string; competencies: string; isAdded: string; }) => {
+type QueryParams = Record<string, string | number | boolean>;
+
+async function queryAPI<T>(route: string, params: QueryParams = {}) {
     try {
-        // Add page params and availableCompentencies to get the competencies connected to the skills
-        const route = `/api/student/skills/?availableCompentencies=true&page=${page}&search=${search}&competencies=${competencies}&is_added=${isAdded}`
-        const { data } = await axiosInstance.get<PagingSchema<SkillType>>(route);
+        const queryString = new URLSearchParams(
+            Object.entries(params).map(([key, value]) => [key, String(value)])
+        ).toString();
+
+        const url = `${route}${queryString ? '?' + queryString : ''}`;
+        const { data } = await axiosInstance.get<PagingSchema<T>>(url);
         return data;
-    }
-    catch (error) {
+    } catch (error) {
         console.error(error);
+        throw error;
     }
 }
 
-export const getTeacherSkills = async ({ query }: { query: Record<string, string> }) => {
-    try {
-        const queryString = new URLSearchParams(query).toString();
-        const route = `/api/teacher/skills?with=competency&${queryString}`
-        const { data } = await axiosInstance.get<PagingSchema<SkillType>>(route);
-        return data;
-    }
-    catch (error) {
-        console.error(error);
-    }
-}
+export const getSkills = (params: { page: number; search: string; competencies: string; isAdded: string }) =>
+    queryAPI<SkillType>('/api/student/skills', {
+        availableCompentencies: true,
+        ...params,
+        is_added: params.isAdded
+    });
 
-export const getCompetencies = async ({ query }: { query: Record<string, string> }) => {
-    try {
-        const queryString = new URLSearchParams(query).toString();
-        const route = `/api/competencies?with=skills,profiles&${queryString}`
-        const { data } = await axiosInstance.get<PagingSchema<CompetencyType>>(route);
-        return data;
-    }
-    catch (error) {
-        console.error(error);
-    }
-}
+export const getTeacherSkills = ({ query }: { query: Record<string, string> }) =>
+    queryAPI<SkillType>('/api/teacher/skills', { with: 'competency', ...query });
 
-export const getTeacherProfiles = async ({ query }: { query: Record<string, string> }) => {
-    try {
-        const queryString = new URLSearchParams(query).toString();
-        const route = `/api/teacher/profiles?with=competencies&${queryString}`
-        const { data } = await axiosInstance.get<PagingSchema<ProfileWithCompetencies>>(route);
-        return data;
-    }
-    catch (error) {
-        console.error(error);
-    }
-}
+export const getCompetencies = ({ query }: { query: Record<string, string> }) =>
+    queryAPI<CompetencyType>('/api/competencies', { with: 'skills,profiles', ...query });
 
-export const getGroups = async ({ query }: { query: Record<string, string> }) => {
-    try {
-        const queryString = new URLSearchParams(query).toString();
-        const route = `/api/groups?with=teachers,students,skills,students&${queryString}`
-        const { data } = await axiosInstance.get<PagingSchema<GroupType>>(route);
-        return data;
-    }
-    catch (error) {
-        console.error(error);
-    }
-}
+export const getTeacherProfiles = ({ query }: { query: Record<string, string> }) =>
+    queryAPI<ProfileWithCompetencies>('/api/teacher/profiles', { with: 'competencies', ...query });
 
-export const getStudentRequests = async ({ page, search }: { page: number; search: string }) => {
-    try {
-        const route = `/api/student/requests?with=requester,skill,group&page=${page}&search=${search}`
-        const { data } = await axiosInstance.get<PagingSchema<StudentRequestType>>(route);
-        return data;
-    }
-    catch (error) {
-        console.error(error);
-    }
-}
+export const getGroups = ({ query }: { query: Record<string, string> }) =>
+    queryAPI<GroupType>('/api/groups', { with: 'teachers,students,skills', ...query });
 
-export const getGroupStudents = async ({ groupId, query }: { groupId: string, query: Record<string, string> }) => {
-    try {
-        const queryString = new URLSearchParams(query).toString();
-        const route = `/api/teacher/groups/${groupId}/students?with=skills&${queryString}`
-        const { data } = await axiosInstance.get<PagingSchema<UserWithSkills>>(route);
-        return data;
-    }
-    catch (error) {
-        console.error(error);
-    }
-}
+export const getStudentRequests = (params: { page: number; search: string }) =>
+    queryAPI<RequestType>('/api/student/requests', { with: 'requester,skill,group', ...params });
 
-export const getStudents = async ({ query }: { query: Record<string, string> }) => {
-    try {
-        const queryString = new URLSearchParams(query).toString();
-        const route = `/api/teacher/students?with=skills,groups&${queryString}`
-        const { data } = await axiosInstance.get<PagingSchema<UserWithSkillsAndGroups>>(route);
-        return data;
-    }
-    catch (error) {
-        console.error(error);
-    }
-}
+export const getGroupStudents = ({ groupId, query }: { groupId: string, query: Record<string, string> }) =>
+    queryAPI<UserWithSkills>(`/api/teacher/groups/${groupId}/students`, { with: 'skills', ...query });
+
+export const getStudents = ({ query }: { query: Record<string, string> }) =>
+    queryAPI<UserWithSkillsAndGroups>('/api/teacher/students', { with: 'skills,groups', ...query });
+
+export const getFeedbackRequests = ({ query }: { query: Record<string, string> }) =>
+    queryAPI<RequestType>('/api/teacher/requests/feedbacks', { with: 'requester,skill,group', ...query });
+
+export const getEndorsementRequests = ({ query }: { query: Record<string, string> }) =>
+    queryAPI<RequestType>('/api/teacher/requests/endorsements', { with: 'requester,skill,group', ...query });

@@ -11,7 +11,7 @@ import UserAvatar from "@/components/UserAvatar"
 import { getFullName } from "@/lib"
 import { getStudentRequests } from "@/lib/queries/client/queries"
 import { cn } from "@/lib/utils"
-import { StudentGroupsQueryType, StudentRequestType } from "@/types"
+import { StudentGroupsQueryType, RequestType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useFormatter, useTranslations } from "next-intl"
 import { useCallback, useEffect, useState, use } from "react";
@@ -21,7 +21,7 @@ const StudentRequests = (props: { searchParams: Promise<StudentGroupsQueryType> 
     const t = useTranslations("general")
     const format = useFormatter()
 
-    const [requests, setRequests] = useState<PagingSchema<StudentRequestType>>();
+    const [requests, setRequests] = useState<PagingSchema<RequestType>>();
     const [isLoading, setIsLoading] = useState(false);
 
     //Method to get the request for the current page
@@ -48,7 +48,7 @@ const StudentRequests = (props: { searchParams: Promise<StudentGroupsQueryType> 
         fetchRequests();
     }, [fetchRequests, searchParams]);
 
-    const renderRequest = (request: StudentRequestType) => <div key={request.id} className="border p-4 rounded-lg">
+    const renderRequest = (request: RequestType) => <div key={request.id} className="border p-4 rounded-lg">
         <div className="flex justify-between items-center">
             <div className="flex gap-2">
                 <UserAvatar user={request.requester} />

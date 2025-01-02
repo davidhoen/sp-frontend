@@ -14,14 +14,14 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
 import { Input } from "../ui/input"
 import { Textarea } from "../ui/textarea"
-import { StudentRequestType } from "@/types"
+import { RequestType } from "@/types"
 import { Alert } from "../ui/alert"
 
 
 // This component can be used for writing self feedback (request is empty)
 // OR
 // Writing feedback for a peer student 
-const AddFeedbackModal = ({ children, request, skillId, parentMutate }: { children: ReactNode, request?: StudentRequestType, skillId?: string, parentMutate?: () => void }) => {
+const AddFeedbackModal = ({ children, request, skillId, parentMutate }: { children: ReactNode, request?: RequestType, skillId?: string, parentMutate?: () => void }) => {
     const t = useTranslations("modals")
     const { user } = useUser()
 

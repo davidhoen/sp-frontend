@@ -161,18 +161,18 @@ export enum NotificationTypeEnum {
   EndorsementReviewed = "EndorsementReviewed", // Teacher reviewed (external) endorsement
 }
 
-export type StudentRequestType = {
+export type RequestType = {
   id: string,
   title: string,
   skill: SkillType,
   requester: UserType,
   group: GroupType,
-  status: StudentRequestStatusEnum
+  status: RequestStatusEnum
   created_at: Date
   updated_at: Date
 }
 
-export enum StudentRequestStatusEnum {
+export enum RequestStatusEnum {
   Pending = "pending",
   Accepted = "answered",
   Rejected = "declined",
