@@ -48,7 +48,7 @@ export default function SkillRow({ skill, mutate }: { skill: SkillType, mutate: 
                 </UpsertSkillModal>
 
                 {/* Delete (for admins) */}
-                {!user?.is_admin && <div onClick={() => setIsDeleteModalOpen(true)}><TableAction type="delete" /></div>}
+                {user?.is_admin && <div onClick={() => setIsDeleteModalOpen(true)}><TableAction type="delete" /></div>}
 
                 {/* View */}
                 <Link href={`/teacher/skills/${skill.id}`}>
