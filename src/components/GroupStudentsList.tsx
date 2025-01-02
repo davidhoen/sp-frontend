@@ -21,12 +21,12 @@ export function GroupStudentsList({ group }: { group: GroupType }) {
     const pathname = usePathname();
 
     const [students, setStudents] = useState<PagingSchema<UserWithSkills>>();
-    const [isLoading, setIsLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [competencyFilterValue, setCompetencyFilterValue] = useState(searchParams.get("skills")?.split(',') || ["all"]);
 
     //Method to get the groups for the current page
     const fetchGroups = useCallback(async () => {
-        setIsLoading(true);
+        setLoading(true);
         try {
             const page = searchParams.get("page") || "1";
             const skills = searchParams.get("skills") || "";
@@ -37,7 +37,7 @@ export function GroupStudentsList({ group }: { group: GroupType }) {
             console.error(error);
         }
         finally {
-            setIsLoading(false);
+            setLoading(false);
         }
     }, [searchParams, group]);
 
@@ -90,10 +90,8 @@ export function GroupStudentsList({ group }: { group: GroupType }) {
 
         {/* Title */}
         <SectionTitle numberOfItems={students?.data?.length}>{t("students")}</SectionTitle>
-        {!!students ?
-            <Pager pagerObject={students} headerItems={tableHeaders} renderItem={renderGroupStudentRow} emptyMessage={t("noEntitiesFound", { entities: t("students").toLowerCase() })} renderAsTable />
-            :
-            <Skeletons amount={15} className="w-full h-14" wrapperClass="grid gap-2" />
-        }
+
+        <Pager pagerObject={students} headerItems={tableHeaders} loading={loading} renderItem={renderGroupStudentRow} emptyMessage={t("noEntitiesFound", { entities: t("students").toLowerCase() })} renderAsTable />
+
     </>
 }

@@ -1,21 +1,20 @@
 "use client"
 
+import UpsertSkillModal from "@/components/Modals/Teacher/UpsertSkillModal"
 import { Pager } from "@/components/Pager"
+import SkillRow from "@/components/Rows/SkillRow"
 import SearchInput from "@/components/SearchInput"
 import Skeletons from "@/components/Skeletons"
-import SkillRow from "@/components/Rows/SkillRow"
 import PageTitle from "@/components/Typography/PageTitle"
+import { Button } from "@/components/ui/button"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
-import { usePathname, useRouter, Link } from "@/i18n/routing"
+import { usePathname, useRouter } from "@/i18n/routing"
 import { getTeacherSkills } from "@/lib/queries/client/queries"
-import { cn } from "@/lib/utils"
 import { CompetencyType, SkillsQueryType, SkillType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useTranslations } from "next-intl"
 import { use, useCallback, useEffect, useState } from "react"
 import { useDebouncedCallback } from "use-debounce"
-import { Button } from "@/components/ui/button"
-import UpsertSkillModal from "@/components/Modals/Teacher/UpsertSkillModal"
 
 const SkillsOverview = (props: { searchParams: Promise<SkillsQueryType> }) => {
     const searchParams = use(props.searchParams);
@@ -26,7 +25,7 @@ const SkillsOverview = (props: { searchParams: Promise<SkillsQueryType> }) => {
     const [skills, setSkills] = useState<PagingSchema<SkillType>>();
     const [competencies, setCompentencies] = useState<CompetencyType[]>();
     const [competencyFilterValue, setCompetencyFilterValue] = useState(searchParams.competencies?.split(',') || ["all"]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const handleCompentencyFilter = useDebouncedCallback((values: string[]) => {
         const params = new URLSearchParams(searchParams);
@@ -108,13 +107,14 @@ const SkillsOverview = (props: { searchParams: Promise<SkillsQueryType> }) => {
             }
         </div>
 
-        <div className={cn("transition-all duration-500", loading ? "blur-md cursor-wait" : "blur-0")}>
-            {!!skills ?
-                <Pager pagerObject={skills} renderItem={renderSkillRow} headerItems={tableHeaders} emptyMessage={t("noEntitiesFound", { entities: t("skills").toLowerCase() })} renderAsTable />
-                :
-                <Skeletons amount={15} className="w-full h-14" wrapperClass="grid gap-2" />
-            }
-        </div>
+        <Pager
+            pagerObject={skills}
+            renderItem={renderSkillRow}
+            loading={loading}
+            headerItems={tableHeaders}
+            emptyMessage={t("noEntitiesFound", { entities: t("skills").toLowerCase() })}
+            renderAsTable
+        />
     </div>
 }
 

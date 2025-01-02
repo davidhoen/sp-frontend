@@ -1,11 +1,11 @@
-import { icons, Loader2Icon, LucideIcon } from "lucide-react"
-import { useState, useMemo, useEffect } from "react"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose, DialogDescription } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { useTranslations } from "next-intl"
 import { Link } from "@/i18n/routing"
+import { icons, Loader2Icon, LucideIcon } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { useEffect, useMemo, useState } from "react"
 
 interface IconPickerProps {
     value: string
@@ -17,7 +17,7 @@ export function IconPicker({ value, onChange }: IconPickerProps) {
 
     const [open, setOpen] = useState(false)
     const [searchTerm, setSearchTerm] = useState("")
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setLoading] = useState(true);
 
     const filteredIcons = useMemo(() => {
         return Object.entries(icons)
@@ -27,7 +27,7 @@ export function IconPicker({ value, onChange }: IconPickerProps) {
     // Simulate loading state for icons
     useEffect(() => {
         const timer = setTimeout(() => {
-            setIsLoading(false);
+            setLoading(false);
         }, 3500);
         return () => clearTimeout(timer);
     }, []);

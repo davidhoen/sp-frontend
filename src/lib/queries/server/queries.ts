@@ -4,15 +4,13 @@ import { getCompetencyRating } from "@/lib";
 import { CompetencyType, EndorsementRequestType, EndorsementType, GroupType, ProfileType, SkillType, SkillWithGroups, UserWithSkillsAndGroups } from "@/types";
 import { getData } from "./data-fetching";
 
-async function fetchData<T>(route: string, parseMethod?: (data: T) => T | Promise<T>): Promise<T | undefined | "expired"> {
+async function fetchData<T>(route: string, parseMethod?: (data: T, status?: number) => T | Promise<T>): Promise<T | undefined> {
     try {
         const { result, status } = await getData<T>(route);
-
-        if (status === 410) return "expired";
         if (!result) return undefined;
-
-        return parseMethod ? await parseMethod(result) : result;
-    } catch (error) {
+        return parseMethod ? await parseMethod(result, status) : result;
+    }
+    catch (error) {
         console.error(error);
         return undefined;
     }
@@ -25,7 +23,10 @@ export const getTeacherSkill = async (id: number) =>
     fetchData<SkillWithGroups>(`/api/teacher/skills/${id}?with=groups`);
 
 export const getEndorsementRequestResponse = async (id: number) =>
-    fetchData<EndorsementRequestType>(`/api/endorsements/request/${id}`);
+    fetchData<EndorsementRequestType | "expired">(
+        `/api/endorsements/request/${id}`,
+        (endorsementRequest, status) => status === 410 ? "expired" : endorsementRequest
+    );
 
 export const getCompetency = async (id: number) =>
     fetchData<CompetencyType>(`/api/student/competencies/${id}`);

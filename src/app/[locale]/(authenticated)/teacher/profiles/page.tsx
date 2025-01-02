@@ -3,12 +3,9 @@
 import UpsertProfileModal from "@/components/Modals/Teacher/UpsertProfileModal"
 import { Pager } from "@/components/Pager"
 import ProfileRow from "@/components/Rows/ProfileRow"
-import Skeletons from "@/components/Skeletons"
 import PageTitle from "@/components/Typography/PageTitle"
 import { Button } from "@/components/ui/button"
-import { usePathname, useRouter } from "@/i18n/routing"
 import { getTeacherProfiles } from "@/lib/queries/client/queries"
-import { cn } from "@/lib/utils"
 import { ProfileWithCompetencies, TeacherProfileQueryType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useTranslations } from "next-intl"
@@ -17,15 +14,13 @@ import { use, useCallback, useEffect, useState } from "react"
 const ProfilesOverview = (props: { searchParams: Promise<TeacherProfileQueryType> }) => {
     const searchParams = use(props.searchParams);
     const t = useTranslations("general")
-    const { replace } = useRouter()
-    const pathname = usePathname();
 
     const [profiles, setProfiles] = useState<PagingSchema<ProfileWithCompetencies>>();
-    const [isLoading, setIsLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     //Method to get the profiles for the current page
     const fetchProfiles = useCallback(async () => {
-        setIsLoading(true);
+        setLoading(true);
         try {
             const page = searchParams.page || "1";
 
@@ -36,7 +31,7 @@ const ProfilesOverview = (props: { searchParams: Promise<TeacherProfileQueryType
             console.error(error);
         }
         finally {
-            setIsLoading(false);
+            setLoading(false);
         }
     }, [searchParams]);
 
@@ -58,13 +53,15 @@ const ProfilesOverview = (props: { searchParams: Promise<TeacherProfileQueryType
             </UpsertProfileModal>
         </div>
 
-        <div className={cn("transition-all duration-500", isLoading ? "blur-md cursor-wait" : "blur-0")}>
-            {!!profiles ?
-                <Pager pagerObject={profiles} renderItem={renderProfileRow} headerItems={tableHeaders} emptyMessage={t("noEntitiesFound", { entities: t("profiles").toLowerCase() })} renderAsTable />
-                :
-                <Skeletons amount={15} className="w-full h-14" wrapperClass="grid gap-2" />
-            }
-        </div>
+        <Pager
+            pagerObject={profiles}
+            renderItem={renderProfileRow}
+            loading={loading}
+            headerItems={tableHeaders}
+            emptyMessage={t("noEntitiesFound", { entities: t("profiles").toLowerCase() })}
+            renderAsTable
+        />
+
     </div>
 }
 

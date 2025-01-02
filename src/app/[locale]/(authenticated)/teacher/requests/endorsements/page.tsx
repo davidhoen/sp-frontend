@@ -3,9 +3,7 @@
 import { Pager } from "@/components/Pager"
 import StudentRow from "@/components/Rows/StudentRow"
 import SearchInput from "@/components/SearchInput"
-import Skeletons from "@/components/Skeletons"
 import { getStudents } from "@/lib/queries/client/queries"
-import { cn } from "@/lib/utils"
 import { StudentsQueryType, UserWithSkillsAndGroups } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useTranslations } from "next-intl"
@@ -16,7 +14,7 @@ const EndorsementRequests = (props: { searchParams: Promise<StudentsQueryType> }
     const t = useTranslations("general");
 
     const [students, setStudents] = useState<PagingSchema<UserWithSkillsAndGroups>>();
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     //Method to get the students for the current page
     const fetchStudents = useCallback(async () => {
@@ -51,13 +49,14 @@ const EndorsementRequests = (props: { searchParams: Promise<StudentsQueryType> }
             <SearchInput placeholder={t("search")} />
         </div>
 
-        <div className={cn("transition-all duration-500", loading ? "blur-md cursor-wait" : "blur-0")}>
-            {!!students ?
-                <Pager pagerObject={students} renderItem={renderStudentRow} headerItems={tableHeaders} emptyMessage={t("noEntitiesFound", { entities: t("students").toLowerCase() })} renderAsTable />
-                :
-                <Skeletons amount={15} className="w-full h-14" wrapperClass="grid gap-2" />
-            }
-        </div>
+        <Pager
+            pagerObject={students}
+            renderItem={renderStudentRow}
+            loading={loading}
+            headerItems={tableHeaders}
+            emptyMessage={t("noEntitiesFound", { entities: t("students").toLowerCase() })}
+            renderAsTable
+        />
     </div>
 }
 

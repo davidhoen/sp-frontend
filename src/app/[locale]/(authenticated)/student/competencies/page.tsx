@@ -6,22 +6,21 @@ import SearchInput from "@/components/SearchInput"
 import Skeletons from "@/components/Skeletons"
 import PageTitle from "@/components/Typography/PageTitle"
 import { getCompetencies } from "@/lib/queries/client/queries"
-import { cn } from "@/lib/utils"
 import { CompetencyType, SkillsQueryType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useTranslations } from "next-intl"
-import { useCallback, useEffect, useState, use } from "react";
+import { use, useCallback, useEffect, useState } from "react"
 
 const CompetenciesOverview = (props: { searchParams: Promise<SkillsQueryType> }) => {
     const searchParams = use(props.searchParams);
     const t = useTranslations("general")
 
     const [competencies, setCompetencies] = useState<PagingSchema<CompetencyType>>();
-    const [isLoading, setIsLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     //Method to get the competencies for the current page
     const fetchCompetencies = useCallback(async () => {
-        setIsLoading(true);
+        setLoading(true);
         try {
             const page = searchParams.page || "1";
             const search = searchParams.search ?? ""
@@ -34,7 +33,7 @@ const CompetenciesOverview = (props: { searchParams: Promise<SkillsQueryType> })
             console.error(error);
         }
         finally {
-            setIsLoading(false);
+            setLoading(false);
         }
     }, [searchParams]);
 
@@ -53,13 +52,14 @@ const CompetenciesOverview = (props: { searchParams: Promise<SkillsQueryType> })
             <SearchInput placeholder={t("search")} />
         </div>
 
-        <div className={cn("transition-all duration-500", isLoading ? "blur-md cursor-wait" : "blur-0")}>
-            {!!competencies ?
-                <Pager pagerObject={competencies} renderItem={renderCompetencies} emptyMessage={t("noEntitiesFound", { entities: t("competencies").toLowerCase() })} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-8 items-stretch" />
-                :
-                <Skeletons amount={15} className="w-full h-28" />
-            }
-        </div>
+        <Pager
+            pagerObject={competencies}
+            renderItem={renderCompetencies}
+            loading={loading}
+            emptyMessage={t("noEntitiesFound", { entities: t("competencies").toLowerCase() })}
+            wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-8 items-stretch w-full"
+        />
+
     </div>
 }
 

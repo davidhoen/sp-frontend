@@ -1,6 +1,6 @@
+import { EndorsementFormValues } from "@/schemas/zod"
 import { useTranslations } from "next-intl"
 import { UserType } from "./auth"
-import { EndorsementFormValues } from "@/schemas/zod"
 
 export type NavItem = {
   title: string
@@ -28,6 +28,7 @@ export type CompetencyType = {
   title: string
   desc: string
   overview: string
+  avgRating?: number
   feedbacks_count?: number
   endorsements_count?: number
   skills: SkillType[]

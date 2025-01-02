@@ -4,17 +4,15 @@ import UpsertGroupModal from "@/components/Modals/Teacher/UpsertGroupModal"
 import { Pager } from "@/components/Pager"
 import GroupRow from "@/components/Rows/GroupRow"
 import SearchInput from "@/components/SearchInput"
-import Skeletons from "@/components/Skeletons"
 import PageTitle from "@/components/Typography/PageTitle"
 import { Button } from "@/components/ui/button"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { usePathname, useRouter } from "@/i18n/routing"
 import { getGroups } from "@/lib/queries/client/queries"
-import { cn } from "@/lib/utils"
 import { GroupType, TeacherGroupsQueryType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useTranslations } from "next-intl"
-import { useCallback, useEffect, useState, use } from "react";
+import { use, useCallback, useEffect, useState } from "react"
 import { useDebouncedCallback } from "use-debounce"
 
 const GroupsOverview = (props: { searchParams: Promise<TeacherGroupsQueryType> }) => {
@@ -24,11 +22,11 @@ const GroupsOverview = (props: { searchParams: Promise<TeacherGroupsQueryType> }
     const pathname = usePathname();
 
     const [groups, setGroups] = useState<PagingSchema<GroupType>>();
-    const [isLoading, setIsLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     //Method to get the groups for the current page
     const fetchGroups = useCallback(async () => {
-        setIsLoading(true);
+        setLoading(true);
         try {
             const page = searchParams.page || "1";
             const search = searchParams.search ?? ""
@@ -42,7 +40,7 @@ const GroupsOverview = (props: { searchParams: Promise<TeacherGroupsQueryType> }
             console.error(error);
         }
         finally {
-            setIsLoading(false);
+            setLoading(false);
         }
     }, [searchParams]);
 
@@ -85,13 +83,15 @@ const GroupsOverview = (props: { searchParams: Promise<TeacherGroupsQueryType> }
             </ToggleGroup>
         </div>
 
-        <div className={cn("transition-all duration-500", isLoading ? "blur-md cursor-wait" : "blur-0")}>
-            {!!groups ?
-                <Pager pagerObject={groups} renderItem={renderGroupRow} headerItems={tableHeaders} emptyMessage={t("noEntitiesFound", { entities: t("groups").toLowerCase() })} renderAsTable />
-                :
-                <Skeletons amount={15} className="w-full h-14" wrapperClass="grid gap-2" />
-            }
-        </div>
+        <Pager
+            pagerObject={groups}
+            renderItem={renderGroupRow}
+            loading={loading}
+            headerItems={tableHeaders}
+            emptyMessage={t("noEntitiesFound", { entities: t("groups").toLowerCase() })}
+            renderAsTable
+        />
+
     </div>
 }
 

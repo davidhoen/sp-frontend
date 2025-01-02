@@ -4,11 +4,9 @@ import UpsertCompetencyModal from "@/components/Modals/Teacher/UpsertCompetencyM
 import { Pager } from "@/components/Pager"
 import CompetencyRow from "@/components/Rows/CompetencyRow"
 import SearchInput from "@/components/SearchInput"
-import Skeletons from "@/components/Skeletons"
 import PageTitle from "@/components/Typography/PageTitle"
 import { Button } from "@/components/ui/button"
 import { getCompetencies } from "@/lib/queries/client/queries"
-import { cn } from "@/lib/utils"
 import { CompetencyType, TeacherGroupsQueryType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useTranslations } from "next-intl"
@@ -19,11 +17,11 @@ const CompetenciesOverview = (props: { searchParams: Promise<TeacherGroupsQueryT
     const t = useTranslations("general")
 
     const [competencies, setCompetencies] = useState<PagingSchema<CompetencyType>>();
-    const [isLoading, setIsLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     //Method to get the competencies for the current page
     const fetchCompetencies = useCallback(async () => {
-        setIsLoading(true);
+        setLoading(true);
         try {
             const page = searchParams.page || "1";
             const search = searchParams.search ?? ""
@@ -36,7 +34,7 @@ const CompetenciesOverview = (props: { searchParams: Promise<TeacherGroupsQueryT
             console.error(error);
         }
         finally {
-            setIsLoading(false);
+            setLoading(false);
         }
     }, [searchParams]);
 
@@ -59,13 +57,15 @@ const CompetenciesOverview = (props: { searchParams: Promise<TeacherGroupsQueryT
             </UpsertCompetencyModal>
         </div>
 
-        <div className={cn("transition-all duration-500", isLoading ? "blur-md cursor-wait" : "blur-0")}>
-            {!!competencies ?
-                <Pager pagerObject={competencies} renderItem={renderGroupRow} headerItems={tableHeaders} emptyMessage={t("noEntitiesFound", { entities: t("competencies").toLowerCase() })} renderAsTable />
-                :
-                <Skeletons amount={15} className="w-full h-14" wrapperClass="grid gap-2" />
-            }
-        </div>
+        <Pager
+            pagerObject={competencies}
+            renderItem={renderGroupRow}
+            loading={loading}
+            headerItems={tableHeaders}
+            emptyMessage={t("noEntitiesFound", { entities: t("competencies").toLowerCase() })}
+            renderAsTable
+        />
+
     </div>
 }
 

@@ -8,11 +8,10 @@ import PageTitle from "@/components/Typography/PageTitle"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { usePathname, useRouter } from "@/i18n/routing"
 import { getSkills } from "@/lib/queries/client/queries"
-import { cn } from "@/lib/utils"
 import { CompetencyType, SkillsQueryType, SkillType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useTranslations } from "next-intl"
-import { useCallback, useEffect, useState, use } from "react";
+import { use, useCallback, useEffect, useState } from "react"
 import { useDebouncedCallback } from "use-debounce"
 
 const SkillsOverview = (props: { searchParams: Promise<SkillsQueryType> }) => {
@@ -23,7 +22,7 @@ const SkillsOverview = (props: { searchParams: Promise<SkillsQueryType> }) => {
 
     const [skills, setSkills] = useState<PagingSchema<SkillType>>();
     const [compentencies, setCompentencies] = useState<CompetencyType[]>();
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [competencyFilterValue, setCompetencyFilterValue] = useState(searchParams.competencies?.split(',') || ["all"]);
 
     const handleCompentencyFilter = useDebouncedCallback((values: string[]) => {
@@ -124,13 +123,13 @@ const SkillsOverview = (props: { searchParams: Promise<SkillsQueryType> }) => {
             </ToggleGroup>
         </div>
 
-        <div className={cn("transition-all duration-500", loading ? "blur-md cursor-wait" : "blur-0")}>
-            {!!skills ?
-                <Pager pagerObject={skills} renderItem={renderSkill} emptyMessage={t("noEntitiesFound", { entities: t("skills").toLowerCase() })} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-8 items-start" />
-                :
-                <Skeletons amount={15} className="w-full h-28" />
-            }
-        </div>
+        <Pager
+            pagerObject={skills}
+            renderItem={renderSkill} loading={loading}
+            emptyMessage={t("noEntitiesFound", { entities: t("skills").toLowerCase() })}
+            wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-8 items-start w-full"
+        />
+
     </div>
 }
 

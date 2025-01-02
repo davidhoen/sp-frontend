@@ -11,10 +11,10 @@ import UserAvatar from "@/components/UserAvatar"
 import { getFullName } from "@/lib"
 import { getStudentRequests } from "@/lib/queries/client/queries"
 import { cn } from "@/lib/utils"
-import { StudentGroupsQueryType, RequestType } from "@/types"
+import { RequestType, StudentGroupsQueryType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useFormatter, useTranslations } from "next-intl"
-import { useCallback, useEffect, useState, use } from "react";
+import { use, useCallback, useEffect, useState } from "react"
 
 const StudentRequests = (props: { searchParams: Promise<StudentGroupsQueryType> }) => {
     const searchParams = use(props.searchParams);
@@ -22,11 +22,11 @@ const StudentRequests = (props: { searchParams: Promise<StudentGroupsQueryType> 
     const format = useFormatter()
 
     const [requests, setRequests] = useState<PagingSchema<RequestType>>();
-    const [isLoading, setIsLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     //Method to get the request for the current page
     const fetchRequests = useCallback(async () => {
-        setIsLoading(true);
+        setLoading(true);
         try {
             const page = parseInt(searchParams.page) || 1;
             const search = searchParams.search ?? ""
@@ -39,7 +39,7 @@ const StudentRequests = (props: { searchParams: Promise<StudentGroupsQueryType> 
             console.error(error);
         }
         finally {
-            setIsLoading(false);
+            setLoading(false);
         }
     }, [searchParams]);
 
@@ -88,13 +88,8 @@ const StudentRequests = (props: { searchParams: Promise<StudentGroupsQueryType> 
             <SearchInput placeholder={t("searchFeedbackRequests")} />
         </div>
 
-        <div className={cn("transition-all duration-500", isLoading ? "blur-md cursor-wait" : "blur-0")}>
-            {!!requests ?
-                <Pager pagerObject={requests} renderItem={renderRequest} emptyMessage={t("noEntitiesFound", { entities: t("requests").toLowerCase() })} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-8 items-start" />
-                :
-                <Skeletons amount={15} className="w-full h-28" />
-            }
-        </div>
+        <Pager pagerObject={requests} renderItem={renderRequest} loading={loading} emptyMessage={t("noEntitiesFound", { entities: t("requests").toLowerCase() })} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-8 items-start" />
+
     </div>
 }
 

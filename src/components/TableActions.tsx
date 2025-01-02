@@ -1,10 +1,10 @@
 "use client"
 
 import { cn } from "@/lib/utils";
-import { ArchiveIcon, CircleDashedIcon, EyeIcon, LucideIcon, PencilLineIcon, TrashIcon } from "lucide-react";
+import { ArchiveIcon, CircleDashedIcon, EyeIcon, LucideIcon, MessageCircleReplyIcon, PencilLineIcon, TrashIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-export function TableAction({ label, icon = CircleDashedIcon, type, resizes }: { label?: string, icon?: LucideIcon, type?: "edit" | "delete" | "view" | "archive", resizes?: boolean }) {
+export function TableAction({ label, icon = CircleDashedIcon, type, resizes }: { label?: string, icon?: LucideIcon, type?: "edit" | "delete" | "view" | "archive" | "reply", resizes?: boolean }) {
   const t = useTranslations("general")
 
   if (type === "edit") {
@@ -21,6 +21,10 @@ export function TableAction({ label, icon = CircleDashedIcon, type, resizes }: {
   }
   else if (type === "archive") {
     icon = ArchiveIcon
+    label = t("archive")
+  }
+  else if (type === "reply") {
+    icon = MessageCircleReplyIcon
     label = t("archive")
   }
   const Icon = icon
