@@ -3,7 +3,7 @@ import ProfileChart from "@/components/ProfileChart"
 import ProfileTile from "@/components/ProfileTile"
 import PageTitle from "@/components/Typography/PageTitle"
 import SectionTitle from "@/components/Typography/SectionTitle"
-import { getProfile, getProfileCompetencies, getProfiles } from "@/lib/queries/server/queries"
+import { getProfile, getProfileCompetencies, getStudentProfiles } from "@/lib/queries/server/queries"
 import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
 
@@ -12,7 +12,7 @@ const ProfileDetail = async (props: { params: Promise<{ id: number }> }) => {
     const t = await getTranslations("general")
     const profile = await getProfile(params.id)
     const competencies = await getProfileCompetencies(params.id)
-    const profiles = await getProfiles()
+    const profiles = await getStudentProfiles()
 
     if (!profile) notFound()
 

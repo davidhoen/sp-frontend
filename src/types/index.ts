@@ -134,6 +134,10 @@ export type StudentsQueryType = {
   search: string,
 }
 
+export type TeacherProfileQueryType = {
+  page: string,
+}
+
 export type NotificationType = {
   id: string,
   type: NotificationTypeEnum,
@@ -178,3 +182,5 @@ export type UserWithSkills = UserType & { skills: SkillType[] }
 export type UserWithSkillsAndGroups = UserWithSkills & { groups: GroupType[] }
 
 export type SkillWithGroups = SkillType & { groups: GroupType[] }
+
+export type ProfileWithCompetencies = ProfileType & { competencies: CompetencyType[] }

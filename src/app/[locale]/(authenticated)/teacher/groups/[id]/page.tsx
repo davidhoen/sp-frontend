@@ -40,7 +40,7 @@ const GroupsDetail = async (props: { params: Promise<{ id: number }> }) => {
         </div>
 
         <div className="">
-            <div className="flex flex-col sm:flex-row sm:justify-between items-center lg:justify-normal lg:gap-8 mb-4">
+            <div className="flex flex-row justify-between items-center lg:justify-normal lg:gap-8 mb-4">
                 {/* Title */}
                 <PageTitle className="mb-4">{group.name}</PageTitle>
 

@@ -8,7 +8,7 @@ import { getData } from "./data-fetching";
 
 export const getStudentSkill = async (id: number) => {
     try {
-        const { result } = await getData<SkillType>(`/api/student/skills/${id}?with=skill,createdBy`);
+        const { result } = await getData<SkillType>(`/api/student/skills/${id}`);
         return result
     }
     catch (error) {
@@ -79,7 +79,7 @@ export const getEnrolledGroups = async () => {
     }
 }
 
-export const getProfiles = async () => {
+export const getStudentProfiles = async () => {
     try {
         const route = `/api/student/profiles`
         const { result } = await getData<ProfileType[]>(route);

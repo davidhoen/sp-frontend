@@ -14,6 +14,9 @@
     "viewProfile": "View profile",
     "logout": "Logout",
     "you": "You",
+    "color": "Color",
+    "icon": "Icon",
+    "iconPickerDescription": "Choose from one of the Lucid icons below. For a complete overview and more extensive search, please visit the <link>Lucid icons list.</link>",
     "definition": "Definition:",
     "endorsement": "Endorsement",
     "endorsements": "Endorsements",
@@ -25,6 +28,7 @@
     "addASkill": "Add a skill",
     "skill": "Skill",
     "skills": "Skills",
+    "profile": "Profile",
     "competencies": "Competencies",
     "search": "Search",
     "allSkills": "All skills",
@@ -49,6 +53,8 @@
     "enrollToInteract": "Enroll for group to interact",
     "enrollToInteractDescription": "Join this group to interact with the teachers and students.",
     "topSkills": "Top skills",
+    "selectIcon": "Select an icon",
+    "searchIcons": "Search for an icon...",
     "myPersonalCoach": "My personal coach",
     "other": "Other",
     "view": "View",
@@ -183,6 +189,13 @@
       "overviewPlaceholder": "E.g. An overview of the competency, including the key skills it encompasses and how they contribute to success in a field.",
       "skillsPlaceholder": "Select the skill(s)",
       "profilesPlaceholder": "Select the profile(s)"
+    },
+    "upsertProfile": {
+      "create": "Create a profile",
+      "update": "Update profile",
+      "titlePlaceholder": "Bijv. Technologist",
+      "descriptionPlaceholder": "E.g. This profile includes competencies needed to excel in a specific role or field.",
+      "competenciesPlaceholder": "Select the competencies"
     }
   },
   "students": {
