@@ -131,6 +131,8 @@ export type TeacherGroupsQueryType = {
   is_archived: string
 }
 
+export type FeedbackRequestsQueryType = TeacherGroupsQueryType
+
 export type StudentsQueryType = {
   page: string,
   search: string,

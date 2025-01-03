@@ -25,7 +25,7 @@ export function TableAction({ label, icon = CircleDashedIcon, type, resizes }: {
   }
   else if (type === "reply") {
     icon = MessageCircleReplyIcon
-    label = t("archive")
+    label = t("reply")
   }
   const Icon = icon
 
