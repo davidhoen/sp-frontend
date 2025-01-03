@@ -4,7 +4,7 @@ import { EndorsementType } from "@/types"
 import { useSearchParams } from "next/navigation"
 import { PagingSchema } from "@/types/pagination"
 
-export const useRecentEndorsements = (competencyId: string) => {
+export const useCompetencyRecentEndorsements = (competencyId: string) => {
     const searchParams = useSearchParams()
     const page = searchParams.get('endorsementsPage') || 1
     const url = `/api/student/endorsements/recent?with=skill,createdBy&page=${page}&per_page=4&competency=${competencyId}`

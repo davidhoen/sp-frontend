@@ -31,11 +31,16 @@ export function EndorsementsList({ skillId }: { skillId: string }) {
             </RequestEndorsementModal>
         </div>
 
-        {!!endorsements ?
-            <Pager pagerObject={endorsements} renderItem={renderEndorsments} emptyMessage={t("noEntitiesFound", { entities: t("endorsements").toLowerCase() })} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-2 items-start" entityKey="endorsements" />
-            :
-            <Skeletons amount={4} className="w-full h-36" />
-        }
+        <Pager
+            pagerObject={endorsements}
+            renderItem={renderEndorsments}
+            loading={isLoading}
+            emptyMessage={t("noEntitiesFound", { entities: t("endorsements").toLowerCase() })}
+            wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-2 items-start"
+            entityKey="endorsements"
+            skeleton={<Skeletons amount={4} className="w-full h-36" />}
+        />
+
     </>
 
 }

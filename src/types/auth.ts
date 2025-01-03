@@ -7,6 +7,9 @@ export interface UserType {
     image?: string
     role: Role
     personal_coach?: UserType;
+    job_title?: string;
+    address?: string;
+    field?: string;
     is_teacher: boolean
     is_head_teacher: boolean
     is_admin: boolean
@@ -33,7 +36,7 @@ export interface ApiResponseGet<T> {
 export interface ApiResponseModify {
     message: string;
     data: {
-        id: number;
+        id: string;
     };
 }
 

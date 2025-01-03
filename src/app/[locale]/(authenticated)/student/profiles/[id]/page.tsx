@@ -7,7 +7,7 @@ import { getProfile, getProfileCompetencies, getStudentProfiles } from "@/lib/qu
 import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
 
-const ProfileDetail = async (props: { params: Promise<{ id: number }> }) => {
+const ProfileDetail = async (props: { params: Promise<{ id: string }> }) => {
     const params = await props.params;
     const t = await getTranslations("general")
     const profile = await getProfile(params.id)

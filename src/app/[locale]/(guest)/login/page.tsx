@@ -5,7 +5,6 @@ import SubmitFormButton from "@/components/SubmitFormButton"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { DASHBOARD_ROUTE } from "@/constants"
 import { Link, useRouter } from "@/i18n/routing"
 import { roleBasePathMap } from "@/lib"
 import { login } from "@/lib/auth/client"
@@ -15,7 +14,8 @@ import { LoginRequest } from "@/schemas/zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Eye, EyeClosed } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { Fragment, useState } from "react"
+import { useSearchParams } from "next/navigation"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import { z } from "zod"
@@ -30,7 +30,7 @@ const LoginPage = () => {
   const router = useRouter()
   const { registerUser } = useUser()
   const t = useTranslations("general")
-
+  const params = useSearchParams()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
@@ -54,7 +54,10 @@ const LoginPage = () => {
         cache: "no-store"
       });
       registerUser(user)
-      router.push(roleBasePathMap[user?.role.name] ?? "/");
+
+      const redirect = params.get("redirect") || roleBasePathMap[user?.role.name] || "/"
+
+      router.push(redirect);
     } catch (error: any) {
       toast.error(t("genericError"))
       handleBackendFormErrors({

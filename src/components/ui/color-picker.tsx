@@ -56,6 +56,7 @@ const ColorPicker = forwardRef<
                 <PopoverContent className='w-full'>
                     <HexColorPicker color={parsedValue} onChange={onChange} />
                     <Input
+                        className="mt-2"
                         maxLength={7}
                         onChange={(e) => {
                             onChange(e?.currentTarget?.value);

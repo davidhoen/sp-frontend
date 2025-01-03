@@ -20,13 +20,14 @@ axiosInstance.interceptors.response.use(
     if (error.response?.status === 401) {
       if (typeof window !== "undefined") {
         // We're on the client side
-        const [, lang] = window.location.pathname.split('/');
+        const currentUrl = window.location.pathname;
+        const [, lang] = currentUrl.split('/');
         const locale = lang || locales[0];
-        const urlWithoutLocale = window.location.pathname.replace(locale, '')
+        const urlWithoutLocale = currentUrl.replace(locale, '')
         if (urlWithoutLocale !== LOGIN_ROUTE) {
           // It's important to check that we're not on the login page, otherwise we'll end up in an infinite loop
           // The server side redirects are handled by the ServerSideRequestsManager class
-          window.location.href = `/${locale}/${EXPIRED_SESSION_ROUTE}`;
+          window.location.href = `/${locale}/${EXPIRED_SESSION_ROUTE}&redirect=${urlWithoutLocale}`;
         }
       }
     }

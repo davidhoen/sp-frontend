@@ -34,10 +34,13 @@ export function FeedbacksList({ skillId }: { skillId: string }) {
             </div>
         </div>
 
-        {!!feedbacks ?
-            <Pager pagerObject={feedbacks} renderItem={renderFeedbacks} emptyMessage={t("noEntitiesFound", { entities: t("feedbacks").toLowerCase() })} wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-2 items-start" entityKey="feedbacks" />
-            :
-            <Skeletons amount={4} className="w-full h-36" />
-        }
+        <Pager
+            pagerObject={feedbacks}
+            renderItem={renderFeedbacks}
+            loading={isLoading}
+            emptyMessage={t("noEntitiesFound", { entities: t("feedbacks").toLowerCase() })}
+            wrapperClass="grid lg:grid-cols-2 xl:grid-cols-3 gap-2 items-start"
+            entityKey="feedbacks"
+        />
     </>
 }

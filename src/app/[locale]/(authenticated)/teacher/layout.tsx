@@ -7,7 +7,7 @@ const StudentLayout = async ({ children }: { children: ReactNode }) => {
   const t = await getTranslations("general")
 
   const menuItems = [
-    { title: t("dashboard"), url: `/teacher`, icon: "Book" },
+    { title: t("dashboard"), url: `/teacher`, icon: "Book", isDashboard: true },
     { title: t("requests"), url: `/teacher/requests`, icon: "Bell" },
     { title: t("groups"), url: `/teacher/groups`, icon: "Group" },
     { title: t("skills"), url: `/teacher/skills`, icon: "Star" },

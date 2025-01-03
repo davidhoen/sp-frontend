@@ -8,6 +8,8 @@
     "edit": "Bewerken",
     "delete": "Verwijderen",
     "add": "Toevoegen",
+    "reply": "Beantwoorden",
+    "open": "Openstaand",
     "name": "Naam",
     "profile": "Profiel",
     "color": "Kleur",
@@ -30,7 +32,10 @@
     "requests": "Verzoeken",
     "competencies": "Competenties",
     "search": "Zoeken",
+    "previousFeedback": "Eerdere feedback",
     "activeGroups": "Actieve groepen",
+    "endorsementRequests": "Onderschrijvingsverzoeken",
+    "endorsementReviews": "Onderschrijvings beoordelingen",
     "archivedGroups": "Gearchiveerde groepen",
     "archived": "Gearchiveerd",
     "archive": "Archiveren",
@@ -58,6 +63,8 @@
     "myPersonalCoach": "Mijn persoonlijke coach",
     "confirmRemoveFromGroup": "Weet je zeker dat je deze student uit de groep wilt verwijderen?",
     "view": "Bekijk",
+    "email": "Email",
+    "review": "Beoordelen",
     "title": "Titel",
     "lastEditedByOn": "Laatst bewerkt door {name} op {date}",
     "other": "Overig",
@@ -71,6 +78,7 @@
     "profiles": "Profielen",
     "enrolledGroups": "Ingeschreven groepen",
     "recentEndorsements": "Recente onderschrijvingen",
+    "recentFeedbacks": "Recente feedback",
     "publicProfile": "Openbaar profiel",
     "viewAll": "Bekijk alles",
     "profileChart": "{profile} grafiek",
@@ -78,6 +86,7 @@
     "confirmDeleteEntity": "Weet je zeker dat je deze {entity} wilt verwijderen?",
     "newestFirst": "Nieuwste eerst",
     "oldestFirst": "Oudste eerst",
+    "currentRating": "Huidige beoordeling",
     "remove": "Verwijderen",
     "selectIcon": "Selecteer een icoon",
     "searchIcons": "Zoek een icoon...",
@@ -104,6 +113,9 @@
   "modals": {
     "cancel": "Annuleren",
     "save": "Opslaan",
+    "submit": "Verzenden",
+    "approve": "Goedkeuren",
+    "reject": "Afwijzen",
     "description": "Beschrijving",
     "saveChanges": "Wijzigingen opslaan",
     "feedback": "Feedback",
@@ -130,8 +142,12 @@
     },
     "addFeedback": {
       "title": "Feedback toevoegen",
-      "description": "Geef voorbeelden, sterke punten, verbeterpunten en suggesties om je vaardigheden te reflecteren en te verbeteren",
+      "description": "Geef voorbeelden, sterke punten, verbeterpunten en suggesties om je skill te reflecteren en te verbeteren",
       "requestDescription": "{requester} heeft je om feedback gevraagd voor de skill {skill} vanuit de {group} groep."
+    },
+    "addEndorsement": {
+      "title": "Beoordeling onderschrijven",
+      "description": "Geef voorbeelden, sterke punten, verbeterpunten en suggesties om de skill van de student te weerspiegelen en te verbeteren."
     },
     "requestEndorsement": {
       "title": "Onderschrijving aanvragen",
@@ -158,6 +174,11 @@
       "skillRating": "Skill beoordeling",
       "skillRatingDescription": "Beoordeel de skill van 1 tot 4 sterren",
       "submitEndorsement": "Onderschrijving versturen"
+    },
+    "reviewEndorsement": {
+      "title": "Onderschrijving beoordelen",
+      "writerOfEndorsement": "Schrijver van de onderschrijving",
+      "positionAtCompany": "{position} bij {company}"
     },
     "updatePersonalCoach": {
       "title": "Persoonlijke coach bijwerken",

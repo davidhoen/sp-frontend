@@ -1,132 +1,71 @@
-"use server"
+"use server";
 
 import { getCompetencyRating } from "@/lib";
-import { CompetencyType, EndorsementRequestType, EndorsementType, GroupType, ProfileType, SkillType, SkillWithGroups } from "@/types";
+import { CompetencyType, EndorsementRequestType, EndorsementType, GroupType, ProfileType, SkillType, SkillWithGroups, UserWithSkillsAndGroups } from "@/types";
 import { getData } from "./data-fetching";
 
-// Only the detail pages are rendered serverside 
-
-export const getStudentSkill = async (id: number) => {
+async function fetchData<T>(route: string, parseMethod?: (data: T, status?: number) => T | Promise<T>): Promise<T | undefined> {
     try {
-        const { result } = await getData<SkillType>(`/api/student/skills/${id}`);
-        return result
+        const { result, status } = await getData<T>(route);
+        if (!result) return undefined;
+        return parseMethod ? await parseMethod(result, status) : result;
     }
     catch (error) {
         console.error(error);
+        return undefined;
     }
 }
 
-export const getTeacherSkill = async (id: number) => {
-    try {
-        const { result } = await getData<SkillWithGroups>(`/api/teacher/skills/${id}?with=groups`);
-        return result
-    }
-    catch (error) {
-        console.error(error);
-    }
-}
+export const getStudentSkill = async (id: string) =>
+    fetchData<SkillType>(`/api/student/skills/${id}`);
 
-export const getEndorsementRequestResponse = async (id: number) => {
-    try {
-        const { result, status } = await getData<EndorsementRequestType>(`/api/endorsements/request/${id}`);
-        if (status === 410)
-            return "expired";
-        return result;
-    }
-    catch (error) {
-        console.error(error);
-    }
-}
+export const getTeacherSkill = async (id: string) =>
+    fetchData<SkillWithGroups>(`/api/teacher/skills/${id}?with=groups`);
 
-export const getCompetency = async (id: number) => {
-    try {
-        const { result } = await getData<CompetencyType>(`/api/student/competencies/${id}`);
-        return result;
-    }
-    catch (error) {
-        console.error(error);
-    }
-}
+export const getSkillOfStudent = async ({ studentId, skillId }: { studentId: string, skillId: string }) =>
+    fetchData<SkillWithGroups>(`/api/teacher/students/${studentId}/${skillId}?with=groups`);
 
-export const getStudentCompetencies = async () => {
-    try {
-        const { result } = await getData<CompetencyType[]>(`/api/student/competencies?with=skills,skills.endorsements`);
-        return result;
-    }
-    catch (error) {
-        console.error(error);
-    }
-}
+export const getEndorsementRequestResponse = async (id: string) =>
+    fetchData<EndorsementRequestType | "expired">(
+        `/api/endorsements/request/${id}`,
+        (endorsementRequest, status) => status === 410 ? "expired" : endorsementRequest
+    );
 
-export const getGroup = async (id: number) => {
-    try {
-        const { result } = await getData<GroupType>(`/api/groups/${id}?with=skills,skills.endorsements`);
-        return result;
-    }
-    catch (error) {
-        console.error(error);
-    }
-}
+export const getCompetency = async (id: string) =>
+    fetchData<CompetencyType>(`/api/student/competencies/${id}`);
 
-export const getEnrolledGroups = async () => {
-    try {
-        const route = `/api/student/groups?with=teachers,skills,students`
-        const { result } = await getData<GroupType[]>(route);
-        return result;
-    }
-    catch (error) {
-        console.error(error);
-    }
-}
+export const getStudentCompetencies = async () =>
+    fetchData<CompetencyType[]>(`/api/student/competencies?with=skills,skills.endorsements`);
 
-export const getStudentProfiles = async () => {
-    try {
-        const route = `/api/student/profiles`
-        const { result } = await getData<ProfileType[]>(route);
-        return result;
-    }
-    catch (error) {
-        console.error(error);
-    }
-}
+export const getGroup = async (id: string) =>
+    fetchData<GroupType>(`/api/groups/${id}?with=skills,skills.endorsements`);
 
-export const getRecentEndorsements = async () => {
-    try {
-        const route = `/api/student/endorsements/recent?with=skill`;
-        const { result } = await getData<EndorsementType[]>(route);
-        return result;
-    }
-    catch (error) {
-        console.error(error);
-    }
-}
+export const getEnrolledGroups = async () =>
+    fetchData<GroupType[]>(`/api/student/groups?with=teachers,skills,students`);
 
-export const getProfile = async (id: number) => {
-    try {
-        const { result } = await getData<ProfileType>(`/api/student/profiles/${id}`);
-        return result;
-    }
-    catch (error) {
-        console.error(error);
-    }
-}
+export const getStudentProfiles = async () =>
+    fetchData<ProfileType[]>(`/api/student/profiles`);
 
-export const getProfileCompetencies = async (id: number) => {
-    try {
-        const { result } = await getData<CompetencyType[]>(`/api/competencies?with=skills.endorsements,profiles&profile=${id}`);
+export const getRecentEndorsements = async () =>
+    fetchData<EndorsementType[]>(`/api/student/endorsements/recent?with=skill`);
 
-        if (!result) return [];
+export const getProfile = async (id: string) =>
+    fetchData<ProfileType>(`/api/student/profiles/${id}`);
 
-        // Get average rating for each competency
-        const competenciesWithRating = result.map(competency => {
-            const avgRating = getCompetencyRating(competency);
-            return { ...competency, avgRating };
-        });
+export const getProfileCompetencies = async (id: string) =>
+    fetchData<CompetencyType[]>(
+        `/api/competencies?with=skills.endorsements,profiles&profile=${id}`,
+        (competencies) => {
+            if (!competencies.length) return [];
 
-        // Sort the competencies average rating of the connected skills
-        return competenciesWithRating.sort((a, b) => b.avgRating - a.avgRating);
-    }
-    catch (error) {
-        console.error(error);
-    }
-}
+            return competencies
+                .map(competency => ({
+                    ...competency,
+                    avgRating: getCompetencyRating(competency)
+                }))
+                .sort((a, b) => b.avgRating - a.avgRating);
+        }
+    );
+
+export const getStudent = async (id: string) =>
+    fetchData<UserWithSkillsAndGroups>(`/api/teacher/students/${id}?with=groups,feedbacks,endorsements`);

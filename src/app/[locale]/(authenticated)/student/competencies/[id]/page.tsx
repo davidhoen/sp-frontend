@@ -1,3 +1,4 @@
+import { CompentenciesEndorsementList } from "@/components/CompentenciesEndorsementList"
 import { EndorsementsList } from "@/components/EndorsementsList"
 import ProfileTile from "@/components/ProfileTile"
 import { RecentEndorsementsList } from "@/components/RecentEndorsementList"
@@ -10,7 +11,7 @@ import { getCompetency } from "@/lib/queries/server/queries"
 import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
 
-const CompetencyDetail = async (props: { params: Promise<{ id: number }> }) => {
+const CompetencyDetail = async (props: { params: Promise<{ id: string }> }) => {
     const params = await props.params;
     const t = await getTranslations("general")
 
@@ -50,7 +51,7 @@ const CompetencyDetail = async (props: { params: Promise<{ id: number }> }) => {
 
         {/* Recent endorsement */}
         <div className="mt-6 mb-4">
-            <RecentEndorsementsList competencyId={competency.id} />
+            <CompentenciesEndorsementList competencyId={competency.id} />
         </div>
 
         {/* Related skills */}
