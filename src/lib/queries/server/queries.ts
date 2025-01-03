@@ -69,3 +69,6 @@ export const getProfileCompetencies = async (id: string) =>
 
 export const getStudent = async (id: string) =>
     fetchData<UserWithSkillsAndGroups>(`/api/teacher/students/${id}?with=groups,feedbacks,endorsements`);
+
+export const getTeacherRequestsCount = async () =>
+    fetchData<number>(`/api/teacher/requests/count`);
