@@ -1,15 +1,16 @@
 import { Chip } from "@/components/Chip"
 import StarRating from "@/components/StarRating"
+import { StudentEndorsementList } from "@/components/StudentEndorsementList"
+import { StudentFeedbackList } from "@/components/StudentFeedbackList"
 import PageTitle from "@/components/Typography/PageTitle"
 import SectionTitle from "@/components/Typography/SectionTitle"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 import UserAvatar from "@/components/UserAvatar"
 import { Link } from "@/i18n/routing"
 import { getFullName } from "@/lib"
-import { fakeGroup } from "@/lib/fakeData"
 import { getStudent } from "@/lib/queries/server/queries"
 import { BadgeCheckIcon, MessageCircleIcon } from "lucide-react"
-import { getFormatter, getTranslations } from "next-intl/server"
+import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
 
 const StudentDetail = async (props: { params: Promise<{ id: number }> }) => {
@@ -18,8 +19,6 @@ const StudentDetail = async (props: { params: Promise<{ id: number }> }) => {
     const student = await getStudent(params.id)
 
     if (!student) notFound()
-
-    student.groups = [fakeGroup]
 
     return <div className="flex flex-col gap-6">
 
@@ -66,8 +65,8 @@ const StudentDetail = async (props: { params: Promise<{ id: number }> }) => {
                                 <Chip className="w-fit">{skill.title}</Chip>
                                 <StarRating rating={skill.rating} />
                                 <div className="flex flex-col text-sm text-muted-foreground">
-                                    <div className="flex items-center gap-1"><MessageCircleIcon size={12} />{skill.feedbacks_count}</div>
-                                    <div className="flex items-center gap-1"><BadgeCheckIcon size={12} />{skill.endorsements_count}</div>
+                                    <div className="flex items-center gap-1"><MessageCircleIcon size={12} />{skill.count_feedbacks}</div>
+                                    <div className="flex items-center gap-1"><BadgeCheckIcon size={12} />{skill.count_endorsements}</div>
                                 </div>
                             </div>
                         </Link>)}
@@ -79,8 +78,10 @@ const StudentDetail = async (props: { params: Promise<{ id: number }> }) => {
         </div>
 
         {/* Recent feedbacks */}
+        <StudentFeedbackList studentId={student.id} />
 
         {/* Recent endorsements */}
+        <StudentEndorsementList studentId={student.id} />
     </div>
 }
 

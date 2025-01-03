@@ -42,8 +42,8 @@ export type SkillType = {
   desc?: string
   groups_count: number
   is_added: boolean
-  feedbacks_count?: number
-  endorsements_count?: number
+  count_feedbacks?: number
+  count_endorsements?: number
   competency: CompetencyType
   created_at: Date
   rating: number

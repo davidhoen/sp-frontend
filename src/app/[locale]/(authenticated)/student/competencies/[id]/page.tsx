@@ -1,3 +1,4 @@
+import { CompentenciesEndorsementList } from "@/components/CompentenciesEndorsementList"
 import { EndorsementsList } from "@/components/EndorsementsList"
 import ProfileTile from "@/components/ProfileTile"
 import { RecentEndorsementsList } from "@/components/RecentEndorsementList"
@@ -50,7 +51,7 @@ const CompetencyDetail = async (props: { params: Promise<{ id: number }> }) => {
 
         {/* Recent endorsement */}
         <div className="mt-6 mb-4">
-            <RecentEndorsementsList competencyId={competency.id} />
+            <CompentenciesEndorsementList competencyId={competency.id} />
         </div>
 
         {/* Related skills */}

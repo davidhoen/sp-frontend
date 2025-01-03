@@ -65,4 +65,4 @@ export const getProfileCompetencies = async (id: number) =>
     );
 
 export const getStudent = async (id: number) =>
-    fetchData<UserWithSkillsAndGroups>(`/api/teacher/students/${id}?with=groups`);
+    fetchData<UserWithSkillsAndGroups>(`/api/teacher/students/${id}?with=groups,feedbacks,endorsements`);
