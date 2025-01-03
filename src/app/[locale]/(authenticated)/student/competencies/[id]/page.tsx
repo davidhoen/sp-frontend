@@ -11,7 +11,7 @@ import { getCompetency } from "@/lib/queries/server/queries"
 import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
 
-const CompetencyDetail = async (props: { params: Promise<{ id: number }> }) => {
+const CompetencyDetail = async (props: { params: Promise<{ id: string }> }) => {
     const params = await props.params;
     const t = await getTranslations("general")
 

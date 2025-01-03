@@ -5,21 +5,18 @@ import SectionTitle from "@/components/Typography/SectionTitle"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 import { Link } from "@/i18n/routing"
 import { getFullName } from "@/lib"
-import { auth } from "@/lib/auth/server"
-import { fakeSkill } from "@/lib/fakeData"
+import { getSkillOfStudent, getStudent } from "@/lib/queries/server/queries"
 import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
 
-const StudentSkillDetail = async (props: { params: Promise<{ skillId: number }> }) => {
+const StudentSkillDetail = async (props: { params: Promise<{ id: string, skillId: string }> }) => {
     const params = await props.params;
     const t = await getTranslations("general")
 
-    // TODO: Replace with get skill of student 
-    const skill = fakeSkill
-    // Replace with current user
-    const { user: student } = await auth()
+    const student = await getStudent(params.id)
+    const skill = await getSkillOfStudent({ studentId: params.id, skillId: params.skillId })
 
-    if (!student) notFound()
+    if (!student || !skill) notFound()
 
     return <div className="flex flex-col gap-6">
 
@@ -37,10 +34,6 @@ const StudentSkillDetail = async (props: { params: Promise<{ skillId: number }> 
                         <BreadcrumbLink asChild>
                             <Link href={`/teacher/students/${student.id}`}>{getFullName(student)}</Link>
                         </BreadcrumbLink>
-                    </BreadcrumbItem>
-                    <BreadcrumbSeparator />
-                    <BreadcrumbItem>
-                        {t("skills")}
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>

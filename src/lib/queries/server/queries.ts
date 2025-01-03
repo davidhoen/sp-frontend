@@ -16,25 +16,28 @@ async function fetchData<T>(route: string, parseMethod?: (data: T, status?: numb
     }
 }
 
-export const getStudentSkill = async (id: number) =>
+export const getStudentSkill = async (id: string) =>
     fetchData<SkillType>(`/api/student/skills/${id}`);
 
-export const getTeacherSkill = async (id: number) =>
+export const getTeacherSkill = async (id: string) =>
     fetchData<SkillWithGroups>(`/api/teacher/skills/${id}?with=groups`);
 
-export const getEndorsementRequestResponse = async (id: number) =>
+export const getSkillOfStudent = async ({ studentId, skillId }: { studentId: string, skillId: string }) =>
+    fetchData<SkillWithGroups>(`/api/teacher/students/${studentId}/${skillId}?with=groups`);
+
+export const getEndorsementRequestResponse = async (id: string) =>
     fetchData<EndorsementRequestType | "expired">(
         `/api/endorsements/request/${id}`,
         (endorsementRequest, status) => status === 410 ? "expired" : endorsementRequest
     );
 
-export const getCompetency = async (id: number) =>
+export const getCompetency = async (id: string) =>
     fetchData<CompetencyType>(`/api/student/competencies/${id}`);
 
 export const getStudentCompetencies = async () =>
     fetchData<CompetencyType[]>(`/api/student/competencies?with=skills,skills.endorsements`);
 
-export const getGroup = async (id: number) =>
+export const getGroup = async (id: string) =>
     fetchData<GroupType>(`/api/groups/${id}?with=skills,skills.endorsements`);
 
 export const getEnrolledGroups = async () =>
@@ -46,10 +49,10 @@ export const getStudentProfiles = async () =>
 export const getRecentEndorsements = async () =>
     fetchData<EndorsementType[]>(`/api/student/endorsements/recent?with=skill`);
 
-export const getProfile = async (id: number) =>
+export const getProfile = async (id: string) =>
     fetchData<ProfileType>(`/api/student/profiles/${id}`);
 
-export const getProfileCompetencies = async (id: number) =>
+export const getProfileCompetencies = async (id: string) =>
     fetchData<CompetencyType[]>(
         `/api/competencies?with=skills.endorsements,profiles&profile=${id}`,
         (competencies) => {
@@ -64,5 +67,5 @@ export const getProfileCompetencies = async (id: number) =>
         }
     );
 
-export const getStudent = async (id: number) =>
+export const getStudent = async (id: string) =>
     fetchData<UserWithSkillsAndGroups>(`/api/teacher/students/${id}?with=groups,feedbacks,endorsements`);

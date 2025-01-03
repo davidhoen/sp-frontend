@@ -13,7 +13,7 @@ import { BadgeCheckIcon, MessageCircleIcon } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
 
-const StudentDetail = async (props: { params: Promise<{ id: number }> }) => {
+const StudentDetail = async (props: { params: Promise<{ id: string }> }) => {
     const params = await props.params;
     const t = await getTranslations("general")
     const student = await getStudent(params.id)

@@ -36,7 +36,7 @@ export interface ApiResponseGet<T> {
 export interface ApiResponseModify {
     message: string;
     data: {
-        id: number;
+        id: string;
     };
 }
 

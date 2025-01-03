@@ -11,7 +11,7 @@ import { UserPlusIcon } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
 
-const GroupsDetail = async (props: { params: Promise<{ id: number }> }) => {
+const GroupsDetail = async (props: { params: Promise<{ id: string }> }) => {
     const params = await props.params;
     const t = await getTranslations("general")
     const group = await getGroup(params.id)
