@@ -4,14 +4,18 @@ import { getFullName } from "@/lib"
 import { RequestType } from "@/types"
 import { useFormatter, useTranslations } from "next-intl"
 import { Chip } from "../Chip"
-import AddFeedbackModal from "../Modals/AddFeedbackModal"
+import AddEndorsementModal from "../Modals/Teacher/AddEndorsementModal"
+import ReviewEndorsementModal from "../Modals/Teacher/ReviewEndorsementModal"
+import StarRating from "../StarRating"
 import { TableAction } from "../TableActions"
 import { TableCell, TableRow } from "../ui/table"
 import UserAvatar from "../UserAvatar"
 
-export default function FeedbackRequestRow({ request, mutate }: { request: RequestType, mutate: () => void }) {
+export default function EndorsementRequestRow({ request, mutate }: { request: RequestType, mutate: () => void }) {
     const t = useTranslations("general")
     const format = useFormatter()
+
+    const rating = request.requestee?.rating || request.skill.rating
 
     return <>
         <TableRow>
@@ -26,9 +30,9 @@ export default function FeedbackRequestRow({ request, mutate }: { request: Reque
                 </div>
             </TableCell>
 
-            {/* Group */}
-            <TableCell>
-                {request.group.name}
+            {/* Email */}
+            <TableCell className="text-muted-foreground">
+                {request.requestee?.email || request.requester.email}
             </TableCell>
 
             {/* Skill */}
@@ -41,14 +45,26 @@ export default function FeedbackRequestRow({ request, mutate }: { request: Reque
                 {request.title}
             </TableCell>
 
+            {/* Rating */}
+            <TableCell>
+                {rating && <StarRating rating={rating} />}
+            </TableCell>
+
             {/* Actions */}
             <TableCell className="flex gap-2">
-                {/* Reply to request */}
-                <AddFeedbackModal request={request}>
-                    <div><TableAction type="reply" /></div>
-                </AddFeedbackModal>
+                {/* Requests without requestees are internal, teacher writes the endorsment */}
+                {request.requestee ?
+                    <AddEndorsementModal request={request}>
+                        <div><TableAction type="reply" /></div>
+                    </AddEndorsementModal>
+                    :
+                    <ReviewEndorsementModal request={request}>
+                        <div><TableAction type="review" /></div>
+                    </ReviewEndorsementModal>
+                }
+
             </TableCell>
-        </TableRow>
+        </TableRow >
     </>
 
 }

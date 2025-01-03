@@ -6,8 +6,9 @@ import SearchInput from "@/components/SearchInput"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { useFetchData } from "@/hooks/use-fetch-data"
 import { useQueryFilter } from "@/hooks/use-query-filter"
+import { fakeGroup, fakeSkill, fakeTeacher } from "@/lib/fakeData"
 import { getFeedbackRequests } from "@/lib/queries/client/queries"
-import { FeedbackRequestsQueryType, RequestType } from "@/types"
+import { FeedbackRequestsQueryType, RequestStatusEnum, RequestType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useTranslations } from "next-intl"
 import { use, useCallback, useEffect } from "react"
@@ -24,7 +25,7 @@ const FeedbackRequests = (props: { searchParams: Promise<FeedbackRequestsQueryTy
     if (!feedbacks)
         feedbacks = {
             data: [
-                { id: "1", requester: { id: "1", first_name: "John", last_name: "Doe", email: "john.doe@example.com", role: "user", is_teacher: false, is_head_teacher: false, is_admin: false }, created_at: new Date(), group: { id: "1", name: "Group 1" }, skill: { id: "1", title: "Skill 1" }, title: "Event 1" },
+                { id: "1", requester: fakeTeacher, group: fakeGroup, skill: fakeSkill, title: "Event 1", status: RequestStatusEnum.Pending, created_at: new Date(), updated_at: new Date() },
             ],
             meta: {
                 total: 0, current_page: 1, last_page: 2, per_page: 10

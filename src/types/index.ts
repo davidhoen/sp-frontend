@@ -133,6 +133,10 @@ export type TeacherGroupsQueryType = {
 
 export type FeedbackRequestsQueryType = TeacherGroupsQueryType
 
+export type EndorsementRequestsQueryType = TeacherGroupsQueryType & {
+  is_review: string
+}
+
 export type StudentsQueryType = {
   page: string,
   search: string,
@@ -169,6 +173,10 @@ export type RequestType = {
   title: string,
   skill: SkillType,
   requester: UserType,
+  requestee_email?: string,
+  requestee?: EndorsementFormValues & {
+    email?: string
+  }
   group: GroupType,
   status: RequestStatusEnum
   created_at: Date

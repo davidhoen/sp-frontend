@@ -35,6 +35,9 @@
     "competencies": "Competencies",
     "search": "Search",
     "allSkills": "All skills",
+    "email": "Email",
+    "endorsementRequests": "Endorsement requests",
+    "endorsementReviews": "Endorsement reviews",
     "allCompetencies": "All competencies",
     "addedSkills": "Added skills",
     "notAdded": "Not added",
@@ -60,6 +63,7 @@
     "searchIcons": "Search for an icon...",
     "myPersonalCoach": "My personal coach",
     "other": "Other",
+    "review": "Review",
     "view": "View",
     "overview": "Overview",
     "students": "Students",
@@ -84,6 +88,7 @@
     "confirmDeleteEntity": "Are you sure you want to delete this {entity}?",
     "newestFirst": "Newest first",
     "oldestFirst": "Oldest first",
+    "currentRating": "Current rating",
     "remove": "Remove",
     "definitions": {
       "skills": "A skill is a specific ability that you can learn, develop, and apply. “Pitching” or “Networking” are examples of skills.",
@@ -105,6 +110,9 @@
     }
   },
   "modals": {
+    "approve": "Approve",
+    "reject": "Reject",
+    "submit": "Submit",
     "description": "Description",
     "cancel": "Cancel",
     "save": "Save",
@@ -136,6 +144,10 @@
       "description": "Provide examples, strengths, areas for improvement, and suggestions to reflect on and improve your skills",
       "requestDescription": "{requester} has requested feedback on the skill {skill} from the {group} group."
     },
+    "addEndorsement": {
+      "title": "Add endorsement",
+      "description": "Include examples, strengths, areas for improvement, and suggestions to reflect and enhance the student’s skill."
+    },
     "requestEndorsement": {
       "title": "Request endorsement",
       "fromEmaildescription": "Enter the work email of the person who will write the endorsement.",
@@ -161,6 +173,11 @@
       "skillRating": "Skill rating",
       "skillRatingDescription": "Rate the skill from 1 to 4 stars",
       "submitEndorsement": "Submit endorsement"
+    },
+    "reviewEndorsement": {
+      "title": "Review endorsement",
+      "writerOfEndorsement": "Writer of the endorsement",
+      "positionAtCompany": "{position} at {company}"
     },
     "updatePersonalCoach": {
       "title": "Update personal coach",

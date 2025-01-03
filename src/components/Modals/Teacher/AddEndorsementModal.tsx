@@ -9,31 +9,31 @@ import { ReactNode, useState } from "react"
 import { useForm } from "react-hook-form"
 import { mutate } from "swr"
 import { z } from "zod"
-import { Button } from "../ui/button"
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
-import { Input } from "../ui/input"
-import { Textarea } from "../ui/textarea"
+import { Button } from "../../ui/button"
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../ui/dialog"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../../ui/form"
+import { Input } from "../../ui/input"
+import { Textarea } from "../../ui/textarea"
 import { FeedbackType, RequestType } from "@/types"
-import { Alert } from "../ui/alert"
+import { Alert } from "../../ui/alert"
 import { GroupIcon, LightbulbIcon, StarIcon, UserIcon } from "lucide-react"
-import { Chip } from "../Chip"
-import StarRating from "../StarRating"
-import { RequestDetails } from "../RequestDetails"
-import { PreviousFeedbackList } from "../PreviousFeedbackList"
+import { Chip } from "../../Chip"
+import StarRating from "../../StarRating"
+import { RequestDetails } from "@/components/RequestDetails"
+import { PreviousFeedbackList } from "@/components/PreviousFeedbackList"
 
-
-// This component can be used for writing self feedback (request is empty)
-// OR
-// Writing feedback for a peer student 
-const AddFeedbackModal = ({ children, request, skillId, parentMutate }: { children: ReactNode, request?: RequestType, skillId?: string, parentMutate?: () => void }) => {
+const AddEndorsementModal = ({ children, request, parentMutate }: { children: ReactNode, request: RequestType, parentMutate?: () => void }) => {
     const t = useTranslations()
     const format = useFormatter()
     const { user } = useUser()
 
     const [isModalOpen, setIsModalOpen] = useState(false)
 
-    const formSchema = z.object({ title: z.string(), feedback: z.string().min(10) })
+    const formSchema = z.object({
+        title: z.string(),
+        rating: z.number().int().max(4),
+        feedback: z.string().min(10)
+    })
 
     // TODO: Replace with real data
     const previousFeedbacks = [
@@ -46,15 +46,14 @@ const AddFeedbackModal = ({ children, request, skillId, parentMutate }: { childr
         resolver: zodResolver(formSchema),
         defaultValues: {
             title: request?.title || "",
+            rating: 0,
             feedback: ""
         }
     })
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            const url = request ? `/api/student/feedbacks/${request.id}/respond` : `/api/student/skills/${skillId}/feedback`
-            const res = axiosInstance.post(url, {
-                skill_id: skillId,
+            const res = axiosInstance.post(`/api/teacher/requests/endorsement/${request.id}/respond`, {
                 title: values.title,
                 content: values.feedback,
                 user_id: user?.id,
@@ -84,33 +83,25 @@ const AddFeedbackModal = ({ children, request, skillId, parentMutate }: { childr
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
 
                         <DialogHeader>
-                            <DialogTitle>{t("modals.addFeedback.title")}</DialogTitle>
-                            {/* When students are requested to give feedback, update the description */}
-                            <DialogDescription>{(request && !isTeacherUser(user)) ?
-                                t("modals.addFeedback.requestDescription", { requester: getFullName(request.requester), skill: request.skill.title, group: request.group.name })
-                                :
-                                t("modals.addFeedback.description")}
-                            </DialogDescription>
+                            <DialogTitle>{t("modals.addEndorsement.title")}</DialogTitle>
+                            <DialogDescription>{t("modals.addEndorsement.description")}</DialogDescription>
                         </DialogHeader>
 
-                        {request && <>
-                            {/* Request details (title for students and more details for teachers)  */}
-                            <Alert className="text-sm">
-                                {
-                                    !isTeacherUser(user) ?
-                                        request.title
-                                        :
-                                        <RequestDetails request={request} />
-                                }
-                            </Alert>
+                        {/* Request details (title for students and more details for teachers)  */}
+                        <Alert className="text-sm">
+                            {
+                                !isTeacherUser(user) ?
+                                    request.title
+                                    :
+                                    <RequestDetails request={request} />
+                            }
+                        </Alert>
 
-                            {/* Previous feedback for and from teachers */}
-                            {(previousFeedbacks.length && isTeacherUser(user)) && <div>
-                                <FormLabel>{t("general.previousFeedback")}</FormLabel>
-                                <PreviousFeedbackList feedbacks={previousFeedbacks} />
-                            </div>}
-
-                        </>}
+                        {/* Previous feedback for and from teachers */}
+                        {(previousFeedbacks.length && isTeacherUser(user)) && <div>
+                            <FormLabel>{t("general.previousFeedback")}</FormLabel>
+                            <PreviousFeedbackList feedbacks={previousFeedbacks} />
+                        </div>}
 
                         {/* Title  */}
                         <FormField
@@ -118,10 +109,26 @@ const AddFeedbackModal = ({ children, request, skillId, parentMutate }: { childr
                             name="title"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>{t("modals.feedbackTitle")}</FormLabel>
+                                    <FormLabel>{t("modals.endorsementTitle")}</FormLabel>
                                     <FormControl>
-                                        <Input {...field} placeholder={t("modals.feedbackTitlePlaceholder")} />
+                                        <Input {...field} placeholder={t("modals.endorsementTitlePlaceholder")} />
                                     </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        {/* Rating */}
+                        <FormField
+                            control={form.control}
+                            name="rating"
+                            render={({ field: { value, onChange } }) => (
+                                <FormItem>
+                                    <FormLabel>{t("modals.endorsementRequest.skillRating")}</FormLabel>
+                                    <FormControl>
+                                        <StarRating rating={value} onRatingChange={onChange} allowEdit />
+                                    </FormControl>
+                                    <FormDescription>{t("modals.endorsementRequest.skillRatingDescription")}</FormDescription>
                                     <FormMessage />
                                 </FormItem>
                             )}
@@ -160,4 +167,4 @@ const AddFeedbackModal = ({ children, request, skillId, parentMutate }: { childr
     )
 }
 
-export default AddFeedbackModal
+export default AddEndorsementModal
