@@ -4,7 +4,7 @@ import PageTitle from "@/components/Typography/PageTitle"
 import SectionTitle from "@/components/Typography/SectionTitle"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 import { Link } from "@/i18n/routing"
-import { getFullName } from "@/lib"
+import { getFullName, getMostRecentRating, isNewestRatingApproved } from "@/lib"
 import { getSkillOfStudent, getStudent } from "@/lib/queries/server/queries"
 import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
@@ -53,7 +53,7 @@ const StudentSkillDetail = async (props: { params: Promise<{ id: string, skillId
         {/* Rating */}
         <div className="mt-4">
             <SectionTitle>{t("rating")}</SectionTitle>
-            <StarRating rating={skill.rating || 0} />
+            <StarRating rating={getMostRecentRating(skill.ratings)} approved={isNewestRatingApproved(skill.ratings)} />
         </div>
 
         {/* Skill journey */}

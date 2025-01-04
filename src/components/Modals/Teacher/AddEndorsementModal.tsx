@@ -53,7 +53,7 @@ const AddEndorsementModal = ({ children, request, parentMutate }: { children: Re
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            const res = axiosInstance.post(`/api/teacher/requests/endorsement/${request.id}/respond`, {
+            const res = axiosInstance.post(`/api/educator/requests/endorsement/${request.id}/respond`, {
                 title: values.title,
                 content: values.feedback,
                 user_id: user?.id,

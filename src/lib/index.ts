@@ -1,4 +1,4 @@
-import { CompetencyType, GroupType, TranslationFunction } from "@/types"
+import { CompetencyType, GroupType, RatingType, TranslationFunction } from "@/types"
 import { UserType } from "@/types/auth"
 import toast from "react-hot-toast"
 import baseX from 'base-x'
@@ -26,9 +26,22 @@ export const triggerPromiseToast = <T extends any>(response: Promise<T>, t: Tran
     });
 }
 
+export const getMostRecentRating = (ratings: RatingType[], approvedOnly?: boolean) => {
+    return getMostRecentRatingObject(ratings, approvedOnly)?.rating ?? 0
+}
+
+export const getMostRecentRatingObject = (ratings: RatingType[], approvedOnly?: boolean) => {
+    const filteredRatings = approvedOnly ? ratings?.filter((rating) => rating.approved_at) : ratings
+    return filteredRatings?.reduce((prev, current) => (prev.created_at > current.created_at) ? prev : current)
+}
+
+export const isNewestRatingApproved = (ratings: RatingType[]) => {
+    return getMostRecentRatingObject(ratings)?.approved_at ? true : false
+}
+
 export const getCompetencyRating = (competency: CompetencyType) => {
     const ratings = competency.skills?.map((skill) => {
-        const skillRating = skill.rating
+        const skillRating = getMostRecentRating(skill.ratings, true)
         if (skillRating) return skillRating
         return undefined
     }).filter((rating): rating is number => rating !== undefined)
@@ -48,8 +61,8 @@ export const roleBasePathMap: { [key: string]: string } = {
     admin: "/teacher",
 };
 
-export const isTeacherUser = (user: UserType) => {
-    return user?.is_teacher || user?.is_head_teacher || user?.is_admin || false
+export const isTeacherUser = (user?: UserType) => {
+    return !!user && (user?.is_teacher || user?.is_head_teacher || user?.is_admin || false)
 }
 
 export const isEnrolledToGroup = (group: GroupType, user?: UserType | null) => {

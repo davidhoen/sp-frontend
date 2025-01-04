@@ -1,11 +1,11 @@
 "use client"
 
 import { getYouOrFullName } from "@/lib";
+import { useUser } from "@/providers/UserProvider";
 import { EndorsementType, FeedbackType } from "@/types";
 import { useFormatter, useTranslations } from "next-intl";
 import StarRating from "./StarRating";
 import UserAvatar from "./UserAvatar";
-import { useUser } from "@/providers/UserProvider";
 
 export function ContentCard({ content }: { content: EndorsementType | FeedbackType }) {
     const t = useTranslations("general")

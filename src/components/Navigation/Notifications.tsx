@@ -7,13 +7,14 @@ import { BellIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { Button } from "../ui/button"
 import Notification from "./Notification"
+import { isTeacherUser } from "@/lib"
 
 export default function Notifications() {
   const t = useTranslations("general.notifications")
   const { user } = useUser()
 
   // When a teacher clicks on the notification, they should be taken to the requests page
-  const needsTeacherRouting = user?.is_teacher || user?.is_head_teacher || user?.is_admin || false
+  const needsTeacherRouting = isTeacherUser(user)
 
   const { data: notifications } = useNotifications()
 

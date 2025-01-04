@@ -46,8 +46,8 @@ export type SkillType = {
   count_feedbacks?: number
   count_endorsements?: number
   competency: CompetencyType
+  ratings: RatingType[]
   created_at: Date
-  rating: number
 }
 
 export type GroupType = {
@@ -90,6 +90,7 @@ export type EndorsementType = {
 export type RatingType = {
   rating: number
   created_at: Date
+  approved_at?: Date
 }
 
 export type TimeLineItemType = {
@@ -130,6 +131,7 @@ export type TeacherGroupsQueryType = {
   page: string,
   search: string,
   is_archived: string
+  is_joined: string
 }
 
 export type FeedbackRequestsQueryType = TeacherGroupsQueryType

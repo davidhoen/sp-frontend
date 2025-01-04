@@ -58,8 +58,9 @@ export const feedback: FeedbackType = {
     content: "Improvement could be incorporating more real-world examples to illustrate the points. Nevertheless, it was a compelling presentation."
 }
 
-export const ratingUpdate: RatingType = {
+export const fakeRatingUpdate: RatingType = {
     rating: 3,
+    approved_at: undefined,
     created_at: new Date()
 }
 
@@ -80,7 +81,7 @@ export const fakeSkill: SkillType = {
     title: "Presenting",
     desc: "React is a JavaScript library for building user interfaces",
     competency: fakeCompetency,
-    rating: 4,
+    ratings: [fakeRatingUpdate],
     count_endorsements: 2,
     count_feedbacks: 3,
     created_at: new Date(),
@@ -93,7 +94,7 @@ export const fakeSkill2: SkillType = {
     title: "Creativity",
     desc: "React is a JavaScript library for building user interfaces",
     competency: fakeCompetency,
-    rating: 2,
+    ratings: [fakeRatingUpdate],
     count_endorsements: 10,
     count_feedbacks: 5,
     created_at: new Date(),

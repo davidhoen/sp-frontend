@@ -20,6 +20,7 @@ const GroupsOverview = (props: { searchParams: Promise<TeacherGroupsQueryType> }
     const t = useTranslations("general")
 
     const onArchiveChange = useQueryFilter({ key: 'is_archived' });
+    const onJoinedChange = useQueryFilter({ key: 'is_joined' });
 
     const { data: groups, loading, fetchData } = useFetchData<PagingSchema<GroupType>>();
 
@@ -50,6 +51,14 @@ const GroupsOverview = (props: { searchParams: Promise<TeacherGroupsQueryType> }
             <ToggleGroup type="single" defaultValue={searchParams.is_archived?.toString() || "false"} onValueChange={onArchiveChange}>
                 <ToggleGroupItem variant="outline" value="false">{t("activeGroups")}</ToggleGroupItem>
                 <ToggleGroupItem variant="outline" value="true">{t("archivedGroups")}</ToggleGroupItem>
+            </ToggleGroup>
+        </div>
+
+        {/* Is joined filter */}
+        <div className="my-4">
+            <ToggleGroup type="single" defaultValue={searchParams.is_joined?.toString() || "false"} onValueChange={onJoinedChange}>
+                <ToggleGroupItem variant="outline" value="false">{t("allEntities", { entities: t("groups").toLowerCase() })}</ToggleGroupItem>
+                <ToggleGroupItem variant="outline" value="true">{t("yourGroups")}</ToggleGroupItem>
             </ToggleGroup>
         </div>
 

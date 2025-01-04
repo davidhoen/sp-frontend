@@ -1,6 +1,6 @@
 "use client"
 
-import { getFullName } from "@/lib"
+import { getFullName, getMostRecentRating } from "@/lib"
 import { RequestType } from "@/types"
 import { useFormatter, useTranslations } from "next-intl"
 import { Chip } from "../Chip"
@@ -15,7 +15,7 @@ export default function EndorsementRequestRow({ request, mutate }: { request: Re
     const t = useTranslations("general")
     const format = useFormatter()
 
-    const rating = request.requestee?.rating || request.skill.rating
+    const rating = request.requestee?.rating || getMostRecentRating(request.skill.ratings)
 
     return <>
         <TableRow>
@@ -47,7 +47,7 @@ export default function EndorsementRequestRow({ request, mutate }: { request: Re
 
             {/* Rating */}
             <TableCell>
-                {rating && <StarRating rating={rating} />}
+                {rating && <StarRating rating={rating} approved={request.requestee?.rating ? true : false} />}
             </TableCell>
 
             {/* Actions */}

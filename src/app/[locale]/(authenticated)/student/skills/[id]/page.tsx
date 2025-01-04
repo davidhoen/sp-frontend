@@ -6,11 +6,12 @@ import StarRating from "@/components/StarRating"
 import TimeLineWithUser from "@/components/Timeline/TimeLineWithUser"
 import PageTitle from "@/components/Typography/PageTitle"
 import SectionTitle from "@/components/Typography/SectionTitle"
+import { Link } from "@/i18n/routing"
+import { getMostRecentRating, isNewestRatingApproved } from "@/lib"
 import { getStudentSkill } from "@/lib/queries/server/queries"
 import { PencilIcon } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
-import { Link } from "@/i18n/routing";
 
 const SkillsDetail = async (props: { params: Promise<{ id: string }> }) => {
     const params = await props.params;
@@ -38,10 +39,10 @@ const SkillsDetail = async (props: { params: Promise<{ id: string }> }) => {
 
             <div className="flex gap-4">
                 {/* Star rating */}
-                <StarRating rating={skill.rating || 0} />
+                <StarRating rating={getMostRecentRating(skill.ratings) || 0} approved={isNewestRatingApproved(skill.ratings)} />
 
                 {/* Edit rating */}
-                {skill.is_added && <UpdateRatingModal currentRating={skill.rating} skillId={skill.id}>
+                {skill.is_added && <UpdateRatingModal currentRating={getMostRecentRating(skill.ratings)} skillId={skill.id}>
                     <div className="flex items-center bg-border p-1 rounded-full"><PencilIcon size={15} /></div>
                 </UpdateRatingModal>}
             </div>

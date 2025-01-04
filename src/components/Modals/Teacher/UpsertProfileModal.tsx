@@ -55,7 +55,7 @@ const UpsertProfileModal = ({ children, profile, mutate }: { children: ReactNode
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const { competencyIds, ...data } = values
-      const url = profile ? `/api/teacher/profiles/${profile.id}` : `/api/teacher/profiles/create`
+      const url = profile ? `/api/educator/profiles/${profile.id}` : `/api/educator/profiles/create`
       const axiosMethod = profile ? axiosInstance.put : axiosInstance.post
       const res = axiosMethod(url, {
         ...data,

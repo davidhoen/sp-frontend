@@ -54,7 +54,7 @@ const UpsertCompetencyModal = ({ children, competency, mutate }: { children: Rea
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const url = competency ? `/api/teacher/competencies/${competency.id}` : `/api/teacher/competencies/create`
+      const url = competency ? `/api/educator/competencies/${competency.id}` : `/api/educator/competencies/create`
       const axiosMethod = competency ? axiosInstance.put : axiosInstance.post
       const res = axiosMethod(url, {
         title: values.title,

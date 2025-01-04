@@ -1,6 +1,6 @@
 "use client"
 
-import { getFullName } from "@/lib";
+import { getFullName, getMostRecentRating, isNewestRatingApproved } from "@/lib";
 import { RequestType } from "@/types";
 import { GroupIcon, LightbulbIcon, StarIcon, UserIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -23,7 +23,7 @@ export const RequestDetails = ({ request }: { request: RequestType }) => {
                 <div>{request.group.name}</div>
                 <div className="flex gap-2">
                     <Chip>{request.skill.title}</Chip>
-                    <StarRating rating={request.skill.rating} />
+                    <StarRating rating={getMostRecentRating(request.skill.ratings)} approved={isNewestRatingApproved(request.skill.ratings)} />
                 </div>
                 <div>{request.title}</div>
             </div>

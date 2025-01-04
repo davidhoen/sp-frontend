@@ -5,7 +5,7 @@ import useSWR from "swr"
 
 export const useStudents = () => {
     // Crazy number of students to prevent pagination in dropdowns
-    const url = `/api/teacher/students?per_page=500`
+    const url = `/api/educator/students?per_page=500`
     return useSWR(url, () =>
         axiosInstance.get(url)
             .then((res: { data: { data: UserType[] } }) => {

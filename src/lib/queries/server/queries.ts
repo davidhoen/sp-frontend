@@ -17,13 +17,13 @@ async function fetchData<T>(route: string, parseMethod?: (data: T, status?: numb
 }
 
 export const getStudentSkill = async (id: string) =>
-    fetchData<SkillType>(`/api/student/skills/${id}`);
+    fetchData<SkillType>(`/api/student/skills/${id}?with=ratings`);
 
 export const getTeacherSkill = async (id: string) =>
-    fetchData<SkillWithGroups>(`/api/teacher/skills/${id}?with=groups`);
+    fetchData<SkillWithGroups>(`/api/educator/skills/${id}?with=groups`);
 
 export const getSkillOfStudent = async ({ studentId, skillId }: { studentId: string, skillId: string }) =>
-    fetchData<SkillWithGroups>(`/api/teacher/students/${studentId}/${skillId}?with=groups`);
+    fetchData<SkillWithGroups>(`/api/educator/students/${studentId}/${skillId}?with=groups`);
 
 export const getEndorsementRequestResponse = async (id: string) =>
     fetchData<EndorsementRequestType | "expired">(
@@ -39,6 +39,9 @@ export const getStudentCompetencies = async () =>
 
 export const getGroup = async (id: string) =>
     fetchData<GroupType>(`/api/groups/${id}?with=skills,skills.endorsements`);
+
+export const getTeacherGroups = async () =>
+    fetchData<GroupType[]>(`/api/educator/groups?is_joined=true&with=skills,students`);
 
 export const getEnrolledGroups = async () =>
     fetchData<GroupType[]>(`/api/student/groups?with=teachers,skills,students`);
@@ -68,7 +71,7 @@ export const getProfileCompetencies = async (id: string) =>
     );
 
 export const getStudent = async (id: string) =>
-    fetchData<UserWithSkillsAndGroups>(`/api/teacher/students/${id}?with=groups,feedbacks,endorsements`);
+    fetchData<UserWithSkillsAndGroups>(`/api/educator/students/${id}?with=groups,feedbacks,endorsements`);
 
 export const getTeacherRequestsCount = async () =>
-    fetchData<number>(`/api/teacher/requests/count`);
+    fetchData<number>(`/api/educator/requests/count`);

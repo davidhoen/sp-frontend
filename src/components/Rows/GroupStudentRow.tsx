@@ -24,7 +24,7 @@ export default function GroupStudentRow({ student, group, mutate }: { student: U
     const removeFromGroup = async () => {
         try {
             const students = group.students?.filter(std => std.id !== student.id).map(std => std.id)
-            const res = axiosInstance.put(`/api/teacher/groups/${group.id}`, {
+            const res = axiosInstance.put(`/api/educator/groups/${group.id}`, {
                 ...group,
                 skills: group.skills?.map(skill => skill.id),
                 teachers: group.teachers?.map(teacher => teacher.id),

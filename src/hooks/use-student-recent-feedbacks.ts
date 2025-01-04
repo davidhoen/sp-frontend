@@ -7,7 +7,7 @@ import useSWR from "swr"
 export const useStudentRecentFeedbacks = (studentId: string) => {
     const searchParams = useSearchParams()
     const page = searchParams.get('endorsementsPage') || 1
-    const url = `/api/teacher/students/${studentId}/feedbacks/recent?with=skill,createdBy&page=${page}&per_page=4`
+    const url = `/api/educator/students/${studentId}/feedbacks/recent?with=skill,createdBy&page=${page}&per_page=4`
     return useSWR(url, () =>
         axiosInstance.get<PagingSchema<FeedbackType>>(url)
             .then((res) => {
