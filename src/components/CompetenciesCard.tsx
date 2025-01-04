@@ -6,7 +6,7 @@ import { BadgeCheckIcon, MessageCircleIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import StarRating from "./StarRating"
 import { Button } from "./ui/button"
-import { getMostRecentRating } from "@/lib"
+import { getMostRecentRating, isNewestRatingApproved } from "@/lib"
 
 // This component is only used on the compentecies overview page. The card will display more information about the competency.
 export default function CompetenciesCard({ competency, mutate }: { competency: CompetencyType, mutate?: () => void }) {
@@ -35,7 +35,7 @@ export default function CompetenciesCard({ competency, mutate }: { competency: C
                     {competency?.skills?.slice(0, 3).map((skill, index) => (
                         <div className="flex justify-between" key={index}>
                             <span className="">{skill.title}</span>
-                            <StarRating rating={getMostRecentRating(skill.ratings)} />
+                            <StarRating rating={getMostRecentRating(skill.ratings)} approved={isNewestRatingApproved(skill.ratings)} />
                         </div>
                     ))}
                 </div>

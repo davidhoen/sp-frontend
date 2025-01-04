@@ -7,7 +7,7 @@ import SectionTitle from "@/components/Typography/SectionTitle"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 import UserAvatar from "@/components/UserAvatar"
 import { Link } from "@/i18n/routing"
-import { getFullName, getMostRecentRating } from "@/lib"
+import { getFullName, getMostRecentRating, isNewestRatingApproved } from "@/lib"
 import { getStudent } from "@/lib/queries/server/queries"
 import { BadgeCheckIcon, MessageCircleIcon } from "lucide-react"
 import { getTranslations } from "next-intl/server"
@@ -63,7 +63,7 @@ const StudentDetail = async (props: { params: Promise<{ id: string }> }) => {
                         {group.skills?.map(skill => <Link key={skill.id} href={`/teacher/students/${student.id}/skills/${skill.id}`}>
                             <div className="grid grid-cols-3 gap-2 items-center hover:bg-accent p-2 border rounded-lg bg-background">
                                 <Chip className="w-fit">{skill.title}</Chip>
-                                <StarRating rating={getMostRecentRating(skill.ratings)} />
+                                <StarRating rating={getMostRecentRating(skill.ratings)} approved={isNewestRatingApproved(skill.ratings)} />
                                 <div className="flex flex-col text-sm text-muted-foreground">
                                     <div className="flex items-center gap-1"><MessageCircleIcon size={12} />{skill.count_feedbacks}</div>
                                     <div className="flex items-center gap-1"><BadgeCheckIcon size={12} />{skill.count_endorsements}</div>

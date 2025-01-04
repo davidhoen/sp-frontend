@@ -3,14 +3,14 @@
 import { Link } from "@/i18n/routing"
 import { SkillType } from "@/types"
 import StarRating from "./StarRating"
-import { getMostRecentRating } from "@/lib"
+import { getMostRecentRating, isNewestRatingApproved } from "@/lib"
 
 export default function SkillLine({ skill }: { skill: SkillType, }) {
 
     return (<Link href={`/student/skills/${skill.id}/`}>
         <div className="flex justify-between hover:bg-accent p-2 rounded-md">
             <span>{skill.title}</span>
-            <StarRating rating={getMostRecentRating(skill.ratings)} />
+            <StarRating rating={getMostRecentRating(skill.ratings)} approved={isNewestRatingApproved(skill.ratings)} />
         </div>
     </Link>
     )

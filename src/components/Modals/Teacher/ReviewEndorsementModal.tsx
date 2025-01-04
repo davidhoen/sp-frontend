@@ -74,7 +74,7 @@ const ReviewEndorsementModal = ({ children, request, parentMutate }: { children:
                             <div className="grid grid-cols-3 border rounded-md p-1">
                                 <div>{getFullName(request.requester)}</div>
                                 <div><Chip>{request.skill.title}</Chip></div>
-                                <div><StarRating rating={request.skill && getMostRecentRating(request.skill.ratings)} /></div>
+                                <div><StarRating rating={request.skill && getMostRecentRating(request.skill.ratings)} approved={false} /></div>
                             </div>
                         </div>
 
@@ -98,7 +98,7 @@ const ReviewEndorsementModal = ({ children, request, parentMutate }: { children:
                             <Alert>
                                 <div className="flex justify-between pb-2">
                                     <span className="font-medium text-lg">{request.title}</span>
-                                    <StarRating rating={request.requestee?.rating || 0} />
+                                    <StarRating rating={request.requestee?.rating || 0} approved={true} />
                                 </div>
                                 <p>{request.requestee?.feedback}</p>
                             </Alert>

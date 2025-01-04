@@ -47,7 +47,7 @@ export default function EndorsementRequestRow({ request, mutate }: { request: Re
 
             {/* Rating */}
             <TableCell>
-                {rating && <StarRating rating={rating} />}
+                {rating && <StarRating rating={rating} approved={request.requestee?.rating ? true : false} />}
             </TableCell>
 
             {/* Actions */}

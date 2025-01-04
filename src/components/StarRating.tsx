@@ -12,7 +12,7 @@ const adjustFillPercentage = (fill: number): number => {
   return fill
 }
 
-const Star = ({ fill, onClick }: { fill: number, onClick?: () => void }) => {
+const Star = ({ fill, onClick, outline }: { fill: number, onClick?: () => void, outline?: boolean }) => {
   const adjustedFill = adjustFillPercentage(fill)
   const percentage = Math.round(adjustedFill * 100)
 
@@ -27,23 +27,18 @@ const Star = ({ fill, onClick }: { fill: number, onClick?: () => void }) => {
           <rect x="0" y="0" width={`${percentage}%`} height="100%" />
         </clipPath>
       </defs>
-      <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="none" stroke="#E5E5E5" strokeWidth="2" />
-      <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="gold" clipPath={`url(#clip-${percentage})`} />
+      <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="none" stroke={percentage === 100 ? "#ffd700" : "#E5E5E5"} strokeWidth="2" />
+      {!outline && <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="gold" clipPath={`url(#clip-${percentage})`} />}
     </svg>
   )
 }
 
-const StarButton = ({ index, fill, onClick, title }: {
-  index: number,
-  fill: number,
-  onClick: (rating: number) => void,
-  title: string
-}) => {
+const StarButton = ({ index, fill, onClick, title, outline }: { index: number, fill: number, onClick: (rating: number) => void, title: string, outline?: boolean }) => {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
         <div className="flex">
-          <Star fill={fill} onClick={() => onClick(index + 1)} />
+          <Star fill={fill} onClick={() => onClick(index + 1)} outline={outline} />
         </div>
       </TooltipTrigger>
       <TooltipContent>
@@ -53,7 +48,7 @@ const StarButton = ({ index, fill, onClick, title }: {
   )
 }
 
-export default function StarRating({ rating: initialRating, allowEdit, onRatingChange, maxStars = 4, showRatingTitle }: { rating: number, allowEdit?: boolean, onRatingChange?: (newRating: number) => void, maxStars?: number, showRatingTitle?: boolean }) {
+export default function StarRating({ rating: initialRating, approved = true, allowEdit, onRatingChange, maxStars = 4, showRatingTitle }: { rating: number, approved?: boolean, allowEdit?: boolean, onRatingChange?: (newRating: number) => void, maxStars?: number, showRatingTitle?: boolean }) {
   // Move hooks to the top level
   const t = useTranslations("ratings")
   const [rating, setRating] = useState(initialRating)
@@ -83,11 +78,12 @@ export default function StarRating({ rating: initialRating, allowEdit, onRatingC
             fill={fill}
             onClick={handleRatingChange}
             title={starTitles[i]}
+            outline={!approved}
           />
         )
       }
 
-      return <Star key={i} fill={fill} />
+      return <Star key={i} fill={fill} outline={!approved} />
     })
   }
 
