@@ -162,7 +162,7 @@ class ServerSideRequestsManager {
 
     // Handle error 401 (Unauthorized)
     if (error.response?.status === 401) {
-      redirect(`/${locale}${EXPIRED_SESSION_ROUTE}`);
+      redirect(`/${locale}${EXPIRED_SESSION_ROUTE}&redirect=${url}`);
     }
 
     // Handle error 419 (CSRF token mismatch)
