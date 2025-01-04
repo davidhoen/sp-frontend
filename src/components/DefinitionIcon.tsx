@@ -1,7 +1,6 @@
 "use client"
 
 import { InfoIcon } from "lucide-react"
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card"
 import { useTranslations } from "next-intl"
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
 

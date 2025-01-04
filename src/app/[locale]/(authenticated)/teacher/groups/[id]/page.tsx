@@ -1,16 +1,15 @@
 import ArchiveGroupButton from "@/components/ArchiveGroupButton"
-import { Chip } from "@/components/Chip"
 import { GroupStudentsList } from "@/components/GroupStudentsList"
+import QRCodeModal from "@/components/Modals/QRCodeModal"
 import UpsertGroupModal from "@/components/Modals/Teacher/UpsertGroupModal"
 import { TableAction } from "@/components/TableActions"
 import PageTitle from "@/components/Typography/PageTitle"
 import SectionTitle from "@/components/Typography/SectionTitle"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
-import { Button } from "@/components/ui/button"
 import UserLine from "@/components/UserLine"
 import { Link } from "@/i18n/routing"
+import { uuidToShortString } from "@/lib"
 import { getGroup } from "@/lib/queries/server/queries"
-import { PencilIcon } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
 
@@ -46,6 +45,10 @@ const GroupsDetail = async (props: { params: Promise<{ id: string }> }) => {
 
                 <div className="flex gap-2">
                     <ArchiveGroupButton group={group} />
+                    {/* QR code */}
+                    <QRCodeModal path={`/qr/g/${uuidToShortString(group.id)}`} title={t("goToGroup", { group: group.name })} >
+                        <div><TableAction type="qrcode" /></div>
+                    </QRCodeModal>
                     <UpsertGroupModal group={group} >
                         <div><TableAction type="edit" resizes /></div>
                     </UpsertGroupModal>
