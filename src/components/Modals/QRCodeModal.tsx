@@ -68,7 +68,6 @@ const QRCodeModal = ({ children, path, title }: { children: ReactNode, path: str
 
           {/* QR code */}
           <div ref={qrRef}>
-            {/* Will result in a build warning for a missing alt tag. The QR package does not support that. We have to ignore it. */}
             <Image
               text={url}
               options={{

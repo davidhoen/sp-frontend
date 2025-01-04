@@ -1,3 +1,6 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "jsx-a11y/alt-text": "off" // Prevent warning for QR code alt text. The QR package does not support that. We have to ignore it.
+  }
 }
