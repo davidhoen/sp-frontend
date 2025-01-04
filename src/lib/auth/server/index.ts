@@ -25,10 +25,15 @@ export const expireCookie = (cookieKey: string, isSecure: boolean = isSecureCook
 };
 
 export const redirectToLoginWithExpiredCookie = (url: URL, locale: string) => {
-  url.pathname = `/${locale}${LOGIN_ROUTE}`;
-  url.searchParams.delete(EXPIRED_SESSION_PARAM); // Avoid infinite redirects
+  // Store the previous URL to redirect back after login
+  const previousUrlWithoutLocale = url.pathname.replace(`/${locale}`, '');
+  const newUrl = new URL(url.toString());
 
-  const response = NextResponse.redirect(url);
+  newUrl.pathname = `/${locale}${LOGIN_ROUTE}`;
+  newUrl.searchParams.delete(EXPIRED_SESSION_PARAM); // Avoid infinite redirects
+  newUrl.searchParams.set("redirect", previousUrlWithoutLocale);
+
+  const response = NextResponse.redirect(newUrl);
   response.headers.append("Set-Cookie", expireCookie(AUTH_COOKIE_NAME));
   return response;
 };
