@@ -6,6 +6,7 @@ export type NavItem = {
   title: string
   url: string
   icon: string,
+  badge?: number
   isActive?: boolean
   isDashboard?: boolean
   adminOnly?: boolean

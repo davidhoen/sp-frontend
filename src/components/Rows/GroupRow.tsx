@@ -1,17 +1,18 @@
 "use client"
 
+import { Link } from "@/i18n/routing"
+import { triggerPromiseToast, uuidToShortString } from "@/lib"
+import axiosInstance from "@/lib/axios"
 import { useUser } from "@/providers/UserProvider"
 import { GroupType } from "@/types"
 import { useTranslations } from "next-intl"
-import { Fragment, useState } from "react"
+import { useState } from "react"
 import { Chip } from "../Chip"
 import { ConfirmActionDialog } from "../Modals/ConfirmActionModal"
+import QRCodeModal from "../Modals/QRCodeModal"
 import UpsertGroupModal from "../Modals/Teacher/UpsertGroupModal"
 import { TableAction } from "../TableActions"
 import { TableCell, TableRow } from "../ui/table"
-import { Link } from "@/i18n/routing"
-import { triggerPromiseToast } from "@/lib"
-import axiosInstance from "@/lib/axios"
 
 export default function GroupRow({ group, mutate }: { group: GroupType, mutate: () => void }) {
     const { user } = useUser()
@@ -56,6 +57,11 @@ export default function GroupRow({ group, mutate }: { group: GroupType, mutate: 
                 <UpsertGroupModal group={group} mutate={mutate}>
                     <div><TableAction type="edit" /></div>
                 </UpsertGroupModal>
+
+                {/* QR code */}
+                <QRCodeModal path={`/qr/g/${uuidToShortString(group.id)}`} title={t("goToGroup", { group: group.name })} >
+                    <div><TableAction type="qrcode" /></div>
+                </QRCodeModal>
 
                 {/* Delete (for admins) */}
                 {user?.is_admin && <div onClick={() => setIsDeleteModalOpen(true)}><TableAction type="delete" /></div>}

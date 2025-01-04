@@ -1,10 +1,10 @@
 "use client"
 
 import { cn } from "@/lib/utils";
-import { ArchiveIcon, CircleDashedIcon, EyeIcon, LucideIcon, MessageCircleReplyIcon, PencilLineIcon, SearchCheckIcon, TrashIcon } from "lucide-react";
+import { ArchiveIcon, CircleDashedIcon, EyeIcon, LucideIcon, MessageCircleReplyIcon, PencilLineIcon, QrCodeIcon, SearchCheckIcon, TrashIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-export function TableAction({ label, icon = CircleDashedIcon, type, resizes }: { label?: string, icon?: LucideIcon, type?: "edit" | "delete" | "view" | "archive" | "reply" | "review", resizes?: boolean }) {
+export function TableAction({ label, icon = CircleDashedIcon, type, resizes }: { label?: string, icon?: LucideIcon, type?: "edit" | "delete" | "view" | "archive" | "reply" | "review" | "qrcode", resizes?: boolean }) {
   const t = useTranslations("general")
 
   if (type === "edit") {
@@ -30,6 +30,10 @@ export function TableAction({ label, icon = CircleDashedIcon, type, resizes }: {
   else if (type === "review") {
     icon = SearchCheckIcon
     label = t("review")
+  }
+  else if (type === "qrcode") {
+    icon = QrCodeIcon
+    label = t("qrCode")
   }
   const Icon = icon
 
