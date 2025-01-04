@@ -49,7 +49,7 @@ const UpsertSkillModal = ({ children, skill }: { children: ReactNode, skill?: Sk
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const url = skill ? `/api/teacher/skills/${skill.id}` : `/api/teacher/skills/create`
+      const url = skill ? `/api/educator/skills/${skill.id}` : `/api/educator/skills/create`
       const axiosMethod = skill ? axiosInstance.put : axiosInstance.post
       const res = axiosMethod(url, {
         ...values,

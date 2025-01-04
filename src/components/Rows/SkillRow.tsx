@@ -21,7 +21,7 @@ export default function SkillRow({ skill, mutate }: { skill: SkillType, mutate: 
 
     const deleteSkill = async () => {
         try {
-            const res = axiosInstance.delete(`/api/teacher/skills/${skill.id}`,)
+            const res = axiosInstance.delete(`/api/educator/skills/${skill.id}`,)
             await triggerPromiseToast(res, t, { success: t("successfullyDeleted") })
             mutate && mutate()
             setIsDeleteModalOpen(false)

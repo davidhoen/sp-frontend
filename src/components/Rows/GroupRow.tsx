@@ -22,7 +22,7 @@ export default function GroupRow({ group, mutate }: { group: GroupType, mutate: 
 
     const deleteGroup = async () => {
         try {
-            const res = axiosInstance.delete(`/api/teacher/groups/${group.id}`,)
+            const res = axiosInstance.delete(`/api/educator/groups/${group.id}`,)
             await triggerPromiseToast(res, t, { success: t("successfullyDeleted") })
             mutate && mutate()
             setIsDeleteModalOpen(false)

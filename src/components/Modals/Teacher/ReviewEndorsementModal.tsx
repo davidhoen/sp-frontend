@@ -34,7 +34,7 @@ const ReviewEndorsementModal = ({ children, request, parentMutate }: { children:
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            const res = axiosInstance.post(`/api/teacher/requests/endorsement/${request.id}/review`, {
+            const res = axiosInstance.post(`/api/educator/requests/endorsement/${request.id}/review`, {
                 is_approved: values.approved
             })
             await triggerPromiseToast(res, t, { success: t("modals.successfullySaved"), error: t("modals.genericError"), loading: t("modals.loading") })

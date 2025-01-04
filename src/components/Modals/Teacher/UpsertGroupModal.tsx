@@ -60,7 +60,7 @@ const UpsertGroupModal = ({ children, group, mutate }: { children: ReactNode, gr
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const url = group ? `/api/teacher/groups/${group.id}` : `/api/teacher/groups/create`
+      const url = group ? `/api/educator/groups/${group.id}` : `/api/educator/groups/create`
       const axiosMethod = group ? axiosInstance.put : axiosInstance.post
       const res = axiosMethod(url, {
         name: values.name,

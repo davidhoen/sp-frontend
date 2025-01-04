@@ -26,13 +26,13 @@ export const getSkills = ({ query }: { query: Record<string, string> }) =>
     });
 
 export const getTeacherSkills = ({ query }: { query: Record<string, string> }) =>
-    queryAPI<SkillType>('/api/teacher/skills', { with: 'competency', ...query });
+    queryAPI<SkillType>('/api/educator/skills', { with: 'competency', ...query });
 
 export const getCompetencies = ({ query }: { query: Record<string, string> }) =>
     queryAPI<CompetencyType>('/api/competencies', { with: 'skills,profiles', ...query });
 
 export const getTeacherProfiles = ({ query }: { query: Record<string, string> }) =>
-    queryAPI<ProfileWithCompetencies>('/api/teacher/profiles', { with: 'competencies', ...query });
+    queryAPI<ProfileWithCompetencies>('/api/educator/profiles', { with: 'competencies', ...query });
 
 export const getGroups = ({ query }: { query: Record<string, string> }) =>
     queryAPI<GroupType>('/api/groups', { with: 'teachers,students,skills', ...query });
@@ -41,13 +41,13 @@ export const getStudentRequests = (params: { page: number; search: string }) =>
     queryAPI<RequestType>('/api/student/requests', { with: 'requester,skill,group', ...params });
 
 export const getGroupStudents = ({ groupId, query }: { groupId: string, query: Record<string, string> }) =>
-    queryAPI<UserWithSkills>(`/api/teacher/groups/${groupId}/students`, { with: 'skills', ...query });
+    queryAPI<UserWithSkills>(`/api/educator/groups/${groupId}/students`, { with: 'skills', ...query });
 
 export const getStudents = ({ query }: { query: Record<string, string> }) =>
-    queryAPI<UserWithSkillsAndGroups>('/api/teacher/students', { with: 'skills,groups', ...query });
+    queryAPI<UserWithSkillsAndGroups>('/api/educator/students', { with: 'skills,groups', ...query });
 
 export const getFeedbackRequests = ({ query }: { query: Record<string, string> }) =>
-    queryAPI<RequestType>('/api/teacher/requests/feedbacks', { with: 'requester,skill,group', ...query });
+    queryAPI<RequestType>('/api/educator/requests/feedbacks', { with: 'requester,skill,group', ...query });
 
 export const getEndorsementRequests = ({ query }: { query: Record<string, string> }) =>
-    queryAPI<RequestType>('/api/teacher/requests/endorsements', { with: 'requester,skill,group', ...query });
+    queryAPI<RequestType>('/api/educator/requests/endorsements', { with: 'requester,skill,group', ...query });
