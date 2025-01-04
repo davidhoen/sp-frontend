@@ -1,7 +1,7 @@
 "use client"
 
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
-import { getFullName, triggerPromiseToast } from "@/lib"
+import { getFullName, getMostRecentRating, triggerPromiseToast } from "@/lib"
 import axiosInstance from "@/lib/axios"
 import { useUser } from "@/providers/UserProvider"
 import { RequestType } from "@/types"
@@ -74,7 +74,7 @@ const ReviewEndorsementModal = ({ children, request, parentMutate }: { children:
                             <div className="grid grid-cols-3 border rounded-md p-1">
                                 <div>{getFullName(request.requester)}</div>
                                 <div><Chip>{request.skill.title}</Chip></div>
-                                <div><StarRating rating={request.skill?.rating || 0} /></div>
+                                <div><StarRating rating={request.skill && getMostRecentRating(request.skill.ratings)} /></div>
                             </div>
                         </div>
 

@@ -23,6 +23,7 @@ export const getSkills = ({ query }: { query: Record<string, string> }) =>
     queryAPI<SkillType>('/api/student/skills', {
         ...query,
         availableCompentencies: true,
+        with: "ratings"
     });
 
 export const getTeacherSkills = ({ query }: { query: Record<string, string> }) =>

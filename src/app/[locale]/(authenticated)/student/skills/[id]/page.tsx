@@ -11,6 +11,7 @@ import { PencilIcon } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
 import { Link } from "@/i18n/routing";
+import { getMostRecentRating } from "@/lib"
 
 const SkillsDetail = async (props: { params: Promise<{ id: string }> }) => {
     const params = await props.params;
@@ -38,10 +39,10 @@ const SkillsDetail = async (props: { params: Promise<{ id: string }> }) => {
 
             <div className="flex gap-4">
                 {/* Star rating */}
-                <StarRating rating={skill.rating || 0} />
+                <StarRating rating={getMostRecentRating(skill.ratings) || 0} />
 
                 {/* Edit rating */}
-                {skill.is_added && <UpdateRatingModal currentRating={skill.rating} skillId={skill.id}>
+                {skill.is_added && <UpdateRatingModal currentRating={getMostRecentRating(skill.ratings)} skillId={skill.id}>
                     <div className="flex items-center bg-border p-1 rounded-full"><PencilIcon size={15} /></div>
                 </UpdateRatingModal>}
             </div>

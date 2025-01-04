@@ -1,4 +1,4 @@
-import { CompetencyType, GroupType, TranslationFunction } from "@/types"
+import { CompetencyType, GroupType, RatingType, TranslationFunction } from "@/types"
 import { UserType } from "@/types/auth"
 import toast from "react-hot-toast"
 import baseX from 'base-x'
@@ -26,9 +26,13 @@ export const triggerPromiseToast = <T extends any>(response: Promise<T>, t: Tran
     });
 }
 
+export const getMostRecentRating = (ratings: RatingType[]) => {
+    return ratings?.reduce((prev, current) => (prev.created_at > current.created_at) ? prev : current)?.rating ?? 0
+}
+
 export const getCompetencyRating = (competency: CompetencyType) => {
     const ratings = competency.skills?.map((skill) => {
-        const skillRating = skill.rating
+        const skillRating = getMostRecentRating(skill.ratings)
         if (skillRating) return skillRating
         return undefined
     }).filter((rating): rating is number => rating !== undefined)

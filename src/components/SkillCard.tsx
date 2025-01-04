@@ -1,7 +1,7 @@
 "use client"
 
 import { Link, useRouter } from "@/i18n/routing"
-import { triggerPromiseToast } from "@/lib"
+import { getMostRecentRating, triggerPromiseToast } from "@/lib"
 import axiosInstance from "@/lib/axios"
 import { cn } from "@/lib/utils"
 import { SkillType } from "@/types"
@@ -44,10 +44,10 @@ export default function SkillCard({ skill, className, mutate }: { skill: SkillTy
                 <Badge variant="secondary">{skill.competency?.title}</Badge>
             </div>
             <div className="flex justify-between items-center">
-                <StarRating rating={skill.rating} />
+                <StarRating rating={getMostRecentRating(skill.ratings)} />
                 {/* Disable button when skill is not added (yet) */}
                 <Link href={`/student/skills/${skill.id}`}>
-                    <Button size="sm" disabled={!skill.is_added}>{t("view")}</Button>
+                    <Button size="sm">{t("view")}</Button>
                 </Link>
             </div>
         </div>

@@ -17,7 +17,7 @@ async function fetchData<T>(route: string, parseMethod?: (data: T, status?: numb
 }
 
 export const getStudentSkill = async (id: string) =>
-    fetchData<SkillType>(`/api/student/skills/${id}`);
+    fetchData<SkillType>(`/api/student/skills/${id}?with=ratings`);
 
 export const getTeacherSkill = async (id: string) =>
     fetchData<SkillWithGroups>(`/api/educator/skills/${id}?with=groups`);
