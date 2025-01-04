@@ -17,7 +17,7 @@ export default function ArchiveGroupButton({ group }: { group: GroupType }) {
 
     const archiveGroup = async () => {
         try {
-            const res = axiosInstance.put(`/api/teacher/groups/${group.id}`, {
+            const res = axiosInstance.put(`/api/educator/groups/${group.id}`, {
                 ...group,
                 skills: group.skills?.map(skill => skill.id),
                 teachers: group.teachers?.map(teacher => teacher.id),

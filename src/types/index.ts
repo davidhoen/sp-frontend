@@ -1,12 +1,14 @@
+import { EndorsementFormValues } from "@/schemas/zod"
 import { useTranslations } from "next-intl"
 import { UserType } from "./auth"
-import { EndorsementFormValues } from "@/schemas/zod"
 
 export type NavItem = {
   title: string
   url: string
   icon: string,
+  badge?: number
   isActive?: boolean
+  isDashboard?: boolean
   adminOnly?: boolean
 }
 
@@ -27,6 +29,7 @@ export type CompetencyType = {
   title: string
   desc: string
   overview: string
+  avgRating?: number
   feedbacks_count?: number
   endorsements_count?: number
   skills: SkillType[]
@@ -40,9 +43,11 @@ export type SkillType = {
   desc?: string
   groups_count: number
   is_added: boolean
+  count_feedbacks?: number
+  count_endorsements?: number
   competency: CompetencyType
+  ratings: RatingType[]
   created_at: Date
-  rating: number
 }
 
 export type GroupType = {
@@ -85,6 +90,7 @@ export type EndorsementType = {
 export type RatingType = {
   rating: number
   created_at: Date
+  approved_at?: Date
 }
 
 export type TimeLineItemType = {
@@ -125,6 +131,18 @@ export type TeacherGroupsQueryType = {
   page: string,
   search: string,
   is_archived: string
+  is_joined: string
+}
+
+export type FeedbackRequestsQueryType = TeacherGroupsQueryType
+
+export type EndorsementRequestsQueryType = TeacherGroupsQueryType & {
+  is_review: string
+}
+
+export type StudentsQueryType = {
+  page: string,
+  search: string,
 }
 
 export type TeacherProfileQueryType = {
@@ -153,24 +171,30 @@ export enum NotificationTypeEnum {
   EndorsementReviewed = "EndorsementReviewed", // Teacher reviewed (external) endorsement
 }
 
-export type StudentRequestType = {
+export type RequestType = {
   id: string,
   title: string,
   skill: SkillType,
   requester: UserType,
+  requestee_email?: string,
+  requestee?: EndorsementFormValues & {
+    email?: string
+  }
   group: GroupType,
-  status: StudentRequestStatusEnum
+  status: RequestStatusEnum
   created_at: Date
   updated_at: Date
 }
 
-export enum StudentRequestStatusEnum {
+export enum RequestStatusEnum {
   Pending = "pending",
   Accepted = "answered",
   Rejected = "declined",
 }
 
 export type UserWithSkills = UserType & { skills: SkillType[] }
+
+export type UserWithSkillsAndGroups = UserWithSkills & { groups: GroupType[] }
 
 export type SkillWithGroups = SkillType & { groups: GroupType[] }
 

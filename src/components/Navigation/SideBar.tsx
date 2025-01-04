@@ -26,16 +26,16 @@ const SideBar = ({ items, children }: { items: NavItem[]; children: ReactNode })
             <SidebarTrigger className="md:hidden ml-2" />
 
             {/* Search */}
-            <div className="hidden md:flex items-center">
+            {/* <div className="hidden md:flex items-center">
               <Input placeholder="Search..." className={cn("h-8 w-full md:w-[300px] lg:w-[400px]", showMobileSearch ? "flex" : "hidden md:flex")} />
             </div>
             <Button variant="ghost" size="icon" className="shrink-0 md:hidden" onClick={() => setShowMobileSearch(true)}>
               <SearchIcon size={16} />
               <span className="sr-only">{t("general.search")}</span>
-            </Button>
+            </Button> */}
 
             {/* Search mobile */}
-            {showMobileSearch && (
+            {/* {showMobileSearch && (
               <div className="fixed inset-0 z-50 md:hidden h-fit bg-background">
                 <div className="flex h-16 items-center gap-2 border-b px-3">
                   <Button variant="ghost" size="icon" onClick={() => setShowMobileSearch(false)}>
@@ -45,7 +45,7 @@ const SideBar = ({ items, children }: { items: NavItem[]; children: ReactNode })
                   <Input type="search" placeholder={t("general.search")} className="h-10 w-full " autoFocus />
                 </div>
               </div>
-            )}
+            )} */}
           </div>
 
           {/* User profile and notifications */}

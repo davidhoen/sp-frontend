@@ -22,7 +22,7 @@ export default function ProfileRow({ profile, mutate }: { profile: ProfileWithCo
 
     const deleteProfile = async () => {
         try {
-            const res = axiosInstance.delete(`/api/teacher/profiles/${profile.id}`,)
+            const res = axiosInstance.delete(`/api/educator/profiles/${profile.id}`,)
             await triggerPromiseToast(res, t, { success: t("successfullyDeleted") })
             mutate && mutate()
             setIsDeleteModalOpen(false)

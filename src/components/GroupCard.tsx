@@ -1,7 +1,7 @@
 "use client"
 
 import { Link, useRouter } from "@/i18n/routing";
-import { getFullName, isEnrolledToGroup, triggerPromiseToast } from "@/lib";
+import { getFullName, isEnrolledToGroup, isTeacherUser, triggerPromiseToast } from "@/lib";
 import { GroupType } from "@/types";
 import { CheckIcon, ChevronRightIcon, PlusIcon, UsersIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -18,6 +18,7 @@ export function GroupCard({ group, className }: { group: GroupType, className?: 
     const { user } = useUser()
 
     const isEnrolled = isEnrolledToGroup(group, user)
+    const isStudent = user && !isTeacherUser(user)
 
     const enrollGroup = async () => {
         try {
@@ -30,13 +31,13 @@ export function GroupCard({ group, className }: { group: GroupType, className?: 
     }
 
     return (
-        <Link href={`/student/groups/${group.id}`}>
+        <Link href={isStudent ? `/student/groups/${group.id}` : `/teacher/groups/${group.id}`}>
             <div className={cn("relative flex flex-col border rounded-lg px-4 py-3 hover:bg-muted", className)}>
 
                 {/* Name */}
-                <div className="flex justify-between mb-4">
+                <div className="flex justify-between">
                     <span className="font-bold text-xl">{group.name}</span>
-                    <div>
+                    {isStudent && <div>
                         <Button variant="secondary" className="rounded-full h-8 w-8" size="icon" onClick={enrollGroup}>
                             {isEnrolled ?
                                 <CheckIcon size={18} />
@@ -44,12 +45,12 @@ export function GroupCard({ group, className }: { group: GroupType, className?: 
                                 <PlusIcon size={18} />
                             }
                         </Button>
-                    </div>
+                    </div>}
                 </div>
 
 
                 {/* Teachers */}
-                <div>
+                {isStudent && <div className="mt-4">
                     <div className="flex gap-2 items-center">
                         {/* First teacher */}
                         {(group.teachers && group.teachers.length > 0) && (
@@ -65,7 +66,7 @@ export function GroupCard({ group, className }: { group: GroupType, className?: 
                             </div>
                         )}
                     </div>
-                </div>
+                </div>}
 
                 {/* Chip for every connected skill */}
                 <div className="flex flex-wrap gap-2 mt-4">

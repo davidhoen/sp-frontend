@@ -64,7 +64,7 @@ const UpdateRatingModal = ({ children, skillId, currentRating }: { children: Rea
                             render={({ field: { value, onChange } }) => (
                                 <FormItem>
                                     <FormControl>
-                                        <StarRating rating={value} onRatingChange={onChange} allowEdit />
+                                        <StarRating rating={value} onRatingChange={onChange} allowEdit approved={false} />
                                     </FormControl>
                                     <FormDescription>{t("updateStarRating.selectNewRating")}</FormDescription>
                                     <FormMessage />

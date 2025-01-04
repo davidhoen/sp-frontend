@@ -12,7 +12,7 @@ export function TimelineRatingUpdateCard({ ratingUpdate, user }: { ratingUpdate:
     return (
         <div className="border rounded-lg p-4">
             <span className="font-sans font-bold text">{t("userUpdatedRating", { name: getYouOrFullName(user, t, currentUser) })} </span>
-            <StarRating rating={ratingUpdate.rating} showRatingTitle />
+            <StarRating rating={ratingUpdate.rating} showRatingTitle approved={false} />
         </div>
     )
 }

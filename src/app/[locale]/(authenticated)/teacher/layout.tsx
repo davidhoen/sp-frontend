@@ -1,14 +1,16 @@
 
 import SideBar from "@/components/Navigation/SideBar"
+import { getTeacherRequestsCount } from "@/lib/queries/server/queries"
 import { getTranslations } from "next-intl/server"
 import { ReactNode } from "react"
 
 const StudentLayout = async ({ children }: { children: ReactNode }) => {
   const t = await getTranslations("general")
+  const numberOfRequests = await getTeacherRequestsCount() || 0
 
   const menuItems = [
-    { title: t("dashboard"), url: `/teacher`, icon: "Book" },
-    { title: t("requests"), url: `/teacher/requests`, icon: "Bell" },
+    { title: t("dashboard"), url: `/teacher`, icon: "Book", isDashboard: true },
+    { title: t("requests"), url: `/teacher/requests`, icon: "Bell", badge: numberOfRequests },
     { title: t("groups"), url: `/teacher/groups`, icon: "Group" },
     { title: t("skills"), url: `/teacher/skills`, icon: "Star" },
     { title: t("students"), url: `/teacher/students`, icon: "Users" },

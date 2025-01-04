@@ -21,7 +21,7 @@ export default function CompetencyRow({ competency, mutate }: { competency: Comp
 
     const deleteCompetency = async () => {
         try {
-            const res = axiosInstance.delete(`/api/teacher/competencies/${competency.id}`,)
+            const res = axiosInstance.delete(`/api/educator/competencies/${competency.id}`,)
             await triggerPromiseToast(res, t, { success: t("successfullyDeleted") })
             mutate && mutate()
             setIsDeleteModalOpen(false)

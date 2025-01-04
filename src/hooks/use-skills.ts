@@ -4,7 +4,7 @@ import useSWR from "swr"
 
 export const useSkills = () => {
     // Crazy number of skills to prevent pagination in dropdowns
-    const url = `/api/teacher/skills?per_page=500`
+    const url = `/api/educator/skills?per_page=500`
     return useSWR(url, () =>
         axiosInstance.get(url)
             .then((res: { data: { data: SkillType[] } }) => {

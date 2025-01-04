@@ -1,7 +1,6 @@
 "use client"
 
 import { useTimeLineItems } from "@/hooks/use-timeline-items";
-import { endorsement, feedback, ratingUpdate } from "@/lib/fakeData";
 import { cn } from "@/lib/utils";
 import { TimeLineItemType, TimeLineItemTypeEnum } from "@/types";
 import { UserType } from "@/types/auth";

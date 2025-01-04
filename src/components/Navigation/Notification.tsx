@@ -23,7 +23,7 @@ const notificationConfig = {
                 {(chunks) => t.rich(`notifications.feedbackRequest`, {
                     ...chunks,
                     requester: notification.requester ? getFullName(notification.requester) : "Unknown",
-                    skillName: notification.skill.title
+                    skillName: notification.skill?.title
                 })}
             </RichText>
     },
@@ -40,7 +40,7 @@ const notificationConfig = {
                 {(chunks) => t.rich(`notifications.feedbackReceived`, {
                     ...chunks,
                     requestee: notification.requestee_name,
-                    skillName: notification.skill.title
+                    skillName: notification.skill?.title
                 })}
             </RichText>
     },
@@ -57,7 +57,7 @@ const notificationConfig = {
                 {(chunks) => t.rich(`notifications.endorsementRequest`, {
                     ...chunks,
                     requester: notification.requester ? getFullName(notification.requester) : "Unknown",
-                    skillName: notification.skill.title
+                    skillName: notification.skill?.title
                 })}
             </RichText>
     },
@@ -65,7 +65,7 @@ const notificationConfig = {
     [NotificationTypeEnum.EndorsementRequestReview]: {
         icon: BadgeCheckIcon,
         getHref: (notification: NotificationType, t: TranslationFunction) => ({
-            pathname: `/student/skills/${notification.skill.id}`,
+            pathname: `/student/skills/${notification.skill?.id}`,
             hash: t("endorsements")
         }),
         color: "text-success",
@@ -81,7 +81,7 @@ const notificationConfig = {
     [NotificationTypeEnum.EndorsementReceived]: {
         icon: BadgeCheckIcon,
         getHref: (notification: NotificationType, t: TranslationFunction) => ({
-            pathname: `/student/skills/${notification.skill.id}`,
+            pathname: `/student/skills/${notification.skill?.id}`,
             hash: t("endorsements")
         }),
         color: "text-success",
@@ -90,7 +90,7 @@ const notificationConfig = {
                 {(chunks) => t.rich(`notifications.endorsementReceived`, {
                     ...chunks,
                     requestee: notification.requestee_name,
-                    skillName: notification.skill.title
+                    skillName: notification.skill?.title
                 })}
             </RichText>
     },
@@ -98,7 +98,7 @@ const notificationConfig = {
     [NotificationTypeEnum.EndorsementReviewed]: {
         icon: BadgeCheckIcon,
         getHref: (notification: NotificationType, t: TranslationFunction) => ({
-            pathname: `/student/skills/${notification.skill.id}`,
+            pathname: `/student/skills/${notification.skill?.id}`,
             hash: t("endorsements")
         }),
         color: "text-success",
@@ -108,7 +108,7 @@ const notificationConfig = {
                 {(chunks) => t.rich(`notifications.endorsementReviewed`, {
                     ...chunks,
                     reviewer,
-                    skillName: notification.skill.title
+                    skillName: notification.skill?.title
                 })}
             </RichText>
         }

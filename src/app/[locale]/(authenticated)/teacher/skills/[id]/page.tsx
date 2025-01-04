@@ -3,14 +3,13 @@ import { TableAction } from "@/components/TableActions"
 import PageTitle from "@/components/Typography/PageTitle"
 import SectionTitle from "@/components/Typography/SectionTitle"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
-import UserLine from "@/components/UserLine"
 import { Link } from "@/i18n/routing"
 import { getTeacherSkill } from "@/lib/queries/server/queries"
 import { UsersIcon } from "lucide-react"
 import { getFormatter, getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
 
-const SkillDetail = async (props: { params: Promise<{ id: number }> }) => {
+const SkillDetail = async (props: { params: Promise<{ id: string }> }) => {
     const params = await props.params;
     const t = await getTranslations("general")
     const skill = await getTeacherSkill(params.id)
