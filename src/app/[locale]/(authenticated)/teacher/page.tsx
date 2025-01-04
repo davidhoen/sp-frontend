@@ -5,6 +5,7 @@ import SectionTitle from "@/components/Typography/SectionTitle"
 import { Button } from "@/components/ui/button"
 import { Link } from "@/i18n/routing"
 import { fakeGroup } from "@/lib/fakeData"
+import { getTeacherGroups } from "@/lib/queries/server/queries"
 import { BadgeCheckIcon, ChevronRightIcon, MessageCircleIcon } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 
@@ -15,7 +16,7 @@ const DashboardPage = async () => {
   const feedbackRequests = 10
   const endorsementRequests = 5
 
-  const groups = [fakeGroup, fakeGroup]
+  const groups = await getTeacherGroups()
 
   return <div className="flex flex-col gap-8">
 
@@ -64,8 +65,8 @@ const DashboardPage = async () => {
         </UpsertGroupModal>
       </div>
 
-      <div className="grid  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-2">
-        {groups.map(group => <GroupCard key={group.id} group={group} />)}
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-2">
+        {groups?.map(group => <GroupCard key={group.id} group={group} />)}
       </div>
     </div>
 

@@ -129,6 +129,7 @@ export type TeacherGroupsQueryType = {
   page: string,
   search: string,
   is_archived: string
+  is_joined: string
 }
 
 export type FeedbackRequestsQueryType = TeacherGroupsQueryType

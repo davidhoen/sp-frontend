@@ -31,7 +31,7 @@ export function GroupCard({ group, className }: { group: GroupType, className?: 
     }
 
     return (
-        <Link href={`/student/groups/${group.id}`}>
+        <Link href={isStudent ? `/student/groups/${group.id}` : `/teacher/groups/${group.id}`}>
             <div className={cn("relative flex flex-col border rounded-lg px-4 py-3 hover:bg-muted", className)}>
 
                 {/* Name */}
