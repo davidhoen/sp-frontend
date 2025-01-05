@@ -180,7 +180,13 @@
       "yourCompany": "Your company",
       "skillRating": "Skill rating",
       "skillRatingDescription": "Rate the skill from 1 to 4 stars",
-      "submitEndorsement": "Submit endorsement"
+      "submitEndorsement": "Submit endorsement",
+      "confirmation": {
+        "title": "Endorsement submitted",
+        "description": "Your endorsement has been successfully submitted.",
+        "body": "The student will receive a notification once the endorsement has been reviewed by a teacher.",
+        "closePage": "You can close this page now"
+      }
     },
     "reviewEndorsement": {
       "title": "Review endorsement",
