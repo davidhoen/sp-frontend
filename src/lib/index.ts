@@ -32,7 +32,7 @@ export const getMostRecentRating = (ratings: RatingType[], approvedOnly?: boolea
 
 export const getMostRecentRatingObject = (ratings: RatingType[], approvedOnly?: boolean) => {
     const filteredRatings = approvedOnly ? ratings?.filter((rating) => rating.approved_at) : ratings
-    return filteredRatings?.reduce((prev, current) => (prev.created_at > current.created_at) ? prev : current)
+    return filteredRatings?.length > 0 ? filteredRatings?.reduce((prev, current) => (prev.created_at > current.created_at) ? prev : current) : undefined
 }
 
 export const isNewestRatingApproved = (ratings: RatingType[]) => {
