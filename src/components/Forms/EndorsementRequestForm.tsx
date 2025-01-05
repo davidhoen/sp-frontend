@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useRouter } from "@/i18n/routing";
 import { triggerPromiseToast } from "@/lib";
 import axiosInstance from "@/lib/axios";
 import { EndorsementFormValues, endorsementSchema } from "@/schemas/zod";
@@ -13,14 +14,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import SetCookies from "../SetCookies";
 
 export const EndorsementRequestForm = ({ endorsementRequest }: { endorsementRequest: EndorsementRequestType }) => {
     const t = useTranslations("modals")
+    const { push } = useRouter()
 
     const form = useForm<EndorsementFormValues>({
         resolver: zodResolver(endorsementSchema),
         defaultValues: {
-            requestTitle: endorsementRequest.title,
+            requestTitle: endorsementRequest.title || "",
             supervisorName: "",
             supervisorPosition: "",
             supervisorCompany: "",
@@ -37,7 +40,7 @@ export const EndorsementRequestForm = ({ endorsementRequest }: { endorsementRequ
                 ...values,
             })
             await triggerPromiseToast(res, t)
-
+            push("/endorsement-request/confirmation/")
         }
         catch (error) {
             console.error(error)
@@ -47,6 +50,7 @@ export const EndorsementRequestForm = ({ endorsementRequest }: { endorsementRequ
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <SetCookies />
                 <FormField
                     control={form.control}
                     name="requestTitle"

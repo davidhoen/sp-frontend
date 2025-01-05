@@ -180,7 +180,13 @@
       "yourCompany": "Uw bedrijfsnaam",
       "skillRating": "Skill beoordeling",
       "skillRatingDescription": "Beoordeel de skill van 1 tot 4 sterren",
-      "submitEndorsement": "Onderschrijving versturen"
+      "submitEndorsement": "Onderschrijving versturen",
+      "confirmation": {
+        "title": "Onderschrijving verstuurd",
+        "description": " Je onderschrijving is succesvol verstuurd.",
+        "body": "De student ontvangt een notificatie zodra je onderschrijving is goedgekeurd.",
+        "closePage": "Je kunt deze pagina nu sluiten."
+      }
     },
     "reviewEndorsement": {
       "title": "Onderschrijving beoordelen",
