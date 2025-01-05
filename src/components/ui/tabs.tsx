@@ -53,11 +53,12 @@ const TabsContent = React.forwardRef<
 ))
 TabsContent.displayName = TabsPrimitive.Content.displayName
 
-const TabsLinkTrigger: React.FC<{ href: string; children: React.ReactNode }> = ({
+const TabsLinkTrigger: React.FC<{ href: string; children: React.ReactNode, className?: string }> = ({
   href,
   children,
+  className
 }) => (
-  <TabsTrigger value={href} asChild>
+  <TabsTrigger value={href} className={cn(className)} asChild>
     <Link href={href}>{children}</Link>
   </TabsTrigger>
 );

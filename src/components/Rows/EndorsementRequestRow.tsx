@@ -12,7 +12,6 @@ import { TableCell, TableRow } from "../ui/table"
 import UserAvatar from "../UserAvatar"
 
 export default function EndorsementRequestRow({ request, mutate }: { request: RequestType, mutate: () => void }) {
-    const t = useTranslations("general")
     const format = useFormatter()
 
     const rating = request.requestee?.rating || getMostRecentRating(request.skill.ratings)
@@ -25,7 +24,7 @@ export default function EndorsementRequestRow({ request, mutate }: { request: Re
                     <UserAvatar user={request.requester} />
                     <div className="flex flex-col">
                         <span className="font-medium">{getFullName(request.requester)}</span>
-                        <span className="text-muted-foreground">{format.dateTime(new Date(request.created_at), { dateStyle: "medium" })}</span>
+                        <span className="text-muted-foreground">{request.created_at && format.dateTime(new Date(request.created_at), { dateStyle: "medium" })}</span>
                     </div>
                 </div>
             </TableCell>
@@ -54,15 +53,14 @@ export default function EndorsementRequestRow({ request, mutate }: { request: Re
             <TableCell className="flex gap-2">
                 {/* Requests without requestees are internal, teacher writes the endorsment */}
                 {request.requestee ?
-                    <AddEndorsementModal request={request}>
-                        <div><TableAction type="reply" /></div>
-                    </AddEndorsementModal>
-                    :
                     <ReviewEndorsementModal request={request}>
                         <div><TableAction type="review" /></div>
                     </ReviewEndorsementModal>
+                    :
+                    <AddEndorsementModal request={request}>
+                        <div><TableAction type="reply" /></div>
+                    </AddEndorsementModal>
                 }
-
             </TableCell>
         </TableRow >
     </>
