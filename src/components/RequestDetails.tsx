@@ -14,13 +14,13 @@ export const RequestDetails = ({ request }: { request: RequestType }) => {
         <div className="flex gap-6 grid-cols-2">
             <div className="font-medium">
                 <div className="flex gap-2"><UserIcon size={16} />{t('student')}:</div>
-                <div className="flex gap-2"><GroupIcon size={16} />{t('group')}:</div>
+                {request.group && <div className="flex gap-2"><GroupIcon size={16} />{t('group')}:</div>}
                 <div className="flex gap-2"><StarIcon size={16} />{t('skill')}:</div>
                 <div className="flex gap-2"><LightbulbIcon size={16} />{t('event')}:</div>
             </div>
             <div>
                 <div className="flex">{getFullName(request.requester)}</div>
-                <div>{request.group.name}</div>
+                {request.group && <div>{request.group.name}</div>}
                 <div className="flex gap-2">
                     <Chip>{request.skill.title}</Chip>
                     <StarRating rating={getMostRecentRating(request.skill.ratings)} approved={isNewestRatingApproved(request.skill.ratings)} />

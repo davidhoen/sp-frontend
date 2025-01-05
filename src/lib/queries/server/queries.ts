@@ -1,7 +1,7 @@
 "use server";
 
 import { getCompetencyRating } from "@/lib";
-import { CompetencyType, EndorsementRequestType, EndorsementType, GroupType, ProfileType, SkillType, SkillWithGroups, UserWithSkillsAndGroups } from "@/types";
+import { CompetencyType, EndorsementRequestType, EndorsementType, GroupType, ProfileType, RequestsCountType, SkillType, SkillWithGroups, UserWithSkillsAndGroups } from "@/types";
 import { getData } from "./data-fetching";
 
 async function fetchData<T>(route: string, parseMethod?: (data: T, status?: number) => T | Promise<T>): Promise<T | undefined> {
@@ -35,10 +35,10 @@ export const getCompetency = async (id: string) =>
     fetchData<CompetencyType>(`/api/student/competencies/${id}`);
 
 export const getStudentCompetencies = async () =>
-    fetchData<CompetencyType[]>(`/api/student/competencies?with=skills,skills.endorsements`);
+    fetchData<CompetencyType[]>(`/api/student/competencies?with=skills,endorsements`);
 
 export const getGroup = async (id: string) =>
-    fetchData<GroupType>(`/api/groups/${id}?with=skills,skills.endorsements`);
+    fetchData<GroupType>(`/api/groups/${id}?with=skills,endorsements`);
 
 export const getTeacherGroups = async () =>
     fetchData<GroupType[]>(`/api/educator/groups?is_joined=true&with=skills,students`);
@@ -74,4 +74,4 @@ export const getStudent = async (id: string) =>
     fetchData<UserWithSkillsAndGroups>(`/api/educator/students/${id}?with=groups,feedbacks,endorsements`);
 
 export const getTeacherRequestsCount = async () =>
-    fetchData<number>(`/api/educator/requests/count`);
+    fetchData<RequestsCountType>(`/api/educator/requests/count`);

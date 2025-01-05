@@ -1,31 +1,29 @@
 "use client"
 
-import { getFullName, isTeacherUser, triggerPromiseToast } from "@/lib"
+import { PreviousFeedbackList } from "@/components/PreviousFeedbackList"
+import { RequestDetails } from "@/components/RequestDetails"
+import { isTeacherUser, triggerPromiseToast } from "@/lib"
 import axiosInstance from "@/lib/axios"
 import { useUser } from "@/providers/UserProvider"
+import { RequestType } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useFormatter, useTranslations } from "next-intl"
+import { useTranslations } from "next-intl"
 import { ReactNode, useState } from "react"
 import { useForm } from "react-hook-form"
 import { mutate } from "swr"
 import { z } from "zod"
+import StarRating from "../../StarRating"
+import { Alert } from "../../ui/alert"
 import { Button } from "../../ui/button"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../ui/dialog"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../../ui/form"
 import { Input } from "../../ui/input"
 import { Textarea } from "../../ui/textarea"
-import { FeedbackType, RequestType } from "@/types"
-import { Alert } from "../../ui/alert"
-import { GroupIcon, LightbulbIcon, StarIcon, UserIcon } from "lucide-react"
-import { Chip } from "../../Chip"
-import StarRating from "../../StarRating"
-import { RequestDetails } from "@/components/RequestDetails"
-import { PreviousFeedbackList } from "@/components/PreviousFeedbackList"
 
 const AddEndorsementModal = ({ children, request, parentMutate }: { children: ReactNode, request: RequestType, parentMutate?: () => void }) => {
     const t = useTranslations()
-    const format = useFormatter()
     const { user } = useUser()
+
 
     const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -34,13 +32,6 @@ const AddEndorsementModal = ({ children, request, parentMutate }: { children: Re
         rating: z.number().int().max(4),
         feedback: z.string().min(10)
     })
-
-    // TODO: Replace with real data
-    const previousFeedbacks = [
-        { title: "Feedback title", content: "Feedback content", created_at: new Date() },
-        { title: "Feedback title 2", content: "Feedback content 2", created_at: new Date() },
-        { title: "Feedback title 3", content: "Feedback content 3", created_at: new Date() }
-    ] as FeedbackType[]
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -98,9 +89,9 @@ const AddEndorsementModal = ({ children, request, parentMutate }: { children: Re
                         </Alert>
 
                         {/* Previous feedback for and from teachers */}
-                        {(previousFeedbacks.length && isTeacherUser(user)) && <div>
+                        {isTeacherUser(user) && <div>
                             <FormLabel>{t("general.previousFeedback")}</FormLabel>
-                            <PreviousFeedbackList feedbacks={previousFeedbacks} />
+                            <PreviousFeedbackList studentId={request.requester.id} skillId={request.skill.id} />
                         </div>}
 
                         {/* Title  */}

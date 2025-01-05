@@ -51,4 +51,4 @@ export const getFeedbackRequests = ({ query }: { query: Record<string, string> }
     queryAPI<RequestType>('/api/educator/requests/feedbacks', { with: 'requester,skill,group', ...query });
 
 export const getEndorsementRequests = ({ query }: { query: Record<string, string> }) =>
-    queryAPI<RequestType>('/api/educator/requests/endorsements', { with: 'requester,skill,group', ...query });
+    queryAPI<RequestType>('/api/educator/requests/endorsements', { with: 'requester,skill', ...query });

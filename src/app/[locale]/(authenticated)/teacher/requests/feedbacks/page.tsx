@@ -6,9 +6,8 @@ import SearchInput from "@/components/SearchInput"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { useFetchData } from "@/hooks/use-fetch-data"
 import { useQueryFilter } from "@/hooks/use-query-filter"
-import { fakeGroup, fakeSkill, fakeTeacher } from "@/lib/fakeData"
 import { getFeedbackRequests } from "@/lib/queries/client/queries"
-import { FeedbackRequestsQueryType, RequestStatusEnum, RequestType } from "@/types"
+import { FeedbackRequestsQueryType, RequestType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useTranslations } from "next-intl"
 import { use, useCallback, useEffect } from "react"
@@ -19,18 +18,7 @@ const FeedbackRequests = (props: { searchParams: Promise<FeedbackRequestsQueryTy
 
     const onArchiveChange = useQueryFilter({ key: 'is_archived' });
 
-    // TODO: Replace with const
-    let { data: feedbacks, loading, fetchData } = useFetchData<PagingSchema<RequestType>>();
-
-    if (!feedbacks)
-        feedbacks = {
-            data: [
-                { id: "1", requester: fakeTeacher, group: fakeGroup, skill: fakeSkill, title: "Event 1", status: RequestStatusEnum.Pending, created_at: new Date(), updated_at: new Date() },
-            ],
-            meta: {
-                total: 0, current_page: 1, last_page: 2, per_page: 10
-            }
-        }
+    const { data: feedbacks, loading, fetchData } = useFetchData<PagingSchema<RequestType>>();
 
     const fetchFeedbackRequests = useCallback(() => {
         fetchData(getFeedbackRequests);

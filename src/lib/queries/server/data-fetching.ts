@@ -9,10 +9,10 @@ export const getData = async <T>(url: string): Promise<ApiResponse<T>> => {
 
   if (!response.success) {
     console.error("Error in getData", response);
-    return { success: false, result: response.result.data };
+    return { success: false, result: response.result.data || response.result as T };
   }
 
-  return { success: true, result: response.result.data };
+  return { success: true, result: response.result.data || response.result as T };
 };
 
 export const getPaginatedData = async <T>(url: string): Promise<ApiResponse<ApiResponsePaginated<T>>> => {
