@@ -38,7 +38,7 @@ export const getStudentCompetencies = async () =>
     fetchData<CompetencyType[]>(`/api/student/competencies?with=skills,endorsements`);
 
 export const getGroup = async (id: string) =>
-    fetchData<GroupType>(`/api/groups/${id}?with=skills,endorsements,ratings`);
+    fetchData<GroupType>(`/api/groups/${id}?with=skills,endorsements`);
 
 export const getTeacherGroups = async () =>
     fetchData<GroupType[]>(`/api/educator/groups?is_joined=true&with=skills,students`);
