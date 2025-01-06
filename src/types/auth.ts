@@ -25,7 +25,7 @@ export interface UserInputType {
 }
 
 export type Role = {
-    id: string
+    id: number
     name: string
 }
 
