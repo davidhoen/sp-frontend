@@ -29,6 +29,13 @@ export type Role = {
     name: string
 }
 
+export enum RolesEnum {
+    "Student" = "student",
+    "Teacher" = "teacher",
+    "HeadTeacher" = "headTeacher",
+    "Admin" = "admin"
+}
+
 export interface ApiResponseGet<T> {
     data: T;
 }

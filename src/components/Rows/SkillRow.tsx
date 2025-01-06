@@ -1,17 +1,17 @@
 "use client"
 
+import { Link } from "@/i18n/routing"
+import { hasPermission, triggerPromiseToast } from "@/lib"
+import axiosInstance from "@/lib/axios"
 import { useUser } from "@/providers/UserProvider"
 import { SkillType } from "@/types"
-import { CompetencyType } from "@/types"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { ConfirmActionDialog } from "../Modals/ConfirmActionModal"
 import UpsertSkillModal from "../Modals/Teacher/UpsertSkillModal"
 import { TableAction } from "../TableActions"
 import { TableCell, TableRow } from "../ui/table"
-import { Link } from "@/i18n/routing"
-import axiosInstance from "@/lib/axios"
-import { triggerPromiseToast } from "@/lib"
+import { RolesEnum } from "@/types/auth"
 
 export default function SkillRow({ skill, mutate }: { skill: SkillType, mutate: () => void }) {
     const { user } = useUser()
@@ -41,14 +41,13 @@ export default function SkillRow({ skill, mutate }: { skill: SkillType, mutate: 
             <TableCell>{skill.groups_count}</TableCell>
             {/* Actions */}
             <TableCell className="flex gap-2">
-
-                {/* Edit */}
-                <UpsertSkillModal skill={skill} mutate={mutate}>
+                {/* Edit  */}
+                {hasPermission(RolesEnum.HeadTeacher, user) && <UpsertSkillModal skill={skill} mutate={mutate}>
                     <div><TableAction type="edit" /></div>
-                </UpsertSkillModal>
+                </UpsertSkillModal>}
 
                 {/* Delete (for admins) */}
-                {user?.is_admin && <div onClick={() => setIsDeleteModalOpen(true)}><TableAction type="delete" /></div>}
+                {hasPermission(RolesEnum.Admin, user) && <div onClick={() => setIsDeleteModalOpen(true)}><TableAction type="delete" /></div>}
 
                 {/* View */}
                 <Link href={`/teacher/skills/${skill.id}`}>
