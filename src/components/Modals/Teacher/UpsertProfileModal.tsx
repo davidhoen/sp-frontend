@@ -64,6 +64,7 @@ const UpsertProfileModal = ({ children, profile, mutate }: { children: ReactNode
       await triggerPromiseToast(res, t, { success: t("modals.successfullySaved"), error: t("modals.genericError"), loading: t("modals.loading") })
 
       refresh()
+      mutate && mutate()
 
       setIsModalOpen(false)
       form.reset()

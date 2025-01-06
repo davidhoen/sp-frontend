@@ -25,8 +25,15 @@ export interface UserInputType {
 }
 
 export type Role = {
-    id: string
+    id: number
     name: string
+}
+
+export enum RolesEnum {
+    "Student" = "student",
+    "Teacher" = "teacher",
+    "HeadTeacher" = "headTeacher",
+    "Admin" = "admin"
 }
 
 export interface ApiResponseGet<T> {

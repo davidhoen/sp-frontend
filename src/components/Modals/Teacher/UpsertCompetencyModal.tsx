@@ -66,6 +66,7 @@ const UpsertCompetencyModal = ({ children, competency, mutate }: { children: Rea
       await triggerPromiseToast(res, t, { success: t("modals.successfullySaved"), error: t("modals.genericError"), loading: t("modals.loading") })
 
       refresh()
+      mutate && mutate()
 
       setIsModalOpen(false)
       form.reset()
