@@ -1,10 +1,6 @@
 "use client"
 
 import { Textarea } from "@/components/ui/textarea"
-import { useCompetencies } from "@/hooks/use-compentencies"
-import { useRouter } from "@/i18n/routing"
-import { triggerPromiseToast } from "@/lib"
-import axiosInstance from "@/lib/axios"
 import { SkillType } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
@@ -16,8 +12,13 @@ import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogT
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../ui/form"
 import { Input } from "../../ui/input"
 import Select from "../../ui/select"
+import { useCompetencies } from "@/hooks/use-compentencies"
+import axiosInstance from "@/lib/axios"
+import { triggerPromiseToast } from "@/lib"
+import { useRouter } from "@/i18n/routing"
+import { useUser } from "@/providers/UserProvider"
 
-const UpsertSkillModal = ({ children, skill, mutate }: { children: ReactNode, skill?: SkillType, mutate?: () => void }) => {
+const UpsertSkillModal = ({ children, skill }: { children: ReactNode, skill?: SkillType }) => {
   const t = useTranslations()
   const { refresh } = useRouter()
 

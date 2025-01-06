@@ -159,7 +159,6 @@ export type NotificationType = {
     title: string
   },
   endorsement?: EndorsementType,
-  created_at: Date
   read_at?: Date
 }
 

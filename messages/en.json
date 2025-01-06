@@ -92,13 +92,9 @@
     "viewAll": "See all",
     "searchFeedbackRequests": "Search for a group, skill or student",
     "confirmDeleteEntity": "Are you sure you want to delete this {entity}?",
-    "role": "Role",
-    "roles": "Roles",
-    "user": "User",
     "newestFirst": "Newest first",
     "oldestFirst": "Oldest first",
     "currentRating": "Current rating",
-    "users": "Users",
     "yourGroups": "Your groups",
     "feedbackAndEndorsementRequests": "Feedback and endorsement requests",
     "remove": "Remove",
@@ -234,12 +230,6 @@
       "titlePlaceholder": "Bijv. Technologist",
       "descriptionPlaceholder": "E.g. This profile includes competencies needed to excel in a specific role or field.",
       "competenciesPlaceholder": "Select the competencies"
-    },
-    "upsertUser": {
-      "create": "Create a user",
-      "update": "Update user",
-      "firstName": "First name",
-      "lastName": "Last name"
     }
   },
   "students": {

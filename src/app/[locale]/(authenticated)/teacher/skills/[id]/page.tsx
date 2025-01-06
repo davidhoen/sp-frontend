@@ -4,10 +4,7 @@ import PageTitle from "@/components/Typography/PageTitle"
 import SectionTitle from "@/components/Typography/SectionTitle"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 import { Link } from "@/i18n/routing"
-import { hasPermission } from "@/lib"
-import { auth } from "@/lib/auth/server"
 import { getTeacherSkill } from "@/lib/queries/server/queries"
-import { RolesEnum } from "@/types/auth"
 import { UsersIcon } from "lucide-react"
 import { getFormatter, getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
@@ -15,10 +12,9 @@ import { notFound } from "next/navigation"
 const SkillDetail = async (props: { params: Promise<{ id: string }> }) => {
     const params = await props.params;
     const t = await getTranslations("general")
-    const format = await getFormatter()
-
     const skill = await getTeacherSkill(params.id)
-    const { user } = await auth()
+
+    const format = await getFormatter()
 
     if (!skill) notFound()
 
@@ -47,11 +43,11 @@ const SkillDetail = async (props: { params: Promise<{ id: string }> }) => {
                 {/* Title */}
                 <PageTitle className="mb-2">{skill.title}</PageTitle>
 
-                {hasPermission(RolesEnum.HeadTeacher, user) && <div className="flex gap-2">
-                    <UpsertSkillModal skill={skill}>
+                <div className="flex gap-2">
+                    <UpsertSkillModal skill={skill} >
                         <div><TableAction type="edit" resizes /></div>
                     </UpsertSkillModal>
-                </div>}
+                </div>
             </div>
 
             <div className="text-xs text-muted-foreground mb-4">{t("lastEditedByOn", { name: "John Doe", date: format.dateTime(new Date(), { dateStyle: "medium" }) })}</div>

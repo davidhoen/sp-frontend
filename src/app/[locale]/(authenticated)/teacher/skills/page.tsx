@@ -10,11 +10,8 @@ import { Button } from "@/components/ui/button"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { useFetchData } from "@/hooks/use-fetch-data"
 import { useQueryFilter } from "@/hooks/use-query-filter"
-import { hasPermission } from "@/lib"
 import { getTeacherSkills } from "@/lib/queries/client/queries"
-import { useUser } from "@/providers/UserProvider"
 import { CompetencyType, SkillsQueryType, SkillType } from "@/types"
-import { RolesEnum } from "@/types/auth"
 import { PagingSchema } from "@/types/pagination"
 import { useTranslations } from "next-intl"
 import { use, useCallback, useEffect, useState } from "react"
@@ -22,8 +19,6 @@ import { use, useCallback, useEffect, useState } from "react"
 const SkillsOverview = (props: { searchParams: Promise<SkillsQueryType> }) => {
     const searchParams = use(props.searchParams);
     const t = useTranslations("general");
-
-    const { user } = useUser();
 
     const [competencies, setCompentencies] = useState<CompetencyType[]>();
     const [competencyFilterValue, setCompetencyFilterValue] = useState(searchParams.competencies?.split(',') || ["all"]);
@@ -59,9 +54,9 @@ const SkillsOverview = (props: { searchParams: Promise<SkillsQueryType> }) => {
         {/* Search */}
         <div className="flex justify-between my-4">
             <SearchInput placeholder={t("search")} />
-            {hasPermission(RolesEnum.HeadTeacher, user) && <UpsertSkillModal mutate={fetchSkills}>
+            <UpsertSkillModal>
                 <Button>{t("addASkill")}</Button>
-            </UpsertSkillModal>}
+            </UpsertSkillModal>
         </div>
 
         {/* Compentencies filter*/}

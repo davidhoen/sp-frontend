@@ -66,17 +66,17 @@ export const middleware = async (req: NextRequest) => {
       const redirectResponse = await handleAuthenticatedUser(url, locale, user);
       if (redirectResponse) return redirectResponse;
 
-      // Send students to the student dashboard when trying to access the teacher env
-      if (!isTeacherUser(user) && urlWithoutLocale.startsWith("/teacher")) {
-        url.pathname = url.pathname.replace("/teacher", "/student");
-        return NextResponse.redirect(url);
-      }
+      // // Send students to the student dashboard when trying to access the teacher env
+      // if (!isTeacherUser(user) && urlWithoutLocale.startsWith("/teacher")) {
+      //   url.pathname = url.pathname.replace("/teacher", "/student");
+      //   return NextResponse.redirect(url);
+      // }
 
-      // Send teachers to the teacher dashboard when trying to access the student env
-      if (isTeacherUser(user) && urlWithoutLocale.startsWith("/student")) {
-        url.pathname = url.pathname.replace("/student", "/teacher");
-        return NextResponse.redirect(url);
-      }
+      // // Send teachers to the teacher dashboard when trying to access the student env
+      // if (isTeacherUser(user) && urlWithoutLocale.startsWith("/student")) {
+      //   url.pathname = url.pathname.replace("/student", "/teacher");
+      //   return NextResponse.redirect(url);
+      // }
 
       return localizedResponse;
     }

@@ -5,14 +5,17 @@ import SectionTitle from "@/components/Typography/SectionTitle"
 import { Button } from "@/components/ui/button"
 import { Link } from "@/i18n/routing"
 import { fakeGroup } from "@/lib/fakeData"
-import { getTeacherGroups, getTeacherRequestsCount } from "@/lib/queries/server/queries"
+import { getTeacherGroups } from "@/lib/queries/server/queries"
 import { BadgeCheckIcon, ChevronRightIcon, MessageCircleIcon } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 
 const DashboardPage = async () => {
   const t = await getTranslations()
 
-  const requests = await getTeacherRequestsCount()
+  // TODO replace with real methods
+  const feedbackRequests = 10
+  const endorsementRequests = 5
+
   const groups = await getTeacherGroups()
 
   return <div className="flex flex-col gap-8">
@@ -28,7 +31,7 @@ const DashboardPage = async () => {
           <div className="flex gap-4 border rounded-lg p-4 w-fit hover:bg-muted cursor-pointer">
             <div className="flex items-center gap-2">
               <MessageCircleIcon size={18} className="text-primary" />
-              <span className="font-medium">{requests?.feedback_requests_count} {t("general.feedbacks")}</span>
+              <span className="font-medium">{feedbackRequests} {t("general.feedbacks")}</span>
             </div>
           </div>
         </Link>
@@ -37,7 +40,7 @@ const DashboardPage = async () => {
           <div className="flex gap-4 border rounded-lg p-4 w-fit hover:bg-muted cursor-pointer">
             <div className="flex items-center gap-2">
               <BadgeCheckIcon size={18} />
-              <span className="font-medium">{requests?.endorsement_requests_count} {t("general.endorsements")}</span>
+              <span className="font-medium">{endorsementRequests} {t("general.endorsements")}</span>
             </div>
           </div>
         </Link>
