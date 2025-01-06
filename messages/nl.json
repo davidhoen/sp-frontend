@@ -234,6 +234,12 @@
       "titlePlaceholder": "Bijv. Technoloog",
       "descriptionPlaceholder": "Bijv. Dit profiel bevat competenties die nodig zijn om uit te blinken in een specifieke rol of vakgebied.",
       "competenciesPlaceholder": "Selecteer de competentie(s)"
+    },
+    "upsertUser": {
+      "create": "Gebruiker aanmaken",
+      "update": "Gebruiker bewerken",
+      "firstName": "Voornaam",
+      "lastName": "Achternaam"
     }
   },
   "students": {

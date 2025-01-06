@@ -1,11 +1,11 @@
 "use client"
 
-import { Textarea } from "@/components/ui/textarea"
-import { useCompetencies } from "@/hooks/use-compentencies"
+import { useRoles } from "@/hooks/use-roles"
 import { useRouter } from "@/i18n/routing"
 import { triggerPromiseToast } from "@/lib"
 import axiosInstance from "@/lib/axios"
-import { SkillType } from "@/types"
+import { BaseUserSchema } from "@/schemas/zod"
+import { UserType } from "@/types/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { ReactNode, useEffect, useState } from "react"
@@ -17,45 +17,41 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "../../ui/input"
 import Select from "../../ui/select"
 
-const UpsertSkillModal = ({ children, skill, mutate }: { children: ReactNode, skill?: SkillType, mutate?: () => void }) => {
+// For now create user is not supported, use register instead
+const UpsertUserModal = ({ children, user, mutate }: { children: ReactNode, user?: UserType, mutate?: () => void }) => {
   const t = useTranslations()
   const { refresh } = useRouter()
 
-  const { data: competencies } = useCompetencies()
+  const { data: roles } = useRoles()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const formSchema = z.object({
-    title: z.string().min(3),
-    desc: z.string().min(3),
-    competencyId: z.string()
+  const form = useForm<z.infer<typeof BaseUserSchema>>({
+    resolver: zodResolver(BaseUserSchema),
   })
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema)
-  })
-
-  // Reset form when skill changes or modal opens
+  // Reset form when user changes or modal opens
   useEffect(() => {
     if (isModalOpen) {
       form.reset({
-        title: skill?.title ?? "",
-        desc: skill?.desc ?? "",
-        competencyId: skill?.competency?.id ?? ""
+        first_name: user?.first_name ?? "",
+        last_name: user?.last_name ?? "",
+        role_id: user?.role?.id ?? 1,
+        email: user?.email ?? "",
       })
     }
-  }, [skill, isModalOpen, form])
+  }, [user, isModalOpen, form])
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof BaseUserSchema>) => {
     try {
-      const url = skill ? `/api/educator/skills/${skill.id}` : `/api/educator/skills/create`
-      const axiosMethod = skill ? axiosInstance.put : axiosInstance.post
-      const res = axiosMethod(url, {
-        ...values,
-        competency_id: values.competencyId
-      })
+      const url = user ? `/api/admin/users/${user.id}` : `/api/admin/users/create`
+      const axiosMethod = user ? axiosInstance.put : axiosInstance.post
+      const res = axiosMethod(url, values)
       await triggerPromiseToast(res, t, { success: t("modals.successfullySaved"), error: t("modals.genericError"), loading: t("modals.loading") })
+
       refresh()
+      mutate && mutate()
+
       setIsModalOpen(false)
       form.reset()
     }
@@ -67,55 +63,71 @@ const UpsertSkillModal = ({ children, skill, mutate }: { children: ReactNode, sk
   return (
     <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="">
+      <DialogContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
 
             <DialogHeader>
-              <DialogTitle>{t(skill ? "modals.upsertSkill.update" : "modals.upsertSkill.create")}</DialogTitle>
+              <DialogTitle>{t(user ? "modals.upsertUser.update" : "modals.upsertUser.create")}</DialogTitle>
             </DialogHeader>
 
-            {/* Title of the skills */}
+            {/* Firstname  */}
             <FormField
               control={form.control}
-              name="title"
+              name="first_name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("general.title")}</FormLabel>
+                  <FormLabel>{t("modals.upsertUser.firstName")}</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder={t("modals.upsertSkill.titlePlaceholder")} />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
+            {/* Lastname  */}
             <FormField
               control={form.control}
-              name="desc"
+              name="first_name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("modals.description")}</FormLabel>
+                  <FormLabel>{t("modals.upsertUser.lastName")}</FormLabel>
                   <FormControl>
-                    <Textarea {...field} placeholder={t("modals.upsertSkill.descriptionPlaceholder")} />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
+            {/* Email */}
             <FormField
               control={form.control}
-              name="competencyId"
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("general.email")}</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Role */}
+            <FormField
+              control={form.control}
+              name="role_id"
               render={({ field: { onChange, value } }) => (
                 <FormItem>
-                  <FormLabel>{t("general.competency")}</FormLabel>
+                  <FormLabel>{t("general.teachers")}</FormLabel>
                   <FormControl>
                     <Select
-                      options={competencies}
-                      placeholder={t("modals.upsertSkill.competencyPlaceholder")}
-                      value={competencies?.filter(competency => value.includes(competency.value))}
+                      options={roles}
                       onChange={(selectedOption) => onChange(selectedOption?.value)}
+                      defaultValue={roles?.filter(role => role?.value === user?.role.id)}
                     />
                   </FormControl>
                   <FormMessage />
@@ -141,4 +153,4 @@ const UpsertSkillModal = ({ children, skill, mutate }: { children: ReactNode, sk
   )
 }
 
-export default UpsertSkillModal
+export default UpsertUserModal

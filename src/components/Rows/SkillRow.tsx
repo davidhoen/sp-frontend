@@ -43,7 +43,7 @@ export default function SkillRow({ skill, mutate }: { skill: SkillType, mutate: 
             <TableCell className="flex gap-2">
 
                 {/* Edit */}
-                <UpsertSkillModal skill={skill}>
+                <UpsertSkillModal skill={skill} mutate={mutate}>
                     <div><TableAction type="edit" /></div>
                 </UpsertSkillModal>
 

@@ -15,7 +15,7 @@ export function NavMain({ items }: { items: NavItem[] }) {
   return (
     <SidebarMenu className="px-2">
       {items.map(item => {
-        if (item.adminOnly && !user?.is_admin) return null
+        if (!item.adminOnly && user?.is_admin) return null
         item.isActive = (!item.isDashboard && pathname.startsWith(item.url)) || (item.isDashboard && pathname === item.url + "/")
         const Icon = icons[item.icon as keyof typeof icons] || icons["CircleDashed"]
         return (

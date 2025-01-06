@@ -28,6 +28,8 @@ const RegisterPage = () => {
 
   const { data: roles } = useRoles()
 
+  const filteredRoles = roles?.filter(role => role.label.toLowerCase() !== "admin")
+
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
@@ -149,7 +151,7 @@ const RegisterPage = () => {
                   Role <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Select options={roles} onChange={(selectedOption) => onChange(selectedOption?.value)} />
+                  <Select options={filteredRoles} onChange={(selectedOption) => onChange(selectedOption?.value)} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

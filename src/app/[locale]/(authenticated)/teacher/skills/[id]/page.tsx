@@ -44,7 +44,7 @@ const SkillDetail = async (props: { params: Promise<{ id: string }> }) => {
                 <PageTitle className="mb-2">{skill.title}</PageTitle>
 
                 <div className="flex gap-2">
-                    <UpsertSkillModal skill={skill} >
+                    <UpsertSkillModal skill={skill}>
                         <div><TableAction type="edit" resizes /></div>
                     </UpsertSkillModal>
                 </div>

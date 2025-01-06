@@ -73,6 +73,7 @@ const UpsertGroupModal = ({ children, group, mutate }: { children: ReactNode, gr
       await triggerPromiseToast(res, t, { success: t("modals.successfullySaved"), error: t("modals.genericError"), loading: t("modals.loading") })
 
       refresh()
+      mutate && mutate()
 
       setIsModalOpen(false)
       form.reset()

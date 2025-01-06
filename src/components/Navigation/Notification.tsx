@@ -5,7 +5,7 @@ import { Link, useRouter } from "@/i18n/routing"
 import { getFullName } from "@/lib"
 import { NotificationType, NotificationTypeEnum, TranslationFunction } from "@/types"
 import { BadgeCheckIcon, MessageCircleIcon, MessageCircleQuestionIcon } from 'lucide-react'
-import { useTranslations } from "next-intl"
+import { useFormatter, useTranslations } from "next-intl"
 import RichText from "../RichText"
 import axiosInstance from "@/lib/axios"
 import { mutate } from "swr"
@@ -117,6 +117,7 @@ const notificationConfig = {
 
 export default function Notification({ notification, needsTeacherRouting }: { notification: NotificationType, needsTeacherRouting: boolean }) {
     const t = useTranslations("general")
+    const format = useFormatter()
     const { push } = useRouter()
 
     const config = notificationConfig[notification.type]
@@ -146,7 +147,10 @@ export default function Notification({ notification, needsTeacherRouting }: { no
                 <div className="pt-1">
                     <Icon strokeWidth={2.5} size={16} className={config.color} />
                 </div>
-                <div>{content}</div>
+                <div>
+                    <div>{content}</div>
+                    <div className="text-xs text-muted-foreground">{format.relativeTime(new Date(notification.created_at))}</div>
+                </div>
                 {!notification.read_at && <div className="bg-destructive p-1 rounded-full"></div>}
             </div>
         </DropdownMenuItem>

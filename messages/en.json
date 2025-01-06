@@ -234,6 +234,12 @@
       "titlePlaceholder": "Bijv. Technologist",
       "descriptionPlaceholder": "E.g. This profile includes competencies needed to excel in a specific role or field.",
       "competenciesPlaceholder": "Select the competencies"
+    },
+    "upsertUser": {
+      "create": "Create a user",
+      "update": "Update user",
+      "firstName": "First name",
+      "lastName": "Last name"
     }
   },
   "students": {

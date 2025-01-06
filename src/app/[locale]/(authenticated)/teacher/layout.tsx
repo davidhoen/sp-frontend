@@ -18,6 +18,7 @@ const StudentLayout = async ({ children }: { children: ReactNode }) => {
     { title: t("students"), url: `/teacher/students`, icon: "Users" },
     { title: t("competencies"), url: `/teacher/competencies`, icon: "Target", adminOnly: true },
     { title: t("profiles"), url: `/teacher/profiles`, icon: "GraduationCap", adminOnly: true },
+    { title: t("users"), url: `/teacher/users`, icon: "UserCog", adminOnly: true },
   ]
 
   return <SideBar items={menuItems}>

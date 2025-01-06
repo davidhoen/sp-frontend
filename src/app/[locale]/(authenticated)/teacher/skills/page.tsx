@@ -54,7 +54,7 @@ const SkillsOverview = (props: { searchParams: Promise<SkillsQueryType> }) => {
         {/* Search */}
         <div className="flex justify-between my-4">
             <SearchInput placeholder={t("search")} />
-            <UpsertSkillModal>
+            <UpsertSkillModal mutate={fetchSkills}>
                 <Button>{t("addASkill")}</Button>
             </UpsertSkillModal>
         </div>

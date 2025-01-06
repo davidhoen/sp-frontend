@@ -11,6 +11,7 @@ import { TableAction } from "../TableActions"
 import Select, { OptionType } from "../ui/select"
 import { TableCell, TableRow } from "../ui/table"
 import UserAvatar from "../UserAvatar"
+import UpsertUserModal from "../Modals/Teacher/UpsertUserModal"
 
 export default function UserRow({ user, roles, mutate }: { user: UserType, roles: OptionType[], mutate: () => void }) {
     const t = useTranslations("general")
@@ -72,10 +73,10 @@ export default function UserRow({ user, roles, mutate }: { user: UserType, roles
 
             {/* Actions */}
             <TableCell className="flex gap-2">
-                {/* View */}
-                <Link href={`/teacher/users/${user.id}`}>
-                    <TableAction type="view" />
-                </Link>
+                {/* Edit */}
+                <UpsertUserModal user={user} mutate={mutate}>
+                    <div><TableAction type="edit" /></div>
+                </UpsertUserModal>
                 {/* Delete user */}
                 <div onClick={() => setIsDeleteModalOpen(true)}>
                     <TableAction type="delete" />
