@@ -1,6 +1,6 @@
 "use client"
 
-import { useCoaches } from "@/hooks/use-coaches"
+import { useTeachers } from "@/hooks/use-coaches"
 import { getFullName, triggerPromiseToast } from "@/lib"
 import axiosInstance from "@/lib/axios"
 import { UserType } from "@/types/auth"
@@ -17,7 +17,7 @@ import UserAvatar from "../../UserAvatar"
 
 const UpdatePersonalCoachModal = ({ children }: { children: ReactNode }) => {
     const t = useTranslations("modals")
-    const { data: coaches } = useCoaches()
+    const { data: coaches } = useTeachers()
 
     const [currentCoach, setCurrentCoach] = useState<UserType | undefined>(undefined)
     const [isModalOpen, setIsModalOpen] = useState(false)

@@ -17,7 +17,7 @@ import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { triggerPromiseToast } from "@/lib"
 import axiosInstance from "@/lib/axios"
-import { useCoaches } from "@/hooks/use-coaches"
+import { useTeachers } from "@/hooks/use-coaches"
 import { useStudents } from "@/hooks/use-students"
 import { useRouter } from "@/i18n/routing"
 
@@ -26,7 +26,7 @@ const UpsertGroupModal = ({ children, group, mutate }: { children: ReactNode, gr
   const { refresh } = useRouter()
 
   const { data: skills } = useSkills()
-  const { data: teachers } = useCoaches()
+  const { data: teachers } = useTeachers()
   const { data: students } = useStudents()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
