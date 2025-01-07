@@ -1,7 +1,7 @@
 import { CompetencyType, GroupType, RatingType, TranslationFunction } from "@/types"
-import { UserType } from "@/types/auth"
-import toast from "react-hot-toast"
+import { RolesEnum, UserType } from "@/types/auth"
 import baseX from 'base-x'
+import toast from "react-hot-toast"
 
 // Create a full name of the user
 export const getFullName = (user: UserType) => {
@@ -32,7 +32,7 @@ export const getMostRecentRating = (ratings: RatingType[], approvedOnly?: boolea
 
 export const getMostRecentRatingObject = (ratings: RatingType[], approvedOnly?: boolean) => {
     const filteredRatings = approvedOnly ? ratings?.filter((rating) => rating.approved_at) : ratings
-    return filteredRatings?.reduce((prev, current) => (prev.created_at > current.created_at) ? prev : current)
+    return filteredRatings?.length > 0 ? filteredRatings?.reduce((prev, current) => (prev.created_at > current.created_at) ? prev : current) : undefined
 }
 
 export const isNewestRatingApproved = (ratings: RatingType[]) => {
@@ -102,5 +102,21 @@ export function shortStringToUuid(shortStr: string): string {
         return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
     } catch (error) {
         throw new Error('Invalid short string format');
+    }
+}
+
+export const hasPermission = (role: RolesEnum, user?: UserType | null) => {
+    if (!user) return false
+    switch (role) {
+        case RolesEnum.Student:
+            return !isTeacherUser(user)
+        case RolesEnum.Teacher:
+            return isTeacherUser(user)
+        case RolesEnum.HeadTeacher:
+            return isTeacherUser(user) && (user.is_head_teacher || user.is_admin)
+        case RolesEnum.Admin:
+            return user.is_admin
+        default:
+            return false
     }
 }

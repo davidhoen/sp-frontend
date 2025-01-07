@@ -159,6 +159,7 @@ export type NotificationType = {
     title: string
   },
   endorsement?: EndorsementType,
+  created_at: Date
   read_at?: Date
 }
 
@@ -199,3 +200,9 @@ export type UserWithSkillsAndGroups = UserWithSkills & { groups: GroupType[] }
 export type SkillWithGroups = SkillType & { groups: GroupType[] }
 
 export type ProfileWithCompetencies = ProfileType & { competencies: CompetencyType[] }
+
+export type RequestsCountType = {
+  feedback_requests_count: number
+  endorsement_requests_count: number
+  total_requests_count: number
+}

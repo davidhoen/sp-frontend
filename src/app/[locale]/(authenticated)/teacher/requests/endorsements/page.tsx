@@ -6,9 +6,8 @@ import SearchInput from "@/components/SearchInput"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { useFetchData } from "@/hooks/use-fetch-data"
 import { useQueryFilter } from "@/hooks/use-query-filter"
-import { fakeGroup, fakeSkill, fakeTeacher } from "@/lib/fakeData"
 import { getEndorsementRequests } from "@/lib/queries/client/queries"
-import { EndorsementRequestsQueryType, RequestStatusEnum, RequestType } from "@/types"
+import { EndorsementRequestsQueryType, RequestType } from "@/types"
 import { PagingSchema } from "@/types/pagination"
 import { useTranslations } from "next-intl"
 import { use, useCallback, useEffect } from "react"
@@ -20,18 +19,7 @@ const EndorsementRequests = (props: { searchParams: Promise<EndorsementRequestsQ
     const onArchiveChange = useQueryFilter({ key: 'is_archived', removeOnAll: false });
     const onReviewChange = useQueryFilter({ key: 'is_review', removeOnAll: false });
 
-    // TODO: Replace with const
-    let { data: feedbacks, loading, fetchData } = useFetchData<PagingSchema<RequestType>>();
-
-    if (!feedbacks)
-        feedbacks = {
-            data: [
-                { id: "1", requester: fakeTeacher, group: fakeGroup, skill: fakeSkill, title: "Event 1", status: RequestStatusEnum.Pending, created_at: new Date(), updated_at: new Date() },
-            ],
-            meta: {
-                total: 0, current_page: 1, last_page: 2, per_page: 10
-            }
-        }
+    const { data: feedbacks, loading, fetchData } = useFetchData<PagingSchema<RequestType>>();
 
     const fetchEndorsementRequests = useCallback(() => {
         fetchData(getEndorsementRequests);

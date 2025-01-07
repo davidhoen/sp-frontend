@@ -11,7 +11,7 @@ export const fakeStudent: UserType = {
     is_head_teacher: false,
     is_admin: false,
     role: {
-        id: uuid(),
+        id: 1,
         name: "Student",
     },
     role_id: uuid(),
@@ -24,7 +24,7 @@ export const fakeStudent2: UserType = {
     first_name: "Gea",
     last_name: "van Booven",
     role: {
-        id: uuid(),
+        id: 2,
         name: "Student",
     },
     role_id: uuid(),
@@ -40,7 +40,7 @@ export const fakeTeacher: UserType = {
     first_name: "Jane",
     last_name: "Robbertson",
     role: {
-        id: uuid(),
+        id: 4,
         name: "Teacher",
     },
     role_id: uuid(),
@@ -142,7 +142,8 @@ export const fakeNotifications: NotificationType[] = [
             id: uuid(),
             title: "Skill 1"
         },
-        read_at: new Date()
+        read_at: new Date(),
+        created_at: new Date()
     },
     {
         id: uuid(),
@@ -151,7 +152,8 @@ export const fakeNotifications: NotificationType[] = [
         skill: {
             id: uuid(),
             title: "Skill 2"
-        }
+        },
+        created_at: new Date()
     },
     {
         id: uuid(),
@@ -160,7 +162,8 @@ export const fakeNotifications: NotificationType[] = [
         skill: {
             id: uuid(),
             title: "Skill 3"
-        }
+        },
+        created_at: new Date()
     },
     {
         id: uuid(),
@@ -169,6 +172,7 @@ export const fakeNotifications: NotificationType[] = [
         skill: {
             id: uuid(),
             title: "Skill 4"
-        }
+        },
+        created_at: new Date()
     }
 ]

@@ -35,13 +35,6 @@ const AddFeedbackModal = ({ children, request, skillId, parentMutate }: { childr
 
     const formSchema = z.object({ title: z.string(), feedback: z.string().min(10) })
 
-    // TODO: Replace with real data
-    const previousFeedbacks = [
-        { title: "Feedback title", content: "Feedback content", created_at: new Date() },
-        { title: "Feedback title 2", content: "Feedback content 2", created_at: new Date() },
-        { title: "Feedback title 3", content: "Feedback content 3", created_at: new Date() }
-    ] as FeedbackType[]
-
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -105,9 +98,9 @@ const AddFeedbackModal = ({ children, request, skillId, parentMutate }: { childr
                             </Alert>
 
                             {/* Previous feedback for and from teachers */}
-                            {(previousFeedbacks.length && isTeacherUser(user)) && <div>
+                            {isTeacherUser(user) && <div>
                                 <FormLabel>{t("general.previousFeedback")}</FormLabel>
-                                <PreviousFeedbackList feedbacks={previousFeedbacks} />
+                                <PreviousFeedbackList studentId={request.requester.id} skillId={request.skill.id} />
                             </div>}
 
                         </>}

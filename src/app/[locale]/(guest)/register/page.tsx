@@ -12,18 +12,23 @@ import SubmitFormButton from "@/components/SubmitFormButton"
 import Select from "@/components/ui/select"
 import { Link, useRouter } from "@/i18n/routing"
 
+import { useRoles } from "@/hooks/use-roles"
+import { roleBasePathMap, triggerPromiseToast } from "@/lib"
+import { register } from "@/lib/auth/client"
+import { handleBackendFormErrors } from "@/lib/utils"
 import { useUser } from "@/providers/UserProvider"
 import { RegisterRequest } from "@/schemas/zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
-import { handleBackendFormErrors } from "@/lib/utils"
-import { roleBasePathMap, triggerPromiseToast } from "@/lib"
-import { register } from "@/lib/auth/client"
 
 const RegisterPage = () => {
   const router = useRouter()
   const { registerUser } = useUser();
   const t = useTranslations("general")
+
+  const { data: roles } = useRoles()
+
+  const filteredRoles = roles?.filter(role => role.label.toLowerCase() !== "admin")
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
@@ -70,13 +75,6 @@ const RegisterPage = () => {
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
-
-  const roleOptions = [
-    { value: 1, label: "Student" },
-    { value: 2, label: "Teacher" },
-    { value: 3, label: "Head teacher" },
-    { value: 4, label: "Admin" },
-  ]
 
   return (
     <AuthCard
@@ -153,7 +151,7 @@ const RegisterPage = () => {
                   Role <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Select options={roleOptions} onChange={(selectedOption) => onChange(selectedOption?.value)} />
+                  <Select options={filteredRoles} onChange={(selectedOption) => onChange(selectedOption?.value)} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
