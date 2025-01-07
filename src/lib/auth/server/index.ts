@@ -31,7 +31,7 @@ export const redirectToLoginWithExpiredCookie = (url: URL, locale: string) => {
 
   newUrl.pathname = `/${locale}${LOGIN_ROUTE}`;
   newUrl.searchParams.delete(EXPIRED_SESSION_PARAM); // Avoid infinite redirects
-  if (previousUrlWithoutLocale !== LOGIN_ROUTE)
+  if (previousUrlWithoutLocale !== LOGIN_ROUTE && previousUrlWithoutLocale !== "/")
     newUrl.searchParams.set("redirect", previousUrlWithoutLocale);
 
   const response = NextResponse.redirect(newUrl);
