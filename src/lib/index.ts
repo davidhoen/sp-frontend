@@ -55,10 +55,10 @@ export const roundToQuarter = (num: number) => {
 }
 
 export const roleBasePathMap: { [key: string]: string } = {
-    student: "/student",
-    teacher: "/teacher",
-    head_teacher: "/teacher",
-    admin: "/teacher",
+    "Student": "/student",
+    "Teacher": "/teacher",
+    "Head-teacher": "/teacher",
+    "Admin": "/teacher",
 };
 
 export const isTeacherUser = (user?: UserType) => {
