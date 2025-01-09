@@ -1,8 +1,9 @@
 # Skills Passport Frontend ⭐
 
 ## Index
+- [Pre requirements](#pre-requirements)
 - [Installation](#installation)
-
+- [Troubleshooting](#troubleshooting)
 
 **This repository is a refactor of [breeze-next](https://github.com/laravel/breeze-next) and [nextjs-laravel-breeze](https://github.com/carlos-talavera/nextjs-laravel-breeze)**
 
@@ -60,25 +61,26 @@ cd sp-frontend
 
 ### 2. Install Dependencies
 ```bash
-`yarn install` or `npm install`
+npm install
 ```
 
 ### 3. Configure Environment
-Copy the `.env.example` file to `.env.local` and supply the URL of your backend:
-```
-NEXT_PUBLIC_BACKEND_URL=http://localhost:8000
-FRONTEND_URL=http://localhost:3000
-JWT_SECRET=secret
-```
 
+1. Copy the `.env.example` file and rename it to `.env` either manually or via
+
+```bash
+cp .env.example .env
+```
 Finally, run the application via `npm run dev`. The application will be available at `http://localhost:3000`:
-
 ```
 npm run dev
 ```
 ## Troubleshooting
 
-If you encounter any issues:
+After the installation of node you might encourter this issue:
+...
+
+If you encounter any other issues:
 - Ensure all prerequisites are installed
 - Verify database credentials are correct
 - Check if ports 8000 and 3000 are available
