@@ -1,8 +1,26 @@
 # Skills Passport Frontend ⭐
 
+## Index
+- [Installation](#installation)
+
+
 **This repository is a refactor of [breeze-next](https://github.com/laravel/breeze-next) and [nextjs-laravel-breeze](https://github.com/carlos-talavera/nextjs-laravel-breeze)**
 
 **See the backend repository [here](https://github.com/Skills-Passport/sp-backend)**
+
+## Skills Passport
+
+The Skills Passport is a project developed as part of an initiative for the Logistics Management program at Windesheim. This project focuses on tracking and showcasing the skills and progress of students. It provides different views for both students and teachers, allowing them to manage and visualize skills development.
+
+This repository is the frontend of the project and it includes the UI.
+
+## Authors
+
+- [@David Hoen](https://github.com/davidhoen)
+- [@Mohammad Shabrani](https://www.github.com/Mohmmadshabrani)
+- [@Hyewon Lee](https://github.com/ehye1)
+- [@Monica Sangrador](https://github.com/MonicaSangrador)
+- Jadah Kiers
 
 ## Features
 
@@ -17,23 +35,36 @@
 - **Paths Revalidations**: Dynamically revalidate paths for up-to-date content (needed after mutating records on the same page).
 - **Next.js Built-in Middleware**: Middleware for handling requests efficiently.
 - **Authenticated User Retrieval**: Fetch authenticated user details on both client and server components.
+- **Playwright testing**: Playwright Test was created specifically to accommodate the needs of end-to-end testing 
 
 ---
-
-This repository is an implementation of the [Laravel Breeze](https://laravel.com/docs/starter-kits) application / authentication starter kit frontend in [Next.js](https://nextjs.org). 
 
 ## Official Documentation
 
 ### Pre requirements
 
+- [Git](https://github.com/git-guides/install-git)
 - [Node.js](https://nodejs.org/en/download/package-manager)
 
 ### Installation
 
 First, install the Next.js compatible Laravel backend. Please follow the setup steps described [here](https://github.com/Skills-Passport/sp-backend)
 
-Next, clone this repository and install its dependencies with `yarn install` or `npm install`. Then, copy the `.env.example` file to `.env.local` and supply the URL of your backend:
+Now, get start with the fun part. 
+### 1. Clone the Repository
 
+```bash
+git clone https://github.com/Skills-Passport/sp-frontend.git
+cd sp-frontend
+```
+
+### 2. Install Dependencies
+```bash
+`yarn install` or `npm install`
+```
+
+### 3. Configure Environment
+Copy the `.env.example` file to `.env.local` and supply the URL of your backend:
 ```
 NEXT_PUBLIC_BACKEND_URL=http://localhost:8000
 FRONTEND_URL=http://localhost:3000
@@ -45,7 +76,13 @@ Finally, run the application via `npm run dev`. The application will be availabl
 ```
 npm run dev
 ```
+## Troubleshooting
 
-## License
+If you encounter any issues:
+- Ensure all prerequisites are installed
+- Verify database credentials are correct
+- Check if ports 8000 and 3000 are available
+- Make sure all environment variables are properly set
 
-Laravel Breeze Next.js v15 software licensed under the [MIT license](LICENSE.md).
+For more help, please create an issue in this GitHub repository. 
+
