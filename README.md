@@ -20,7 +20,7 @@ This repository is the frontend of the project and it includes the UI.
 - [@Mohammad Shabrani](https://www.github.com/Mohmmadshabrani)
 - [@Hyewon Lee](https://github.com/ehye1)
 - [@Monica Sangrador](https://github.com/MonicaSangrador)
-- Jadah Kiers
+- [Jadah Kiers](https://github.com/J9090)
 
 ## Features
 
