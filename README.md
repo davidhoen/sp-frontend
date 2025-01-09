@@ -77,14 +77,25 @@ npm run dev
 ```
 ## Troubleshooting
 
-After the installation of node you might encourter this issue:
-...
+### Error when running `npm install`
+After the installation of Node.js you might encourter this issue:
+"Running scripts is disabled on this system", follow these steps:
 
+1. Open PowerShell as Administrator.
+2. Run the command:
+    ```bash
+    Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+    ```
+3. Confirm by typing Y and pressing Enter.
+
+This allows local scripts to run while keeping security for remote scripts. For more details, see [`about_Execution_Policies`](https://learn.microsoft.com/nl-nl/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.4).
+
+### Other issues
 If you encounter any other issues:
 - Ensure all prerequisites are installed
 - Verify database credentials are correct
 - Check if ports 8000 and 3000 are available
 - Make sure all environment variables are properly set
 
-For more help, please create an issue in this GitHub repository. 
+For more help, please create an [issue](https://github.com/Skills-Passport/sp-frontend/issues). 
 
