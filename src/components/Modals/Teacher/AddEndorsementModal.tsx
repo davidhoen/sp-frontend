@@ -47,7 +47,8 @@ const AddEndorsementModal = ({ children, request, parentMutate }: { children: Re
             const res = axiosInstance.post(`/api/educator/requests/endorsement/${request.id}/respond`, {
                 title: values.title,
                 content: values.feedback,
-                rating: values.rating
+                rating: values.rating,
+                request_id: request.id
             })
             await triggerPromiseToast(res, t, { success: t("modals.successfullySaved"), error: t("modals.genericError"), loading: t("modals.loading") })
 
