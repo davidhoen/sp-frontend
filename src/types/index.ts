@@ -137,7 +137,7 @@ export type TeacherGroupsQueryType = {
 export type FeedbackRequestsQueryType = TeacherGroupsQueryType
 
 export type EndorsementRequestsQueryType = TeacherGroupsQueryType & {
-  is_review: string
+  type: "review" | "request"
 }
 
 export type StudentsQueryType = {

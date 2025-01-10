@@ -16,8 +16,8 @@ const EndorsementRequests = (props: { searchParams: Promise<EndorsementRequestsQ
     const searchParams = use(props.searchParams);
     const t = useTranslations("general");
 
-    const onArchiveChange = useQueryFilter({ key: 'is_archived', removeOnAll: false });
-    const onReviewChange = useQueryFilter({ key: 'is_review', removeOnAll: false });
+    const onArchiveChange = useQueryFilter({ key: 'is_archived' });
+    const onReviewChange = useQueryFilter({ key: 'type' });
 
     const { data: feedbacks, loading, fetchData } = useFetchData<PagingSchema<RequestType>>();
 
@@ -39,18 +39,19 @@ const EndorsementRequests = (props: { searchParams: Promise<EndorsementRequestsQ
             <SearchInput placeholder={t("search")} />
         </div>
 
-        {/* Is review filter */}
-        <div className="my-4">
-            <ToggleGroup type="single" defaultValue={searchParams.is_review?.toString() || "false"} onValueChange={onReviewChange}>
-                <ToggleGroupItem variant="outline" value="false">{t("endorsementRequests")}</ToggleGroupItem>
-                <ToggleGroupItem variant="outline" value="true">{t("endorsementReviews")}</ToggleGroupItem>
-            </ToggleGroup>
-        </div>
-
+        {/*Is archived  */}
         <div className="my-4">
             <ToggleGroup type="single" defaultValue={searchParams.is_archived?.toString() || "false"} onValueChange={onArchiveChange}>
                 <ToggleGroupItem variant="outline" value="false">{t("open")}</ToggleGroupItem>
                 <ToggleGroupItem variant="outline" value="true">{t("archived")}</ToggleGroupItem>
+            </ToggleGroup>
+        </div>
+
+        {/* Type of requests */}
+        <div className="my-4">
+            <ToggleGroup type="single" defaultValue={searchParams.type?.toString()} onValueChange={onReviewChange}>
+                <ToggleGroupItem variant="outline" value="request">{t("endorsementRequests")}</ToggleGroupItem>
+                <ToggleGroupItem variant="outline" value="review">{t("endorsementReviews")}</ToggleGroupItem>
             </ToggleGroup>
         </div>
 

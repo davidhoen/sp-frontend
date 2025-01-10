@@ -8,11 +8,12 @@ export const getData = async <T>(url: string): Promise<ApiResponse<T>> => {
   });
 
   if (!response.success) {
-    console.error("Error in getData", response);
-    return { success: false, result: response.result.data || response.result as T };
+    // We expect 410 status code to be returned when the resource is no longer available
+    response.error?.response?.status != 410 && console.error("Error in getData", response.result);
+    return { success: false, result: response.error?.response?.data || response.result as T, status: response.error?.response?.status };
   }
 
-  return { success: true, result: response.result.data || response.result as T };
+  return { success: true, result: response.result?.data || response.result as T, status: response.status };
 };
 
 export const getPaginatedData = async <T>(url: string): Promise<ApiResponse<ApiResponsePaginated<T>>> => {
