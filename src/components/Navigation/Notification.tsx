@@ -16,7 +16,7 @@ const notificationConfig = {
     [NotificationTypeEnum.FeedbackRequest]: {
         icon: MessageCircleQuestionIcon,
         getHref: (notification: NotificationType, t: TranslationFunction, isTeacher: boolean) =>
-            isTeacher ? { pathname: `/teacher/requests`, hash: t("feedbacks") } : "/student/requests",
+            isTeacher ? `/teacher/requests/feedbacks` : "/student/requests",
         color: "text-primary",
         getContent: (notification: NotificationType, t: TranslationFunction) =>
             <RichText>
@@ -48,8 +48,8 @@ const notificationConfig = {
     [NotificationTypeEnum.EndorsementRequest]: {
         icon: BadgeCheckIcon,
         getHref: (notification: NotificationType, t: TranslationFunction) => ({
-            pathname: `/teacher/requests`,
-            hash: t("endorsements")
+            pathname: `/teacher/requests/endorsements`,
+            query: { type: "request" }
         }),
         color: "text-success",
         getContent: (notification: NotificationType, t: TranslationFunction) =>
@@ -65,8 +65,8 @@ const notificationConfig = {
     [NotificationTypeEnum.EndorsementRequestReview]: {
         icon: BadgeCheckIcon,
         getHref: (notification: NotificationType, t: TranslationFunction) => ({
-            pathname: `/student/skills/${notification.skill?.id}`,
-            hash: t("endorsements")
+            pathname: `/teacher/requests/endorsements`,
+            query: { type: "review" }
         }),
         color: "text-success",
         getContent: (notification: NotificationType, t: TranslationFunction) => <RichText>
