@@ -44,9 +44,8 @@ const UpsertUserModal = ({ children, user, mutate }: { children: ReactNode, user
 
   const onSubmit = async (values: z.infer<typeof BaseUserSchema>) => {
     try {
-      const url = user ? `/api/admin/users/${user.id}` : `/api/admin/users/create`
-      const axiosMethod = user ? axiosInstance.put : axiosInstance.post
-      const res = axiosMethod(url, values)
+      const url = user ? `/api/educator/users/${user.id}` : `/api/educator/users/create`
+      const res = axiosInstance.post(url, values)
       await triggerPromiseToast(res, t, { success: t("modals.successfullySaved"), error: t("modals.genericError"), loading: t("modals.loading") })
 
       refresh()
@@ -89,7 +88,7 @@ const UpsertUserModal = ({ children, user, mutate }: { children: ReactNode, user
             {/* Lastname  */}
             <FormField
               control={form.control}
-              name="first_name"
+              name="last_name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>{t("modals.upsertUser.lastName")}</FormLabel>
@@ -122,7 +121,7 @@ const UpsertUserModal = ({ children, user, mutate }: { children: ReactNode, user
               name="role_id"
               render={({ field: { onChange, value } }) => (
                 <FormItem>
-                  <FormLabel>{t("general.teachers")}</FormLabel>
+                  <FormLabel>{t("general.role")}</FormLabel>
                   <FormControl>
                     <Select
                       options={roles}

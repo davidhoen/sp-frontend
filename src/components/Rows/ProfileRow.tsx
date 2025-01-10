@@ -35,11 +35,11 @@ export default function ProfileRow({ profile, mutate }: { profile: ProfileWithCo
     return <>
         <TableRow>
             {/* Title */}
-            <TableCell><ProfileTile profile={profile} className="h-11 w-44" /></TableCell>
+            <TableCell><ProfileTile profile={profile} className="h-11 w-44" withLink={false} /></TableCell>
             {/* Competencies */}
             <TableCell>
                 <div className="flex gap-2">
-                    {profile.competencies && profile.competencies.map(competency => <Link key={competency.id} href={`/teacher/competencies/${competency.id}`}><Chip>{competency.title}</Chip></Link>)}
+                    {profile.competencies && profile.competencies.map(competency => <Chip key={competency.id}>{competency.title}</Chip>)}
                 </div>
             </TableCell>
 

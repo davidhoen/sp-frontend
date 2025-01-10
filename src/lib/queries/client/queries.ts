@@ -1,5 +1,6 @@
 import axiosInstance from "@/lib/axios";
 import { CompetencyType, GroupType, ProfileWithCompetencies, RequestType, SkillType, UserWithSkills, UserWithSkillsAndGroups } from "@/types";
+import { UserType } from "@/types/auth";
 import { PagingSchema } from "@/types/pagination";
 
 type QueryParams = Record<string, string | number | boolean>;
@@ -52,3 +53,6 @@ export const getFeedbackRequests = ({ query }: { query: Record<string, string> }
 
 export const getEndorsementRequests = ({ query }: { query: Record<string, string> }) =>
     queryAPI<RequestType>('/api/educator/requests/endorsements', { with: 'requester,skill', ...query });
+
+export const getUsers = ({ query }: { query: Record<string, string> }) =>
+    queryAPI<UserType>('/api/educator/users', query);
