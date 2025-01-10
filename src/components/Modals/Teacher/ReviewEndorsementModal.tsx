@@ -17,10 +17,12 @@ import { Button } from "../../ui/button"
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../ui/dialog"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../ui/form"
 import { Alert } from "@/components/ui/alert"
+import { useRouter } from "@/i18n/routing"
 
 const ReviewEndorsementModal = ({ children, request, parentMutate }: { children: ReactNode, request: RequestType, parentMutate?: () => void }) => {
     const t = useTranslations()
     const { user } = useUser()
+    const router = useRouter()
 
     const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -39,8 +41,10 @@ const ReviewEndorsementModal = ({ children, request, parentMutate }: { children:
             })
             await triggerPromiseToast(res, t, { success: t("modals.successfullySaved"), error: t("modals.genericError"), loading: t("modals.loading") })
 
-            mutate((key) => typeof key === 'string' && key.startsWith('/api/skills/'))
-            parentMutate && parentMutate()
+            await mutate((key) => typeof key === 'string' && key.startsWith('/api/skills/'))
+            await mutate("/api/notifications")
+            await mutate("/api/educator/requests/count")
+            parentMutate && await parentMutate()
 
             setIsModalOpen(false)
             form.reset()

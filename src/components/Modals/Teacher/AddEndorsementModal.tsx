@@ -52,8 +52,10 @@ const AddEndorsementModal = ({ children, request, parentMutate }: { children: Re
             })
             await triggerPromiseToast(res, t, { success: t("modals.successfullySaved"), error: t("modals.genericError"), loading: t("modals.loading") })
 
-            mutate((key) => typeof key === 'string' && key.startsWith('/api/skills/'))
-            parentMutate && parentMutate()
+            await mutate((key) => typeof key === 'string' && key.startsWith('/api/skills/'))
+            await mutate("/api/notifications")
+            await mutate("/api/educator/requests/count")
+            parentMutate && await parentMutate()
 
             setIsModalOpen(false)
             form.reset()
