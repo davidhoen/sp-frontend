@@ -31,7 +31,7 @@ export default function EndorsementRequestRow({ request, mutate }: { request: Re
 
             {/* Email */}
             <TableCell className="text-muted-foreground">
-                {request.requestee?.email || request.requester.email}
+                {request.requestee_email || request.requester.email}
             </TableCell>
 
             {/* Skill */}
@@ -51,13 +51,13 @@ export default function EndorsementRequestRow({ request, mutate }: { request: Re
 
             {/* Actions */}
             <TableCell className="flex gap-2">
-                {/* Requests without requestees are internal, teacher writes the endorsment */}
+                {/* Requests without requestees are internal, teacher writes the endorsement */}
                 {request.requestee ?
-                    <ReviewEndorsementModal request={request}>
+                    <ReviewEndorsementModal request={request} parentMutate={mutate}>
                         <div><TableAction type="review" /></div>
                     </ReviewEndorsementModal>
                     :
-                    <AddEndorsementModal request={request}>
+                    <AddEndorsementModal request={request} parentMutate={mutate}>
                         <div><TableAction type="reply" /></div>
                     </AddEndorsementModal>
                 }

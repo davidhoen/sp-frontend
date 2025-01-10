@@ -1,19 +1,12 @@
 "use client"
 
-import { useUser } from "@/providers/UserProvider"
-import { GroupType, SkillType, UserWithSkills, UserWithSkillsAndGroups } from "@/types"
+import { Link } from "@/i18n/routing"
+import { getFullName } from "@/lib"
+import { UserWithSkillsAndGroups } from "@/types"
 import { useTranslations } from "next-intl"
-import { Fragment, useState } from "react"
 import { Chip } from "../Chip"
-import { ConfirmActionDialog } from "../Modals/ConfirmActionModal"
-import UpsertGroupModal from "../Modals/Teacher/UpsertGroupModal"
 import { TableAction } from "../TableActions"
 import { TableCell, TableRow } from "../ui/table"
-import { Link } from "@/i18n/routing"
-import { getFullName, triggerPromiseToast } from "@/lib"
-import axiosInstance from "@/lib/axios"
-import { UserType } from "@/types/auth"
-import { MinusIcon } from "lucide-react"
 import UserAvatar from "../UserAvatar"
 
 export default function StudentRow({ student, mutate }: { student: UserWithSkillsAndGroups, mutate: () => void }) {
@@ -44,7 +37,12 @@ export default function StudentRow({ student, mutate }: { student: UserWithSkill
             {/* Groups */}
             <TableCell>
                 <div className="flex gap-2">
-                    {student.groups && student.groups.map(group => <Link key={group.id} href={`/teacher/groups/${group.id}/skills/${group.id}`}><Chip key={group.id}>{group.name}</Chip></Link>)}
+                    {student.groups && student.groups.slice(0, 3).map(group => <Link key={group.id} href={`/teacher/groups/${group.id}/skills/${group.id}`}><Chip key={group.id}>{group.name}</Chip></Link>)}
+                    {(student.groups && student.groups.length > 3) && (
+                        <div className="flex items-center h-fit gap-1 bg-border rounded-full text-xs p-1">
+                            <span>+{student.groups.length - 1}</span>
+                        </div>
+                    )}
                 </div>
             </TableCell>
 

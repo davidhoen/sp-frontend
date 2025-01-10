@@ -8,7 +8,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { useFetchData } from "@/hooks/use-fetch-data"
 import { useQueryFilter } from "@/hooks/use-query-filter"
 import { useRoles } from "@/hooks/use-roles"
-import { getStudents } from "@/lib/queries/client/queries"
+import { getUsers } from "@/lib/queries/client/queries"
 import { UserType } from "@/types/auth"
 import { PagingSchema } from "@/types/pagination"
 import { useTranslations } from "next-intl"
@@ -31,8 +31,7 @@ const UsersOverview = () => {
     });
 
     const fetchUsers = useCallback(() => {
-        // TODO: Use get users method
-        fetchData(getStudents);
+        fetchData(getUsers);
     }, [fetchData]);
 
     useEffect(() => {

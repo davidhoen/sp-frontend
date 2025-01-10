@@ -21,8 +21,7 @@ export default function UserRow({ user, roles, mutate }: { user: UserType, roles
 
     const onChangeRole = async (roleId?: number | string) => {
         try {
-            const res = axiosInstance.put(`/api/admin/users/${user.id}`, {
-                ...user,
+            const res = axiosInstance.post(`/api/educator/users/${user.id}/role`, {
                 role_id: roleId
             })
             await triggerPromiseToast(res, t)
@@ -37,7 +36,7 @@ export default function UserRow({ user, roles, mutate }: { user: UserType, roles
 
     const deleteUser = async () => {
         try {
-            const res = axiosInstance.delete(`/api/admin/users/${user.id}`,)
+            const res = axiosInstance.delete(`/api/educator/users/${user.id}`,)
             await triggerPromiseToast(res, t, { success: t("successfullyDeleted") })
             mutate && mutate()
             setIsDeleteModalOpen(false)
