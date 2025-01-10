@@ -178,9 +178,7 @@ export type RequestType = {
   skill: SkillType,
   requester: UserType,
   requestee_email?: string,
-  requestee?: EndorsementFormValues & {
-    email?: string
-  }
+  requestee?: EndorsementFormValues
   group: GroupType,
   status: RequestStatusEnum
   created_at: Date

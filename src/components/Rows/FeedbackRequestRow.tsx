@@ -10,7 +10,6 @@ import { TableCell, TableRow } from "../ui/table"
 import UserAvatar from "../UserAvatar"
 
 export default function FeedbackRequestRow({ request, mutate }: { request: RequestType, mutate: () => void }) {
-    const t = useTranslations("general")
     const format = useFormatter()
 
     return <>
@@ -44,7 +43,7 @@ export default function FeedbackRequestRow({ request, mutate }: { request: Reque
             {/* Actions */}
             <TableCell className="flex gap-2">
                 {/* Reply to request */}
-                <AddFeedbackModal request={request}>
+                <AddFeedbackModal request={request} parentMutate={mutate}>
                     <div><TableAction type="reply" /></div>
                 </AddFeedbackModal>
             </TableCell>
