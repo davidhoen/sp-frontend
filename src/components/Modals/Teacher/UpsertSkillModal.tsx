@@ -16,6 +16,7 @@ import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogT
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../ui/form"
 import { Input } from "../../ui/input"
 import Select from "../../ui/select"
+import RichTextEditor from "@/components/RichTextEditor"
 
 const UpsertSkillModal = ({ children, skill, mutate }: { children: ReactNode, skill?: SkillType, mutate?: () => void }) => {
   const t = useTranslations()
@@ -98,7 +99,7 @@ const UpsertSkillModal = ({ children, skill, mutate }: { children: ReactNode, sk
                 <FormItem>
                   <FormLabel>{t("modals.description")}</FormLabel>
                   <FormControl>
-                    <Textarea {...field} placeholder={t("modals.upsertSkill.descriptionPlaceholder")} />
+                    <RichTextEditor {...field} placeholder={t("modals.upsertSkill.descriptionPlaceholder")} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
