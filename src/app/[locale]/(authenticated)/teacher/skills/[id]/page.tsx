@@ -57,7 +57,7 @@ const SkillDetail = async (props: { params: Promise<{ id: string }> }) => {
             <div className="text-xs text-muted-foreground mb-4">{t("lastEditedByOn", { name: "John Doe", date: format.dateTime(new Date(), { dateStyle: "medium" }) })}</div>
 
             {/* Description */}
-            <p>{skill.desc}</p>
+            {skill.desc && <div className="prose" dangerouslySetInnerHTML={{ __html: skill.desc }}></div>}
         </div>
 
         {/* Competency */}

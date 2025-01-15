@@ -4,7 +4,7 @@ import { NextIntlClientProvider } from "next-intl"
 import { getMessages } from "next-intl/server"
 import { Roboto, Roboto_Slab } from "next/font/google"
 import { notFound } from "next/navigation"
-import "./globals.css"
+import "../globals.css"
 import { Toaster } from 'react-hot-toast';
 import ParentProvider from "@/providers/ParentProvider"
 
@@ -44,13 +44,9 @@ export const metadata: Metadata = {
 export default async function RootLayout(props: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
   const params = await props.params;
 
-  const {
-    locale
-  } = params;
+  const { locale } = params;
 
-  const {
-    children
-  } = props;
+  const { children } = props;
 
   // Ensure that the incoming `locale` is valid
   if (!routing.locales.includes(locale as any)) {
