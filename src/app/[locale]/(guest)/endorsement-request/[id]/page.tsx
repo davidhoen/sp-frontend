@@ -43,8 +43,8 @@ const EndorsementRequestPage = async (props: { params: Promise<{ id: string }> }
                         </div>
                         <div className="mb-6">
                             <h4 className="text-md font-semibold">{t("endorsementRequest.skillInformation")}</h4>
-                            <p className="text-sm text-gray-700">{endorsementRequest.skill.title}</p>
-                            <p className="text-sm text-gray-500">{endorsementRequest.skill.desc}</p>
+                            <p className="text-gray-700">{endorsementRequest.skill.title}</p>
+                            {endorsementRequest.skill.desc && <div className="prose" dangerouslySetInnerHTML={{ __html: endorsementRequest.skill.desc }}></div>}
                         </div>
                         {/* Form */}
                         <EndorsementRequestForm endorsementRequest={endorsementRequest} />

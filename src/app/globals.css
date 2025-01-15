@@ -100,4 +100,77 @@
     scrollbar-width: none;
     /* Firefox */
   }
+
+  /* Fix the bullet list because the quill editor renders a ol in stead of a ul */
+  .prose li[data-list="bullet"] {
+    list-style-type: disc;
+  }
+
+  .prose li[data-list="bullet"] > li::marker {
+    content: none;
+    color: var(--tw-prose-bullets);
+  }
+
+  /* TODO: Fix overwrite */
+  /* Overwrite styles of quill editor to actually look good */
+  .ql-stroke {
+    @apply !stroke-base-content;
+  }
+
+  .ql-fill {
+    @apply !fill-base-content;
+  }
+
+  .ql-active .ql-stroke {
+    @apply !stroke-primary;
+  }
+
+  .ql-active .ql-fill {
+    @apply !fill-primary;
+  }
+
+  .ql-container {
+    @apply !max-w-full bg-base-100 !text-base !font-sans !border-2 !rounded-b-small !border-base-200 !h-auto;
+  }
+
+  .ql-container p,
+  .ql-container h1,
+  .ql-container h2 {
+    @apply first:!mt-0 last:!mb-0;
+  }
+
+  .ql-toolbar {
+    @apply bg-base-100 !border-2 !rounded-t-sm !border-base-200 !border-b-base-200;
+  }
+
+  .ql-tooltip {
+    @apply !left-4 !bg-base-300 !shadow-none !rounded-small !px-4 !border-0 z-10;
+  }
+
+  .ql-tooltip a {
+    @apply !text-base-content !text-base;
+  }
+
+  .ql-preview {
+    vertical-align: unset !important;
+    display: inline !important;
+  }
+
+  .ql-tooltip::before {
+    content: "" !important;
+    margin: 0 !important;
+  }
+
+  .ql-tooltip[data-mode="link"]::before {
+    content: "Link: " !important;
+    @apply !text-base-content !text-base;
+  }
+
+  .ql-tooltip input {
+    @apply !py-4 !w-auto !max-w-xs !text-base rounded-small focus-visible:outline-none;
+  }
+
+  .ql-editor {
+    @apply default-prose;
+  }
 }
