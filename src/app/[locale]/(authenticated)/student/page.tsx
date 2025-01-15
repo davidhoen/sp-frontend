@@ -70,7 +70,7 @@ const DashboardPage = async () => {
     <div>
       <SectionTitle>{t("general.recentEndorsements")}</SectionTitle>
       <div className="flex gap-3 overflow-x-auto no-scrollbar bg-sidebar-accent p-2 rounded-md">
-        {recentEndorsements?.map((endorsement) => <Link key={endorsement.id} href={{ pathname: `/student/skills/${endorsement.skill.id}`, hash: t("general.endorsements") }} >
+        {(!!recentEndorsements && recentEndorsements?.length > 0) && recentEndorsements?.map((endorsement) => <Link key={endorsement.id} href={{ pathname: `/student/skills/${endorsement.skill?.id}`, hash: t("general.endorsements") }} >
           <div className="flex items-center gap-2 rounded-full bg-background">
             <UserAvatar user={endorsement?.user} />
             <div className="flex flex-col">
