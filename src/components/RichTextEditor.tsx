@@ -2,7 +2,7 @@ import { useQuill } from 'react-quilljs';
 import 'quill/dist/quill.snow.css';
 import { useEffect } from "react";
 
-export default ({ value, onChange, placeholder }: { value: string, onChange: (value: string) => void, placeholder?: string }) => {
+export default function RichTextEditor({ value, onChange, placeholder }: { value: string, onChange: (value: string) => void, placeholder?: string }) {
     const modules = {
         toolbar: [
             'bold', 'italic', 'underline', 'strike', 'blockquote', { list: 'ordered' }, { list: 'bullet' }, 'link'
@@ -20,6 +20,7 @@ export default ({ value, onChange, placeholder }: { value: string, onChange: (va
             quill.clipboard.dangerouslyPasteHTML(value || "");
             quill.on('text-change', () => onChange(quill.root.innerHTML));
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [quill]);
 
     return (
